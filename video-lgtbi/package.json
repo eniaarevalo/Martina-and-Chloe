@@ -1,0 +1,12 @@
+{
+  "name": "anhqv-lgtbi",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npx --yes hyperframes@0.9.38 check",
+    "render": "npx --yes hyperframes@0.9.38 render"
+  },
+  "devDependencies": {
+    "lucide-static": "^0.460.0"
+  }
+}

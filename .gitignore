@@ -6,3 +6,6 @@ video/assets/.mix-graph.txt
 video/assets/sfx/candidatos/
 video/voz-raw.wav
 video/muestras/*.wav
+video-lgtbi/voz-raw.wav
+video-lgtbi/assets/.premix.wav
+video-lgtbi/assets/.mix-graph.txt
