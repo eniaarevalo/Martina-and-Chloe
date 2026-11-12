@@ -1,357 +1,382 @@
 [
  {
-  "palabra": "España",
-  "vez": 1,
-  "empieza": 1.92
- },
- {
-  "palabra": "dedicó",
-  "vez": 1,
-  "empieza": 2.52
- },
- {
-  "palabra": "amigo",
-  "vez": 1,
-  "empieza": 3.06
- },
- {
-  "palabra": "muerto.",
-  "vez": 1,
-  "empieza": 3.78
- },
- {
-  "palabra": "Y",
-  "vez": 1,
-  "empieza": 4.14
- },
- {
-  "palabra": "marcó",
-  "vez": 1,
-  "empieza": 4.62
- },
- {
-  "palabra": "hundido.",
-  "vez": 1,
-  "empieza": 5.52
- },
- {
-  "palabra": "Uno:",
-  "vez": 1,
-  "empieza": 6.36
- },
- {
-  "palabra": "amigo.",
-  "vez": 2,
-  "empieza": 6.75
- },
- {
-  "palabra": "agosto",
-  "vez": 1,
-  "empieza": 7.58
- },
- {
-  "palabra": "2009,",
-  "vez": 1,
-  "empieza": 7.96
- },
- {
-  "palabra": "Dani",
-  "vez": 1,
-  "empieza": 8.89
- },
- {
-  "palabra": "capitán",
-  "vez": 1,
-  "empieza": 9.7
- },
- {
-  "palabra": "Espanyol,",
-  "vez": 1,
-  "empieza": 10.44
- },
- {
-  "palabra": "infarto",
-  "vez": 1,
-  "empieza": 11.68
- },
- {
-  "palabra": "26",
-  "vez": 1,
-  "empieza": 12.37
- },
- {
-  "palabra": "Era",
-  "vez": 1,
-  "empieza": 13.34
- },
- {
-  "palabra": "Iniesta",
-  "vez": 1,
-  "empieza": 13.87
- },
- {
-  "palabra": "categorías",
-  "vez": 1,
-  "empieza": 14.67
- },
- {
-  "palabra": "selección.",
-  "vez": 1,
-  "empieza": 15.94
- },
- {
-  "palabra": "selección. (final)",
-  "vez": 1,
-  "empieza": 16.64
- },
- {
-  "palabra": "Dos:",
-  "vez": 1,
-  "empieza": 16.9
- },
- {
-  "palabra": "bajón.",
-  "vez": 1,
-  "empieza": 17.23
- },
- {
-  "palabra": "temporada,",
-  "vez": 1,
-  "empieza": 18.32
- },
- {
-  "palabra": "lesiones",
-  "vez": 1,
-  "empieza": 19.6
- },
- {
-  "palabra": "musculares",
-  "vez": 1,
-  "empieza": 20.07
- },
- {
-  "palabra": "cayó",
-  "vez": 1,
-  "empieza": 20.74
- },
- {
-  "palabra": "depresión.",
-  "vez": 1,
-  "empieza": 21.27
- },
- {
-  "palabra": "contó",
-  "vez": 1,
-  "empieza": 22.41
- },
- {
-  "palabra": "libro,",
-  "vez": 1,
-  "empieza": 23.39
- },
- {
-  "palabra": "jugada",
-  "vez": 1,
-  "empieza": 23.94
- },
- {
-  "palabra": "Tres:",
-  "vez": 1,
-  "empieza": 25.3
- },
- {
-  "palabra": "minuto",
-  "vez": 1,
-  "empieza": 25.7
- },
- {
-  "palabra": "116.",
-  "vez": 1,
-  "empieza": 26.18
- },
- {
   "palabra": "julio",
   "vez": 1,
-  "empieza": 27.61
+  "empieza": 0.54
  },
  {
-  "palabra": "2010,",
+  "palabra": "2010.",
   "vez": 1,
-  "empieza": 28.03
+  "empieza": 1
  },
  {
-  "palabra": "final",
+  "palabra": "Final",
   "vez": 1,
-  "empieza": 28.8
+  "empieza": 2.04
+ },
+ {
+  "palabra": "Mundial.",
+  "vez": 1,
+  "empieza": 2.49
  },
  {
   "palabra": "Holanda,",
   "vez": 1,
-  "empieza": 30.02
+  "empieza": 3.56
  },
  {
-  "palabra": "prórroga.",
+  "palabra": "cero",
   "vez": 1,
-  "empieza": 30.71
+  "empieza": 4.35
  },
  {
-  "palabra": "Puyol",
-  "vez": 1,
-  "empieza": 31.58
+  "palabra": "cero.",
+  "vez": 2,
+  "empieza": 4.42
  },
  {
-  "palabra": "Navas",
+  "palabra": "Prórroga.",
   "vez": 1,
-  "empieza": 32.19
+  "empieza": 4.75
+ },
+ {
+  "palabra": "cuatro",
+  "vez": 1,
+  "empieza": 6
+ },
+ {
+  "palabra": "penaltis.",
+  "vez": 1,
+  "empieza": 7.2
  },
  {
   "palabra": "Torres",
   "vez": 1,
-  "empieza": 33.73
+  "empieza": 7.95
  },
  {
-  "palabra": "rebota,",
+  "palabra": "centra,",
   "vez": 1,
-  "empieza": 34.15
+  "empieza": 8.32
  },
  {
-  "palabra": "Cesc",
-  "vez": 2,
-  "empieza": 36.26
- },
- {
-  "palabra": "controla",
+  "palabra": "rebota…",
   "vez": 1,
-  "empieza": 37.57
+  "empieza": 9.42
+ },
+ {
+  "palabra": "cae",
+  "vez": 1,
+  "empieza": 10.3
+ },
+ {
+  "palabra": "ve",
+  "vez": 1,
+  "empieza": 11.19
+ },
+ {
+  "palabra": "Andrés,",
+  "vez": 1,
+  "empieza": 11.4
+ },
+ {
+  "palabra": "área.",
+  "vez": 1,
+  "empieza": 13.03
+ },
+ {
+  "palabra": "Controla.",
+  "vez": 1,
+  "empieza": 13.46
+ },
+ {
+  "palabra": "caer.",
+  "vez": 1,
+  "empieza": 14.6
  },
  {
   "palabra": "dispara.",
   "vez": 1,
-  "empieza": 38.12
+  "empieza": 15.09
  },
  {
-  "palabra": "Gol.",
-  "vez": 2,
-  "empieza": 39.04
+  "palabra": "¡Gol!",
+  "vez": 1,
+  "empieza": 15.73
  },
  {
   "palabra": "campeona",
   "vez": 1,
-  "empieza": 39.73
+  "empieza": 16.65
  },
  {
   "palabra": "primera",
   "vez": 1,
-  "empieza": 40.89
+  "empieza": 18
  },
  {
-  "palabra": "Iniesta",
-  "vez": 4,
-  "empieza": 41.92
+  "palabra": "Camacho",
+  "vez": 1,
+  "empieza": 19.17
+ },
+ {
+  "palabra": "gritó",
+  "vez": 1,
+  "empieza": 19.74
+ },
+ {
+  "palabra": "¡Iniesta",
+  "vez": 1,
+  "empieza": 20.82
+ },
+ {
+  "palabra": "¡Iniesta (final)",
+  "vez": 1,
+  "empieza": 21.18
+ },
+ {
+  "palabra": "vida!",
+  "vez": 1,
+  "empieza": 21.43
+ },
+ {
+  "palabra": "vida! (final)",
+  "vez": 1,
+  "empieza": 21.83
+ },
+ {
+  "palabra": "Andrés",
+  "vez": 2,
+  "empieza": 21.9
+ },
+ {
+  "palabra": "córner,",
+  "vez": 1,
+  "empieza": 22.74
  },
  {
   "palabra": "quita",
   "vez": 1,
-  "empieza": 42.31
+  "empieza": 23.37
  },
  {
-  "palabra": "camiseta,",
+  "palabra": "enseña",
   "vez": 1,
-  "empieza": 42.79
+  "empieza": 24.39
  },
  {
-  "palabra": "debajo",
+  "palabra": "mensaje:",
   "vez": 1,
-  "empieza": 43.4
+  "empieza": 24.91
  },
  {
   "palabra": "Dani",
-  "vez": 2,
-  "empieza": 44.17
+  "vez": 1,
+  "empieza": 25.5
  },
  {
   "palabra": "nosotros.",
   "vez": 1,
-  "empieza": 45.59
+  "empieza": 26.99
  },
  {
-  "palabra": "tarjeta",
-  "vez": 1,
-  "empieza": 47.04
- },
- {
-  "palabra": "amarilla,",
-  "vez": 1,
-  "empieza": 47.48
- },
- {
-  "palabra": "importó.",
-  "vez": 1,
-  "empieza": 48.59
- },
- {
-  "palabra": "importó. (final)",
-  "vez": 1,
-  "empieza": 49.32
- },
- {
-  "palabra": "Desde",
+  "palabra": "Dani,",
   "vez": 2,
-  "empieza": 49.32
+  "empieza": 27.96
+ },
+ {
+  "palabra": "capitán",
+  "vez": 1,
+  "empieza": 28.09
+ },
+ {
+  "palabra": "Espanyol",
+  "vez": 1,
+  "empieza": 28.74
+ },
+ {
+  "palabra": "amigo",
+  "vez": 1,
+  "empieza": 29.26
+ },
+ {
+  "palabra": "inferiores,",
+  "vez": 1,
+  "empieza": 30.37
+ },
+ {
+  "palabra": "ido",
+  "vez": 1,
+  "empieza": 31.61
+ },
+ {
+  "palabra": "antes,",
+  "vez": 1,
+  "empieza": 32.12
+ },
+ {
+  "palabra": "26",
+  "vez": 1,
+  "empieza": 33.17
+ },
+ {
+  "palabra": "Aquel",
+  "vez": 1,
+  "empieza": 34.01
+ },
+ {
+  "palabra": "Andrés",
+  "vez": 3,
+  "empieza": 34.71
+ },
+ {
+  "palabra": "depresión.",
+  "vez": 1,
+  "empieza": 35.83
+ },
+ {
+  "palabra": "contó",
+  "vez": 1,
+  "empieza": 36.74
+ },
+ {
+  "palabra": "libro.",
+  "vez": 1,
+  "empieza": 37.86
+ },
+ {
+  "palabra": "mismo",
+  "vez": 1,
+  "empieza": 38.8
+ },
+ {
+  "palabra": "gol",
+  "vez": 2,
+  "empieza": 40.01
+ },
+ {
+  "palabra": "ayudó",
+  "vez": 1,
+  "empieza": 40.45
+ },
+ {
+  "palabra": "salir",
+  "vez": 1,
+  "empieza": 40.71
+ },
+ {
+  "palabra": "oscuro",
+  "vez": 1,
+  "empieza": 41.67
+ },
+ {
+  "palabra": "volver",
+  "vez": 1,
+  "empieza": 42.11
+ },
+ {
+  "palabra": "bien.",
+  "vez": 1,
+  "empieza": 43.05
+ },
+ {
+  "palabra": "Ese",
+  "vez": 3,
+  "empieza": 43.55
+ },
+ {
+  "palabra": "quedó",
+  "vez": 1,
+  "empieza": 43.94
+ },
+ {
+  "palabra": "segundo",
+  "vez": 1,
+  "empieza": 44.31
+ },
+ {
+  "palabra": "Balón",
+  "vez": 2,
+  "empieza": 45.01
+ },
+ {
+  "palabra": "Oro,",
+  "vez": 1,
+  "empieza": 45.36
+ },
+ {
+  "palabra": "2012",
+  "vez": 1,
+  "empieza": 45.84
+ },
+ {
+  "palabra": "elegido",
+  "vez": 1,
+  "empieza": 46.87
+ },
+ {
+  "palabra": "mejor",
+  "vez": 1,
+  "empieza": 47.27
+ },
+ {
+  "palabra": "Europa.",
+  "vez": 1,
+  "empieza": 48.09
+ },
+ {
+  "palabra": "Europa. (final)",
+  "vez": 1,
+  "empieza": 48.7
+ },
+ {
+  "palabra": "Hasta",
+  "vez": 1,
+  "empieza": 48.7
  },
  {
   "palabra": "afición",
   "vez": 1,
-  "empieza": 50.39
+  "empieza": 49.16
  },
  {
-  "palabra": "Espanyol,",
-  "vez": 2,
-  "empieza": 50.98
- },
- {
-  "palabra": "rival",
+  "palabra": "rival,",
   "vez": 1,
-  "empieza": 51.9
+  "empieza": 50.79
  },
  {
-  "palabra": "Barça,",
+  "palabra": "aplaudido",
   "vez": 1,
-  "empieza": 52.45
+  "empieza": 51.52
  },
  {
-  "palabra": "aplaude",
+  "palabra": "pie.",
   "vez": 1,
-  "empieza": 53.07
- },
- {
-  "palabra": "estadio.",
-  "vez": 1,
-  "empieza": 53.67
+  "empieza": 52.25
  },
  {
   "palabra": "¿Dónde",
   "vez": 1,
-  "empieza": 54.276
+  "empieza": 52.538
  },
  {
   "palabra": "marcó",
-  "vez": 2,
-  "empieza": 55.47
+  "vez": 1,
+  "empieza": 53.77
  },
  {
   "palabra": "Cuéntamelo",
   "vez": 1,
-  "empieza": 56.54
+  "empieza": 54.68
  },
  {
   "palabra": "comentarios.",
   "vez": 1,
-  "empieza": 56.78
+  "empieza": 55.21
  },
  {
   "palabra": "comentarios. (final)",
   "vez": 1,
-  "empieza": 57.58
+  "empieza": 55.9
  }
 ]

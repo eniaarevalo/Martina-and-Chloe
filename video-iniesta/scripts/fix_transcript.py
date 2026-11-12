@@ -87,3 +87,12 @@ for k, x in enumerate(out):
     x["id"] = f"w{k}"
 json.dump(out, open("transcript.json", "w"), ensure_ascii=False, indent=1)
 print(f"{len(w)} -> {len(out)} palabras")
+
+# Si hay las mismas palabras que en el guion, se usa la ortografía y puntuación del guion (los tiempos no cambian)
+_w = json.load(open("transcript.json"))
+_t = [t.replace("«", "").replace("»", "") for t in open("guion.txt").read().split()]
+if len(_t) == len(_w):
+    for x, t in zip(_w, _t):
+        x["text"] = t
+    json.dump(_w, open("transcript.json", "w"), ensure_ascii=False, indent=1)
+    print("ortografía tomada del guion")

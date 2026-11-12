@@ -119,6 +119,19 @@
 .fan { position:absolute; width:70px; height:110px; border-radius:35px 35px 10px 10px; }
 .pubb { position:absolute; right:40px; bottom:40px; padding:16px 50px; border-radius:999px; background:#15803d; color:#fff; font:900 70px Inter; }
 .hc, .kc { opacity:0; }
+
+.beam { background:linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0)); clip-path:polygon(45% 0,55% 0,100% 100%,0 100%); filter:blur(6px); }
+.clk { border-radius:28px; border:5px solid #fff; background:#0b1220; display:flex; align-items:center; justify-content:center; gap:14px; }
+.tv { border-radius:34px; background:#0b1220; border:6px solid #ffd43b; box-shadow:0 24px 60px rgba(0,0,0,0.6); }
+.tvq { position:absolute; left:250px; top:70px; font:900 76px Inter; color:#fff; line-height:1.05; white-space:nowrap; }
+.ring { border-radius:50%; border:8px solid #ffd43b; }
+.candle { border-radius:18px 18px 10px 10px; background:linear-gradient(90deg,#f1f5f9,#e2e8f0); }
+.flame { border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; background:radial-gradient(circle at 50% 70%, #fff7c2, #facc15 45%, #f97316 80%); box-shadow:0 0 60px 20px rgba(250,204,21,0.35); }
+.pod { border-radius:20px 20px 0 0; display:flex; justify-content:center; padding-top:20px; font:900 110px Inter; color:rgba(15,23,42,0.55); }
+.goldball { border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff3b0, #facc15 40%, #b45309 100%); box-shadow:0 0 70px 10px rgba(250,204,21,0.35); }
+.sun { border-radius:50%; background:radial-gradient(circle, #fde68a, #facc15 60%, #f59e0b); box-shadow:0 0 120px 40px rgba(250,204,21,0.35); }
+.pillx { position:relative; }
+.pillx span { position:absolute; left:0; right:0; top:0; bottom:0; display:flex; align-items:center; justify-content:center; gap:14px; }
 </style>
 <div id="root" data-composition-id="world" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
   <div id="grid" data-layout-ignore></div>
@@ -127,10 +140,10 @@
   <div id="shake">
     <div id="wd">
       <div class="room" data-layout-ignore style="position:absolute;left:50px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
-<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room pitchroom" data-layout-ignore style="position:absolute;left:1110px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
 <div class="room" data-layout-ignore style="position:absolute;left:50px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
 <div class="room" data-layout-ignore style="position:absolute;left:1110px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
-<div class="room pitchroom" data-layout-ignore style="position:absolute;left:50px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
 <div class="room" data-layout-ignore style="position:absolute;left:1110px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
 <div class="room" data-layout-ignore style="position:absolute;left:50px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
 <div class="room" data-layout-ignore style="position:absolute;left:1110px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
@@ -140,16 +153,83 @@
       <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="#262a35" stroke-width="54" fill="none" stroke-linejoin="round"/>
       <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="rgba(255,255,255,0.18)" stroke-width="5" fill="none" stroke-dasharray="26 22" stroke-linejoin="round"/>
       <path id="road" d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="url(#rb)" stroke-width="16" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
-<div id="mile0" class="mile" data-layout-ignore style="position:absolute;left:1390px;top:1306px;width:480px;height:70px;z-index:2;">Agosto 2009</div>
-<div id="mile1" class="mile" data-layout-ignore style="position:absolute;left:330px;top:2606px;width:480px;height:70px;z-index:2;">Temporada 09-10</div>
-<div id="mile2" class="mile" data-layout-ignore style="position:absolute;left:1390px;top:3906px;width:480px;height:70px;z-index:2;">Johannesburgo</div>
-<div id="mile3" class="mile" data-layout-ignore style="position:absolute;left:330px;top:5206px;width:480px;height:70px;z-index:2;">Cornellà</div>
-<div id="goal0" style="position:absolute;left:210px;top:245px;width:720px;height:420px;z-index:4;" class="goalframe"><div id="net0" class="net"></div></div>
-<div id="ball0" class="ball" style="position:absolute;left:520px;top:905px;width:100px;height:100px;z-index:8;"><svg fill="#fff"
+<div id="mile0" class="mile" data-layout-ignore style="position:absolute;left:1390px;top:1306px;width:480px;height:70px;z-index:2;">Johannesburgo</div>
+<div id="mile1" class="mile" data-layout-ignore style="position:absolute;left:330px;top:2606px;width:480px;height:70px;z-index:2;">Agosto 2009</div>
+<div id="mile2" class="mile" data-layout-ignore style="position:absolute;left:1390px;top:3906px;width:480px;height:70px;z-index:2;">2010 · 2012</div>
+<div id="mile3" class="mile" data-layout-ignore style="position:absolute;left:1390px;top:5206px;width:480px;height:70px;z-index:2;">Cornellà</div>
+<div id="bm1" class="beam" data-layout-ignore style="position:absolute;left:30px;top:145px;width:420px;height:1000px;z-index:2;transform:rotate(-24deg)"></div>
+<div id="bm2" class="beam" data-layout-ignore style="position:absolute;left:690px;top:145px;width:420px;height:1000px;z-index:2;transform:rotate(24deg)"></div>
+<div id="cal2" class="cnt" style="position:absolute;left:290px;top:235px;width:560px;height:130px;z-index:8;background:#0f1115"><span style="font:900 56px Inter;color:#fff;margin-right:16px">11 JUL</span><span id="cal10" class="roller" style="display:inline-block;font-size:70px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:78px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal10-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal10-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal10-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal10-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span></span></div>
+<div id="final" class="pill" style="position:absolute;left:240px;top:400px;z-index:8;background:#fff;color:#0f1115;font-size:58px;opacity:0"><svg
  
   xmlns="http://www.w3.org/2000/svg"
-  width="96"
-  height="96"
+  width="56"
+  height="56"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ca8a04"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+  <path d="M4 22h16" />
+  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+  <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+</svg> FINAL DEL MUNDIAL</div>
+<div id="sb0" class="score" style="position:absolute;left:150px;top:535px;width:840px;height:190px;z-index:7;">
+      <span class="team">ESP</span><span id="sb0-g" class="roller" style="display:inline-block;font-size:110px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:123px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:123px;overflow:hidden;vertical-align:top"><span id="sb0-g-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span></span></span></span><span class="dash">-</span><span id="sb0-r" class="goal0">0</span><span class="team">NED</span>
+      <span id="sb0-min" class="minute"></span></div>
+<div id="pror" class="pill" style="position:absolute;left:340px;top:785px;z-index:8;background:#ef4444;color:#fff;font-size:58px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="56"
+  height="56"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <line x1="10" x2="14" y1="2" y2="2" />
+  <line x1="12" x2="15" y1="14" y2="11" />
+  <circle cx="12" cy="14" r="8" />
+</svg> PRÓRROGA</div>
+<div id="clk" class="clk" style="position:absolute;left:340px;top:935px;width:460px;height:160px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="84"
+  height="84"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg><span id="clk" class="roller" style="display:inline-block;font-size:96px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:108px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="clk-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="clk-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="clk-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span></span><span style="font:900 96px Inter;color:#fff">'</span></div>
+<div id="pitch" data-layout-ignore style="position:absolute;left:1150px;top:245px;width:960px;height:1020px;z-index:3;" class="pitch">
+      <div class="pbox"></div><div class="parea"></div><div class="pcircle"></div><div class="pline"></div>
+      <div id="net1" class="pgoal"></div></div>
+<div id="tk-torres" class="token red" style="position:absolute;left:1245px;top:710px;width:110px;height:110px;z-index:6;"><span class="tlab">Torres</span></div>
+<div id="tk-def" class="token orange" style="position:absolute;left:1525px;top:590px;width:90px;height:90px;z-index:5;"></div>
+<div id="tk-cesc" class="token red" style="position:absolute;left:1425px;top:850px;width:110px;height:110px;z-index:6;"><span class="tlab">Cesc</span></div>
+<div id="tk-iniesta" class="token red" style="position:absolute;left:1735px;top:440px;width:110px;height:110px;z-index:6;"><span class="tlab">Iniesta</span></div>
+<div class="token orange" style="position:absolute;left:1365px;top:490px;width:90px;height:90px;z-index:5;"></div>
+<div class="token orange" style="position:absolute;left:1665px;top:630px;width:90px;height:90px;z-index:5;"></div>
+<div class="token orange" style="position:absolute;left:1865px;top:800px;width:90px;height:90px;z-index:5;"></div>
+<div class="token orange" style="position:absolute;left:1665px;top:980px;width:90px;height:90px;z-index:5;"></div>
+<div class="token keeper" style="position:absolute;left:1585px;top:275px;width:90px;height:90px;z-index:5;"></div>
+<div id="ball1" class="ball" style="position:absolute;left:1320px;top:735px;width:60px;height:60px;z-index:9;"><svg fill="#fff"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="58"
+  height="58"
   viewBox="0 0 24 24"
   fill="none"
   stroke="#0f1115"
@@ -164,12 +244,152 @@
   <path d="M6.3 3.8a16.55 16.55 0 0 0 1.9 11.5" />
   <circle cx="12" cy="12" r="10" />
 </svg></div>
-<div id="sb0" class="score" style="position:absolute;left:150px;top:685px;width:840px;height:190px;z-index:7;">
-      <span class="team">ESP</span><span id="sb0-g" class="roller" style="display:inline-block;font-size:110px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:123px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:123px;overflow:hidden;vertical-align:top"><span id="sb0-g-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span></span></span></span><span class="dash">-</span><span class="goal0">0</span><span class="team">NED</span>
-      <span id="sb0-min" class="minute"></span></div>
-<div id="tee0" class="tee" style="position:absolute;left:620px;top:885px;width:320px;height:250px;z-index:6;"><span>Dani Jarque<br>siempre con<br>nosotros</span></div>
-<svg id="ini0" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
-  style="position:absolute;left:252px;top:768px;overflow:visible;z-index:6" color="#c8102e">
+<svg data-layout-ignore style="position:absolute;left:1150px;top:205px;width:960px;height:1080px;z-index:5;overflow:visible" viewBox="0 0 960 1080"><path id="seg-torres" d="M 150 560 L 420 430" stroke="#ffd43b" stroke-width="10" fill="none" stroke-dasharray="20 14" opacity="0"/><path id="seg-def" d="M 420 430 L 330 700" stroke="#ffd43b" stroke-width="10" fill="none" stroke-dasharray="20 14" opacity="0"/><path id="seg-cesc" d="M 330 700 L 640 290" stroke="#ffd43b" stroke-width="10" fill="none" stroke-dasharray="20 14" opacity="0"/><path id="seg-shot" d="M 640 290 L 480 110" stroke="#fff" stroke-width="12" fill="none" opacity="0"/></svg>
+<div id="spot" class="ring" data-layout-ignore style="position:absolute;left:1680px;top:385px;width:220px;height:220px;z-index:5;opacity:0"></div>
+<div id="sb2" class="score" style="position:absolute;left:1210px;top:185px;width:840px;height:190px;z-index:10;">
+      <span class="team">ESP</span><span id="sb2-g" class="roller" style="display:inline-block;font-size:110px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:123px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:123px;overflow:hidden;vertical-align:top"><span id="sb2-g-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span></span></span></span><span class="dash">-</span><span id="sb2-r" class="goal0">0</span><span class="team">NED</span>
+      <span id="sb2-min" class="minute">116'</span></div>
+<div id="star" style="position:absolute;left:1530px;top:585px;width:200px;height:200px;z-index:11;opacity:0"><svg fill="#facc15"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="200"
+  height="200"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+</svg></div>
+<div id="champ" class="pill" style="position:absolute;left:1220px;top:805px;z-index:11;background:#c8102e;color:#fff;font-size:62px;opacity:0">CAMPEONES DEL MUNDO</div>
+<div id="hj-0" class="heart" data-layout-ignore style="position:absolute;left:1235px;top:765px;width:90px;height:90px;z-index:9;"><svg fill="#ef4444"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ef4444"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="hj-1" class="heart" data-layout-ignore style="position:absolute;left:1375px;top:765px;width:90px;height:90px;z-index:9;"><svg fill="#f97316"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#f97316"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="hj-2" class="heart" data-layout-ignore style="position:absolute;left:1515px;top:765px;width:90px;height:90px;z-index:9;"><svg fill="#facc15"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="hj-3" class="heart" data-layout-ignore style="position:absolute;left:1655px;top:765px;width:90px;height:90px;z-index:9;"><svg fill="#22c55e"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#22c55e"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="hj-4" class="heart" data-layout-ignore style="position:absolute;left:1795px;top:765px;width:90px;height:90px;z-index:9;"><svg fill="#3b82f6"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#3b82f6"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="hj-5" class="heart" data-layout-ignore style="position:absolute;left:1935px;top:765px;width:90px;height:90px;z-index:9;"><svg fill="#a855f7"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#a855f7"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="tv" class="card" style="position:absolute;left:1190px;top:995px;width:880px;height:270px;z-index:6;background:#0b1220;border:6px solid #ffd43b;">
+      <div id="mic" style="position:absolute;left:40px;top:45px;width:180px;height:180px;border-radius:50%;background:#ffd43b;display:flex;align-items:center;justify-content:center"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="110"
+  height="110"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+  <line x1="12" x2="12" y1="19" y2="22" />
+</svg></div>
+      <div style="position:absolute;left:250px;top:14px;font:800 46px Inter;color:#ffd43b">CAMACHO · TV</div>
+      <div id="tvq" class="tvq"><span style="display:inline-block;white-space:nowrap"><span class="tq">¡</span><span class="tq">I</span><span class="tq">N</span><span class="tq">I</span><span class="tq">E</span><span class="tq">S</span><span class="tq">T</span><span class="tq">A</span></span><br><span style="display:inline-block;white-space:nowrap"><span class="tq2">D</span><span class="tq2">E</span></span> <span style="display:inline-block;white-space:nowrap"><span class="tq2">M</span><span class="tq2">I</span></span> <span style="display:inline-block;white-space:nowrap"><span class="tq2">V</span><span class="tq2">I</span><span class="tq2">D</span><span class="tq2">A</span><span class="tq2">!</span></span></div></div>
+<div id="rg0" class="ring" data-layout-ignore style="position:absolute;left:1210px;top:1020px;width:220px;height:220px;z-index:12;opacity:0"></div>
+<div id="rg1" class="ring" data-layout-ignore style="position:absolute;left:1210px;top:1020px;width:220px;height:220px;z-index:12;opacity:0"></div>
+<div id="rg2" class="ring" data-layout-ignore style="position:absolute;left:1210px;top:1020px;width:220px;height:220px;z-index:12;opacity:0"></div>
+<div id="under" class="under" style="position:absolute;left:1330px;top:1535px;width:600px;height:600px;z-index:4;">
+      <div id="ut" class="handw"><span style="display:inline-block;white-space:nowrap"><span class="hc">D</span><span class="hc">a</span><span class="hc">n</span><span class="hc">i</span></span> <span style="display:inline-block;white-space:nowrap"><span class="hc">J</span><span class="hc">a</span><span class="hc">r</span><span class="hc">q</span><span class="hc">u</span><span class="hc">e</span></span> <span style="display:inline-block;white-space:nowrap"><span class="hc">s</span><span class="hc">i</span><span class="hc">e</span><span class="hc">m</span><span class="hc">p</span><span class="hc">r</span><span class="hc">e</span></span> <span style="display:inline-block;white-space:nowrap"><span class="hc">c</span><span class="hc">o</span><span class="hc">n</span></span> <span style="display:inline-block;white-space:nowrap"><span class="hc">n</span><span class="hc">o</span><span class="hc">s</span><span class="hc">o</span><span class="hc">t</span><span class="hc">r</span><span class="hc">o</span><span class="hc">s</span></span></div></div>
+<div id="redsh" class="redsh" style="position:absolute;left:1330px;top:1535px;width:600px;height:600px;z-index:5;"><span>6</span><div class="rshl">INIESTA</div></div>
+<div id="flag" style="position:absolute;left:1910px;top:2265px;width:200px;height:300px;z-index:5;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="200"
+  height="200"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+  <line x1="4" x2="4" y1="22" y2="15" />
+</svg></div>
+<svg id="ini2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="240" height="440"
+  style="position:absolute;left:1310px;top:2132px;overflow:visible;z-index:6" color="#c8102e">
   <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
   <g class="rig">
     <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
@@ -194,49 +414,14 @@
     </g>
   </g>
 </svg>
-<div id="mood" class="pill" style="position:absolute;left:610px;top:1185px;z-index:8;background:#ef4444;color:#fff;opacity:0"><svg
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="50"
-  height="50"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#fff"
-  stroke-width="2.6"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-  <path d="M16 14v6" />
-  <path d="M8 14v6" />
-  <path d="M12 16v6" />
-</svg> HUNDIDO</div>
-<div id="h1" style="position:absolute;left:1150px;top:205px;width:960px;height:150px;z-index:6;">
-      <div id="h1-badge" class="badge" style="background:#2563eb;color:#fff">1</div>
-      <div id="h1-title" class="htitle">EL AMIGO</div></div>
-<div id="dani" class="card" style="position:absolute;left:1150px;top:375px;width:960px;height:330px;z-index:6;background:#ffffff;">
+<div id="dani" class="card" style="position:absolute;left:90px;top:1535px;width:960px;height:330px;z-index:6;background:#ffffff;">
       <div class="num21">21</div>
       <div style="position:absolute;left:250px;top:40px;font:900 76px Inter;color:#0f1115">DANI JARQUE</div>
       <div id="capt" class="pill" style="position:absolute;left:250px;top:140px;background:#ffd43b;color:#0f1115;opacity:0">CAPITÁN · ESPANYOL</div>
-      <div id="age" style="position:absolute;left:250px;top:230px;font:800 54px Inter;color:#555;opacity:0">26 años</div>
-      <div id="hrt" style="position:absolute;right:40px;top:150px;opacity:0"><svg
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="130"
-  height="130"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#ef4444"
-  stroke-width="2.4"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-  <path d="m12 13-1-1 2-2-3-3 2-2" />
-</svg></div></div>
-<div id="cal" class="cnt" style="position:absolute;left:1410px;top:735px;width:440px;height:120px;z-index:8;background:#0f1115"><span style="font:900 56px Inter;color:#fff;margin-right:16px">AGO</span><span id="cal9" class="roller" style="display:inline-block;font-size:70px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:78px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal9-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal9-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal9-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal9-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span></span></div>
-<svg id="kid1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="240" height="440"
-  style="position:absolute;left:1330px;top:832px;overflow:visible;z-index:6" color="#2563eb">
+      <div id="age" style="position:absolute;left:250px;top:230px;font:800 54px Inter;color:#555;opacity:0">26 años</div></div>
+<div id="sel" class="pill" style="position:absolute;left:130px;top:1925px;z-index:8;background:#c8102e;color:#fff;opacity:0">SELECCIÓN · INFERIORES</div>
+<svg id="kid1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="228" height="418"
+  style="position:absolute;left:146px;top:2154px;overflow:visible;z-index:6" color="#2563eb">
   <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
   <g class="rig">
     <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
@@ -261,8 +446,8 @@
     </g>
   </g>
 </svg>
-<svg id="kid2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="240" height="440"
-  style="position:absolute;left:1670px;top:832px;overflow:visible;z-index:6" color="#c8102e">
+<svg id="kid2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="228" height="418"
+  style="position:absolute;left:406px;top:2154px;overflow:visible;z-index:6" color="#c8102e">
   <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
   <g class="rig">
     <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
@@ -287,96 +472,13 @@
     </g>
   </g>
 </svg>
-<div id="sel" class="pill" style="position:absolute;left:1430px;top:885px;z-index:8;background:#c8102e;color:#fff;opacity:0">SELECCIÓN · INFERIORES</div>
-<div id="h2" style="position:absolute;left:1150px;top:1505px;width:960px;height:150px;z-index:6;">
-      <div id="h2-badge" class="badge" style="background:#64748b;color:#fff">2</div>
-      <div id="h2-title" class="htitle">EL BAJÓN</div></div>
-<div id="les0" class="notif" style="position:absolute;left:1620px;top:1685px;width:480px;height:110px;z-index:8;">
-          <div class="nicon" style="background:#ef4444"><svg
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="54"
-  height="54"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#fff"
-  stroke-width="2.6"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M10 10.01h.01" />
-  <path d="M10 14.01h.01" />
-  <path d="M14 10.01h.01" />
-  <path d="M14 14.01h.01" />
-  <path d="M18 6v11.5" />
-  <path d="M6 6v12" />
-  <rect x="2" y="6" width="20" height="12" rx="2" />
-</svg></div><span>LESIÓN 1</span></div>
-<div id="les1" class="notif" style="position:absolute;left:1620px;top:1810px;width:480px;height:110px;z-index:8;">
-          <div class="nicon" style="background:#ef4444"><svg
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="54"
-  height="54"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#fff"
-  stroke-width="2.6"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M10 10.01h.01" />
-  <path d="M10 14.01h.01" />
-  <path d="M14 10.01h.01" />
-  <path d="M14 14.01h.01" />
-  <path d="M18 6v11.5" />
-  <path d="M6 6v12" />
-  <rect x="2" y="6" width="20" height="12" rx="2" />
-</svg></div><span>LESIÓN 2</span></div>
-<div id="les2" class="notif" style="position:absolute;left:1620px;top:1935px;width:480px;height:110px;z-index:8;">
-          <div class="nicon" style="background:#ef4444"><svg
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="54"
-  height="54"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#fff"
-  stroke-width="2.6"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M10 10.01h.01" />
-  <path d="M10 14.01h.01" />
-  <path d="M14 10.01h.01" />
-  <path d="M14 14.01h.01" />
-  <path d="M18 6v11.5" />
-  <path d="M6 6v12" />
-  <rect x="2" y="6" width="20" height="12" rx="2" />
-</svg></div><span>LESIÓN 3</span></div>
-<div id="les3" class="notif" style="position:absolute;left:1620px;top:2060px;width:480px;height:110px;z-index:8;">
-          <div class="nicon" style="background:#ef4444"><svg
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="54"
-  height="54"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#fff"
-  stroke-width="2.6"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M10 10.01h.01" />
-  <path d="M10 14.01h.01" />
-  <path d="M14 10.01h.01" />
-  <path d="M14 14.01h.01" />
-  <path d="M18 6v11.5" />
-  <path d="M6 6v12" />
-  <rect x="2" y="6" width="20" height="12" rx="2" />
-</svg></div><span>LESIÓN 4</span></div>
+<div id="cnd" style="position:absolute;left:790px;top:2145px;width:160px;height:420px;z-index:6;opacity:0">
+      <div id="flm" class="flame" style="position:absolute;left:50px;top:0;width:60px;height:96px"></div>
+      <div class="candle" style="position:absolute;left:20px;top:110px;width:120px;height:300px"></div></div>
+<div id="y09" class="pill" style="position:absolute;left:730px;top:2025px;z-index:8;background:#334155;color:#fff;opacity:0">AGO 2009</div>
+<div id="sun" class="sun" style="position:absolute;left:710px;top:2865px;width:260px;height:260px;z-index:3;opacity:0"></div>
 <svg id="ini1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
-  style="position:absolute;left:1242px;top:2068px;overflow:visible;z-index:6" color="#c8102e">
+  style="position:absolute;left:212px;top:3368px;overflow:visible;z-index:6" color="#c8102e">
   <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
   <g class="rig">
     <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
@@ -401,11 +503,11 @@
     </g>
   </g>
 </svg>
-<div id="cloud" style="position:absolute;left:1220px;top:1805px;width:320px;height:220px;z-index:9;"><svg fill="#475569"
+<div id="cloud" style="position:absolute;left:180px;top:3035px;width:340px;height:240px;z-index:9;opacity:0"><svg fill="#475569"
  
   xmlns="http://www.w3.org/2000/svg"
-  width="300"
-  height="300"
+  width="320"
+  height="320"
   viewBox="0 0 24 24"
   fill="none"
   stroke="#94a3b8"
@@ -413,13 +515,32 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-  <path d="M16 14v6" />
-  <path d="M8 14v6" />
-  <path d="M12 16v6" />
+  <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
 </svg></div>
-<div id="dep" class="pill" style="position:absolute;left:1210px;top:2065px;z-index:8;background:#475569;color:#fff;opacity:0">DEPRESIÓN</div>
-<div id="book" class="card" style="position:absolute;left:1620px;top:2225px;width:480px;height:330px;z-index:6;background:#ffffff;">
+<div id="dep" class="pill pillx" style="position:absolute;left:130px;top:3305px;width:470px;height:90px;z-index:8;background:#475569;color:#fff;opacity:0">
+      <span id="dep-a">DEPRESIÓN</span><span id="dep-b" style="opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg> SE SIENTE BIEN</span></div>
+<div id="book" class="card" style="position:absolute;left:620px;top:3465px;width:400px;height:330px;z-index:6;background:#ffffff;">
       <div style="position:absolute;left:30px;top:30px"><svg
  
   xmlns="http://www.w3.org/2000/svg"
@@ -436,67 +557,11 @@
   <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
 </svg></div>
       <div style="position:absolute;left:30px;top:170px;font:900 50px Inter;color:#0f1115;line-height:1.1">La jugada<br>de mi vida</div></div>
-<div id="h3" style="position:absolute;left:90px;top:1505px;width:960px;height:150px;z-index:6;">
-      <div id="h3-badge" class="badge" style="background:#ffd43b;color:#0f1115">3</div>
-      <div id="h3-title" class="htitle">MINUTO 116</div></div>
-<div id="sb1" class="score" style="position:absolute;left:150px;top:1695px;width:840px;height:190px;z-index:7;">
-      <span class="team">ESP</span><span id="sb1-g" class="roller" style="display:inline-block;font-size:110px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:123px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:123px;overflow:hidden;vertical-align:top"><span id="sb1-g-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span></span></span></span><span class="dash">-</span><span class="goal0">0</span><span class="team">NED</span>
-      <span id="sb1-min" class="minute">116'</span></div>
-<div id="cal2" class="cnt" style="position:absolute;left:290px;top:1945px;width:560px;height:130px;z-index:8;background:#0f1115"><span style="font:900 56px Inter;color:#fff;margin-right:16px">11 JUL</span><span id="cal10" class="roller" style="display:inline-block;font-size:70px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:78px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal10-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal10-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal10-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="cal10-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span></span></div>
-<div id="final" class="pill" style="position:absolute;left:230px;top:2125px;z-index:8;background:#fff;color:#0f1115;font-size:58px;opacity:0"><svg
+<div id="miniball" class="ball" style="position:absolute;left:470px;top:3225px;width:90px;height:90px;z-index:9;opacity:0"><svg fill="#fff"
  
   xmlns="http://www.w3.org/2000/svg"
-  width="56"
-  height="56"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#ca8a04"
-  stroke-width="2.4"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-  <path d="M4 22h16" />
-  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-  <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
-</svg> FINAL DEL MUNDIAL</div>
-<div id="pror" class="pill" style="position:absolute;left:310px;top:2265px;z-index:8;background:#ef4444;color:#fff;font-size:58px;opacity:0"><svg
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="56"
-  height="56"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#fff"
-  stroke-width="2.4"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <line x1="10" x2="14" y1="2" y2="2" />
-  <line x1="12" x2="15" y1="14" y2="11" />
-  <circle cx="12" cy="14" r="8" />
-</svg> PRÓRROGA</div>
-<div id="pitch" data-layout-ignore style="position:absolute;left:90px;top:2845px;width:960px;height:1020px;z-index:3;" class="pitch">
-      <div class="pbox"></div><div class="parea"></div><div class="pcircle"></div><div class="pline"></div>
-      <div id="net1" class="pgoal"></div></div>
-<div id="tk-puyol" class="token red" style="position:absolute;left:335px;top:3650px;width:110px;height:110px;z-index:6;"><span class="tlab">Puyol</span></div>
-<div id="tk-navas" class="token red" style="position:absolute;left:825px;top:3440px;width:110px;height:110px;z-index:6;"><span class="tlab">Navas</span></div>
-<div id="tk-torres" class="token red" style="position:absolute;left:855px;top:3110px;width:110px;height:110px;z-index:6;"><span class="tlab">Torres</span></div>
-<div id="tk-cesc" class="token red" style="position:absolute;left:395px;top:3220px;width:110px;height:110px;z-index:6;"><span class="tlab">Cesc</span></div>
-<div id="tk-iniesta" class="token red" style="position:absolute;left:655px;top:3000px;width:110px;height:110px;z-index:6;"><span class="tlab">Iniesta</span></div>
-<div class="token orange" style="position:absolute;left:245px;top:3360px;width:90px;height:90px;z-index:5;"></div>
-<div class="token orange" style="position:absolute;left:605px;top:3400px;width:90px;height:90px;z-index:5;"></div>
-<div class="token orange" style="position:absolute;left:745px;top:3230px;width:90px;height:90px;z-index:5;"></div>
-<div class="token orange" style="position:absolute;left:525px;top:3090px;width:90px;height:90px;z-index:5;"></div>
-<div class="token orange" style="position:absolute;left:345px;top:3060px;width:90px;height:90px;z-index:5;"></div>
-<div class="token keeper" style="position:absolute;left:525px;top:2875px;width:90px;height:90px;z-index:5;"></div>
-<div id="ball1" class="ball" style="position:absolute;left:360px;top:3675px;width:60px;height:60px;z-index:9;"><svg fill="#fff"
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="58"
-  height="58"
+  width="86"
+  height="86"
   viewBox="0 0 24 24"
   fill="none"
   stroke="#0f1115"
@@ -511,115 +576,36 @@
   <path d="M6.3 3.8a16.55 16.55 0 0 0 1.9 11.5" />
   <circle cx="12" cy="12" r="10" />
 </svg></div>
-<svg data-layout-ignore style="position:absolute;left:90px;top:2805px;width:960px;height:1080px;z-index:5;overflow:visible" viewBox="0 0 960 1080"><path id="seg-puyol" d="M 300 940 L 790 730" stroke="#ffd43b" stroke-width="10" fill="none" stroke-dasharray="20 14" opacity="0"/><path id="seg-navas" d="M 790 730 L 820 400" stroke="#ffd43b" stroke-width="10" fill="none" stroke-dasharray="20 14" opacity="0"/><path id="seg-torres" d="M 820 400 L 360 510" stroke="#ffd43b" stroke-width="10" fill="none" stroke-dasharray="20 14" opacity="0"/><path id="seg-cesc" d="M 360 510 L 620 290" stroke="#ffd43b" stroke-width="10" fill="none" stroke-dasharray="20 14" opacity="0"/><path id="seg-shot" d="M 620 290 L 480 120" stroke="#fff" stroke-width="12" fill="none" opacity="0"/></svg>
-<div id="sb2" class="score" style="position:absolute;left:150px;top:2785px;width:840px;height:190px;z-index:10;">
-      <span class="team">ESP</span><span id="sb2-g" class="roller" style="display:inline-block;font-size:110px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:123px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:123px;overflow:hidden;vertical-align:top"><span id="sb2-g-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span><span style="display:block;height:123px;line-height:123px">0</span><span style="display:block;height:123px;line-height:123px">1</span><span style="display:block;height:123px;line-height:123px">2</span><span style="display:block;height:123px;line-height:123px">3</span><span style="display:block;height:123px;line-height:123px">4</span><span style="display:block;height:123px;line-height:123px">5</span><span style="display:block;height:123px;line-height:123px">6</span><span style="display:block;height:123px;line-height:123px">7</span><span style="display:block;height:123px;line-height:123px">8</span><span style="display:block;height:123px;line-height:123px">9</span></span></span></span><span class="dash">-</span><span class="goal0">0</span><span class="team">NED</span>
-      <span id="sb2-min" class="minute">116'</span></div>
-<div id="star" style="position:absolute;left:470px;top:3285px;width:200px;height:200px;z-index:11;opacity:0"><svg fill="#facc15"
+<div id="gb" class="goldball" style="position:absolute;left:1210px;top:2845px;width:220px;height:220px;z-index:6;opacity:0"></div>
+<div id="gbp" class="pill" style="position:absolute;left:1460px;top:2905px;z-index:7;background:#facc15;color:#0f1115;font-size:60px;opacity:0">BALÓN DE ORO 2010</div>
+<div id="uefa" class="card" style="position:absolute;left:1210px;top:3095px;width:840px;height:170px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:30px;top:25px"><svg
  
   xmlns="http://www.w3.org/2000/svg"
-  width="200"
-  height="200"
+  width="120"
+  height="120"
   viewBox="0 0 24 24"
   fill="none"
-  stroke="#facc15"
-  stroke-width="2"
+  stroke="#ca8a04"
+  stroke-width="2.4"
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+  <path d="M4 22h16" />
+  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+  <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
 </svg></div>
-<div id="champ" class="pill" style="position:absolute;left:160px;top:3505px;z-index:11;background:#c8102e;color:#fff;font-size:62px;opacity:0">CAMPEONES DEL MUNDO</div>
-<div id="hj-0" class="heart" data-layout-ignore style="position:absolute;left:175px;top:3455px;width:90px;height:90px;z-index:9;"><svg fill="#ef4444"
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="90"
-  height="90"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#ef4444"
-  stroke-width="2.2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-</svg></div>
-<div id="hj-1" class="heart" data-layout-ignore style="position:absolute;left:315px;top:3455px;width:90px;height:90px;z-index:9;"><svg fill="#f97316"
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="90"
-  height="90"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#f97316"
-  stroke-width="2.2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-</svg></div>
-<div id="hj-2" class="heart" data-layout-ignore style="position:absolute;left:455px;top:3455px;width:90px;height:90px;z-index:9;"><svg fill="#facc15"
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="90"
-  height="90"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#facc15"
-  stroke-width="2.2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-</svg></div>
-<div id="hj-3" class="heart" data-layout-ignore style="position:absolute;left:595px;top:3455px;width:90px;height:90px;z-index:9;"><svg fill="#22c55e"
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="90"
-  height="90"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#22c55e"
-  stroke-width="2.2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-</svg></div>
-<div id="hj-4" class="heart" data-layout-ignore style="position:absolute;left:735px;top:3455px;width:90px;height:90px;z-index:9;"><svg fill="#3b82f6"
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="90"
-  height="90"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#3b82f6"
-  stroke-width="2.2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-</svg></div>
-<div id="hj-5" class="heart" data-layout-ignore style="position:absolute;left:875px;top:3455px;width:90px;height:90px;z-index:9;"><svg fill="#a855f7"
- 
-  xmlns="http://www.w3.org/2000/svg"
-  width="90"
-  height="90"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#a855f7"
-  stroke-width="2.2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-</svg></div>
-<div id="under" class="under" style="position:absolute;left:1330px;top:2865px;width:600px;height:640px;z-index:4;">
-      <div id="ut" class="handw"><span style="display:inline-block;white-space:nowrap"><span class="hc">D</span><span class="hc">a</span><span class="hc">n</span><span class="hc">i</span></span> <span style="display:inline-block;white-space:nowrap"><span class="hc">J</span><span class="hc">a</span><span class="hc">r</span><span class="hc">q</span><span class="hc">u</span><span class="hc">e</span></span> <span style="display:inline-block;white-space:nowrap"><span class="hc">s</span><span class="hc">i</span><span class="hc">e</span><span class="hc">m</span><span class="hc">p</span><span class="hc">r</span><span class="hc">e</span></span> <span style="display:inline-block;white-space:nowrap"><span class="hc">c</span><span class="hc">o</span><span class="hc">n</span></span> <span style="display:inline-block;white-space:nowrap"><span class="hc">n</span><span class="hc">o</span><span class="hc">s</span><span class="hc">o</span><span class="hc">t</span><span class="hc">r</span><span class="hc">o</span><span class="hc">s</span></span></div></div>
-<div id="redsh" class="redsh" style="position:absolute;left:1330px;top:2865px;width:600px;height:640px;z-index:5;"><span>6</span><div class="rshl">INIESTA</div></div>
-<div id="yc" class="ycard" style="position:absolute;left:1870px;top:3525px;width:170px;height:240px;z-index:8;"></div>
-<svg id="ini2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="240" height="440"
-  style="position:absolute;left:1330px;top:3432px;overflow:visible;z-index:6" color="#c8102e">
+      <div style="position:absolute;left:180px;top:26px;font:900 48px Inter;color:#0f1115;white-space:nowrap">MEJOR JUGADOR</div>
+      <div style="position:absolute;left:180px;top:90px;font:900 48px Inter;color:#2563eb;white-space:nowrap">DE EUROPA</div>
+      <div id="yrbox" style="position:absolute;right:30px;top:40px;padding:6px 18px;border-radius:18px;background:#f1f5f9;display:flex"><span id="yr" class="roller" style="display:inline-block;font-size:64px;font-weight:900;color:#0f1115;font-variant-numeric:tabular-nums;line-height:72px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:72px;overflow:hidden;vertical-align:top"><span id="yr-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:72px;overflow:hidden;vertical-align:top"><span id="yr-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:72px;overflow:hidden;vertical-align:top"><span id="yr-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:72px;overflow:hidden;vertical-align:top"><span id="yr-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span></span></span></span></div></div>
+<div id="p2" class="pod" style="position:absolute;left:1210px;top:3602px;width:260px;height:260px;z-index:5;background:#cbd5e1;transform-origin:50% 100%">2</div>
+<div id="p1" class="pod" style="position:absolute;left:1500px;top:3522px;width:260px;height:340px;z-index:5;background:#facc15;transform-origin:50% 100%">1</div>
+<div id="p3" class="pod" style="position:absolute;left:1790px;top:3662px;width:260px;height:200px;z-index:5;background:#d97706;transform-origin:50% 100%">3</div>
+<svg id="ini3" class="chr " data-layout-ignore viewBox="0 0 240 440" width="173" height="317"
+  style="position:absolute;left:1254px;top:3292px;overflow:visible;z-index:6" color="#c8102e">
   <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
   <g class="rig">
     <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
@@ -644,19 +630,19 @@
     </g>
   </g>
 </svg>
-<div id="stand" class="stand" style="position:absolute;left:1150px;top:4365px;width:960px;height:620px;z-index:4;"><div class="fan" style="left:30px;top:40px;background:#2563eb"></div><div class="fan" style="left:130px;top:40px;background:#f8fafc"></div><div class="fan" style="left:230px;top:40px;background:#2563eb"></div><div class="fan" style="left:330px;top:40px;background:#f8fafc"></div><div class="fan" style="left:430px;top:40px;background:#2563eb"></div><div class="fan" style="left:530px;top:40px;background:#f8fafc"></div><div class="fan" style="left:630px;top:40px;background:#2563eb"></div><div class="fan" style="left:730px;top:40px;background:#f8fafc"></div><div class="fan" style="left:830px;top:40px;background:#2563eb"></div><div class="fan" style="left:70px;top:170px;background:#f8fafc"></div><div class="fan" style="left:170px;top:170px;background:#2563eb"></div><div class="fan" style="left:270px;top:170px;background:#f8fafc"></div><div class="fan" style="left:370px;top:170px;background:#2563eb"></div><div class="fan" style="left:470px;top:170px;background:#f8fafc"></div><div class="fan" style="left:570px;top:170px;background:#2563eb"></div><div class="fan" style="left:670px;top:170px;background:#f8fafc"></div><div class="fan" style="left:770px;top:170px;background:#2563eb"></div><div class="fan" style="left:870px;top:170px;background:#f8fafc"></div><div class="fan" style="left:30px;top:300px;background:#2563eb"></div><div class="fan" style="left:130px;top:300px;background:#f8fafc"></div><div class="fan" style="left:230px;top:300px;background:#2563eb"></div><div class="fan" style="left:330px;top:300px;background:#f8fafc"></div><div class="fan" style="left:430px;top:300px;background:#2563eb"></div><div class="fan" style="left:530px;top:300px;background:#f8fafc"></div><div class="fan" style="left:630px;top:300px;background:#2563eb"></div><div class="fan" style="left:730px;top:300px;background:#f8fafc"></div><div class="fan" style="left:830px;top:300px;background:#2563eb"></div><div class="fan" style="left:70px;top:430px;background:#f8fafc"></div><div class="fan" style="left:170px;top:430px;background:#2563eb"></div><div class="fan" style="left:270px;top:430px;background:#f8fafc"></div><div class="fan" style="left:370px;top:430px;background:#2563eb"></div><div class="fan" style="left:470px;top:430px;background:#f8fafc"></div><div class="fan" style="left:570px;top:430px;background:#2563eb"></div><div class="fan" style="left:670px;top:430px;background:#f8fafc"></div><div class="fan" style="left:770px;top:430px;background:#2563eb"></div><div class="fan" style="left:870px;top:430px;background:#f8fafc"></div></div>
+<div id="stand" class="stand" style="position:absolute;left:1150px;top:4365px;width:960px;height:620px;z-index:4;"><div class="fan" style="left:30px;top:60px;background:#2563eb"></div><div class="fan" style="left:130px;top:60px;background:#f8fafc"></div><div class="fan" style="left:230px;top:60px;background:#2563eb"></div><div class="fan" style="left:330px;top:60px;background:#f8fafc"></div><div class="fan" style="left:430px;top:60px;background:#2563eb"></div><div class="fan" style="left:530px;top:60px;background:#f8fafc"></div><div class="fan" style="left:630px;top:60px;background:#2563eb"></div><div class="fan" style="left:730px;top:60px;background:#f8fafc"></div><div class="fan" style="left:830px;top:60px;background:#2563eb"></div><div class="fan" style="left:70px;top:190px;background:#f8fafc"></div><div class="fan" style="left:170px;top:190px;background:#2563eb"></div><div class="fan" style="left:270px;top:190px;background:#f8fafc"></div><div class="fan" style="left:370px;top:190px;background:#2563eb"></div><div class="fan" style="left:470px;top:190px;background:#f8fafc"></div><div class="fan" style="left:570px;top:190px;background:#2563eb"></div><div class="fan" style="left:670px;top:190px;background:#f8fafc"></div><div class="fan" style="left:770px;top:190px;background:#2563eb"></div><div class="fan" style="left:870px;top:190px;background:#f8fafc"></div><div class="fan" style="left:30px;top:320px;background:#2563eb"></div><div class="fan" style="left:130px;top:320px;background:#f8fafc"></div><div class="fan" style="left:230px;top:320px;background:#2563eb"></div><div class="fan" style="left:330px;top:320px;background:#f8fafc"></div><div class="fan" style="left:430px;top:320px;background:#2563eb"></div><div class="fan" style="left:530px;top:320px;background:#f8fafc"></div><div class="fan" style="left:630px;top:320px;background:#2563eb"></div><div class="fan" style="left:730px;top:320px;background:#f8fafc"></div><div class="fan" style="left:830px;top:320px;background:#2563eb"></div><div class="fan" style="left:70px;top:450px;background:#f8fafc"></div><div class="fan" style="left:170px;top:450px;background:#2563eb"></div><div class="fan" style="left:270px;top:450px;background:#f8fafc"></div><div class="fan" style="left:370px;top:450px;background:#2563eb"></div><div class="fan" style="left:470px;top:450px;background:#f8fafc"></div><div class="fan" style="left:570px;top:450px;background:#2563eb"></div><div class="fan" style="left:670px;top:450px;background:#f8fafc"></div><div class="fan" style="left:770px;top:450px;background:#2563eb"></div><div class="fan" style="left:870px;top:450px;background:#f8fafc"></div></div>
 <div id="esp" class="card" style="position:absolute;left:1210px;top:4125px;width:840px;height:210px;z-index:6;background:#ffffff;">
       <div style="position:absolute;left:36px;top:30px;font:900 72px Inter;color:#2563eb">AFICIÓN ESPANYOL</div>
       <div id="rival" class="pill" style="position:absolute;left:36px;top:124px;background:#0f1115;color:#fff;font-size:46px;opacity:0">el gran rival del Barça</div></div>
-<div id="cl" class="cnt" style="position:absolute;left:1350px;top:5025px;width:560px;height:140px;z-index:8;background:#15803d"><svg
+<div id="pie" class="pill" style="position:absolute;left:1400px;top:5035px;z-index:8;background:#15803d;color:#fff;font-size:62px;opacity:0"><svg
  
   xmlns="http://www.w3.org/2000/svg"
-  width="80"
-  height="80"
+  width="62"
+  height="62"
   viewBox="0 0 24 24"
   fill="none"
   stroke="#fff"
-  stroke-width="2.4"
+  stroke-width="2.6"
   stroke-linecap="round"
   stroke-linejoin="round"
 >
@@ -664,7 +650,7 @@
   <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2" />
   <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8" />
   <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" />
-</svg><span id="clap" class="roller" style="display:inline-block;font-size:90px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:101px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:101px;overflow:hidden;vertical-align:top"><span id="clap-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:101px;overflow:hidden;vertical-align:top"><span id="clap-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:101px;overflow:hidden;vertical-align:top"><span id="clap-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:101px;overflow:hidden;vertical-align:top"><span id="clap-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span></span></span></span></div>
+</svg> EN PIE</div>
 <div id="cbox" class="card" style="position:absolute;left:150px;top:4305px;width:840px;height:520px;z-index:6;background:#ffffff;">
       <div style="position:absolute;left:40px;top:40px;display:flex;align-items:center;gap:22px"><svg
  
@@ -758,219 +744,229 @@ function typeOn(sel, t0, t1) {
 }
 
 tl.set("#road", {strokeDasharray:12140.0, strokeDashoffset:12140.0}, 0);
-tl.set("#wd", {x:-144.0, y:178.0, scale:1.2, transformOrigin:"0 0"}, 0);
-tl.set("#grid", {backgroundPosition:"-36px 44px"}, 0);
-tl.fromTo("#ball0", {x:0, y:0, scale:1.6}, {x:0, y:-520, scale:0.7, duration:0.35, ease:"power3.in"}, 0);
-tl.fromTo("#net0", {scaleY:1}, {scaleY:0.82, transformOrigin:"50% 0%", duration:0.12, yoyo:true, repeat:3}, 0.33);
-tl.to("#shake", {keyframes:[{x:-18,y:11},{x:14,y:-7},{x:-9,y:5},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 0.350);
-tl.set("#ball0", {opacity:0}, 1.2);
-tl.set("#sb0-g-d0", {y:0}, 0);
-tl.to("#sb0-g-d0", {y:-1353, duration:0.4, ease:"back.out(2)"}, 0.45);
-tl.fromTo("#tee0", {opacity:0, y:40, rotation:-6}, {opacity:1, y:0, rotation:3, duration:0.4, ease:"back.out(2)"}, 2.520);
-tl.to("#tee0", {rotation:-2, duration:0.4}, 3.780);
-life("ini0", 0.000, 58.758, 1);
-tl.fromTo("#ini0", {opacity:0, x:-200}, {opacity:1, x:0, duration:0.5}, 4.140); walk("ini0", 4.140, 4.640, 0.13);
-tl.to(Q("ini0","head"), {rotation:18, svgOrigin:PIV.head, duration:0.5}, 5.520); tl.to(Q("ini0","eyes"), {scaleY:0.3, svgOrigin:PIV.eyes, duration:0.3}, 5.520);
-tl.fromTo("#mood", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 5.520);
-tl.to("#wd", {x:-1090.0, y:195.0, scale:1.0, duration:0.85, ease:"power3.inOut"}, 6.360);
-tl.to("#grid", {backgroundPosition:"-272px 49px", duration:0.85, ease:"power3.inOut"}, 6.360);
-tl.to("#wd", {filter:"blur(5px)", duration:0.34, ease:"power1.in"}, 6.360);
-tl.to("#wd", {filter:"blur(0px)", duration:0.38, ease:"power1.out"}, 6.785);
-tl.to("#road", {strokeDashoffset:10580.0, duration:0.85, ease:"power2.inOut"}, 6.360);
-tl.fromTo("#h1-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 6.360);
-tl.fromTo("#h1-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 6.750);
-tl.fromTo("#cal", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 7.580);
-tl.set("#cal9-d0", {y:0}, 0);
-tl.set("#cal9-d1", {y:0}, 0);
-tl.set("#cal9-d2", {y:0}, 0);
-tl.set("#cal9-d3", {y:0}, 0);
-tl.to("#cal9-d0", {y:-936, duration:0.60, ease:"power3.out"}, 7.960);
-tl.to("#cal9-d1", {y:-780, duration:0.60, ease:"power3.out"}, 8.020);
-tl.to("#cal9-d2", {y:-780, duration:0.60, ease:"power3.out"}, 8.080);
-tl.to("#cal9-d3", {y:-1482, duration:0.60, ease:"power3.out"}, 8.140);
-tl.fromTo("#dani", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 8.890);
-tl.fromTo("#capt", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 9.700);
-tl.fromTo("#hrt", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 11.680);
-tl.to("#hrt", {opacity:0.35, duration:0.6}, 12.480);
-tl.fromTo("#age", {opacity:0, x:-20}, {opacity:1, x:0, duration:0.3}, 12.370);
-life("kid1", 0.000, 58.758, 10);
-tl.fromTo("#kid1", {opacity:0, y:40}, {opacity:1, y:0, duration:0.4}, 13.340);
-life("kid2", 0.000, 58.758, 11);
-tl.fromTo("#kid2", {opacity:0, y:40}, {opacity:1, y:0, duration:0.4}, 13.740);
-tl.to(Q("kid1","armR"), {rotation:-150, svgOrigin:PIV.armR, duration:0.25}, 14.670); tl.to(Q("kid2","armL"), {rotation:150, svgOrigin:PIV.armL, duration:0.25}, 14.670);
-jump("kid1", 14.920, 40); jump("kid2", 14.970, 40);
-tl.fromTo("#sel", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 15.940);
-tl.to("#wd", {x:41.9, y:611.7, scale:0.4528, duration:0.4, ease:"power3.inOut"}, 16.690);
-tl.to("#grid", {backgroundPosition:"10px 153px", duration:0.4, ease:"power3.inOut"}, 16.690);
-tl.to("#wd", {filter:"blur(5px)", duration:0.16, ease:"power1.in"}, 16.690);
-tl.to("#wd", {filter:"blur(0px)", duration:0.18, ease:"power1.out"}, 16.890);
-tl.to("#wd", {x:-1090.0, y:-1105.0, scale:1.0, duration:0.85, ease:"power3.inOut"}, 16.900);
-tl.to("#grid", {backgroundPosition:"-272px -276px", duration:0.85, ease:"power3.inOut"}, 16.900);
-tl.to("#wd", {filter:"blur(5px)", duration:0.34, ease:"power1.in"}, 16.900);
-tl.to("#wd", {filter:"blur(0px)", duration:0.38, ease:"power1.out"}, 17.325);
-tl.to("#road", {strokeDashoffset:8280.0, duration:0.85, ease:"power2.inOut"}, 16.900);
-tl.to("#mile0", {opacity:0, duration:0.3}, 17.200);
-tl.fromTo("#h2-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 16.900);
-tl.fromTo("#h2-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 17.230);
-life("ini1", 0.000, 58.758, 2);
-tl.fromTo("#les0", {opacity:0, y:-120}, {opacity:1, y:0, duration:0.35, ease:"bounce.out"}, 19.600);
-tl.fromTo("#les1", {opacity:0, y:-120}, {opacity:1, y:0, duration:0.35, ease:"bounce.out"}, 19.900);
-tl.fromTo("#les2", {opacity:0, y:-120}, {opacity:1, y:0, duration:0.35, ease:"bounce.out"}, 20.070);
-tl.fromTo("#les3", {opacity:0, y:-120}, {opacity:1, y:0, duration:0.35, ease:"bounce.out"}, 20.370);
-tl.to(Q("ini1","head"), {rotation:18, svgOrigin:PIV.head, duration:0.5}, 20.740); tl.to("#ini1", {y:40, duration:0.5}, 20.740);
-tl.fromTo("#cloud", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.6, ease:"power2.out"}, 20.740);
-tl.fromTo("#dep", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 21.270);
-tl.to(".notif", {opacity:0, x:120, duration:0.3, stagger:0.05}, 22.310);
-tl.fromTo("#book", {opacity:0, x:0, y:80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 23.390);
-tl.to("#cloud", {opacity:0.25, y:-60, duration:0.8}, 23.940); tl.to(Q("ini1","head"), {rotation:0, svgOrigin:PIV.head, duration:0.5}, 23.940); tl.to("#ini1", {y:0, duration:0.5}, 23.940);
-tl.to("#wd", {x:-30.0, y:-1105.0, scale:1.0, duration:0.85, ease:"power3.inOut"}, 25.300);
-tl.to("#grid", {backgroundPosition:"-8px -276px", duration:0.85, ease:"power3.inOut"}, 25.300);
-tl.to("#wd", {filter:"blur(5px)", duration:0.34, ease:"power1.in"}, 25.300);
-tl.to("#wd", {filter:"blur(0px)", duration:0.38, ease:"power1.out"}, 25.725);
-tl.to("#road", {strokeDashoffset:7220.0, duration:0.85, ease:"power2.inOut"}, 25.300);
-tl.fromTo("#h3-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 25.300);
-tl.fromTo("#h3-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 25.700);
-tl.fromTo("#sb1", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 26.080);
-tl.fromTo("#sb1-min", {scale:1.6, color:"#fff"}, {scale:1, color:"#0f1115", duration:0.4, ease:"back.out(2)"}, 26.180);
-tl.fromTo("#cal2", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 27.310);
+tl.set("#wd", {x:-30.0, y:195.0, scale:1.0, transformOrigin:"0 0"}, 0);
+tl.set("#grid", {backgroundPosition:"-8px 49px"}, 0);
+tl.fromTo(".beam", {opacity:0.25}, {opacity:0.9, duration:0.12, yoyo:true, repeat:3}, 0);
+tl.fromTo("#sb0", {scale:1.25, opacity:1}, {scale:1, duration:0.45, ease:"back.out(1.8)"}, 0);
+tl.to("#shake", {keyframes:[{x:-14,y:8},{x:11,y:-6},{x:-7,y:4},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 0.400);
+tl.fromTo("#cal2", {opacity:0, y:-60}, {opacity:1, y:0, duration:0.35, ease:"back.out(2)"}, 0.1);
 tl.set("#cal10-d0", {y:0}, 0);
 tl.set("#cal10-d1", {y:0}, 0);
 tl.set("#cal10-d2", {y:0}, 0);
 tl.set("#cal10-d3", {y:0}, 0);
-tl.to("#cal10-d0", {y:-936, duration:0.60, ease:"power3.out"}, 28.030);
-tl.to("#cal10-d1", {y:-780, duration:0.60, ease:"power3.out"}, 28.090);
-tl.to("#cal10-d2", {y:-858, duration:0.60, ease:"power3.out"}, 28.150);
-tl.to("#cal10-d3", {y:-780, duration:0.60, ease:"power3.out"}, 28.210);
-tl.fromTo("#final", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 28.800);
-tl.to("#sb1", {scale:1.04, duration:0.15, yoyo:true, repeat:1}, 30.020);
-tl.fromTo("#pror", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 30.710);
-tl.to("#wd", {x:-30.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 31.280);
-tl.to("#grid", {backgroundPosition:"-8px -601px", duration:0.7, ease:"power3.inOut"}, 31.280);
-tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 31.280);
-tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 31.630);
-tl.to("#road", {strokeDashoffset:4920.0, duration:0.70, ease:"power2.inOut"}, 31.280);
-tl.to("#mile1", {opacity:0, duration:0.3}, 31.580);
-tl.fromTo(".token", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.3, stagger:0.04, ease:"back.out(2)"}, 31.380);
-tl.fromTo("#tk-puyol", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 31.580);
-tl.fromTo("#ball1", {opacity:0}, {opacity:1, duration:0.2}, 31.580);
-tl.set("#sb2", {opacity:0}, 0);
-tl.to("#ball1", {x:490, y:-210, duration:0.45, ease:"power1.inOut"}, 32.190);
-tl.to("#seg-puyol", {opacity:1, duration:0.2}, 32.190);
-tl.to("#tk-navas", {scale:1.25, duration:0.15, yoyo:true, repeat:1}, 32.590);
-tl.to("#ball1", {x:520, y:-540, duration:0.45, ease:"power1.inOut"}, 33.430);
-tl.to("#seg-navas", {opacity:1, duration:0.2}, 33.430);
-tl.to("#tk-torres", {scale:1.25, duration:0.15, yoyo:true, repeat:1}, 33.830);
-tl.to("#ball1", {x:60, y:-430, duration:0.45, ease:"power1.inOut"}, 34.150);
-tl.to("#seg-torres", {opacity:1, duration:0.2}, 34.150);
-tl.to("#tk-cesc", {scale:1.25, duration:0.15, yoyo:true, repeat:1}, 34.550);
-tl.to("#ball1", {x:320, y:-650, duration:0.45, ease:"power1.inOut"}, 36.460);
-tl.to("#seg-cesc", {opacity:1, duration:0.2}, 36.460);
-tl.to("#tk-iniesta", {scale:1.25, duration:0.15, yoyo:true, repeat:1}, 36.860);
-tl.to("#wd", {x:-540.0, y:-4451.4, scale:1.7143, duration:0.6, ease:"power3.inOut"}, 37.370);
-tl.to("#grid", {backgroundPosition:"-135px -1113px", duration:0.6, ease:"power3.inOut"}, 37.370);
-tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 37.370);
-tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 37.670);
-tl.to("#ball1", {x:180, y:-780, duration:0.7, ease:"power2.in"}, 38.270);
-tl.to("#seg-shot", {opacity:1, duration:0.2}, 38.270);
-tl.fromTo("#net1", {scaleY:1}, {scaleY:1.5, transformOrigin:"50% 100%", duration:0.12, yoyo:true, repeat:3}, 38.990);
-tl.to("#shake", {keyframes:[{x:-26,y:16},{x:21,y:-10},{x:-13,y:8},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 39.040);
-tl.to("#wd", {x:-30.0, y:-2405.0, scale:1.0, duration:0.5, ease:"power3.inOut"}, 39.190);
-tl.to("#grid", {backgroundPosition:"-8px -601px", duration:0.5, ease:"power3.inOut"}, 39.190);
-tl.to("#wd", {filter:"blur(5px)", duration:0.20, ease:"power1.in"}, 39.190);
-tl.to("#wd", {filter:"blur(0px)", duration:0.23, ease:"power1.out"}, 39.440);
-tl.to("#sb2", {opacity:1, duration:0.3}, 39.040);
+tl.to("#cal10-d0", {y:-936, duration:0.60, ease:"power3.out"}, 0.800);
+tl.to("#cal10-d1", {y:-780, duration:0.60, ease:"power3.out"}, 0.860);
+tl.to("#cal10-d2", {y:-858, duration:0.60, ease:"power3.out"}, 0.920);
+tl.to("#cal10-d3", {y:-780, duration:0.60, ease:"power3.out"}, 0.980);
+tl.fromTo("#final", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 2.040);
+tl.to("#sb0", {scale:1.05, duration:0.15, yoyo:true, repeat:1}, 3.560);
+tl.fromTo("#sb0-g", {scale:1.3}, {scale:1, duration:0.3, ease:"back.out(3)"}, 4.350);
+tl.fromTo("#sb0-r", {scale:1.3}, {scale:1, duration:0.3, ease:"back.out(3)"}, 4.420);
+tl.to(".beam", {opacity:0.45, duration:0.6}, 2.490);
+tl.fromTo("#pror", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 4.750);
+tl.fromTo("#clk", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 5.000);
+tl.set("#clk-d0", {y:0}, 0);
+tl.set("#clk-d1", {y:-972}, 0);
+tl.set("#clk-d2", {y:0}, 0);
+tl.to("#clk-d0", {y:-1188, duration:0.70, ease:"power3.out"}, 6.000);
+tl.to("#clk-d1", {y:-1188, duration:0.70, ease:"power3.out"}, 6.060);
+tl.to("#clk-d2", {y:-1728, duration:0.70, ease:"power3.out"}, 6.120);
+tl.to("#clk", {rotation:2, duration:0.08, yoyo:true, repeat:5}, 7.200);
+tl.to("#wd", {x:-1090.0, y:195.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 7.600);
+tl.to("#grid", {backgroundPosition:"-272px 49px", duration:0.6, ease:"power3.inOut"}, 7.600);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 7.600);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 7.900);
+tl.to("#road", {strokeDashoffset:10580.0, duration:0.60, ease:"power2.inOut"}, 7.600);
+tl.fromTo(".token", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.3, stagger:0.03, ease:"back.out(2)"}, 7.650);
+tl.set("#sb2", {opacity:0}, 0); tl.set("#ball1", {opacity:0}, 0);
+tl.to("#ball1", {opacity:1, duration:0.2}, 7.950);
+tl.to("#ball1", {x:220, y:-130, duration:0.4, ease:"power1.inOut"}, 8.320);
+tl.to("#seg-torres", {opacity:1, duration:0.2}, 8.320);
+tl.to("#tk-def", {scale:1.3, duration:0.12, yoyo:true, repeat:1}, 9.420);
+tl.to("#ball1", {x:130, y:140, duration:0.45, ease:"power1.inOut"}, 10.300);
+tl.to("#seg-def", {opacity:1, duration:0.2}, 10.300);
+tl.to("#tk-cesc", {scale:1.25, duration:0.15, yoyo:true, repeat:1}, 10.700);
+tl.fromTo("#spot", {opacity:0, scale:1.6}, {opacity:1, scale:1, duration:0.35}, 11.190);
+tl.to("#spot", {scale:1.12, duration:0.3, yoyo:true, repeat:5}, 11.540);
+tl.to("#ball1", {x:440, y:-270, duration:0.45, ease:"power1.inOut"}, 12.930);
+tl.to("#seg-cesc", {opacity:1, duration:0.2}, 12.930);
+tl.to("#wd", {x:-2425.7, y:74.3, scale:1.7143, duration:0.5, ease:"power3.inOut"}, 13.210);
+tl.to("#grid", {backgroundPosition:"-606px 19px", duration:0.5, ease:"power3.inOut"}, 13.210);
+tl.to("#wd", {filter:"blur(5px)", duration:0.20, ease:"power1.in"}, 13.210);
+tl.to("#wd", {filter:"blur(0px)", duration:0.23, ease:"power1.out"}, 13.460);
+tl.to("#ball1", {x:470, y:-250, duration:0.25, ease:"power2.out"}, 13.460);
+tl.to("#ball1", {scale:1.7, duration:0.25, yoyo:true, repeat:1, ease:"sine.out"}, 14.600);
+tl.to("#ball1", {x:280, y:-450, duration:0.35, ease:"power3.in"}, 15.190);
+tl.to("#seg-shot", {opacity:1, duration:0.2}, 15.190); tl.to("#spot", {opacity:0, duration:0.2}, 15.090);
+tl.fromTo("#net1", {scaleY:1}, {scaleY:1.5, transformOrigin:"50% 100%", duration:0.12, yoyo:true, repeat:3}, 15.680);
+tl.to("#shake", {keyframes:[{x:-26,y:16},{x:21,y:-10},{x:-13,y:8},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 15.730);
+tl.to("#wd", {x:-1090.0, y:195.0, scale:1.0, duration:0.5, ease:"power3.inOut"}, 15.880);
+tl.to("#grid", {backgroundPosition:"-272px 49px", duration:0.5, ease:"power3.inOut"}, 15.880);
+tl.to("#wd", {filter:"blur(5px)", duration:0.20, ease:"power1.in"}, 15.880);
+tl.to("#wd", {filter:"blur(0px)", duration:0.23, ease:"power1.out"}, 16.130);
+tl.to("#sb2", {opacity:1, duration:0.3}, 15.730);
 tl.set("#sb2-g-d0", {y:0}, 0);
-tl.to("#sb2-g-d0", {y:-1353, duration:0.4, ease:"back.out(2)"}, 39.140);
-tl.fromTo("#star", {opacity:0, scale:0.2, rotation:-90}, {opacity:1, scale:1, rotation:0, duration:0.5, ease:"back.out(2)"}, 39.730);
-tl.fromTo("#champ", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 40.890);
-tl.fromTo("#hj-0", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 39.930);
-tl.to("#hj-0", {y:-300, x:-40, opacity:0, duration:1.2, ease:"power1.in"}, 40.480);
-tl.fromTo("#hj-1", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 40.020);
-tl.to("#hj-1", {y:-300, x:0, opacity:0, duration:1.2, ease:"power1.in"}, 40.570);
-tl.fromTo("#hj-2", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 40.110);
-tl.to("#hj-2", {y:-300, x:40, opacity:0, duration:1.2, ease:"power1.in"}, 40.660);
-tl.fromTo("#hj-3", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 40.200);
-tl.to("#hj-3", {y:-300, x:-40, opacity:0, duration:1.2, ease:"power1.in"}, 40.750);
-tl.fromTo("#hj-4", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 40.290);
-tl.to("#hj-4", {y:-300, x:0, opacity:0, duration:1.2, ease:"power1.in"}, 40.840);
-tl.fromTo("#hj-5", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 40.380);
-tl.to("#hj-5", {y:-300, x:40, opacity:0, duration:1.2, ease:"power1.in"}, 40.930);
-tl.to("#wd", {x:-1090.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 41.720);
-tl.to("#grid", {backgroundPosition:"-272px -601px", duration:0.7, ease:"power3.inOut"}, 41.720);
-tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 41.720);
-tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 42.070);
-tl.to("#road", {strokeDashoffset:3860.0, duration:0.70, ease:"power2.inOut"}, 41.720);
-tl.fromTo("#redsh, #under", {opacity:0}, {opacity:1, duration:0.3}, 41.920);
-tl.to("#redsh", {y:-700, rotation:-8, duration:0.6, ease:"power3.in"}, 42.410); tl.to("#redsh", {opacity:0, duration:0.2}, 42.910);
-typeOn("#ut .hc", 44.170, 45.990);
-life("ini2", 0.000, 58.758, 3);
-tl.fromTo("#ini2", {opacity:0}, {opacity:1, duration:0.3}, 43.400); point("ini2", "R", 43.400, 46.090, -130);
-tl.fromTo("#yc", {opacity:0, rotation:-90, scale:0.4}, {opacity:1, rotation:12, scale:1, duration:0.4, ease:"back.out(2)"}, 47.040);
-tl.to(Q("ini2","mouth"), {scaleX:1.3, svgOrigin:"120 136", duration:0.2}, 48.590); jump("ini2", 48.590, 40);
-tl.to("#wd", {x:41.9, y:-565.7, scale:0.4528, duration:0.4, ease:"power3.inOut"}, 49.370);
-tl.to("#grid", {backgroundPosition:"10px -141px", duration:0.4, ease:"power3.inOut"}, 49.370);
-tl.to("#wd", {filter:"blur(5px)", duration:0.16, ease:"power1.in"}, 49.370);
-tl.to("#wd", {filter:"blur(0px)", duration:0.18, ease:"power1.out"}, 49.570);
-tl.to("#wd", {x:-1090.0, y:-3705.0, scale:1.0, duration:0.75, ease:"power3.inOut"}, 49.120);
-tl.to("#grid", {backgroundPosition:"-272px -926px", duration:0.75, ease:"power3.inOut"}, 49.120);
-tl.to("#wd", {filter:"blur(5px)", duration:0.30, ease:"power1.in"}, 49.120);
-tl.to("#wd", {filter:"blur(0px)", duration:0.34, ease:"power1.out"}, 49.495);
-tl.to("#road", {strokeDashoffset:1560.0, duration:0.75, ease:"power2.inOut"}, 49.120);
-tl.to("#mile2", {opacity:0, duration:0.3}, 49.420);
-tl.fromTo("#esp", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 50.390);
-tl.fromTo("#rival", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 51.900);
-tl.fromTo("#stand", {opacity:0}, {opacity:1, duration:0.4}, 50.390);
-tl.to(".fan", {y:-26, duration:0.18, yoyo:true, repeat:31, stagger:{each:0.02, from:"random"}}, 53.070);
-tl.fromTo("#cl", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 53.070);
-tl.set("#clap-d0", {y:0}, 0);
-tl.set("#clap-d1", {y:0}, 0);
-tl.set("#clap-d2", {y:0}, 0);
-tl.set("#clap-d3", {y:0}, 0);
-tl.to("#clap-d0", {y:-2929, duration:1.40, ease:"power3.out"}, 53.170);
-tl.to("#clap-d1", {y:-2929, duration:1.40, ease:"power3.out"}, 53.230);
-tl.to("#clap-d2", {y:-2929, duration:1.40, ease:"power3.out"}, 53.290);
-tl.to("#clap-d3", {y:-2929, duration:1.40, ease:"power3.out"}, 53.350);
-tl.to("#wd", {x:-30.0, y:-3705.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 54.076);
-tl.to("#grid", {backgroundPosition:"-8px -926px", duration:0.7, ease:"power3.inOut"}, 54.076);
-tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 54.076);
-tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 54.426);
-tl.to("#road", {strokeDashoffset:500.0, duration:0.70, ease:"power2.inOut"}, 54.076);
-tl.fromTo("#cbox", {opacity:0, x:0, y:80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 54.276);
-typeOn("#ctt .kc", 55.470, 56.740);
-tl.fromTo("#cur", {opacity:0, x:200, y:200}, {opacity:1, x:0, y:0, duration:0.4}, 56.540);
-tl.to("#cur", {scale:0.85, duration:0.08, yoyo:true, repeat:1}, 57.080); tl.to("#pub", {scale:0.9, backgroundColor:"#166534", duration:0.1, yoyo:true, repeat:1}, 57.080);
-tl.to(".mile", {opacity:1, duration:0.4}, 57.780);
-tl.to("#wd", {x:307.3, y:368.8, scale:0.2115, duration:0.7, ease:"power3.inOut"}, 57.680);
-tl.to("#grid", {backgroundPosition:"77px 92px", duration:0.7, ease:"power3.inOut"}, 57.680);
-tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 57.680);
-tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 58.030);
-tl.fromTo(".pt:nth-child(1)", {y:0, x:0}, {y:-120, x:-40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(2)", {y:0, x:0}, {y:-150, x:0, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(3)", {y:0, x:0}, {y:-180, x:40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(4)", {y:0, x:0}, {y:-210, x:-40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(5)", {y:0, x:0}, {y:-240, x:0, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(6)", {y:0, x:0}, {y:-120, x:40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(7)", {y:0, x:0}, {y:-150, x:-40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(8)", {y:0, x:0}, {y:-180, x:0, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(9)", {y:0, x:0}, {y:-210, x:40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(10)", {y:0, x:0}, {y:-240, x:-40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(11)", {y:0, x:0}, {y:-120, x:0, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(12)", {y:0, x:0}, {y:-150, x:40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(13)", {y:0, x:0}, {y:-180, x:-40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(14)", {y:0, x:0}, {y:-210, x:0, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(15)", {y:0, x:0}, {y:-240, x:40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(16)", {y:0, x:0}, {y:-120, x:-40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(17)", {y:0, x:0}, {y:-150, x:0, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(18)", {y:0, x:0}, {y:-180, x:40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(19)", {y:0, x:0}, {y:-210, x:-40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(20)", {y:0, x:0}, {y:-240, x:0, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(21)", {y:0, x:0}, {y:-120, x:40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(22)", {y:0, x:0}, {y:-150, x:-40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(23)", {y:0, x:0}, {y:-180, x:0, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(24)", {y:0, x:0}, {y:-210, x:40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(25)", {y:0, x:0}, {y:-240, x:-40, duration:58.76, ease:"none"}, 0);
-tl.fromTo(".pt:nth-child(26)", {y:0, x:0}, {y:-120, x:0, duration:58.76, ease:"none"}, 0);
-tl.fromTo("#glow", {opacity:0.75}, {opacity:1, duration:2.5, ease:"sine.inOut", yoyo:true, repeat:23}, 0);
+tl.to("#sb2-g-d0", {y:-1353, duration:0.4, ease:"back.out(2)"}, 15.830);
+tl.fromTo("#star", {opacity:0, scale:0.2, rotation:-90}, {opacity:1, scale:1, rotation:0, duration:0.5, ease:"back.out(2)"}, 16.650);
+tl.fromTo("#champ", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 18.000);
+tl.fromTo("#hj-0", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 16.850);
+tl.to("#hj-0", {y:-300, x:-40, opacity:0, duration:1.2, ease:"power1.in"}, 17.400);
+tl.fromTo("#hj-1", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 16.940);
+tl.to("#hj-1", {y:-300, x:0, opacity:0, duration:1.2, ease:"power1.in"}, 17.490);
+tl.fromTo("#hj-2", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 17.030);
+tl.to("#hj-2", {y:-300, x:40, opacity:0, duration:1.2, ease:"power1.in"}, 17.580);
+tl.fromTo("#hj-3", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 17.120);
+tl.to("#hj-3", {y:-300, x:-40, opacity:0, duration:1.2, ease:"power1.in"}, 17.670);
+tl.fromTo("#hj-4", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 17.210);
+tl.to("#hj-4", {y:-300, x:0, opacity:0, duration:1.2, ease:"power1.in"}, 17.760);
+tl.fromTo("#hj-5", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-150, scale:1, duration:0.5, ease:"back.out(2)"}, 17.300);
+tl.to("#hj-5", {y:-300, x:40, opacity:0, duration:1.2, ease:"power1.in"}, 17.850);
+tl.fromTo("#tv", {opacity:0, x:0, y:120}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 19.070);
+tl.fromTo("#rg0", {opacity:0.9, scale:0.8}, {opacity:0, scale:2.2, duration:0.8, repeat:2, immediateRender:false}, 19.740);
+tl.fromTo("#rg1", {opacity:0.9, scale:0.8}, {opacity:0, scale:2.2, duration:0.8, repeat:2, immediateRender:false}, 20.010);
+tl.fromTo("#rg2", {opacity:0.9, scale:0.8}, {opacity:0, scale:2.2, duration:0.8, repeat:2, immediateRender:false}, 20.280);
+tl.to("#mic", {scale:1.12, duration:0.12, yoyo:true, repeat:9}, 19.740);
+typeOn("#tvq .tq", 20.820, 21.180);
+typeOn("#tvq .tq2", 21.180, 21.830);
+tl.to("#shake", {keyframes:[{x:-10,y:6},{x:8,y:-4},{x:-5,y:3},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 21.430);
+tl.to("#wd", {x:-1090.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 21.600);
+tl.to("#grid", {backgroundPosition:"-272px -276px", duration:0.7, ease:"power3.inOut"}, 21.600);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 21.600);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 21.950);
+tl.to("#road", {strokeDashoffset:8280.0, duration:0.70, ease:"power2.inOut"}, 21.600);
+tl.to("#mile0", {opacity:0, duration:0.3}, 22.100);
+life("ini2", 0.000, 57.075, 3);
+tl.fromTo("#ini2", {opacity:0, x:-300}, {opacity:1, x:0, duration:0.9, ease:"power1.out"}, 21.800); walk("ini2", 21.800, 22.700, 0.11);
+tl.fromTo("#flag", {opacity:0, y:40}, {opacity:1, y:0, duration:0.35, ease:"back.out(2)"}, 22.740); tl.to("#flag", {rotation:6, transformOrigin:"20% 100%", duration:0.4, yoyo:true, repeat:85}, 23.090);
+tl.fromTo("#redsh, #under", {opacity:0, scale:0.8}, {opacity:1, scale:1, duration:0.35, ease:"back.out(2)"}, 22.740);
+tl.to("#redsh", {y:-640, rotation:-8, duration:0.55, ease:"power3.in"}, 23.470); tl.to("#redsh", {opacity:0, duration:0.2}, 23.920);
+tl.to(Q("ini2","armL"), {rotation:160, svgOrigin:PIV.armL, duration:0.3}, 23.370); tl.to(Q("ini2","armR"), {rotation:-160, svgOrigin:PIV.armR, duration:0.3}, 23.370);
+tl.to(Q("ini2","armL"), {rotation:0, svgOrigin:PIV.armL, duration:0.3}, 24.390);
+point("ini2", "R", 24.390, 27.590, -130);
+tl.fromTo("#under", {boxShadow:"0 0 0px rgba(250,204,21,0)"}, {boxShadow:"0 0 90px rgba(250,204,21,0.55)", duration:0.6}, 24.910);
+typeOn("#ut .hc", 25.500, 27.390);
+tl.to("#wd", {x:-30.0, y:-1105.0, scale:1.0, duration:0.8, ease:"power3.inOut"}, 27.660);
+tl.to("#grid", {backgroundPosition:"-8px -276px", duration:0.8, ease:"power3.inOut"}, 27.660);
+tl.to("#wd", {filter:"blur(5px)", duration:0.32, ease:"power1.in"}, 27.660);
+tl.to("#wd", {filter:"blur(0px)", duration:0.36, ease:"power1.out"}, 28.060);
+tl.to("#road", {strokeDashoffset:7220.0, duration:0.80, ease:"power2.inOut"}, 27.660);
+tl.fromTo("#dani", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 27.960);
+tl.fromTo("#capt", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 28.090);
+life("kid1", 0.000, 57.075, 10);
+tl.fromTo("#kid1", {opacity:0, y:40}, {opacity:1, y:0, duration:0.4}, 29.260);
+life("kid2", 0.000, 57.075, 11);
+tl.fromTo("#kid2", {opacity:0, y:40}, {opacity:1, y:0, duration:0.4}, 29.510);
+tl.to(Q("kid1","armR"), {rotation:-150, svgOrigin:PIV.armR, duration:0.25}, 30.370); tl.to(Q("kid2","armL"), {rotation:150, svgOrigin:PIV.armL, duration:0.25}, 30.370);
+jump("kid1", 30.620, 40); jump("kid2", 30.670, 40);
+tl.fromTo("#sel", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 30.370);
+tl.to(Q("kid1","armR"), {rotation:0, svgOrigin:PIV.armR, duration:0.4}, 31.610); tl.to(Q("kid2","armL"), {rotation:0, svgOrigin:PIV.armL, duration:0.4}, 31.610);
+tl.to("#kid1", {opacity:0.45, duration:1.0}, 31.610);
+tl.fromTo("#cnd", {opacity:0, y:30}, {opacity:1, y:0, duration:0.8, ease:"power2.out"}, 31.610);
+tl.to("#flm", {scaleY:1.15, scaleX:0.9, transformOrigin:"50% 100%", duration:0.35, yoyo:true, repeat:72, ease:"sine.inOut"}, 32.210);
+tl.fromTo("#y09", {opacity:0}, {opacity:1, duration:0.6}, 32.120);
+tl.fromTo("#age", {opacity:0, x:-20}, {opacity:1, x:0, duration:0.4}, 33.170);
+tl.to("#wd", {x:-30.0, y:-2405.0, scale:1.0, duration:0.8, ease:"power3.inOut"}, 33.710);
+tl.to("#grid", {backgroundPosition:"-8px -601px", duration:0.8, ease:"power3.inOut"}, 33.710);
+tl.to("#wd", {filter:"blur(5px)", duration:0.32, ease:"power1.in"}, 33.710);
+tl.to("#wd", {filter:"blur(0px)", duration:0.36, ease:"power1.out"}, 34.110);
+tl.to("#road", {strokeDashoffset:4920.0, duration:0.80, ease:"power2.inOut"}, 33.710);
+tl.to("#mile1", {opacity:0, duration:0.3}, 34.210);
+life("ini1", 0.000, 57.075, 2);
+tl.fromTo("#cloud", {opacity:0, scale:0.5}, {opacity:0.9, scale:1, duration:0.7, ease:"power2.out"}, 34.710);
+tl.to(Q("ini1","head"), {rotation:16, svgOrigin:PIV.head, duration:0.6}, 34.710); tl.to("#ini1", {y:30, duration:0.6}, 34.710);
+tl.fromTo("#dep", {opacity:0, y:20}, {opacity:1, y:0, duration:0.5}, 35.830);
+tl.to("#cloud", {y:12, duration:1.1, yoyo:true, repeat:3, ease:"sine.inOut"}, 35.830);
+tl.fromTo("#book", {opacity:0, x:0, y:80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 37.760);
+tl.to("#book", {x:40, opacity:0.0, duration:0.4}, 38.800);
+tl.fromTo("#miniball", {opacity:0, scale:0.3, y:-200}, {opacity:1, scale:1, y:0, duration:0.5, ease:"bounce.out"}, 40.010);
+tl.to("#cloud", {scale:1.12, duration:0.25, yoyo:true, repeat:1}, 41.670);
+tl.to("#cloud", {x:-500, opacity:0, duration:0.8, ease:"power2.in"}, 42.110);
+tl.fromTo("#sun", {opacity:0, y:240, scale:0.6}, {opacity:1, y:0, scale:1, duration:1.0, ease:"power2.out"}, 40.710);
+tl.to("#sun", {rotation:360, duration:6, ease:"none"}, 41.710);
+tl.to(Q("ini1","head"), {rotation:0, svgOrigin:PIV.head, duration:0.5}, 42.110); tl.to("#ini1", {y:0, duration:0.5}, 42.110);
+tl.to("#miniball", {y:-60, duration:0.3, yoyo:true, repeat:3, ease:"power1.out"}, 40.450);
+tl.to("#dep", {scaleY:0, duration:0.14, ease:"power2.in"}, 43.050);
+tl.set("#dep-a", {opacity:0}, 43.190);
+tl.set("#dep-b", {opacity:1}, 43.190);
+tl.set("#dep", {backgroundColor:"#15803d"}, 43.190);
+tl.to("#dep", {scaleY:1, duration:0.26, ease:"back.out(2.2)"}, 43.190);
+jump("ini1", 43.150, 50); tl.to(Q("ini1","mouth"), {scaleX:1.3, svgOrigin:"120 136", duration:0.2}, 43.050);
+tl.to("#wd", {x:-1090.0, y:-2405.0, scale:1.0, duration:0.75, ease:"power3.inOut"}, 43.250);
+tl.to("#grid", {backgroundPosition:"-272px -601px", duration:0.75, ease:"power3.inOut"}, 43.250);
+tl.to("#wd", {filter:"blur(5px)", duration:0.30, ease:"power1.in"}, 43.250);
+tl.to("#wd", {filter:"blur(0px)", duration:0.34, ease:"power1.out"}, 43.625);
+tl.to("#road", {strokeDashoffset:3860.0, duration:0.75, ease:"power2.inOut"}, 43.250);
+tl.fromTo(".pod", {scaleY:0}, {scaleY:1, duration:0.4, stagger:0.08, ease:"back.out(1.6)"}, 43.550);
+life("ini3", 0.000, 57.075, 4);
+tl.fromTo("#ini3", {opacity:0, y:-200}, {opacity:1, y:0, duration:0.45, ease:"bounce.out"}, 44.210);
+tl.to("#p2", {backgroundColor:"#e2e8f0", scaleY:1.06, duration:0.15, yoyo:true, repeat:1}, 44.310);
+tl.fromTo("#gb", {opacity:0, scale:0.3, rotation:-120}, {opacity:1, scale:1, rotation:0, duration:0.5, ease:"back.out(2)"}, 45.010);
+tl.fromTo("#gbp", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 45.360);
+tl.to("#gb", {rotation:360, duration:5, ease:"none"}, 45.860);
+tl.fromTo("#uefa", {opacity:0, x:0, y:60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 45.640);
+tl.set("#yr-d0", {y:-144}, 0);
+tl.set("#yr-d1", {y:0}, 0);
+tl.set("#yr-d2", {y:-72}, 0);
+tl.set("#yr-d3", {y:0}, 0);
+tl.to("#yr-d0", {y:-864, duration:0.50, ease:"power3.out"}, 45.840);
+tl.to("#yr-d1", {y:-720, duration:0.50, ease:"power3.out"}, 45.900);
+tl.to("#yr-d2", {y:-792, duration:0.50, ease:"power3.out"}, 45.960);
+tl.to("#yr-d3", {y:-864, duration:0.50, ease:"power3.out"}, 46.020);
+tl.to("#ini3", {y:-20, duration:0.2, yoyo:true, repeat:1}, 47.270); wave("ini3", 46.870, 49.100);
+tl.to("#uefa", {scale:1.04, duration:0.15, yoyo:true, repeat:1}, 48.090);
+tl.to("#wd", {x:-1090.0, y:-3705.0, scale:1.0, duration:0.75, ease:"power3.inOut"}, 48.400);
+tl.to("#grid", {backgroundPosition:"-272px -926px", duration:0.75, ease:"power3.inOut"}, 48.400);
+tl.to("#wd", {filter:"blur(5px)", duration:0.30, ease:"power1.in"}, 48.400);
+tl.to("#wd", {filter:"blur(0px)", duration:0.34, ease:"power1.out"}, 48.775);
+tl.to("#road", {strokeDashoffset:1560.0, duration:0.75, ease:"power2.inOut"}, 48.400);
+tl.to("#mile2", {opacity:0, duration:0.3}, 48.900);
+tl.fromTo("#esp", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 49.160);
+tl.fromTo("#rival", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 50.790);
+tl.fromTo("#stand", {opacity:0}, {opacity:1, duration:0.4}, 48.700);
+tl.to(".fan", {y:-18, duration:0.18, yoyo:true, repeat:30, stagger:{each:0.02, from:"random"}}, 51.520);
+tl.to(".fan", {scaleY:1.35, transformOrigin:"50% 100%", duration:0.3, stagger:{each:0.01, from:"center"}}, 52.250);
+tl.fromTo("#pie", {opacity:0, scale:2.6, rotation:-20}, {opacity:1, scale:1, rotation:-6, duration:0.32, ease:"power4.in"}, 52.250);
+tl.to("#wd", {x:-30.0, y:-3705.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 52.338);
+tl.to("#grid", {backgroundPosition:"-8px -926px", duration:0.7, ease:"power3.inOut"}, 52.338);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 52.338);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 52.688);
+tl.to("#road", {strokeDashoffset:500.0, duration:0.70, ease:"power2.inOut"}, 52.338);
+tl.fromTo("#cbox", {opacity:0, x:0, y:80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 52.538);
+typeOn("#ctt .kc", 53.770, 54.880);
+tl.fromTo("#cur", {opacity:0, x:200, y:200}, {opacity:1, x:0, y:0, duration:0.4}, 54.680);
+tl.to("#cur", {scale:0.85, duration:0.08, yoyo:true, repeat:1}, 55.510); tl.to("#pub", {scale:0.9, backgroundColor:"#166534", duration:0.1, yoyo:true, repeat:1}, 55.510);
+tl.to(".mile", {opacity:1, duration:0.4}, 56.100);
+tl.to("#wd", {x:307.3, y:368.8, scale:0.2115, duration:0.7, ease:"power3.inOut"}, 56.000);
+tl.to("#grid", {backgroundPosition:"77px 92px", duration:0.7, ease:"power3.inOut"}, 56.000);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 56.000);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 56.350);
+tl.fromTo(".pt:nth-child(1)", {y:0, x:0}, {y:-120, x:-40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(2)", {y:0, x:0}, {y:-150, x:0, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(3)", {y:0, x:0}, {y:-180, x:40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(4)", {y:0, x:0}, {y:-210, x:-40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(5)", {y:0, x:0}, {y:-240, x:0, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(6)", {y:0, x:0}, {y:-120, x:40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(7)", {y:0, x:0}, {y:-150, x:-40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(8)", {y:0, x:0}, {y:-180, x:0, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(9)", {y:0, x:0}, {y:-210, x:40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(10)", {y:0, x:0}, {y:-240, x:-40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(11)", {y:0, x:0}, {y:-120, x:0, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(12)", {y:0, x:0}, {y:-150, x:40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(13)", {y:0, x:0}, {y:-180, x:-40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(14)", {y:0, x:0}, {y:-210, x:0, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(15)", {y:0, x:0}, {y:-240, x:40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(16)", {y:0, x:0}, {y:-120, x:-40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(17)", {y:0, x:0}, {y:-150, x:0, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(18)", {y:0, x:0}, {y:-180, x:40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(19)", {y:0, x:0}, {y:-210, x:-40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(20)", {y:0, x:0}, {y:-240, x:0, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(21)", {y:0, x:0}, {y:-120, x:40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(22)", {y:0, x:0}, {y:-150, x:-40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(23)", {y:0, x:0}, {y:-180, x:0, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(24)", {y:0, x:0}, {y:-210, x:40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(25)", {y:0, x:0}, {y:-240, x:-40, duration:57.08, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(26)", {y:0, x:0}, {y:-120, x:0, duration:57.08, ease:"none"}, 0);
+tl.fromTo("#glow", {opacity:0.75}, {opacity:1, duration:2.5, ease:"sine.inOut", yoyo:true, repeat:22}, 0);
 window.__timelines["world"] = tl;
 </script>
 </template>

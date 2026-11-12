@@ -427,10 +427,10 @@ window.__timelines["world"] = tl;
 
 # ================================================================= SUBTÍTULOS
 FIX = {"Ruedel": "Rue del", "guión": "guion", "que": None}
-KEY_GOOD = {"gol", "campeona", "mundo", "aplaude", "comentarios", "nosotros"}
-KEY_BAD = {"muerto", "hundido", "infarto", "lesiones", "depresion", "amarilla"}
-KEY_ACC = {"iniesta", "dani", "jarque", "uno", "dos", "tres", "2009", "26", "espanyol", "116", "2010", "holanda", "prorroga",
-           "puyol", "navas", "torres", "cesc", "camiseta", "amigo", "bajon", "barca", "libro", "seleccion", "minuto"}
+KEY_GOOD = {"gol", "campeona", "mundo", "bien", "aplaudido", "comentarios", "nosotros", "oro", "europa", "segundo"}
+KEY_BAD = {"prorroga", "penaltis"}
+KEY_ACC = {"iniesta", "dani", "jarque", "2010", "2012", "26", "espanyol", "holanda", "mundial", "torres", "cesc", "andres",
+           "dispara", "camacho", "vida", "camiseta", "amigo", "libro", "rival", "controla", "caer"}
 
 
 def caption_groups():

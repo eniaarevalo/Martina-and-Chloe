@@ -168,11 +168,13 @@ def food(fid, name, x, y, size, color, z=7, fill=None):
 
 
 # ================================================================= MUNDO
+MILES = [("Johannesburgo", 0, 1630), ("Agosto 2009", 1, 570), ("2010 · 2012", 2, 1630), ("Cornellà", 3, 1630)]
+
+
 def world():
     for r in range(4):
         for c in (0, 1):
-            pitch = (r, c) in ((2, 0),)
-            cls = "room pitchroom" if pitch else "room"
+            cls = "room pitchroom" if (r, c) == (0, 1) else "room"
             add(f'<div class="{cls}" data-layout-ignore style="{css_box(COLX[c] + 10, ROWS[r] + 120, CW - 20, CH - 150, 0)}"></div>')
     d = "M " + " L ".join(f"{x} {y}" for x, y in PTS)
     add(f'''<svg id="roadsvg" data-layout-ignore style="{css_box(0, 0, 2200, 5300, 1)}overflow:visible" viewBox="0 0 2200 5300">
@@ -182,243 +184,313 @@ def world():
       <path d="{d}" stroke="rgba(255,255,255,0.18)" stroke-width="5" fill="none" stroke-dasharray="26 22" stroke-linejoin="round"/>
       <path id="road" d="{d}" stroke="url(#rb)" stroke-width="16" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>''')
     js(f'tl.set("#road", {{strokeDasharray:{TOTAL:.1f}, strokeDashoffset:{TOTAL:.1f}}}, 0);')
-    for lab, r, x in [("Agosto 2009", 0, 1630), ("Temporada 09-10", 1, 570), ("Johannesburgo", 2, 1630), ("Cornellà", 3, 570)]:
+    for lab, r, x in MILES:
         add(f'<div id="mile{r}" class="mile" data-layout-ignore style="{css_box(x - 240, ROAD[r] + 34, 480, 70, 2)}">{lab}</div>')
+
+
+def hide_mile(r, t):
+    js(f'tl.to("#mile{r}", {{opacity:0, duration:0.3}}, {t:.3f});')
 
 
 def scoreboard(sid, x, y, w=840, left="ESP", right="NED", z=7, minute=""):
     sc, sh = roller(f"{sid}-g", "0", 110, "#fff")
     add(f'''<div id="{sid}" class="score" style="{css_box(x, y, w, 190, z)}">
-      <span class="team">{left}</span>{sc}<span class="dash">-</span><span class="goal0">0</span><span class="team">{right}</span>
+      <span class="team">{left}</span>{sc}<span class="dash">-</span><span id="{sid}-r" class="goal0">0</span><span class="team">{right}</span>
       <span id="{sid}-min" class="minute">{minute}</span></div>''')
     return sh
 
 
-# ================================================================= GANCHO
+def ball_svg(size):
+    return icon("volleyball", size, INK, 2.2).replace("<svg", "<svg fill=\"#fff\"")
+
+
+# ================================================================= GANCHO: la final
 def scene_hook():
     fx, fy, fw, fh = F(0, 0)
-    fl = floor(0)
-    add(f'''<div id="goal0" style="{css_box(fx + 120, fy + 40, 720, 420, 4)}" class="goalframe"><div id="net0" class="net"></div></div>''')
-    add(f'<div id="ball0" class="ball" style="{css_box(fx + 430, fy + 700, 100, 100, 8)}">{icon("volleyball", 96, INK, 2.2).replace("<svg", "<svg fill=\"#fff\"")}</div>')
-    sh = scoreboard("sb0", fx + 60, fy + 480)
-    add(f'<div id="tee0" class="tee" style="{css_box(fx + 530, fy + 680, 320, 250, 6)}"><span>Dani Jarque<br>siempre con<br>nosotros</span></div>')
-    add(character("ini0", "ini", fx + 300, fl, 1.15, z=6))
-    add(f'<div id="mood" class="pill" style="{css_box(fx + 520, fy + 980, None, None, 8)}background:{BAD};color:#fff;opacity:0">{icon("cloud-rain", 50, "#fff", 2.6)} HUNDIDO</div>')
-    cam(0, (fx + 80, fy + 20, 800, 820), whoosh=False)
-    js(f'tl.fromTo("#ball0", {{x:0, y:0, scale:1.6}}, {{x:0, y:-520, scale:0.7, duration:0.35, ease:"power3.in"}}, 0);')
-    js('tl.fromTo("#net0", {scaleY:1}, {scaleY:0.82, transformOrigin:"50% 0%", duration:0.12, yoyo:true, repeat:3}, 0.33);')
-    sfx(0.0, "whoosh", 0.4)
-    sfx(0.34, "golpe", 0.5)
-    shake(0.35, 18)
-    js(f'tl.set("#ball0", {{opacity:0}}, 1.2);')
-    roll_set("sb0-g", "0", sh)
-    js(f'tl.to("#sb0-g-d0", {{y:{-(10 + 1) * sh}, duration:0.4, ease:"back.out(2)"}}, 0.45);')
-    t_esp, t_ded, t_ami, t_mue = P("espana"), P("dedico"), P("amigo"), P("muerto")
-    js(f'tl.fromTo("#tee0", {{opacity:0, y:40, rotation:-6}}, {{opacity:1, y:0, rotation:3, duration:0.4, ease:"back.out(2)"}}, {t_ded:.3f});')
-    sfx(t_ded, "pop2", 0.3)
-    js(f'tl.to("#tee0", {{rotation:-2, duration:0.4}}, {t_mue:.3f});')
-    t_y, t_mar, t_hun = P("y"), P("marco"), P("hundido")
-    life("ini0", 0, G.DUR, 1)
-    js(f'tl.fromTo("#ini0", {{opacity:0, x:-200}}, {{opacity:1, x:0, duration:0.5}}, {t_y:.3f}); walk("ini0", {t_y:.3f}, {t_y + 0.5:.3f}, 0.13);')
-    js(f'tl.to(Q("ini0","head"), {{rotation:18, svgOrigin:PIV.head, duration:0.5}}, {t_hun:.3f}); tl.to(Q("ini0","eyes"), {{scaleY:0.3, svgOrigin:PIV.eyes, duration:0.3}}, {t_hun:.3f});')
-    pop("#mood", t_hun, sound="pop2")
-
-
-# ================================================================= 1 · EL AMIGO
-def scene_amigo():
-    fx, fy, fw, fh = F(0, 1)
-    fl = floor(0)
-    header("h1", fx, fy, "1", "EL AMIGO", color="#2563eb", txt="#fff")
-    cal, ch = roller("cal9", "0000", 70, "#fff")
-    card("dani", fx, fy + 170, fw, 330, f'''
-      <div class="num21">21</div>
-      <div style="position:absolute;left:250px;top:40px;font:900 76px {FONT};color:{INK}">DANI JARQUE</div>
-      <div id="capt" class="pill" style="position:absolute;left:250px;top:140px;background:{ACC};color:{INK};opacity:0">CAPITÁN · ESPANYOL</div>
-      <div id="age" style="position:absolute;left:250px;top:230px;font:800 54px {FONT};color:#555;opacity:0">26 años</div>
-      <div id="hrt" style="position:absolute;right:40px;top:150px;opacity:0">{icon("heart-crack", 130, BAD, 2.4)}</div>''')
-    add(f'<div id="cal" class="cnt" style="{css_box(fx + 260, fy + 530, 440, 120, 8)}background:{INK}"><span style="font:900 56px {FONT};color:#fff;margin-right:16px">AGO</span>{cal}</div>')
-    add(character("kid1", "jar", fx + 300, fl, 1.0, z=6))
-    add(character("kid2", "ini", fx + 640, fl, 1.0, z=6))
-    add(f'<div id="sel" class="pill" style="{css_box(fx + 280, fy + 680, None, None, 8)}background:#c8102e;color:#fff;opacity:0">SELECCIÓN · INFERIORES</div>')
-    t_uno, t_ami2, t_ago, t_09, t_dan, t_cap, t_esp, t_inf, t_26 = (P("uno"), P("amigo", 2), P("agosto"), P("2009"), P("dani"),
-                                                                   P("capitan"), P("espanyol"), P("infarto"), P("26"))
-    travel(t_uno, F(0, 1), 0, 1630, dur=0.85)
-    header_in("h1", t_uno, t_ami2)
-    pop("#cal", t_ago, sound="pop2")
-    roll_set("cal9", "0000", ch)
-    roll_to("cal9", "2009", ch, t_09, dur=0.6)
-    slide_in("#dani", t_dan, dy=-60, sound="pop")
-    pop("#capt", t_cap, sound=None)
-    pop("#hrt", t_inf, sound="golpe", vol=0.35)
-    js(f'tl.to("#hrt", {{opacity:0.35, duration:0.6}}, {t_inf + 0.8:.3f});')
-    js(f'tl.fromTo("#age", {{opacity:0, x:-20}}, {{opacity:1, x:0, duration:0.3}}, {t_26:.3f});')
-    t_era, t_ini, t_cat, t_sel = P("era"), P("iniesta"), P("categorias"), P("seleccion")
-    for k, cid in enumerate(("kid1", "kid2")):
-        life(cid, 0, G.DUR, 10 + k)
-        js(f'tl.fromTo("#{cid}", {{opacity:0, y:40}}, {{opacity:1, y:0, duration:0.4}}, {t_era + k * 0.4:.3f});')
-    js(f'tl.to(Q("kid1","armR"), {{rotation:-150, svgOrigin:PIV.armR, duration:0.25}}, {t_cat:.3f}); tl.to(Q("kid2","armL"), {{rotation:150, svgOrigin:PIV.armL, duration:0.25}}, {t_cat:.3f});')
-    js(f'jump("kid1", {t_cat + 0.25:.3f}, 40); jump("kid2", {t_cat + 0.3:.3f}, 40);')
-    sfx(t_cat + 0.25, "click", 0.4)
-    pop("#sel", t_sel, sound="pop2")
-    cam(E("seleccion") + 0.05, ROW(0), dur=0.4)
-
-
-# ================================================================= 2 · EL BAJÓN
-def scene_bajon():
-    fx, fy, fw, fh = F(1, 1)
-    fl = floor(1)
-    header("h2", fx, fy, "2", "EL BAJÓN", color="#64748b", txt="#fff")
-    for i in range(4):
-        add(f'''<div id="les{i}" class="notif" style="{css_box(fx + 470, fy + 180 + i * 125, 480, 110, 8)}">
-          <div class="nicon" style="background:{BAD}">{icon("bandage", 54, "#fff", 2.6)}</div><span>LESIÓN {i + 1}</span></div>''')
-    add(character("ini1", "ini", fx + 230, fl, 1.15, z=6))
-    add(f'<div id="cloud" style="{css_box(fx + 70, fy + 300, 320, 220, 9)}">{icon("cloud-rain", 300, "#94a3b8", 2.0).replace("<svg", "<svg fill=\"#475569\"")}</div>')
-    add(f'<div id="dep" class="pill" style="{css_box(fx + 60, fy + 560, None, None, 8)}background:#475569;color:#fff;opacity:0">DEPRESIÓN</div>')
-    card("book", fx + 470, fy + 720, 480, 330, f'''
-      <div style="position:absolute;left:30px;top:30px">{icon("book-open", 120, INK, 2.2)}</div>
-      <div style="position:absolute;left:30px;top:170px;font:900 50px {FONT};color:{INK};line-height:1.1">La jugada<br>de mi vida</div>''')
-    t_dos, t_baj, t_tem, t_les, t_mus, t_cay, t_dep = (P("dos"), P("bajon"), P("temporada"), P("lesiones"), P("musculares"),
-                                                     P("cayo"), P("depresion"))
-    travel(t_dos, F(1, 1), 1, 1630, dur=0.85)
-    js(f'tl.to("#mile0", {{opacity:0, duration:0.3}}, {t_dos + 0.3:.3f});')
-    header_in("h2", t_dos, t_baj)
-    life("ini1", 0, G.DUR, 2)
-    for i, t in enumerate([t_les, t_les + 0.3, t_mus, t_mus + 0.3]):
-        js(f'tl.fromTo("#les{i}", {{opacity:0, y:-120}}, {{opacity:1, y:0, duration:0.35, ease:"bounce.out"}}, {t:.3f});')
-        sfx(t, "pop2", 0.25)
-    js(f'tl.to(Q("ini1","head"), {{rotation:18, svgOrigin:PIV.head, duration:0.5}}, {t_cay:.3f}); tl.to("#ini1", {{y:40, duration:0.5}}, {t_cay:.3f});')
-    js(f'tl.fromTo("#cloud", {{opacity:0, scale:0.4}}, {{opacity:1, scale:1, duration:0.6, ease:"power2.out"}}, {t_cay:.3f});')
-    pop("#dep", t_dep, sound="golpe", vol=0.3)
-    t_con, t_lib, t_jug = P("conto"), P("libro"), P("jugada")
-    js(f'tl.to(".notif", {{opacity:0, x:120, duration:0.3, stagger:0.05}}, {t_con - 0.1:.3f});')
-    slide_in("#book", t_lib, dy=80, sound="papel", vol=0.4)
-    js(f'tl.to("#cloud", {{opacity:0.25, y:-60, duration:0.8}}, {t_jug:.3f}); tl.to(Q("ini1","head"), {{rotation:0, svgOrigin:PIV.head, duration:0.5}}, {t_jug:.3f}); tl.to("#ini1", {{y:0, duration:0.5}}, {t_jug:.3f});')
-
-
-# ================================================================= 3 · EL MINUTO 116
-def scene_previa():
-    fx, fy, fw, fh = F(1, 0)
-    header("h3", fx, fy, "3", "MINUTO 116", color=ACC)
-    sh = scoreboard("sb1", fx + 60, fy + 190, minute="116'")
+    add(f'<div id="bm1" class="beam" data-layout-ignore style="{css_box(fx - 60, fy - 60, 420, 1000, 2)}transform:rotate(-24deg)"></div>')
+    add(f'<div id="bm2" class="beam" data-layout-ignore style="{css_box(fx + 600, fy - 60, 420, 1000, 2)}transform:rotate(24deg)"></div>')
     cal, ch = roller("cal10", "0000", 70, "#fff")
-    add(f'<div id="cal2" class="cnt" style="{css_box(fx + 200, fy + 440, 560, 130, 8)}background:{INK}"><span style="font:900 56px {FONT};color:#fff;margin-right:16px">11 JUL</span>{cal}</div>')
-    add(f'<div id="final" class="pill" style="{css_box(fx + 140, fy + 620, None, None, 8)}background:#fff;color:{INK};font-size:58px;opacity:0">{icon("trophy", 56, "#ca8a04", 2.4)} FINAL DEL MUNDIAL</div>')
-    add(f'<div id="pror" class="pill" style="{css_box(fx + 220, fy + 760, None, None, 8)}background:{BAD};color:#fff;font-size:58px;opacity:0">{icon("timer", 56, "#fff", 2.4)} PRÓRROGA</div>')
-    t_tres, t_116, t_jul, t_10, t_fin, t_hol, t_pro = (P("tres"), P("116"), P("julio"), P("2010"), P("final"), P("holanda"), P("prorroga"))
-    travel(t_tres, F(1, 0), 1, 570, dur=0.85)
-    header_in("h3", t_tres, P("minuto"))
-    pop("#sb1", t_116 - 0.1, sound="pop")
-    js(f'tl.fromTo("#sb1-min", {{scale:1.6, color:"#fff"}}, {{scale:1, color:"{INK}", duration:0.4, ease:"back.out(2)"}}, {t_116:.3f});')
-    pop("#cal2", t_jul - 0.3, sound=None)
+    add(f'<div id="cal2" class="cnt" style="{css_box(fx + 200, fy + 30, 560, 130, 8)}background:{INK}"><span style="font:900 56px {FONT};color:#fff;margin-right:16px">11 JUL</span>{cal}</div>')
+    add(f'<div id="final" class="pill" style="{css_box(fx + 150, fy + 195, None, None, 8)}background:#fff;color:{INK};font-size:58px;opacity:0">{icon("trophy", 56, "#ca8a04", 2.4)} FINAL DEL MUNDIAL</div>')
+    scoreboard("sb0", fx + 60, fy + 330)
+    add(f'<div id="pror" class="pill" style="{css_box(fx + 250, fy + 580, None, None, 8)}background:{BAD};color:#fff;font-size:58px;opacity:0">{icon("timer", 56, "#fff", 2.4)} PRÓRROGA</div>')
+    ck, kh = roller("clk", "090", 96, "#fff")
+    add(f'<div id="clk" class="clk" style="{css_box(fx + 250, fy + 730, 460, 160, 8)}opacity:0">{icon("clock", 84, ACC, 2.6)}{ck}<span style="font:900 96px {FONT};color:#fff">\'</span></div>')
+    cam(0, F(0, 0), whoosh=False)
+    # primer segundo: se encienden los focos y cae el marcador
+    js('tl.fromTo(".beam", {opacity:0.25}, {opacity:0.9, duration:0.12, yoyo:true, repeat:3}, 0);')
+    js('tl.fromTo("#sb0", {scale:1.25, opacity:1}, {scale:1, duration:0.45, ease:"back.out(1.8)"}, 0);')
+    shake(0.4, 14)
+    sfx(0.0, "whoosh", 0.4)
+    sfx(0.4, "golpe", 0.5)
+    t_jul, t_10, t_fin, t_mun, t_hol, t_c1, t_c2 = P("julio"), P("2010"), P("final"), P("mundial"), P("holanda"), P("cero"), P("cero", 2)
+    js('tl.fromTo("#cal2", {opacity:0, y:-60}, {opacity:1, y:0, duration:0.35, ease:"back.out(2)"}, 0.1);')
     roll_set("cal10", "0000", ch)
-    roll_to("cal10", "2010", ch, t_10, dur=0.6)
+    roll_to("cal10", "2010", ch, t_10 - 0.2, dur=0.6)
     pop("#final", t_fin, sound="pop2")
-    js(f'tl.to("#sb1", {{scale:1.04, duration:0.15, yoyo:true, repeat:1}}, {t_hol:.3f});')
-    pop("#pror", t_pro, sound="pop2")
+    js(f'tl.to("#sb0", {{scale:1.05, duration:0.15, yoyo:true, repeat:1}}, {t_hol:.3f});')
+    js(f'tl.fromTo("#sb0-g", {{scale:1.3}}, {{scale:1, duration:0.3, ease:"back.out(3)"}}, {t_c1:.3f});')
+    js(f'tl.fromTo("#sb0-r", {{scale:1.3}}, {{scale:1, duration:0.3, ease:"back.out(3)"}}, {t_c2:.3f});')
+    js(f'tl.to(".beam", {{opacity:0.45, duration:0.6}}, {t_mun:.3f});')
+    t_pro, t_cua, t_pen = P("prorroga"), P("cuatro"), P("penaltis")
+    stamp("#pror", t_pro)
+    sfx(t_pro, "golpe", 0.35)
+    pop("#clk", t_pro + 0.25, sound=None)
+    roll_set("clk", "090", kh)
+    roll_to("clk", "116", kh, t_cua, dur=0.7, from_text="090")
+    sfx(t_cua, "tic-rodillo", 0.3)
+    js(f'tl.to("#clk", {{rotation:2, duration:0.08, yoyo:true, repeat:5}}, {t_pen:.3f});')
 
 
+# ================================================================= LA JUGADA
 def scene_jugada():
-    fx, fy, fw, fh = F(2, 0)
+    fx, fy, fw, fh = F(0, 1)
     add(f'''<div id="pitch" data-layout-ignore style="{css_box(fx, fy + 40, fw, 1020, 3)}" class="pitch">
       <div class="pbox"></div><div class="parea"></div><div class="pcircle"></div><div class="pline"></div>
       <div id="net1" class="pgoal"></div></div>''')
-    pts = {"puyol": (300, 900), "navas": (790, 690), "torres": (820, 360), "cesc": (360, 470), "iniesta": (620, 250)}
+    pts = {"torres": (150, 560), "def": (420, 430), "cesc": (330, 700), "iniesta": (640, 290)}
     for name, (x, y) in pts.items():
-        add(f'<div id="tk-{name}" class="token red" style="{css_box(fx + x - 55, fy + y - 55, 110, 110, 6)}"><span class="tlab">{name.capitalize()}</span></div>')
-    for k, (x, y) in enumerate([(200, 600), (560, 640), (700, 470), (480, 330), (300, 300)]):
+        if name == "def":
+            add(f'<div id="tk-def" class="token orange" style="{css_box(fx + x - 45, fy + y - 45, 90, 90, 5)}"></div>')
+        else:
+            add(f'<div id="tk-{name}" class="token red" style="{css_box(fx + x - 55, fy + y - 55, 110, 110, 6)}"><span class="tlab">{name.capitalize()}</span></div>')
+    for (x, y) in [(260, 330), (560, 470), (760, 640), (560, 820)]:
         add(f'<div class="token orange" style="{css_box(fx + x - 45, fy + y - 45, 90, 90, 5)}"></div>')
     add(f'<div class="token keeper" style="{css_box(fx + 435, fy + 70, 90, 90, 5)}"></div>')
-    add(f'<div id="ball1" class="ball" style="{css_box(fx + 300 - 30, fy + 900 - 30, 60, 60, 9)}">{icon("volleyball", 58, INK, 2.2).replace("<svg", "<svg fill=\"#fff\"")}</div>')
-    seq = [("puyol", "navas", P("navas")), ("navas", "torres", P("torres") - 0.3), ("torres", "cesc", P("rebota")),
-           ("cesc", "iniesta", P("cesc", 2) + 0.2)]
-    path_d = []
-    for a, b, t in seq:
-        (x0, y0), (x1, y1) = pts[a], pts[b]
-        path_d.append(f'<path id="seg-{a}" d="M {x0} {y0 + 40} L {x1} {y1 + 40}" stroke="{ACC}" stroke-width="10" fill="none" stroke-dasharray="20 14" opacity="0"/>')
-    path_d.append(f'<path id="seg-shot" d="M {pts["iniesta"][0]} {pts["iniesta"][1] + 40} L 480 120" stroke="#fff" stroke-width="12" fill="none" opacity="0"/>')
+    x0, y0 = pts["torres"]
+    add(f'<div id="ball1" class="ball" style="{css_box(fx + x0 - 30 + 50, fy + y0 - 30, 60, 60, 9)}">{ball_svg(58)}</div>')
+    segs = [("torres", "def"), ("def", "cesc"), ("cesc", "iniesta")]
+    path_d = [f'<path id="seg-{a}" d="M {pts[a][0]} {pts[a][1]} L {pts[b][0]} {pts[b][1]}" stroke="{ACC}" stroke-width="10" fill="none" stroke-dasharray="20 14" opacity="0"/>' for a, b in segs]
+    path_d.append(f'<path id="seg-shot" d="M {pts["iniesta"][0]} {pts["iniesta"][1]} L 480 110" stroke="#fff" stroke-width="12" fill="none" opacity="0"/>')
     add(f'<svg data-layout-ignore style="{css_box(fx, fy, 960, 1080, 5)}overflow:visible" viewBox="0 0 960 1080">{"".join(path_d)}</svg>')
-    sh = scoreboard("sb2", fx + 60, fy - 20, minute="116'", z=10)
-    add(f'<div id="star" style="{css_box(fx + 380, fy + 480, 200, 200, 11)}opacity:0">{icon("star", 200, "#facc15", 2).replace("<svg", "<svg fill=\"#facc15\"")}</div>')
-    add(f'<div id="champ" class="pill" style="{css_box(fx + 70, fy + 700, None, None, 11)}background:#c8102e;color:#fff;font-size:62px;opacity:0">CAMPEONES DEL MUNDO</div>')
-    t_puy = P("puyol")
-    travel(t_puy - 0.3, F(2, 0), 2, 570, dur=0.7)
-    js(f'tl.to("#mile1", {{opacity:0, duration:0.3}}, {t_puy - 0.3 + 0.3:.3f});')
-    js(f'tl.fromTo(".token", {{opacity:0, scale:0.4}}, {{opacity:1, scale:1, duration:0.3, stagger:0.04, ease:"back.out(2)"}}, {t_puy - 0.2:.3f});')
-    pop("#tk-puyol", t_puy, sound="pop2", vol=0.3)
-    js(f'tl.fromTo("#ball1", {{opacity:0}}, {{opacity:1, duration:0.2}}, {t_puy:.3f});')
-    js('tl.set("#sb2", {opacity:0}, 0);')
-    for a, b, t in seq:
-        (x0, y0), (x1, y1) = pts[a], pts[b]
-        js(f'tl.to("#ball1", {{x:{x1 - pts["puyol"][0]}, y:{y1 - pts["puyol"][1]}, duration:0.45, ease:"power1.inOut"}}, {t:.3f});')
-        js(f'tl.to("#seg-{a}", {{opacity:1, duration:0.2}}, {t:.3f});')
-        js(f'tl.to("#tk-{b}", {{scale:1.25, duration:0.15, yoyo:true, repeat:1}}, {t + 0.4:.3f});')
-        sfx(t, "click", 0.3)
-    t_con, t_dis, t_gol = P("controla"), P("dispara"), P("gol", 2)
-    cam(t_con - 0.2, (fx + 260, fy + 40, 560, 600), dur=0.6)
-    js(f'tl.to("#ball1", {{x:{480 - pts["puyol"][0]}, y:{120 - pts["puyol"][1]}, duration:0.7, ease:"power2.in"}}, {t_dis + 0.15:.3f});')
-    js(f'tl.to("#seg-shot", {{opacity:1, duration:0.2}}, {t_dis + 0.15:.3f});')
-    sfx(t_dis + 0.15, "whoosh", 0.4)
+    add(f'<div id="spot" class="ring" data-layout-ignore style="{css_box(fx + pts["iniesta"][0] - 110, fy + pts["iniesta"][1] - 110, 220, 220, 5)}opacity:0"></div>')
+    sh = scoreboard("sb2", fx + 60, fy - 20, minute="116\'", z=10)
+    add(f'<div id="star" style="{css_box(fx + 380, fy + 380, 200, 200, 11)}opacity:0">{icon("star", 200, "#facc15", 2).replace("<svg", "<svg fill=\"#facc15\"")}</div>')
+    add(f'<div id="champ" class="pill" style="{css_box(fx + 70, fy + 600, None, None, 11)}background:#c8102e;color:#fff;font-size:62px;opacity:0">CAMPEONES DEL MUNDO</div>')
+    t_tor = P("torres")
+    travel(t_tor - 0.35, F(0, 1), 0, 1630, dur=0.6)
+    js(f'tl.fromTo(".token", {{opacity:0, scale:0.4}}, {{opacity:1, scale:1, duration:0.3, stagger:0.03, ease:"back.out(2)"}}, {t_tor - 0.3:.3f});')
+    js('tl.set("#sb2", {opacity:0}, 0); tl.set("#ball1", {opacity:0}, 0);')
+    js(f'tl.to("#ball1", {{opacity:1, duration:0.2}}, {t_tor:.3f});')
+    bx0 = x0 + 50
+
+    def move(to, t, dur=0.4):
+        x1, y1 = pts[to]
+        js(f'tl.to("#ball1", {{x:{x1 - bx0}, y:{y1 - y0}, duration:{dur}, ease:"power1.inOut"}}, {t:.3f});')
+    t_cen, t_reb, t_cae, t_ve, t_and, t_are = P("centra"), P("rebota"), P("cae"), P("ve"), P("andres"), P("area")
+    move("def", t_cen)
+    js(f'tl.to("#seg-torres", {{opacity:1, duration:0.2}}, {t_cen:.3f});')
+    sfx(t_cen, "click", 0.3)
+    js(f'tl.to("#tk-def", {{scale:1.3, duration:0.12, yoyo:true, repeat:1}}, {t_reb:.3f});')
+    sfx(t_reb, "golpe", 0.25)
+    move("cesc", t_cae, 0.45)
+    js(f'tl.to("#seg-def", {{opacity:1, duration:0.2}}, {t_cae:.3f});')
+    js(f'tl.to("#tk-cesc", {{scale:1.25, duration:0.15, yoyo:true, repeat:1}}, {t_cae + 0.4:.3f});')
+    js(f'tl.fromTo("#spot", {{opacity:0, scale:1.6}}, {{opacity:1, scale:1, duration:0.35}}, {t_ve:.3f});')
+    js(f'tl.to("#spot", {{scale:1.12, duration:0.3, yoyo:true, repeat:5}}, {t_ve + 0.35:.3f});')
+    sfx(t_ve, "pop2", 0.25)
+    move("iniesta", t_are - 0.1, 0.45)
+    js(f'tl.to("#seg-cesc", {{opacity:1, duration:0.2}}, {t_are - 0.1:.3f});')
+    sfx(t_are - 0.1, "click", 0.3)
+    t_con, t_caer, t_dis, t_gol = P("controla"), P("caer"), P("dispara"), P("gol")
+    cam(t_con - 0.25, (fx + 300, fy + 20, 560, 560), dur=0.5)
+    xi, yi = pts["iniesta"]
+    js(f'tl.to("#ball1", {{x:{xi - bx0 + 30}, y:{yi - y0 + 20}, duration:0.25, ease:"power2.out"}}, {t_con:.3f});')
+    sfx(t_con, "click", 0.25)
+    js(f'tl.to("#ball1", {{scale:1.7, duration:0.25, yoyo:true, repeat:1, ease:"sine.out"}}, {t_caer:.3f});')
+    js(f'tl.to("#ball1", {{x:{480 - bx0}, y:{110 - y0}, duration:0.35, ease:"power3.in"}}, {t_dis + 0.1:.3f});')
+    js(f'tl.to("#seg-shot", {{opacity:1, duration:0.2}}, {t_dis + 0.1:.3f}); tl.to("#spot", {{opacity:0, duration:0.2}}, {t_dis:.3f});')
+    sfx(t_dis + 0.1, "whoosh", 0.45)
     # CLÍMAX
     js(f'tl.fromTo("#net1", {{scaleY:1}}, {{scaleY:1.5, transformOrigin:"50% 100%", duration:0.12, yoyo:true, repeat:3}}, {t_gol - 0.05:.3f});')
     shake(t_gol, 26)
     sfx(t_gol, "golpe-climax", 0.6)
-    cam(t_gol + 0.15, F(2, 0), dur=0.5)
+    cam(t_gol + 0.15, F(0, 1), dur=0.5)
     js(f'tl.to("#sb2", {{opacity:1, duration:0.3}}, {t_gol:.3f});')
     roll_set("sb2-g", "0", sh)
     js(f'tl.to("#sb2-g-d0", {{y:{-(10 + 1) * sh}, duration:0.4, ease:"back.out(2)"}}, {t_gol + 0.1:.3f});')
     t_cam, t_pri = P("campeona"), P("primera")
     js(f'tl.fromTo("#star", {{opacity:0, scale:0.2, rotation:-90}}, {{opacity:1, scale:1, rotation:0, duration:0.5, ease:"back.out(2)"}}, {t_cam:.3f});')
     pop("#champ", t_pri, sound="pop")
-    hearts("hj-", fx + 480, fy + 650, 6, t_cam + 0.2, spread=700, rise=300)
+    hearts("hj-", fx + 480, fy + 560, 6, t_cam + 0.2, spread=700, rise=300)
+    # Camacho, en la tele
+    card("tv", fx + 40, fy + 790, 880, 270, f'''
+      <div id="mic" style="position:absolute;left:40px;top:45px;width:180px;height:180px;border-radius:50%;background:{ACC};display:flex;align-items:center;justify-content:center">{icon("mic", 110, INK, 2.6)}</div>
+      <div style="position:absolute;left:250px;top:14px;font:800 46px {FONT};color:{ACC}">CAMACHO · TV</div>
+      <div id="tvq" class="tvq">{chars("¡INIESTA", "tq")}<br>{chars("DE MI VIDA!", "tq2")}</div>''', bg="#0b1220", extra=f"border:6px solid {ACC};")
+    for k in range(3):
+        add(f'<div id="rg{k}" class="ring" data-layout-ignore style="{css_box(fx + 60, fy + 815, 220, 220, 12)}opacity:0"></div>')
+    t_cmo, t_gri, t_ini, t_vid = P("camacho"), P("grito"), P("iniesta"), P("vida")
+    slide_in("#tv", t_cmo - 0.1, dy=120, sound="whoosh-corto")
+    for k in range(3):
+        js(f'tl.fromTo("#rg{k}", {{opacity:0.9, scale:0.8}}, {{opacity:0, scale:2.2, duration:0.8, repeat:2, immediateRender:false}}, {t_gri + k * 0.27:.3f});')
+    js(f'tl.to("#mic", {{scale:1.12, duration:0.12, yoyo:true, repeat:9}}, {t_gri:.3f});')
+    type_on("#tvq .tq", 8, t_ini, E("iniesta"))
+    type_on("#tvq .tq2", 11, E("iniesta"), E("vida"))
+    shake(t_vid, 10)
+    sfx(t_ini, "golpe", 0.35)
 
 
+# ================================================================= LA CAMISETA
 def scene_camiseta():
+    fx, fy, fw, fh = F(1, 1)
+    fl = floor(1)
+    msg = "Dani Jarque siempre con nosotros"
+    add(f'''<div id="under" class="under" style="{css_box(fx + 180, fy + 30, 600, 600, 4)}">
+      <div id="ut" class="handw">{chars(msg, "hc")}</div></div>''')
+    add(f'''<div id="redsh" class="redsh" style="{css_box(fx + 180, fy + 30, 600, 600, 5)}"><span>6</span><div class="rshl">INIESTA</div></div>''')
+    add(f'<div id="flag" style="{css_box(fx + 760, fy + 760, 200, 300, 5)}opacity:0">{icon("flag", 200, "#facc15", 2.4)}</div>')
+    add(character("ini2", "ini", fx + 280, fl, 1.0, z=6))
+    t_and, t_cor, t_qui, t_ens, t_men, t_dan, t_nos = (P("andres", 2), P("corner"), P("quita"), P("ensena"), P("mensaje"), P("dani"), P("nosotros"))
+    travel(t_and - 0.3, F(1, 1), 1, 1630, dur=0.7)
+    hide_mile(0, t_and + 0.2)
+    life("ini2", 0, G.DUR, 3)
+    js(f'tl.fromTo("#ini2", {{opacity:0, x:-300}}, {{opacity:1, x:0, duration:0.9, ease:"power1.out"}}, {t_and - 0.1:.3f}); walk("ini2", {t_and - 0.1:.3f}, {t_and + 0.8:.3f}, 0.11);')
+    js(f'tl.fromTo("#flag", {{opacity:0, y:40}}, {{opacity:1, y:0, duration:0.35, ease:"back.out(2)"}}, {t_cor:.3f}); tl.to("#flag", {{rotation:6, transformOrigin:"20% 100%", duration:0.4, yoyo:true, repeat:{int((G.DUR - t_cor) / 0.4)}}}, {t_cor + 0.35:.3f});')
+    js(f'tl.fromTo("#redsh, #under", {{opacity:0, scale:0.8}}, {{opacity:1, scale:1, duration:0.35, ease:"back.out(2)"}}, {t_cor:.3f});')
+    sfx(t_cor, "pop2", 0.3)
+    js(f'tl.to("#redsh", {{y:-640, rotation:-8, duration:0.55, ease:"power3.in"}}, {t_qui + 0.1:.3f}); tl.to("#redsh", {{opacity:0, duration:0.2}}, {t_qui + 0.55:.3f});')
+    js(f'tl.to(Q("ini2","armL"), {{rotation:160, svgOrigin:PIV.armL, duration:0.3}}, {t_qui:.3f}); tl.to(Q("ini2","armR"), {{rotation:-160, svgOrigin:PIV.armR, duration:0.3}}, {t_qui:.3f});')
+    js(f'tl.to(Q("ini2","armL"), {{rotation:0, svgOrigin:PIV.armL, duration:0.3}}, {t_ens:.3f});')
+    sfx(t_qui + 0.1, "whoosh-corto", 0.35)
+    js(f'point("ini2", "R", {t_ens:.3f}, {t_nos + 0.6:.3f}, -130);')
+    js(f'tl.fromTo("#under", {{boxShadow:"0 0 0px rgba(250,204,21,0)"}}, {{boxShadow:"0 0 90px rgba(250,204,21,0.55)", duration:0.6}}, {t_men:.3f});')
+    type_on("#ut .hc", len(msg), t_dan, t_nos + 0.4)
+    sfx(t_dan, "papel", 0.3)
+
+
+# ================================================================= DANI
+def scene_dani():
+    fx, fy, fw, fh = F(1, 0)
+    fl = floor(1)
+    card("dani", fx, fy + 30, fw, 330, f'''
+      <div class="num21">21</div>
+      <div style="position:absolute;left:250px;top:40px;font:900 76px {FONT};color:{INK}">DANI JARQUE</div>
+      <div id="capt" class="pill" style="position:absolute;left:250px;top:140px;background:{ACC};color:{INK};opacity:0">CAPITÁN · ESPANYOL</div>
+      <div id="age" style="position:absolute;left:250px;top:230px;font:800 54px {FONT};color:#555;opacity:0">26 años</div>''')
+    add(f'<div id="sel" class="pill" style="{css_box(fx + 40, fy + 420, None, None, 8)}background:#c8102e;color:#fff;opacity:0">SELECCIÓN · INFERIORES</div>')
+    add(character("kid1", "jar", fx + 170, fl, 0.95, z=6))
+    add(character("kid2", "ini", fx + 430, fl, 0.95, z=6))
+    add(f'''<div id="cnd" style="{css_box(fx + 700, fy + 640, 160, 420, 6)}opacity:0">
+      <div id="flm" class="flame" style="position:absolute;left:50px;top:0;width:60px;height:96px"></div>
+      <div class="candle" style="position:absolute;left:20px;top:110px;width:120px;height:300px"></div></div>''')
+    add(f'<div id="y09" class="pill" style="{css_box(fx + 640, fy + 520, None, None, 8)}background:#334155;color:#fff;opacity:0">AGO 2009</div>')
+    t_dan, t_cap, t_esp, t_ami, t_inf, t_ido, t_ant, t_26 = (P("dani", 2), P("capitan"), P("espanyol"), P("amigo"), P("inferiores"),
+                                                           P("ido"), P("antes"), P("26"))
+    travel(t_dan - 0.3, F(1, 0), 1, 570, dur=0.8)
+    slide_in("#dani", t_dan, dy=-60, sound="pop")
+    pop("#capt", t_cap, sound=None)
+    for k, cid in enumerate(("kid1", "kid2")):
+        life(cid, 0, G.DUR, 10 + k)
+        js(f'tl.fromTo("#{cid}", {{opacity:0, y:40}}, {{opacity:1, y:0, duration:0.4}}, {t_ami + k * 0.25:.3f});')
+    js(f'tl.to(Q("kid1","armR"), {{rotation:-150, svgOrigin:PIV.armR, duration:0.25}}, {t_inf:.3f}); tl.to(Q("kid2","armL"), {{rotation:150, svgOrigin:PIV.armL, duration:0.25}}, {t_inf:.3f});')
+    js(f'jump("kid1", {t_inf + 0.25:.3f}, 40); jump("kid2", {t_inf + 0.3:.3f}, 40);')
+    sfx(t_inf + 0.25, "click", 0.4)
+    pop("#sel", t_inf, sound="pop2")
+    js(f'tl.to(Q("kid1","armR"), {{rotation:0, svgOrigin:PIV.armR, duration:0.4}}, {t_ido:.3f}); tl.to(Q("kid2","armL"), {{rotation:0, svgOrigin:PIV.armL, duration:0.4}}, {t_ido:.3f});')
+    js(f'tl.to("#kid1", {{opacity:0.45, duration:1.0}}, {t_ido:.3f});')
+    js(f'tl.fromTo("#cnd", {{opacity:0, y:30}}, {{opacity:1, y:0, duration:0.8, ease:"power2.out"}}, {t_ido:.3f});')
+    js(f'tl.to("#flm", {{scaleY:1.15, scaleX:0.9, transformOrigin:"50% 100%", duration:0.35, yoyo:true, repeat:{int((G.DUR - t_ido) / 0.35)}, ease:"sine.inOut"}}, {t_ido + 0.6:.3f});')
+    js(f'tl.fromTo("#y09", {{opacity:0}}, {{opacity:1, duration:0.6}}, {t_ant:.3f});')
+    js(f'tl.fromTo("#age", {{opacity:0, x:-20}}, {{opacity:1, x:0, duration:0.4}}, {t_26:.3f});')
+
+
+# ================================================================= LA DEPRESIÓN Y EL GOL QUE AYUDÓ
+def scene_luz():
+    fx, fy, fw, fh = F(2, 0)
+    fl = floor(2)
+    add(f'<div id="sun" class="sun" style="{css_box(fx + 620, fy + 60, 260, 260, 3)}opacity:0"></div>')
+    add(character("ini1", "ini", fx + 260, fl, 1.15, z=6))
+    add(f'<div id="cloud" style="{css_box(fx + 90, fy + 230, 340, 240, 9)}opacity:0">{icon("cloud", 320, "#94a3b8", 2.0).replace("<svg", "<svg fill=\"#475569\"")}</div>')
+    add(f'''<div id="dep" class="pill pillx" style="{css_box(fx + 40, fy + 500, 470, 90, 8)}background:#475569;color:#fff;opacity:0">
+      <span id="dep-a">DEPRESIÓN</span><span id="dep-b" style="opacity:0">{icon("sun", 50, "#fff", 2.6)} SE SIENTE BIEN</span></div>''')
+    card("book", fx + 530, fy + 660, 400, 330, f'''
+      <div style="position:absolute;left:30px;top:30px">{icon("book-open", 120, INK, 2.2)}</div>
+      <div style="position:absolute;left:30px;top:170px;font:900 50px {FONT};color:{INK};line-height:1.1">La jugada<br>de mi vida</div>''')
+    add(f'<div id="miniball" class="ball" style="{css_box(fx + 380, fy + 420, 90, 90, 9)}opacity:0">{ball_svg(86)}</div>')
+    t_aq, t_and, t_dep, t_con, t_lib = P("aquel"), P("andres", 3), P("depresion"), P("conto"), P("libro")
+    travel(t_aq - 0.3, F(2, 0), 2, 570, dur=0.8)
+    hide_mile(1, t_aq + 0.2)
+    life("ini1", 0, G.DUR, 2)
+    js(f'tl.fromTo("#cloud", {{opacity:0, scale:0.5}}, {{opacity:0.9, scale:1, duration:0.7, ease:"power2.out"}}, {t_and:.3f});')
+    js(f'tl.to(Q("ini1","head"), {{rotation:16, svgOrigin:PIV.head, duration:0.6}}, {t_and:.3f}); tl.to("#ini1", {{y:30, duration:0.6}}, {t_and:.3f});')
+    js(f'tl.fromTo("#dep", {{opacity:0, y:20}}, {{opacity:1, y:0, duration:0.5}}, {t_dep:.3f});')
+    js(f'tl.to("#cloud", {{y:12, duration:1.1, yoyo:true, repeat:3, ease:"sine.inOut"}}, {t_dep:.3f});')
+    slide_in("#book", t_lib - 0.1, dy=80, sound="papel", vol=0.4)
+    t_mis, t_gol, t_ayu, t_sal, t_osc, t_vol, t_bie = (P("mismo"), P("gol", 2), P("ayudo"), P("salir"), P("oscuro"), P("volver"), P("bien"))
+    js(f'tl.to("#book", {{x:40, opacity:0.0, duration:0.4}}, {t_mis:.3f});')
+    js(f'tl.fromTo("#miniball", {{opacity:0, scale:0.3, y:-200}}, {{opacity:1, scale:1, y:0, duration:0.5, ease:"bounce.out"}}, {t_gol:.3f});')
+    sfx(t_gol, "pop", 0.3)
+    js(f'tl.to("#cloud", {{scale:1.12, duration:0.25, yoyo:true, repeat:1}}, {t_osc:.3f});')
+    js(f'tl.to("#cloud", {{x:-500, opacity:0, duration:0.8, ease:"power2.in"}}, {t_vol:.3f});')
+    sfx(t_vol, "whoosh", 0.3)
+    js(f'tl.fromTo("#sun", {{opacity:0, y:240, scale:0.6}}, {{opacity:1, y:0, scale:1, duration:1.0, ease:"power2.out"}}, {t_sal:.3f});')
+    js(f'tl.to("#sun", {{rotation:360, duration:6, ease:"none"}}, {t_sal + 1.0:.3f});')
+    js(f'tl.to(Q("ini1","head"), {{rotation:0, svgOrigin:PIV.head, duration:0.5}}, {t_vol:.3f}); tl.to("#ini1", {{y:0, duration:0.5}}, {t_vol:.3f});')
+    js(f'tl.to("#miniball", {{y:-60, duration:0.3, yoyo:true, repeat:3, ease:"power1.out"}}, {t_ayu:.3f});')
+    flip("#dep", t_bie, ["#dep-a"], ["#dep-b"], sound="check", bg=GOOD_BG)
+    js(f'jump("ini1", {t_bie + 0.1:.3f}, 50); tl.to(Q("ini1","mouth"), {{scaleX:1.3, svgOrigin:"120 136", duration:0.2}}, {t_bie:.3f});')
+
+
+# ================================================================= PREMIOS
+def scene_premios():
     fx, fy, fw, fh = F(2, 1)
     fl = floor(2)
-    msg = "Dani Jarque siempre con nosotros"
-    add(f'''<div id="under" class="under" style="{css_box(fx + 180, fy + 60, 600, 640, 4)}">
-      <div id="ut" class="handw">{chars(msg, "hc")}</div></div>''')
-    add(f'''<div id="redsh" class="redsh" style="{css_box(fx + 180, fy + 60, 600, 640, 5)}"><span>6</span><div class="rshl">INIESTA</div></div>''')
-    add(f'<div id="yc" class="ycard" style="{css_box(fx + 720, fy + 720, 170, 240, 8)}"></div>')
-    add(character("ini2", "ini", fx + 300, fl, 1.0, z=6))
-    t_ini, t_qui, t_cam, t_deb, t_dan, t_nos = (P("iniesta", 4), P("quita"), P("camiseta"), P("debajo"), P("dani", 2), P("nosotros"))
-    travel(t_ini - 0.2, F(2, 1), 2, 1630, dur=0.7)
-    js(f'tl.fromTo("#redsh, #under", {{opacity:0}}, {{opacity:1, duration:0.3}}, {t_ini:.3f});')
-    js(f'tl.to("#redsh", {{y:-700, rotation:-8, duration:0.6, ease:"power3.in"}}, {t_qui + 0.1:.3f}); tl.to("#redsh", {{opacity:0, duration:0.2}}, {t_qui + 0.6:.3f});')
-    sfx(t_qui + 0.1, "whoosh-corto", 0.35)
-    type_on("#ut .hc", len(msg), t_dan, t_nos + 0.4)
-    life("ini2", 0, G.DUR, 3)
-    js(f'tl.fromTo("#ini2", {{opacity:0}}, {{opacity:1, duration:0.3}}, {t_deb:.3f}); point("ini2", "R", {t_deb:.3f}, {t_nos + 0.5:.3f}, -130);')
-    t_tar, t_ama, t_imp = P("tarjeta"), P("amarilla"), P("importo")
-    js(f'tl.fromTo("#yc", {{opacity:0, rotation:-90, scale:0.4}}, {{opacity:1, rotation:12, scale:1, duration:0.4, ease:"back.out(2)"}}, {t_tar:.3f});')
-    sfx(t_tar, "pop", 0.35)
-    js(f'tl.to(Q("ini2","mouth"), {{scaleX:1.3, svgOrigin:"120 136", duration:0.2}}, {t_imp:.3f}); jump("ini2", {t_imp:.3f}, 40);')
-    cam(E("importo") + 0.05, ROW(2), dur=0.4)
+    add(f'<div id="gb" class="goldball" style="{css_box(fx + 60, fy + 40, 220, 220, 6)}opacity:0"></div>')
+    add(f'<div id="gbp" class="pill" style="{css_box(fx + 310, fy + 100, None, None, 7)}background:#facc15;color:{INK};font-size:60px;opacity:0">BALÓN DE ORO 2010</div>')
+    yr, yh = roller("yr", "2010", 64, INK)
+    card("uefa", fx + 60, fy + 290, 840, 170, f'''
+      <div style="position:absolute;left:30px;top:25px">{icon("trophy", 120, "#ca8a04", 2.4)}</div>
+      <div style="position:absolute;left:180px;top:26px;font:900 48px {FONT};color:{INK};white-space:nowrap">MEJOR JUGADOR</div>
+      <div style="position:absolute;left:180px;top:90px;font:900 48px {FONT};color:#2563eb;white-space:nowrap">DE EUROPA</div>
+      <div id="yrbox" style="position:absolute;right:30px;top:40px;padding:6px 18px;border-radius:18px;background:#f1f5f9;display:flex">{yr}</div>''')
+    pods = [("p2", "2", fx + 60, 260, "#cbd5e1"), ("p1", "1", fx + 350, 340, "#facc15"), ("p3", "3", fx + 640, 200, "#d97706")]
+    for pid, n, x, h, col in pods:
+        add(f'<div id="{pid}" class="pod" style="{css_box(x, fl - h, 260, h, 5)}background:{col};transform-origin:50% 100%">{n}</div>')
+    add(character("ini3", "ini", fx + 190, fl - 260, 0.72, z=6))
+    t_ese, t_que, t_seg, t_bal, t_oro, t_12, t_ele, t_mej, t_eur = (P("ese", 3), P("quedo"), P("segundo"), P("balon", 2), P("oro"),
+                                                                  P("2012"), P("elegido"), P("mejor"), P("europa"))
+    travel(t_ese - 0.3, F(2, 1), 2, 1630, dur=0.75)
+    js(f'tl.fromTo(".pod", {{scaleY:0}}, {{scaleY:1, duration:0.4, stagger:0.08, ease:"back.out(1.6)"}}, {t_ese:.3f});')
+    sfx(t_ese + 0.1, "madera", 0.3)
+    life("ini3", 0, G.DUR, 4)
+    js(f'tl.fromTo("#ini3", {{opacity:0, y:-200}}, {{opacity:1, y:0, duration:0.45, ease:"bounce.out"}}, {t_seg - 0.1:.3f});')
+    js(f'tl.to("#p2", {{backgroundColor:"#e2e8f0", scaleY:1.06, duration:0.15, yoyo:true, repeat:1}}, {t_seg:.3f});')
+    sfx(t_seg, "pop", 0.3)
+    js(f'tl.fromTo("#gb", {{opacity:0, scale:0.3, rotation:-120}}, {{opacity:1, scale:1, rotation:0, duration:0.5, ease:"back.out(2)"}}, {t_bal:.3f});')
+    pop("#gbp", t_oro, sound="pop2")
+    js(f'tl.to("#gb", {{rotation:360, duration:5, ease:"none"}}, {t_oro + 0.5:.3f});')
+    slide_in("#uefa", t_12 - 0.2, dy=60, sound="pop")
+    roll_set("yr", "2010", yh)
+    roll_to("yr", "2012", yh, t_12, dur=0.5, from_text="2010")
+    js(f'tl.to("#ini3", {{y:-20, duration:0.2, yoyo:true, repeat:1}}, {t_mej:.3f}); wave("ini3", {t_ele:.3f}, {E("europa") + 0.4:.3f});')
+    js(f'tl.to("#uefa", {{scale:1.04, duration:0.15, yoyo:true, repeat:1}}, {t_eur:.3f});')
+    sfx(t_eur, "check", 0.35)
 
 
+# ================================================================= LA GRADA DEL ESPANYOL
 def scene_grada():
     fx, fy, fw, fh = F(3, 1)
     fans = []
     for r in range(4):
         for c in range(9):
-            fans.append(f'<div class="fan" style="left:{30 + c * 100 + (r % 2) * 40}px;top:{40 + r * 130}px;background:{["#2563eb", "#f8fafc"][(r + c) % 2]}"></div>')
+            fans.append(f'<div class="fan" style="left:{30 + c * 100 + (r % 2) * 40}px;top:{60 + r * 130}px;background:{["#2563eb", "#f8fafc"][(r + c) % 2]}"></div>')
     add(f'<div id="stand" class="stand" style="{css_box(fx, fy + 260, fw, 620, 4)}">{"".join(fans)}</div>')
     card("esp", fx + 60, fy + 20, 840, 210, f'''
       <div style="position:absolute;left:36px;top:30px;font:900 72px {FONT};color:#2563eb">AFICIÓN ESPANYOL</div>
       <div id="rival" class="pill" style="position:absolute;left:36px;top:124px;background:{INK};color:#fff;font-size:46px;opacity:0">el gran rival del Barça</div>''')
-    ap, ah = roller("clap", "0000", 90, "#fff")
-    add(f'<div id="cl" class="cnt" style="{css_box(fx + 200, fy + 920, 560, 140, 8)}background:{GOOD_BG}">{icon("hand", 80, "#fff", 2.4)}{ap}</div>')
-    t_des, t_afi, t_esp, t_riv, t_bar, t_apl, t_est = (P("desde", 2), P("aficion"), P("espanyol", 2), P("rival"), P("barca"), P("aplaude"), P("estadio"))
-    travel(t_des - 0.2, F(3, 1), 3, 1630, dur=0.75)
-    js(f'tl.to("#mile2", {{opacity:0, duration:0.3}}, {t_des - 0.2 + 0.3:.3f});')
+    add(f'<div id="pie" class="pill" style="{css_box(fx + 250, fy + 930, None, None, 8)}background:{GOOD_BG};color:#fff;font-size:62px;opacity:0">{icon("hand", 62, "#fff", 2.6)} EN PIE</div>')
+    t_has, t_afi, t_riv, t_apl, t_pie = P("hasta"), P("aficion"), P("rival"), P("aplaudido"), P("pie")
+    travel(t_has - 0.3, F(3, 1), 3, 1630, dur=0.75)
+    hide_mile(2, t_has + 0.2)
     slide_in("#esp", t_afi, dy=-60, sound="pop")
     pop("#rival", t_riv, sound=None)
-    js(f'tl.fromTo("#stand", {{opacity:0}}, {{opacity:1, duration:0.4}}, {t_afi:.3f});')
-    js(f'tl.to(".fan", {{y:-26, duration:0.18, yoyo:true, repeat:{int((G.DUR - t_apl) / 0.18)}, stagger:{{each:0.02, from:"random"}}}}, {t_apl:.3f});')
+    js(f'tl.fromTo("#stand", {{opacity:0}}, {{opacity:1, duration:0.4}}, {t_has:.3f});')
+    js(f'tl.to(".fan", {{y:-18, duration:0.18, yoyo:true, repeat:{int((G.DUR - t_apl) / 0.18)}, stagger:{{each:0.02, from:"random"}}}}, {t_apl:.3f});')
     sfx(t_apl, "pop2", 0.3)
-    pop("#cl", t_apl, sound=None)
-    roll_set("clap", "0000", ah)
-    roll_to("clap", "9999", ah, t_apl + 0.1, dur=1.4, spins=2)
+    js(f'tl.to(".fan", {{scaleY:1.35, transformOrigin:"50% 100%", duration:0.3, stagger:{{each:0.01, from:"center"}}}}, {t_pie:.3f});')
+    stamp("#pie", t_pie, rot=-6)
+    sfx(t_pie, "golpe", 0.3)
 
 
 def scene_final():
@@ -432,7 +504,7 @@ def scene_final():
       <div id="pub" class="pubb">Publicar</div>''')
     add(f'<div id="cur" data-layout-ignore style="{css_box(fx + 760, fy + 640, 130, 130, 12)}opacity:0">'
         f'{icon("mouse-pointer-2", 120, "#fff", 2.2).replace("<svg", "<svg fill=\"#111\"")}</div>')
-    t_don, t_mar, t_cue, t_com = P("donde"), P("marco", 2), P("cuentamelo"), P("comentarios")
+    t_don, t_mar, t_cue, t_com = P("donde"), P("marco"), P("cuentamelo"), P("comentarios")
     travel(t_don - 0.2, F(3, 0), 3, 570, dur=0.7)
     slide_in("#cbox", t_don, dy=80)
     type_on("#ctt .kc", len(cta), t_mar, t_cue + 0.2)
@@ -484,16 +556,28 @@ CSS = """
 .fan {{ position:absolute; width:70px; height:110px; border-radius:35px 35px 10px 10px; }}
 .pubb {{ position:absolute; right:40px; bottom:40px; padding:16px 50px; border-radius:999px; background:{GOOD_BG}; color:#fff; font:900 70px {FONT}; }}
 .hc, .kc {{ opacity:0; }}
-"""
 
+.beam {{ background:linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0)); clip-path:polygon(45% 0,55% 0,100% 100%,0 100%); filter:blur(6px); }}
+.clk {{ border-radius:28px; border:5px solid #fff; background:#0b1220; display:flex; align-items:center; justify-content:center; gap:14px; }}
+.tv {{ border-radius:34px; background:#0b1220; border:6px solid {ACC}; box-shadow:0 24px 60px rgba(0,0,0,0.6); }}
+.tvq {{ position:absolute; left:250px; top:70px; font:900 76px {FONT}; color:#fff; line-height:1.05; white-space:nowrap; }}
+.ring {{ border-radius:50%; border:8px solid {ACC}; }}
+.candle {{ border-radius:18px 18px 10px 10px; background:linear-gradient(90deg,#f1f5f9,#e2e8f0); }}
+.flame {{ border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; background:radial-gradient(circle at 50% 70%, #fff7c2, #facc15 45%, #f97316 80%); box-shadow:0 0 60px 20px rgba(250,204,21,0.35); }}
+.pod {{ border-radius:20px 20px 0 0; display:flex; justify-content:center; padding-top:20px; font:900 110px {FONT}; color:rgba(15,23,42,0.55); }}
+.goldball {{ border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff3b0, #facc15 40%, #b45309 100%); box-shadow:0 0 70px 10px rgba(250,204,21,0.35); }}
+.sun {{ border-radius:50%; background:radial-gradient(circle, #fde68a, #facc15 60%, #f59e0b); box-shadow:0 0 120px 40px rgba(250,204,21,0.35); }}
+.pillx {{ position:relative; }}
+.pillx span {{ position:absolute; left:0; right:0; top:0; bottom:0; display:flex; align-items:center; justify-content:center; gap:14px; }}
+"""
 
 def build():
     world()
     scene_hook()
-    scene_amigo()
-    scene_bajon()
-    scene_previa()
     scene_jugada()
     scene_camiseta()
+    scene_dani()
+    scene_luz()
+    scene_premios()
     scene_grada()
     scene_final()
