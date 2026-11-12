@@ -122,11 +122,12 @@ def icon(name, size, color="#111", sw=2.4):
 
 
 def chars(text, cls="ch"):
-    """Texto partido en letras para escribirlo letra a letra."""
-    out = []
-    for c in text:
-        out.append(f'<span class="{cls}">{"&nbsp;" if c == " " else c}</span>')
-    return "".join(out)
+    """Texto partido en letras para escribirlo letra a letra (las palabras siguen saltando de línea)."""
+    words = []
+    for w in text.split(" "):
+        words.append('<span style="display:inline-block;white-space:nowrap">' +
+                     "".join(f'<span class="{cls}">{c}</span>' for c in w) + "</span>")
+    return " ".join(words)
 
 
 def type_on(sel, n_chars, t0, t1):
@@ -152,8 +153,8 @@ def roller(rid, text, size, color=INK, weight=900):
         if c.isdigit():
             strip = "".join(f'<span style="display:block;height:{h}px;line-height:{h}px">{d % 10}</span>'
                             for d in range(10 * ROLL_N))
-            parts.append(f'<span class="dg" style="display:inline-block;height:{h}px;overflow:hidden;vertical-align:top">'
-                         f'<span id="{rid}-d{di}" class="strip" style="display:block">{strip}</span></span>')
+            parts.append(f'<span class="dg" data-layout-ignore style="display:inline-block;height:{h}px;overflow:hidden;vertical-align:top">'
+                         f'<span id="{rid}-d{di}" class="strip" data-layout-ignore style="display:block">{strip}</span></span>')
             di += 1
         else:
             parts.append(f'<span style="display:inline-block;height:{h}px;line-height:{h}px;vertical-align:top">{c}</span>')
@@ -355,7 +356,7 @@ def scene_idea():
     card("rtve", fx + 500, fy + 210, 460, 330, f'''
       <div style="position:absolute;left:0;right:0;top:40px;text-align:center">{icon("tv", 110, INK, 2.4)}</div>
       <div style="position:absolute;left:0;right:0;top:170px;text-align:center;font:900 96px {FONT};color:{INK}">RTVE</div>
-      <div id="st-si" class="stamp" style="position:absolute;right:-30px;top:-50px;color:{GOOD};border-color:{GOOD}">SÍ ✓</div>''')
+      <div id="st-si" class="stamp" style="position:absolute;right:-30px;top:-50px;color:#15803d;border-color:#15803d">SÍ ✓</div>''')
     # mesa con cajón
     add(f'''<div id="desk" data-layout-ignore style="{css_box(fx + 20, fy + 640, 620, 420, 4)}">
       <div class="desktop"></div><div class="deskbody"></div>
@@ -420,11 +421,11 @@ def scene_idea():
     cam(t_ac, frame("1", 1), dur=0.7)
     js(f'tl.to("#drawer", {{y:70, duration:0.18, ease:"power2.out"}}, {t_ac:.3f});')
     js(f'tl.set("#folder", {{opacity:1}}, {t_ac + 0.05:.3f});')
-    js(f'tl.to("#folder", {{x:{gx - fx + 560}, y:{-170}, scale:0.42, rotation:-8, duration:0.7, ease:"power3.inOut"}}, {t_ac + 0.05:.3f});')
+    js(f'tl.to("#folder", {{x:{gx - fx + 660}, y:{-335}, scale:0.42, rotation:-8, duration:0.7, ease:"power3.inOut"}}, {t_ac + 0.05:.3f});')
     js(f'tl.to("#drawer", {{y:0, duration:0.2}}, {t_ac + 0.4:.3f});')
     pop("#a3", t_a3, sound="pop")
     js(f'tl.to("#folder", {{rotation:6, duration:0.3, ease:"back.out(3)"}}, {t_a3 + 0.3:.3f});')
-    t_don, t_llam, t_perc = P("donde"), P("llamaban"), E("percebe")
+    t_don, t_llam, t_perc = P("donde"), P("llamaban"), P("percebe") + 0.4
     slide_in("#chat", t_don, dy=120, dur=0.5)
     js(f'tl.fromTo("#typing", {{opacity:0}}, {{opacity:1, duration:0.15}}, {t_don + 0.2:.3f});')
     js(f'tl.to("#typing", {{opacity:0, duration:0.1}}, {t_llam:.3f});')

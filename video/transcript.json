@@ -2,931 +2,931 @@
   {
     "text": "Juan",
     "start": 0.07,
-    "end": 0.18,
+    "end": 0.2,
     "id": "w0"
   },
   {
     "text": "Cuesta",
-    "start": 0.26,
-    "end": 0.62,
+    "start": 0.28,
+    "end": 0.65,
     "id": "w1"
   },
   {
     "text": "casi",
-    "start": 0.62,
-    "end": 0.87,
+    "start": 0.65,
+    "end": 0.91,
     "id": "w2"
   },
   {
     "text": "no",
-    "start": 0.87,
-    "end": 0.99,
+    "start": 0.91,
+    "end": 1.03,
     "id": "w3"
   },
   {
     "text": "fue",
-    "start": 0.99,
-    "end": 1.17,
+    "start": 1.12,
+    "end": 1.23,
     "id": "w4"
   },
   {
     "text": "José",
-    "start": 1.19,
-    "end": 1.41,
+    "start": 1.23,
+    "end": 1.49,
     "id": "w5"
   },
   {
     "text": "Luis",
-    "start": 1.43,
-    "end": 1.68,
+    "start": 1.49,
+    "end": 1.75,
     "id": "w6"
   },
   {
     "text": "Gil,",
-    "start": 1.68,
-    "end": 2.04,
+    "start": 1.75,
+    "end": 2.1,
     "id": "w7"
   },
   {
     "text": "y",
-    "start": 2.04,
-    "end": 2.08,
+    "start": 2.1,
+    "end": 2.12,
     "id": "w8"
   },
   {
     "text": "Emilio",
-    "start": 2.32,
-    "end": 2.5,
+    "start": 2.34,
+    "end": 2.56,
     "id": "w9"
   },
   {
     "text": "no",
-    "start": 2.5,
-    "end": 2.63,
+    "start": 2.56,
+    "end": 2.69,
     "id": "w10"
   },
   {
     "text": "iba",
-    "start": 2.63,
-    "end": 2.83,
+    "start": 2.69,
+    "end": 2.89,
     "id": "w11"
   },
   {
     "text": "a",
-    "start": 2.83,
-    "end": 2.89,
+    "start": 2.89,
+    "end": 2.95,
     "id": "w12"
   },
   {
     "text": "ser",
-    "start": 2.89,
-    "end": 3.09,
+    "start": 2.95,
+    "end": 3.14,
     "id": "w13"
   },
   {
     "text": "el",
-    "start": 3.09,
-    "end": 3.22,
+    "start": 3.14,
+    "end": 3.28,
     "id": "w14"
   },
   {
     "text": "portero.",
-    "start": 3.22,
-    "end": 3.93,
+    "start": 3.28,
+    "end": 3.99,
     "id": "w15"
   },
   {
     "text": "Uno,",
-    "start": 4.2,
-    "end": 4.32,
+    "start": 4.25,
+    "end": 4.38,
     "id": "w16"
   },
   {
     "text": "la",
-    "start": 4.4,
-    "end": 4.48,
+    "start": 4.46,
+    "end": 4.55,
     "id": "w17"
   },
   {
     "text": "idea,",
-    "start": 4.57,
-    "end": 5,
+    "start": 4.63,
+    "end": 5.08,
     "id": "w18"
   },
   {
     "text": "en",
-    "start": 5,
-    "end": 5.14,
+    "start": 5.08,
+    "end": 5.21,
     "id": "w19"
   },
   {
     "text": "1999",
-    "start": 5.24,
-    "end": 6.12,
+    "start": 5.3,
+    "end": 6.2,
     "id": "w20"
   },
   {
     "text": "Alberto",
-    "start": 6.13,
-    "end": 6.69,
+    "start": 6.21,
+    "end": 6.77,
     "id": "w21"
   },
   {
     "text": "Caballero",
-    "start": 6.69,
-    "end": 7.41,
+    "start": 6.77,
+    "end": 7.49,
     "id": "w22"
   },
   {
     "text": "se",
-    "start": 7.41,
-    "end": 7.55,
+    "start": 7.49,
+    "end": 7.64,
     "id": "w23"
   },
   {
     "text": "la",
     "start": 7.64,
-    "end": 7.7,
+    "end": 7.81,
     "id": "w24"
   },
   {
     "text": "ofreció",
-    "start": 7.83,
-    "end": 8.29,
+    "start": 7.81,
+    "end": 8.37,
     "id": "w25"
   },
   {
     "text": "a",
-    "start": 8.3,
-    "end": 8.37,
+    "start": 8.39,
+    "end": 8.45,
     "id": "w26"
   },
   {
     "text": "RTVE,",
-    "start": 8.37,
-    "end": 8.9,
+    "start": 8.45,
+    "end": 9,
     "id": "w27"
   },
   {
     "text": "dijeron",
-    "start": 8.9,
-    "end": 9.49,
+    "start": 9,
+    "end": 9.46,
     "id": "w28"
   },
   {
     "text": "que",
-    "start": 9.49,
-    "end": 9.74,
+    "start": 9.46,
+    "end": 9.65,
     "id": "w29"
   },
   {
     "text": "sí",
-    "start": 9.74,
-    "end": 9.91,
+    "start": 9.66,
+    "end": 9.79,
     "id": "w30"
   },
   {
     "text": "y",
-    "start": 9.91,
-    "end": 9.97,
+    "start": 9.79,
+    "end": 9.85,
     "id": "w31"
   },
   {
     "text": "la",
-    "start": 10,
-    "end": 10.18,
+    "start": 9.85,
+    "end": 9.98,
     "id": "w32"
   },
   {
     "text": "guardaron",
-    "start": 10.18,
-    "end": 10.58,
+    "start": 9.98,
+    "end": 10.65,
     "id": "w33"
   },
   {
     "text": "dos",
-    "start": 10.65,
-    "end": 10.75,
+    "start": 10.73,
+    "end": 10.85,
     "id": "w34"
   },
   {
     "text": "años",
-    "start": 10.75,
-    "end": 10.92,
+    "start": 10.85,
+    "end": 11.03,
     "id": "w35"
   },
   {
     "text": "en",
-    "start": 11.01,
-    "end": 11.05,
+    "start": 11.11,
+    "end": 11.16,
     "id": "w36"
   },
   {
     "text": "un",
-    "start": 11.14,
-    "end": 11.2,
+    "start": 11.24,
+    "end": 11.37,
     "id": "w37"
   },
   {
-    "text": "cajón.",
-    "start": 11.2,
-    "end": 11.7,
+    "text": "cajón,",
+    "start": 11.37,
+    "end": 11.82,
     "id": "w38"
   },
   {
-    "text": "Acabó",
-    "start": 11.7,
-    "end": 11.895,
+    "text": "acabó",
+    "start": 11.82,
+    "end": 12.14,
     "id": "w39"
   },
   {
     "text": "en",
-    "start": 11.895,
-    "end": 12.09,
+    "start": 12.14,
+    "end": 12.27,
     "id": "w40"
   },
   {
     "text": "Antena",
-    "start": 12.09,
-    "end": 12.36,
+    "start": 12.27,
+    "end": 12.65,
     "id": "w41"
   },
   {
-    "text": "3,",
-    "start": 12.45,
-    "end": 12.69,
+    "text": "3",
+    "start": 12.65,
+    "end": 12.78,
     "id": "w42"
   },
   {
     "text": "donde",
-    "start": 12.74,
-    "end": 12.99,
+    "start": 13,
+    "end": 13.16,
     "id": "w43"
   },
   {
     "text": "la",
-    "start": 12.99,
-    "end": 13.02,
+    "start": 13.16,
+    "end": 13.28,
     "id": "w44"
   },
   {
     "text": "llamaban",
-    "start": 13.12,
-    "end": 13.56,
+    "start": 13.29,
+    "end": 13.8,
     "id": "w45"
   },
   {
     "text": "13,",
-    "start": 13.56,
-    "end": 14.01,
+    "start": 13.8,
+    "end": 14.29,
     "id": "w46"
   },
   {
     "text": "Ruedel",
-    "start": 14.01,
-    "end": 14.34,
+    "start": 14.39,
+    "end": 14.65,
     "id": "w47"
   },
   {
-    "text": "Percebe.",
-    "start": 14.34,
-    "end": 14.99,
+    "text": "Percebe,",
+    "start": 14.86,
+    "end": 15.29,
     "id": "w48"
   },
   {
-    "text": "Dos,",
-    "start": 15.32,
-    "end": 15.35,
+    "text": "dos,",
+    "start": 15.29,
+    "end": 15.58,
     "id": "w49"
   },
   {
     "text": "los",
-    "start": 15.39,
-    "end": 15.5,
+    "start": 15.58,
+    "end": 15.79,
     "id": "w50"
   },
   {
     "text": "que",
-    "start": 15.58,
-    "end": 15.66,
+    "start": 15.79,
+    "end": 15.92,
     "id": "w51"
   },
   {
     "text": "iban",
-    "start": 15.75,
-    "end": 15.99,
+    "start": 15.97,
+    "end": 16.09,
     "id": "w52"
   },
   {
     "text": "a",
-    "start": 16.04,
-    "end": 16.07,
+    "start": 16.17,
+    "end": 16.19,
     "id": "w53"
   },
   {
     "text": "ser.",
-    "start": 16.07,
-    "end": 16.49,
+    "start": 16.19,
+    "end": 16.58,
     "id": "w54"
   },
   {
     "text": "Juan",
-    "start": 16.49,
-    "end": 16.75,
+    "start": 16.58,
+    "end": 16.83,
     "id": "w55"
   },
   {
     "text": "Cuesta",
-    "start": 16.75,
-    "end": 17.02,
+    "start": 16.83,
+    "end": 17.13,
     "id": "w56"
   },
   {
     "text": "era",
-    "start": 17.11,
-    "end": 17.15,
+    "start": 17.21,
+    "end": 17.38,
     "id": "w57"
   },
   {
     "text": "para",
-    "start": 17.24,
-    "end": 17.43,
+    "start": 17.38,
+    "end": 17.63,
     "id": "w58"
   },
   {
     "text": "Pablo",
-    "start": 17.43,
-    "end": 17.68,
+    "start": 17.63,
+    "end": 17.94,
     "id": "w59"
   },
   {
-    "text": "Carbonell,",
-    "start": 17.78,
-    "end": 18.3,
+    "text": "Carbonell",
+    "start": 17.94,
+    "end": 18.49,
     "id": "w60"
   },
   {
     "text": "pero",
-    "start": 18.3,
-    "end": 18.48,
+    "start": 18.49,
+    "end": 18.74,
     "id": "w61"
   },
   {
     "text": "prefirió",
-    "start": 18.56,
-    "end": 18.96,
+    "start": 18.74,
+    "end": 19.23,
     "id": "w62"
   },
   {
     "text": "dirigir",
-    "start": 19,
-    "end": 19.34,
+    "start": 19.23,
+    "end": 19.66,
     "id": "w63"
   },
   {
-    "text": "cine.",
-    "start": 19.34,
-    "end": 19.76,
+    "text": "cine,",
+    "start": 19.66,
+    "end": 20.01,
     "id": "w64"
   },
   {
     "text": "Vicenta",
-    "start": 20.1,
-    "end": 20.15,
+    "start": 20.03,
+    "end": 20.39,
     "id": "w65"
   },
   {
     "text": "era",
-    "start": 20.17,
-    "end": 20.28,
+    "start": 20.52,
+    "end": 20.62,
     "id": "w66"
   },
   {
     "text": "para",
-    "start": 20.36,
-    "end": 20.54,
+    "start": 20.64,
+    "end": 20.71,
     "id": "w67"
   },
   {
     "text": "María",
-    "start": 20.54,
-    "end": 20.82,
+    "start": 20.97,
+    "end": 21.28,
     "id": "w68"
   },
   {
-    "text": "Asquerino,",
-    "start": 20.84,
-    "end": 21.43,
+    "text": "Asquerino",
+    "start": 21.35,
+    "end": 21.78,
     "id": "w69"
   },
   {
     "text": "que",
-    "start": 21.43,
-    "end": 21.6,
+    "start": 21.86,
+    "end": 22.01,
     "id": "w70"
   },
   {
     "text": "tras",
-    "start": 21.6,
-    "end": 21.81,
+    "start": 22.01,
+    "end": 22.26,
     "id": "w71"
   },
   {
     "text": "leer",
-    "start": 21.81,
-    "end": 22.04,
+    "start": 22.26,
+    "end": 22.51,
     "id": "w72"
   },
   {
     "text": "el",
-    "start": 22.04,
-    "end": 22.15,
+    "start": 22.51,
+    "end": 22.63,
     "id": "w73"
   },
   {
     "text": "guión",
-    "start": 22.15,
-    "end": 22.43,
+    "start": 22.63,
+    "end": 22.93,
     "id": "w74"
   },
   {
     "text": "dijo,",
-    "start": 22.43,
-    "end": 22.86,
+    "start": 22.93,
+    "end": 23.3,
     "id": "w75"
   },
   {
     "text": "yo",
-    "start": 22.86,
-    "end": 22.98,
+    "start": 23.3,
+    "end": 23.39,
     "id": "w76"
   },
   {
     "text": "no",
-    "start": 22.98,
-    "end": 23.07,
+    "start": 23.39,
+    "end": 23.62,
     "id": "w77"
   },
   {
     "text": "quiero",
-    "start": 23.1,
-    "end": 23.45,
+    "start": 23.62,
+    "end": 23.91,
     "id": "w78"
   },
   {
     "text": "estar",
-    "start": 23.45,
-    "end": 23.66,
+    "start": 23.91,
+    "end": 24.22,
     "id": "w79"
   },
   {
     "text": "aquí,",
-    "start": 23.79,
-    "end": 24.03,
+    "start": 24.22,
+    "end": 24.59,
     "id": "w80"
   },
   {
     "text": "y",
-    "start": 24.03,
-    "end": 24.23,
+    "start": 24.59,
+    "end": 24.65,
     "id": "w81"
   },
   {
     "text": "Luis",
-    "start": 24.23,
-    "end": 24.43,
+    "start": 24.65,
+    "end": 24.9,
     "id": "w82"
   },
   {
     "text": "Merlo",
-    "start": 24.43,
-    "end": 24.7,
+    "start": 24.9,
+    "end": 25.2,
     "id": "w83"
   },
   {
     "text": "rechazó",
-    "start": 24.79,
-    "end": 25.17,
+    "start": 25.2,
+    "end": 25.74,
     "id": "w84"
   },
   {
     "text": "a",
-    "start": 25.17,
-    "end": 25.23,
+    "start": 25.74,
+    "end": 25.81,
     "id": "w85"
   },
   {
     "text": "Mauri",
-    "start": 25.23,
-    "end": 25.53,
+    "start": 25.81,
+    "end": 26.04,
     "id": "w86"
   },
   {
     "text": "cuatro",
-    "start": 25.55,
-    "end": 25.92,
+    "start": 26.04,
+    "end": 26.35,
     "id": "w87"
   },
   {
     "text": "veces.",
-    "start": 25.92,
-    "end": 26.44,
+    "start": 26.35,
+    "end": 26.77,
     "id": "w88"
   },
   {
     "text": "Tres,",
-    "start": 26.75,
-    "end": 27,
+    "start": 26.94,
+    "end": 27.25,
     "id": "w89"
   },
   {
     "text": "los",
-    "start": 27,
-    "end": 27.15,
+    "start": 27.33,
+    "end": 27.38,
     "id": "w90"
   },
   {
     "text": "que",
-    "start": 27.15,
-    "end": 27.3,
+    "start": 27.46,
+    "end": 27.64,
     "id": "w91"
   },
   {
     "text": "acabaron",
-    "start": 27.3,
-    "end": 27.7,
+    "start": 27.64,
+    "end": 28.13,
     "id": "w92"
   },
   {
-    "text": "siendo.",
-    "start": 27.8,
-    "end": 28.24,
+    "text": "siendo,",
+    "start": 28.16,
+    "end": 28.68,
     "id": "w93"
   },
   {
     "text": "Fernando",
-    "start": 28.63,
-    "end": 28.74,
+    "start": 28.68,
+    "end": 28.98,
     "id": "w94"
   },
   {
     "text": "Tejero",
-    "start": 28.82,
-    "end": 29.12,
+    "start": 29.22,
+    "end": 29.58,
     "id": "w95"
   },
   {
     "text": "iba",
-    "start": 29.14,
-    "end": 29.32,
+    "start": 29.58,
+    "end": 29.77,
     "id": "w96"
   },
   {
     "text": "a",
-    "start": 29.32,
-    "end": 29.38,
+    "start": 29.77,
+    "end": 29.83,
     "id": "w97"
   },
   {
     "text": "ser",
-    "start": 29.38,
-    "end": 29.56,
+    "start": 29.83,
+    "end": 30.02,
     "id": "w98"
   },
   {
     "text": "Paco,",
-    "start": 29.66,
-    "end": 29.94,
+    "start": 30.02,
+    "end": 30.36,
     "id": "w99"
   },
   {
     "text": "el",
-    "start": 29.94,
-    "end": 30.07,
+    "start": 30.45,
+    "end": 30.51,
     "id": "w100"
   },
   {
     "text": "del",
-    "start": 30.07,
-    "end": 30.26,
+    "start": 30.54,
+    "end": 30.72,
     "id": "w101"
   },
   {
-    "text": "videoclub.",
-    "start": 30.26,
-    "end": 31.1,
+    "text": "videoclub,",
+    "start": 30.72,
+    "end": 31.43,
     "id": "w102"
   },
   {
-    "text": "Pidió",
-    "start": 31.28,
-    "end": 31.4,
+    "text": "pidió",
+    "start": 31.43,
+    "end": 31.82,
     "id": "w103"
   },
   {
     "text": "ser",
-    "start": 31.4,
-    "end": 31.58,
+    "start": 32,
+    "end": 32.08,
     "id": "w104"
   },
   {
     "text": "el",
-    "start": 31.58,
-    "end": 31.63,
+    "start": 32.15,
+    "end": 32.2,
     "id": "w105"
   },
   {
     "text": "portero",
-    "start": 31.71,
-    "end": 32.12,
+    "start": 32.2,
+    "end": 32.58,
     "id": "w106"
   },
   {
     "text": "y",
-    "start": 32.12,
-    "end": 32.18,
+    "start": 32.58,
+    "end": 32.67,
     "id": "w107"
   },
   {
     "text": "a",
-    "start": 32.18,
-    "end": 32.24,
+    "start": 32.67,
+    "end": 32.72,
     "id": "w108"
   },
   {
     "text": "los",
-    "start": 32.24,
-    "end": 32.42,
+    "start": 32.72,
+    "end": 32.9,
     "id": "w109"
   },
   {
     "text": "tres",
-    "start": 32.42,
-    "end": 32.66,
+    "start": 32.9,
+    "end": 33.11,
     "id": "w110"
   },
   {
     "text": "días",
-    "start": 32.66,
-    "end": 32.9,
+    "start": 33.2,
+    "end": 33.33,
     "id": "w111"
   },
   {
     "text": "era",
-    "start": 32.9,
-    "end": 33.06,
+    "start": 33.36,
+    "end": 33.54,
     "id": "w112"
   },
   {
     "text": "Emilio.",
-    "start": 33.06,
-    "end": 33.66,
+    "start": 33.54,
+    "end": 34.11,
     "id": "w113"
   },
   {
     "text": "Cuatro,",
-    "start": 33.9,
-    "end": 34.07,
+    "start": 34.3,
+    "end": 34.6,
     "id": "w114"
   },
   {
     "text": "el",
-    "start": 34.07,
-    "end": 34.17,
+    "start": 34.6,
+    "end": 34.67,
     "id": "w115"
   },
   {
-    "text": "estreno.",
-    "start": 34.17,
-    "end": 34.74,
+    "text": "estreno,",
+    "start": 34.75,
+    "end": 35.26,
     "id": "w116"
   },
   {
-    "text": "En",
-    "start": 34.74,
-    "end": 35.08,
+    "text": "en",
+    "start": 35.26,
+    "end": 35.33,
     "id": "w117"
   },
   {
     "text": "septiembre",
-    "start": 35.08,
-    "end": 35.4,
+    "start": 35.42,
+    "end": 35.99,
     "id": "w118"
   },
   {
     "text": "de",
-    "start": 35.49,
-    "end": 35.53,
+    "start": 35.99,
+    "end": 36.11,
     "id": "w119"
   },
   {
     "text": "2003",
-    "start": 35.53,
-    "end": 36.22,
+    "start": 36.11,
+    "end": 36.85,
     "id": "w120"
   },
   {
     "text": "la",
-    "start": 36.22,
-    "end": 36.33,
+    "start": 36.85,
+    "end": 36.97,
     "id": "w121"
   },
   {
     "text": "vieron",
-    "start": 36.33,
-    "end": 36.67,
+    "start": 36.97,
+    "end": 37.32,
     "id": "w122"
   },
   {
     "text": "dos",
-    "start": 36.67,
-    "end": 36.84,
+    "start": 37.33,
+    "end": 37.51,
     "id": "w123"
   },
   {
     "text": "millones",
-    "start": 36.84,
-    "end": 37.14,
+    "start": 37.51,
+    "end": 37.93,
     "id": "w124"
   },
   {
     "text": "y",
-    "start": 37.14,
-    "end": 37.38,
+    "start": 37.93,
+    "end": 38.06,
     "id": "w125"
   },
   {
-    "text": "medio.",
-    "start": 37.38,
-    "end": 37.88,
+    "text": "medio,",
+    "start": 38.06,
+    "end": 38.48,
     "id": "w126"
   },
   {
-    "text": "En",
-    "start": 37.88,
-    "end": 38.24,
+    "text": "en",
+    "start": 38.51,
+    "end": 38.6,
     "id": "w127"
   },
   {
-    "text": "noviembre,",
-    "start": 38.24,
-    "end": 38.87,
+    "text": "noviembre",
+    "start": 38.6,
+    "end": 39.24,
     "id": "w128"
   },
   {
     "text": "7,3",
-    "start": 38.87,
-    "end": 39.46,
+    "start": 39.33,
+    "end": 39.87,
     "id": "w129"
   },
   {
     "text": "millones,",
-    "start": 39.49,
-    "end": 40.26,
+    "start": 39.87,
+    "end": 40.65,
     "id": "w130"
   },
   {
     "text": "un",
-    "start": 40.26,
-    "end": 40.32,
+    "start": 40.65,
+    "end": 40.81,
     "id": "w131"
   },
   {
     "text": "40%",
-    "start": 40.56,
-    "end": 40.95,
+    "start": 40.81,
+    "end": 41.34,
     "id": "w132"
   },
   {
     "text": "de",
-    "start": 40.95,
-    "end": 41.1,
+    "start": 41.34,
+    "end": 41.38,
     "id": "w133"
   },
   {
-    "text": "cuota.",
-    "start": 41.1,
-    "end": 41.8,
+    "text": "cuota,",
+    "start": 41.6,
+    "end": 42.05,
     "id": "w134"
   },
   {
-    "text": "Veinte",
-    "start": 42.2,
-    "end": 42.26,
+    "text": "20",
+    "start": 42.05,
+    "end": 42.51,
     "id": "w135"
   },
   {
     "text": "años",
-    "start": 42.27,
-    "end": 42.54,
+    "start": 42.51,
+    "end": 42.74,
     "id": "w136"
   },
   {
-    "text": "después,",
-    "start": 42.54,
-    "end": 43.18,
+    "text": "después",
+    "start": 42.83,
+    "end": 43.23,
     "id": "w137"
   },
   {
     "text": "aún",
-    "start": 43.18,
-    "end": 43.37,
+    "start": 43.46,
+    "end": 43.61,
     "id": "w138"
   },
   {
     "text": "la",
-    "start": 43.39,
-    "end": 43.53,
+    "start": 43.61,
+    "end": 43.77,
     "id": "w139"
   },
   {
     "text": "ven",
-    "start": 43.53,
-    "end": 43.74,
+    "start": 43.77,
+    "end": 44,
     "id": "w140"
   },
   {
     "text": "5,9",
-    "start": 43.74,
-    "end": 44.28,
+    "start": 44,
+    "end": 44.61,
     "id": "w141"
   },
   {
     "text": "millones",
-    "start": 44.52,
-    "end": 44.87,
+    "start": 44.61,
+    "end": 45.24,
     "id": "w142"
   },
   {
     "text": "de",
-    "start": 44.87,
-    "end": 45.01,
+    "start": 45.24,
+    "end": 45.4,
     "id": "w143"
   },
   {
     "text": "personas",
-    "start": 45.01,
-    "end": 45.58,
+    "start": 45.4,
+    "end": 46.02,
     "id": "w144"
   },
   {
     "text": "al",
-    "start": 45.58,
-    "end": 45.72,
+    "start": 46.05,
+    "end": 46.19,
     "id": "w145"
   },
   {
-    "text": "mes.",
-    "start": 45.72,
-    "end": 46.13,
+    "text": "mes,",
+    "start": 46.19,
+    "end": 46.76,
     "id": "w146"
   },
   {
-    "text": "Comenta",
-    "start": 46.6,
-    "end": 46.72,
+    "text": "comenta",
+    "start": 47.1,
+    "end": 47.23,
     "id": "w147"
   },
   {
     "text": "que",
-    "start": 46.72,
-    "end": 46.92,
+    "start": 47.23,
+    "end": 47.43,
     "id": "w148"
   },
   {
     "text": "vecino",
-    "start": 46.92,
-    "end": 47.31,
+    "start": 47.43,
+    "end": 47.83,
     "id": "w149"
   },
   {
     "text": "de",
-    "start": 47.34,
-    "end": 47.45,
+    "start": 47.83,
+    "end": 47.96,
     "id": "w150"
   },
   {
     "text": "Desengaño",
-    "start": 47.45,
-    "end": 48.04,
+    "start": 47.96,
+    "end": 48.56,
     "id": "w151"
   },
   {
     "text": "21",
-    "start": 48.04,
-    "end": 48.4,
+    "start": 48.56,
+    "end": 48.91,
     "id": "w152"
   },
   {
     "text": "serías",
-    "start": 48.48,
-    "end": 48.68,
+    "start": 49.01,
+    "end": 49.21,
     "id": "w153"
   },
   {
     "text": "tú.",
-    "start": 48.92,
-    "end": 49.22,
+    "start": 49.44,
+    "end": 49.8,
     "id": "w154"
   }
 ]

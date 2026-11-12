@@ -1,7 +1,7 @@
 """Compara guion.txt con transcript.json palabra a palabra (números normalizados)."""
 import json, re, difflib, unicodedata
 NUM = {"mil novecientos noventa y nueve": "1999", "antena tres": "antena 3", "trece": "13", "dos mil tres": "2003",
-       "siete coma tres": "7,3", "cuarenta por ciento": "40%", "cinco coma nueve": "5,9", "veintiuno": "21"}
+       "siete coma tres": "7,3", "cuarenta por ciento": "40%", "cinco coma nueve": "5,9", "veintiuno": "21", "veinte": "20"}
 def norm(s):
     s = unicodedata.normalize("NFD", s.lower())
     s = "".join(c for c in s if unicodedata.category(c) != "Mn")
