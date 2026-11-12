@@ -24,3 +24,8 @@ video-glucosa/assets/.mix-graph.txt
 video-adopta/voz-raw.wav
 video-adopta/assets/.premix.wav
 video-adopta/assets/.mix-graph.txt
+video-iniesta/voz-raw.wav
+video-iniesta/assets/.premix.wav
+video-iniesta/assets/.mix-graph.txt
+video-iniesta/.hyperframes/
+video-iniesta/node_modules/
