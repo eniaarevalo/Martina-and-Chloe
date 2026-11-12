@@ -78,3 +78,15 @@ Si una palabra se repite («música», «lenta», «compraba», «caro», «nadi
 - Yalch y Spangenberg (2000), Journal of Business Research: con música desconocida la gente se queda más tiempo.
 - [COMPROBAR] Que la música francesa era de acordeón (así lo cuentan los resúmenes).
 - [COMPROBAR] Si el 38 % de Milliman es de ventas totales o de gasto (sale de resúmenes, no del artículo original).
+
+## Nota sobre el volumen
+
+En este vídeo el render dejó el audio a −16,7 LUFS (la mezcla está a −14). Para corregirlo se vuelve a poner
+`assets/mezcla.wav` sin tocar la imagen:
+
+```bash
+cd entregas
+for f in video-FINAL.mp4 video-SIN-SUBTITULOS.mp4; do
+  ffmpeg -y -i $f -i ../assets/mezcla.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 256k -ar 48000 -shortest -movflags +faststart tmp-$f && mv tmp-$f $f
+done
+```
