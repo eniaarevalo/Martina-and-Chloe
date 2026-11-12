@@ -29,3 +29,8 @@ video-iniesta/assets/.premix.wav
 video-iniesta/assets/.mix-graph.txt
 video-iniesta/.hyperframes/
 video-iniesta/node_modules/
+video-musica/voz-raw.wav
+video-musica/assets/.premix.wav
+video-musica/assets/.mix-graph.txt
+video-musica/.hyperframes/
+video-musica/node_modules/
