@@ -1,0 +1,974 @@
+[
+ {
+  "text": "Ese",
+  "start": 0.06,
+  "end": 0.18,
+  "id": "w0"
+ },
+ {
+  "text": "bajón",
+  "start": 0.24,
+  "end": 0.49,
+  "id": "w1"
+ },
+ {
+  "text": "después",
+  "start": 0.49,
+  "end": 0.94,
+  "id": "w2"
+ },
+ {
+  "text": "de",
+  "start": 0.94,
+  "end": 1.07,
+  "id": "w3"
+ },
+ {
+  "text": "comer",
+  "start": 1.07,
+  "end": 1.39,
+  "id": "w4"
+ },
+ {
+  "text": "puede",
+  "start": 1.39,
+  "end": 1.71,
+  "id": "w5"
+ },
+ {
+  "text": "tener",
+  "start": 1.71,
+  "end": 2.03,
+  "id": "w6"
+ },
+ {
+  "text": "nombre,",
+  "start": 2.03,
+  "end": 2.53,
+  "id": "w7"
+ },
+ {
+  "text": "pico",
+  "start": 2.53,
+  "end": 2.78,
+  "id": "w8"
+ },
+ {
+  "text": "de",
+  "start": 2.82,
+  "end": 2.91,
+  "id": "w9"
+ },
+ {
+  "text": "glucosa.",
+  "start": 2.96,
+  "end": 3.64,
+  "id": "w10"
+ },
+ {
+  "text": "Uno:",
+  "start": 3.88,
+  "end": 4.047,
+  "id": "w11"
+ },
+ {
+  "text": "¿Qué",
+  "start": 4.047,
+  "end": 4.38,
+  "id": "w12"
+ },
+ {
+  "text": "es?",
+  "start": 4.38,
+  "end": 4.74,
+  "id": "w13"
+ },
+ {
+  "text": "Cuando",
+  "start": 4.74,
+  "end": 5.16,
+  "id": "w14"
+ },
+ {
+  "text": "comes,",
+  "start": 5.16,
+  "end": 5.62,
+  "id": "w15"
+ },
+ {
+  "text": "el",
+  "start": 5.62,
+  "end": 5.75,
+  "id": "w16"
+ },
+ {
+  "text": "azúcar",
+  "start": 5.75,
+  "end": 6.15,
+  "id": "w17"
+ },
+ {
+  "text": "en",
+  "start": 6.15,
+  "end": 6.28,
+  "id": "w18"
+ },
+ {
+  "text": "sangre",
+  "start": 6.28,
+  "end": 6.69,
+  "id": "w19"
+ },
+ {
+  "text": "sube,",
+  "start": 6.69,
+  "end": 7.06,
+  "id": "w20"
+ },
+ {
+  "text": "y",
+  "start": 7.08,
+  "end": 7.14,
+  "id": "w21"
+ },
+ {
+  "text": "es",
+  "start": 7.14,
+  "end": 7.27,
+  "id": "w22"
+ },
+ {
+  "text": "normal.",
+  "start": 7.27,
+  "end": 8,
+  "id": "w23"
+ },
+ {
+  "text": "En",
+  "start": 8,
+  "end": 8.25,
+  "id": "w24"
+ },
+ {
+  "text": "una",
+  "start": 8.25,
+  "end": 8.5,
+  "id": "w25"
+ },
+ {
+  "text": "persona",
+  "start": 8.5,
+  "end": 8.85,
+  "id": "w26"
+ },
+ {
+  "text": "sana,",
+  "start": 8.92,
+  "end": 9.36,
+  "id": "w27"
+ },
+ {
+  "text": "rara",
+  "start": 9.36,
+  "end": 9.66,
+  "id": "w28"
+ },
+ {
+  "text": "vez",
+  "start": 9.66,
+  "end": 9.84,
+  "id": "w29"
+ },
+ {
+  "text": "pasa",
+  "start": 9.95,
+  "end": 10.15,
+  "id": "w30"
+ },
+ {
+  "text": "de",
+  "start": 10.21,
+  "end": 10.34,
+  "id": "w31"
+ },
+ {
+  "text": "140,",
+  "start": 10.34,
+  "end": 11.17,
+  "id": "w32"
+ },
+ {
+  "text": "y",
+  "start": 11.17,
+  "end": 11.24,
+  "id": "w33"
+ },
+ {
+  "text": "baja",
+  "start": 11.24,
+  "end": 11.54,
+  "id": "w34"
+ },
+ {
+  "text": "en",
+  "start": 11.54,
+  "end": 11.7,
+  "id": "w35"
+ },
+ {
+  "text": "2",
+  "start": 11.7,
+  "end": 11.93,
+  "id": "w36"
+ },
+ {
+  "text": "o",
+  "start": 11.93,
+  "end": 11.95,
+  "id": "w37"
+ },
+ {
+  "text": "3",
+  "start": 12.15,
+  "end": 12.23,
+  "id": "w38"
+ },
+ {
+  "text": "horas.",
+  "start": 12.23,
+  "end": 12.92,
+  "id": "w39"
+ },
+ {
+  "text": "Un",
+  "start": 12.92,
+  "end": 13.24,
+  "id": "w40"
+ },
+ {
+  "text": "pico",
+  "start": 13.24,
+  "end": 13.31,
+  "id": "w41"
+ },
+ {
+  "text": "es",
+  "start": 13.31,
+  "end": 13.48,
+  "id": "w42"
+ },
+ {
+  "text": "una",
+  "start": 13.48,
+  "end": 13.63,
+  "id": "w43"
+ },
+ {
+  "text": "subida",
+  "start": 13.64,
+  "end": 14.04,
+  "id": "w44"
+ },
+ {
+  "text": "brusca,",
+  "start": 14.04,
+  "end": 14.5,
+  "id": "w45"
+ },
+ {
+  "text": "típica",
+  "start": 14.57,
+  "end": 14.95,
+  "id": "w46"
+ },
+ {
+  "text": "de",
+  "start": 14.95,
+  "end": 15.08,
+  "id": "w47"
+ },
+ {
+  "text": "harinas",
+  "start": 15.08,
+  "end": 15.55,
+  "id": "w48"
+ },
+ {
+  "text": "y",
+  "start": 15.55,
+  "end": 15.61,
+  "id": "w49"
+ },
+ {
+  "text": "dulces.",
+  "start": 15.61,
+  "end": 16.32,
+  "id": "w50"
+ },
+ {
+  "text": "Dos:",
+  "start": 16.62,
+  "end": 16.72,
+  "id": "w51"
+ },
+ {
+  "text": "¿Por",
+  "start": 16.72,
+  "end": 16.92,
+  "id": "w52"
+ },
+ {
+  "text": "qué",
+  "start": 16.92,
+  "end": 17.1,
+  "id": "w53"
+ },
+ {
+  "text": "importa?",
+  "start": 17.1,
+  "end": 17.72,
+  "id": "w54"
+ },
+ {
+  "text": "Tras",
+  "start": 17.72,
+  "end": 17.93,
+  "id": "w55"
+ },
+ {
+  "text": "un",
+  "start": 17.93,
+  "end": 18.14,
+  "id": "w56"
+ },
+ {
+  "text": "pico",
+  "start": 18.14,
+  "end": 18.32,
+  "id": "w57"
+ },
+ {
+  "text": "grande",
+  "start": 18.32,
+  "end": 18.69,
+  "id": "w58"
+ },
+ {
+  "text": "puede",
+  "start": 18.69,
+  "end": 18.97,
+  "id": "w59"
+ },
+ {
+  "text": "venir",
+  "start": 19.07,
+  "end": 19.28,
+  "id": "w60"
+ },
+ {
+  "text": "un",
+  "start": 19.34,
+  "end": 19.43,
+  "id": "w61"
+ },
+ {
+  "text": "bajón.",
+  "start": 19.43,
+  "end": 20,
+  "id": "w62"
+ },
+ {
+  "text": "Un",
+  "start": 20,
+  "end": 20.46,
+  "id": "w63"
+ },
+ {
+  "text": "estudio",
+  "start": 20.46,
+  "end": 20.59,
+  "id": "w64"
+ },
+ {
+  "text": "de",
+  "start": 20.59,
+  "end": 20.72,
+  "id": "w65"
+ },
+ {
+  "text": "2021",
+  "start": 20.72,
+  "end": 21.48,
+  "id": "w66"
+ },
+ {
+  "text": "con",
+  "start": 21.54,
+  "end": 21.7,
+  "id": "w67"
+ },
+ {
+  "text": "más",
+  "start": 21.7,
+  "end": 21.79,
+  "id": "w68"
+ },
+ {
+  "text": "de",
+  "start": 21.91,
+  "end": 22.02,
+  "id": "w69"
+ },
+ {
+  "text": "mil",
+  "start": 22.02,
+  "end": 22.21,
+  "id": "w70"
+ },
+ {
+  "text": "personas",
+  "start": 22.21,
+  "end": 22.77,
+  "id": "w71"
+ },
+ {
+  "text": "vio",
+  "start": 22.77,
+  "end": 22.96,
+  "id": "w72"
+ },
+ {
+  "text": "que",
+  "start": 23.04,
+  "end": 23.13,
+  "id": "w73"
+ },
+ {
+  "text": "esos",
+  "start": 23.18,
+  "end": 23.37,
+  "id": "w74"
+ },
+ {
+  "text": "bajones",
+  "start": 23.39,
+  "end": 23.8,
+  "id": "w75"
+ },
+ {
+  "text": "predicen",
+  "start": 23.8,
+  "end": 24.28,
+  "id": "w76"
+ },
+ {
+  "text": "más",
+  "start": 24.28,
+  "end": 24.38,
+  "id": "w77"
+ },
+ {
+  "text": "hambre",
+  "start": 24.58,
+  "end": 24.85,
+  "id": "w78"
+ },
+ {
+  "text": "y",
+  "start": 24.85,
+  "end": 24.91,
+  "id": "w79"
+ },
+ {
+  "text": "más",
+  "start": 24.91,
+  "end": 24.99,
+  "id": "w80"
+ },
+ {
+  "text": "calorías.",
+  "start": 25.2,
+  "end": 25.7,
+  "id": "w81"
+ },
+ {
+  "text": "Y",
+  "start": 25.76,
+  "end": 25.796,
+  "id": "w82"
+ },
+ {
+  "text": "en",
+  "start": 25.796,
+  "end": 25.88,
+  "id": "w83"
+ },
+ {
+  "text": "personas",
+  "start": 25.94,
+  "end": 26.37,
+  "id": "w84"
+ },
+ {
+  "text": "con",
+  "start": 26.37,
+  "end": 26.55,
+  "id": "w85"
+ },
+ {
+  "text": "diabetes,",
+  "start": 26.55,
+  "end": 27.16,
+  "id": "w86"
+ },
+ {
+  "text": "los",
+  "start": 27.16,
+  "end": 27.28,
+  "id": "w87"
+ },
+ {
+  "text": "picos",
+  "start": 27.39,
+  "end": 27.59,
+  "id": "w88"
+ },
+ {
+  "text": "repetidos",
+  "start": 27.65,
+  "end": 28.18,
+  "id": "w89"
+ },
+ {
+  "text": "se",
+  "start": 28.18,
+  "end": 28.27,
+  "id": "w90"
+ },
+ {
+  "text": "asocian",
+  "start": 28.42,
+  "end": 28.72,
+  "id": "w91"
+ },
+ {
+  "text": "a",
+  "start": 28.72,
+  "end": 28.78,
+  "id": "w92"
+ },
+ {
+  "text": "complicaciones.",
+  "start": 28.78,
+  "end": 29.86,
+  "id": "w93"
+ },
+ {
+  "text": "En",
+  "start": 29.86,
+  "end": 30.18,
+  "id": "w94"
+ },
+ {
+  "text": "gente",
+  "start": 30.18,
+  "end": 30.5,
+  "id": "w95"
+ },
+ {
+  "text": "sana,",
+  "start": 30.5,
+  "end": 30.83,
+  "id": "w96"
+ },
+ {
+  "text": "el",
+  "start": 30.93,
+  "end": 30.99,
+  "id": "w97"
+ },
+ {
+  "text": "daño",
+  "start": 30.99,
+  "end": 31.21,
+  "id": "w98"
+ },
+ {
+  "text": "a",
+  "start": 31.3,
+  "end": 31.35,
+  "id": "w99"
+ },
+ {
+  "text": "largo",
+  "start": 31.35,
+  "end": 31.72,
+  "id": "w100"
+ },
+ {
+  "text": "plazo",
+  "start": 31.72,
+  "end": 32.09,
+  "id": "w101"
+ },
+ {
+  "text": "aún",
+  "start": 32.09,
+  "end": 32.31,
+  "id": "w102"
+ },
+ {
+  "text": "se",
+  "start": 32.31,
+  "end": 32.45,
+  "id": "w103"
+ },
+ {
+  "text": "estudia.",
+  "start": 32.45,
+  "end": 33.26,
+  "id": "w104"
+ },
+ {
+  "text": "Tres:",
+  "start": 33.48,
+  "end": 33.637,
+  "id": "w105"
+ },
+ {
+  "text": "¿Cómo",
+  "start": 33.637,
+  "end": 34.03,
+  "id": "w106"
+ },
+ {
+  "text": "reducirlos?",
+  "start": 34.03,
+  "end": 34.96,
+  "id": "w107"
+ },
+ {
+  "text": "Primero,",
+  "start": 35.2,
+  "end": 35.5,
+  "id": "w108"
+ },
+ {
+  "text": "el",
+  "start": 35.5,
+  "end": 35.62,
+  "id": "w109"
+ },
+ {
+  "text": "orden,",
+  "start": 35.62,
+  "end": 36.03,
+  "id": "w110"
+ },
+ {
+  "text": "verdura",
+  "start": 36.04,
+  "end": 36.46,
+  "id": "w111"
+ },
+ {
+  "text": "y",
+  "start": 36.46,
+  "end": 36.52,
+  "id": "w112"
+ },
+ {
+  "text": "proteína",
+  "start": 36.52,
+  "end": 37,
+  "id": "w113"
+ },
+ {
+  "text": "antes",
+  "start": 37,
+  "end": 37.29,
+  "id": "w114"
+ },
+ {
+  "text": "que",
+  "start": 37.3,
+  "end": 37.48,
+  "id": "w115"
+ },
+ {
+  "text": "los",
+  "start": 37.48,
+  "end": 37.66,
+  "id": "w116"
+ },
+ {
+  "text": "hidratos.",
+  "start": 37.66,
+  "end": 38.38,
+  "id": "w117"
+ },
+ {
+  "text": "En",
+  "start": 38.38,
+  "end": 38.67,
+  "id": "w118"
+ },
+ {
+  "text": "un",
+  "start": 38.67,
+  "end": 38.96,
+  "id": "w119"
+ },
+ {
+  "text": "estudio",
+  "start": 38.96,
+  "end": 39.23,
+  "id": "w120"
+ },
+ {
+  "text": "con",
+  "start": 39.23,
+  "end": 39.46,
+  "id": "w121"
+ },
+ {
+  "text": "personas",
+  "start": 39.46,
+  "end": 40.09,
+  "id": "w122"
+ },
+ {
+  "text": "con",
+  "start": 40.09,
+  "end": 40.3,
+  "id": "w123"
+ },
+ {
+  "text": "diabetes,",
+  "start": 40.41,
+  "end": 41.1,
+  "id": "w124"
+ },
+ {
+  "text": "el",
+  "start": 41.1,
+  "end": 41.25,
+  "id": "w125"
+ },
+ {
+  "text": "azúcar",
+  "start": 41.25,
+  "end": 41.71,
+  "id": "w126"
+ },
+ {
+  "text": "bajó",
+  "start": 41.71,
+  "end": 42.01,
+  "id": "w127"
+ },
+ {
+  "text": "hasta",
+  "start": 42.01,
+  "end": 42.37,
+  "id": "w128"
+ },
+ {
+  "text": "un",
+  "start": 42.37,
+  "end": 42.61,
+  "id": "w129"
+ },
+ {
+  "text": "37%.",
+  "start": 42.61,
+  "end": 43.44,
+  "id": "w130"
+ },
+ {
+  "text": "Segundo,",
+  "start": 43.67,
+  "end": 44.04,
+  "id": "w131"
+ },
+ {
+  "text": "camina",
+  "start": 44.15,
+  "end": 44.43,
+  "id": "w132"
+ },
+ {
+  "text": "después",
+  "start": 44.53,
+  "end": 44.9,
+  "id": "w133"
+ },
+ {
+  "text": "de",
+  "start": 44.9,
+  "end": 45.02,
+  "id": "w134"
+ },
+ {
+  "text": "comer,",
+  "start": 45.03,
+  "end": 45.49,
+  "id": "w135"
+ },
+ {
+  "text": "unos",
+  "start": 45.49,
+  "end": 45.75,
+  "id": "w136"
+ },
+ {
+  "text": "minutos",
+  "start": 45.75,
+  "end": 46.04,
+  "id": "w137"
+ },
+ {
+  "text": "ya",
+  "start": 46.3,
+  "end": 46.34,
+  "id": "w138"
+ },
+ {
+  "text": "ayudan.",
+  "start": 46.34,
+  "end": 46.98,
+  "id": "w139"
+ },
+ {
+  "text": "Y",
+  "start": 47.2,
+  "end": 47.329,
+  "id": "w140"
+ },
+ {
+  "text": "tercero,",
+  "start": 47.329,
+  "end": 47.63,
+  "id": "w141"
+ },
+ {
+  "text": "no",
+  "start": 47.63,
+  "end": 47.76,
+  "id": "w142"
+ },
+ {
+  "text": "comas",
+  "start": 47.76,
+  "end": 48.09,
+  "id": "w143"
+ },
+ {
+  "text": "los",
+  "start": 48.09,
+  "end": 48.29,
+  "id": "w144"
+ },
+ {
+  "text": "hidratos",
+  "start": 48.29,
+  "end": 48.78,
+  "id": "w145"
+ },
+ {
+  "text": "solos,",
+  "start": 48.89,
+  "end": 49.28,
+  "id": "w146"
+ },
+ {
+  "text": "acompáñalos",
+  "start": 49.28,
+  "end": 49.99,
+  "id": "w147"
+ },
+ {
+  "text": "de",
+  "start": 50.02,
+  "end": 50.11,
+  "id": "w148"
+ },
+ {
+  "text": "fibra,",
+  "start": 50.16,
+  "end": 50.58,
+  "id": "w149"
+ },
+ {
+  "text": "proteína",
+  "start": 50.58,
+  "end": 51.12,
+  "id": "w150"
+ },
+ {
+  "text": "o",
+  "start": 51.12,
+  "end": 51.18,
+  "id": "w151"
+ },
+ {
+  "text": "grasa.",
+  "start": 51.18,
+  "end": 51.88,
+  "id": "w152"
+ },
+ {
+  "text": "Mándaselo",
+  "start": 52.2,
+  "end": 52.38,
+  "id": "w153"
+ },
+ {
+  "text": "a",
+  "start": 52.38,
+  "end": 52.44,
+  "id": "w154"
+ },
+ {
+  "text": "quien",
+  "start": 52.44,
+  "end": 52.72,
+  "id": "w155"
+ },
+ {
+  "text": "siempre",
+  "start": 52.72,
+  "end": 53.13,
+  "id": "w156"
+ },
+ {
+  "text": "se",
+  "start": 53.13,
+  "end": 53.15,
+  "id": "w157"
+ },
+ {
+  "text": "duerme",
+  "start": 53.25,
+  "end": 53.58,
+  "id": "w158"
+ },
+ {
+  "text": "después",
+  "start": 53.58,
+  "end": 53.99,
+  "id": "w159"
+ },
+ {
+  "text": "de",
+  "start": 53.99,
+  "end": 54.09,
+  "id": "w160"
+ },
+ {
+  "text": "comer.",
+  "start": 54.15,
+  "end": 54.64,
+  "id": "w161"
+ }
+]

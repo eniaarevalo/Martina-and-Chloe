@@ -23,6 +23,18 @@ import unicodedata
 def _plain(t):
     return "".join(c for c in unicodedata.normalize("NFD", t.lower()) if unicodedata.category(c) != "Mn")
 GUION = set(re.findall(r"\w+", _plain(open("guion.txt").read()))) if os.path.exists("guion.txt") else set()
+# «costas.¿Y» -> «costas.» + «¿Y»: se parte donde empieza la pregunta, repartiendo el tiempo por letras
+split = []
+for x in w:
+    i = x["text"].find("¿")
+    if i > 0:
+        a_, b_ = x["text"][:i], x["text"][i:]
+        mid = round(x["start"] + (x["end"] - x["start"]) * len(a_) / len(x["text"]), 3)
+        split += [dict(text=a_, start=x["start"], end=mid), dict(text=b_, start=mid, end=x["end"])]
+    else:
+        split.append(x)
+w = split
+
 BLOQUE = {"1": "Uno", "2": "Dos", "3": "Tres", "4": "Cuatro"}
 SPELL = {"Zeki": "Zequi", "Zeki,": "Zequi,"}
 out = []
@@ -67,17 +79,6 @@ for x in w:
         out.append(dict(text="Y", start=x["start"], end=mid))
         x = dict(text="que", start=mid, end=x["end"])
     out.append(x)
-# «costas.¿Y» -> «costas.» + «¿Y»: se parte donde empieza la pregunta, repartiendo el tiempo por letras
-split = []
-for x in out:
-    i = x["text"].find("¿")
-    if i > 0:
-        a_, b_ = x["text"][:i], x["text"][i:]
-        mid = round(x["start"] + (x["end"] - x["start"]) * len(a_) / len(x["text"]), 3)
-        split += [dict(text=a_, start=x["start"], end=mid), dict(text=b_, start=mid, end=x["end"])]
-    else:
-        split.append(x)
-out = split
 for k, x in enumerate(out):
     x["id"] = f"w{k}"
 json.dump(out, open("transcript.json", "w"), ensure_ascii=False, indent=1)

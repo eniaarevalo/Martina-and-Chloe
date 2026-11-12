@@ -19,6 +19,22 @@ tail = [s for s in starts if s > dur - 3]
 if tail:
     w = [x for x in w if x["start"] < tail[-1]]
 
+import unicodedata
+def _plain(t):
+    return "".join(c for c in unicodedata.normalize("NFD", t.lower()) if unicodedata.category(c) != "Mn")
+GUION = set(re.findall(r"\w+", _plain(open("guion.txt").read()))) if os.path.exists("guion.txt") else set()
+# «costas.¿Y» -> «costas.» + «¿Y»: se parte donde empieza la pregunta, repartiendo el tiempo por letras
+split = []
+for x in w:
+    i = x["text"].find("¿")
+    if i > 0:
+        a_, b_ = x["text"][:i], x["text"][i:]
+        mid = round(x["start"] + (x["end"] - x["start"]) * len(a_) / len(x["text"]), 3)
+        split += [dict(text=a_, start=x["start"], end=mid), dict(text=b_, start=mid, end=x["end"])]
+    else:
+        split.append(x)
+w = split
+
 BLOQUE = {"1": "Uno", "2": "Dos", "3": "Tres", "4": "Cuatro"}
 SPELL = {"Zeki": "Zequi", "Zeki,": "Zequi,"}
 out = []
@@ -52,27 +68,17 @@ for x in w:
         mid = round(x["start"] + (x["end"] - x["start"]) * 0.35, 3)
         out.append(dict(text="Y", start=x["start"], end=mid))
         x = dict(text="abajo", start=mid, end=x["end"])
-    if x["text"] in ("Yde", "Yjusto"):
+    _w = re.sub(r"\W", "", _plain(x["text"]))
+    if (x["text"][:1] == "Y" and len(_w) > 2 and _w not in GUION and _w[1:] in GUION) or x["text"] in ("Yde", "Yjusto"):
         x["text"] = "Yque" if False else x["text"]
         mid = round(x["start"] + (x["end"] - x["start"]) * 0.3, 3)
         out.append(dict(text="Y", start=x["start"], end=mid))
-        x = dict(text=x["text"][1:], start=mid, end=x["end"])
+        x = dict(text=x["text"][1:].lstrip(), start=mid, end=x["end"])
     if x["text"] == "Yque":  # palabras pegadas: se reparte el tiempo
         mid = round(x["start"] + (x["end"] - x["start"]) * 0.35, 3)
         out.append(dict(text="Y", start=x["start"], end=mid))
         x = dict(text="que", start=mid, end=x["end"])
     out.append(x)
-# «costas.¿Y» -> «costas.» + «¿Y»: se parte donde empieza la pregunta, repartiendo el tiempo por letras
-split = []
-for x in out:
-    i = x["text"].find("¿")
-    if i > 0:
-        a_, b_ = x["text"][:i], x["text"][i:]
-        mid = round(x["start"] + (x["end"] - x["start"]) * len(a_) / len(x["text"]), 3)
-        split += [dict(text=a_, start=x["start"], end=mid), dict(text=b_, start=mid, end=x["end"])]
-    else:
-        split.append(x)
-out = split
 for k, x in enumerate(out):
     x["id"] = f"w{k}"
 json.dump(out, open("transcript.json", "w"), ensure_ascii=False, indent=1)
