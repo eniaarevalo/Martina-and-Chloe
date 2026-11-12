@@ -36,6 +36,7 @@ def norm(s):
 
 
 NW = [norm(w["text"]) for w in WORDS]
+SYNC = {}
 
 
 def P(word, n=1):
@@ -44,7 +45,9 @@ def P(word, n=1):
     hits = [i for i in range(len(NW)) if NW[i:i + len(seq)] == seq]
     if len(hits) < n:
         raise SystemExit(f'P("{word}", {n}): solo aparece {len(hits)} veces en la voz')
-    return round(WORDS[hits[n - 1]]["start"], 3)
+    t = round(WORDS[hits[n - 1]]["start"], 3)
+    SYNC.setdefault(f"{word}#{n}", dict(palabra=WORDS[hits[n - 1]]["text"], vez=n, empieza=t))
+    return t
 
 
 def E(word, n=1):
@@ -56,6 +59,7 @@ def E(word, n=1):
 
 # ---------------------------------------------------------------- estilo
 GOOD, BAD, ACC, INK = "#22c55e", "#ef4444", "#ffd43b", "#0f1115"
+GOOD_BG = "#15803d"  # verde para fondos con texto blanco (contraste AA)
 FONT = "Inter"
 
 # ---------------------------------------------------------------- mundo (lienzo gigante)
@@ -434,7 +438,7 @@ def scene_idea():
     sfx(t_perc, "pop2", 0.3)
     floaty("#chat", t_perc, DUR, 6)
     # el bloque entero
-    cam(t_perc + 0.15, (COLX[0], ROWY["1"], 2120, CH), dur=0.6)
+    cam(t_perc + 0.15, (COLX[0], ROWY["1"], 2120, CH), dur=0.45)
 
 
 # ================================================================= HTML
@@ -446,6 +450,8 @@ STYLE = f"""
   background-size: 90px 90px; }}
 #glow {{ position:absolute; left:-200px; right:-200px; bottom:-500px; height:1200px;
   background: radial-gradient(ellipse at 50% 70%, rgba(92,108,255,0.38), rgba(46,196,182,0.12) 45%, transparent 70%); }}
+#scrim {{ position:absolute; left:0; right:0; top:0; height:470px; pointer-events:none;
+  background:linear-gradient(rgba(7,8,11,0.92) 0%, rgba(7,8,11,0.8) 55%, rgba(7,8,11,0) 100%); }}
 #shake {{ position:absolute; left:0; top:0; width:1080px; height:1920px; }}
 #wd {{ position:absolute; left:0; top:0; width:2200px; height:6600px; }}
 .room {{ background:linear-gradient(#13151c,#0f1117); border:6px solid rgba(255,255,255,0.10); border-bottom:14px solid rgba(255,255,255,0.16); border-radius:10px; }}
@@ -463,7 +469,7 @@ STYLE = f"""
 .bbsub {{ font:700 90px {FONT}; color:#666; margin-top:20px; }}
 .card {{ border-radius:40px; box-shadow:0 24px 60px rgba(0,0,0,0.45); overflow:visible; }}
 .stamp {{ font:900 64px {FONT}; border:8px solid; border-radius:20px; padding:4px 22px; background:rgba(255,255,255,0.92); }}
-.pill {{ font:900 50px {FONT}; padding:6px 24px; border-radius:999px; }}
+.pill {{ font:900 50px {FONT}; padding:6px 24px; border-radius:999px; white-space:nowrap; }}
 .badge {{ position:absolute; left:0; top:0; width:140px; height:140px; border-radius:50%; font:900 96px {FONT};
   color:{INK}; text-align:center; line-height:140px; }}
 .htitle {{ position:absolute; left:170px; top:14px; font:900 100px {FONT}; color:#fff; letter-spacing:-2px; white-space:nowrap; }}
@@ -484,7 +490,37 @@ STYLE = f"""
 .typing {{ position:absolute; left:40px; top:180px; background:#fff; border-radius:30px; padding:22px 30px; display:flex; gap:14px; opacity:0; }}
 .typing span {{ width:22px; height:22px; border-radius:50%; background:#9aa3b2; display:block; }}
 .bubble {{ position:absolute; background:#fff; border-radius:34px; padding:26px 34px; box-shadow:0 8px 24px rgba(0,0,0,0.08); }}
-.ch {{ opacity:0; }}
+.ch, .qc, .pc, .cc {{ opacity:0; }}
+.avatar {{ position:relative; border-radius:50%; overflow:hidden; background:#e8ecf4; }}
+.over {{ position:absolute; left:0; top:0; }}
+.badge .over {{ width:100%; text-align:center; }}
+.ph {{ border:6px dashed rgba(255,255,255,0.25); border-radius:40px; }}
+.sticker {{ border-radius:50%; background:#fff; box-shadow:0 14px 30px rgba(0,0,0,0.35); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; }}
+.stlab {{ font:900 30px {FONT}; color:{INK}; margin-top:-4px; }}
+.xdot {{ border-radius:50%; background:{BAD}; display:flex; align-items:center; justify-content:center; }}
+.bubble.big {{ padding:30px 40px; box-shadow:0 20px 50px rgba(0,0,0,0.4); }}
+.tail {{ position:absolute; left:120px; top:-28px; width:0; height:0; border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:34px solid #fff; }}
+.tail.l {{ left:-30px; top:auto; bottom:30px; border-left:none; border-bottom:24px solid transparent; border-top:24px solid transparent; border-right:34px solid #fff; }}
+.sofa {{ background:#3b3f73; border-radius:60px 60px 20px 20px; border-top:60px solid #4b4f8a; }}
+.lamp {{ border-left:10px solid #555a66; margin-left:40px; }}
+#vc-sign {{ border-radius:30px; background:#141621; border:8px solid #3a3f55; text-align:center; font:900 96px {FONT}; line-height:114px; color:#7a809c; }}
+#vc-on {{ width:100%; color:#ff4fd8; text-shadow:0 0 18px rgba(255,79,216,0.7); }}
+.tape {{ position:absolute; width:48px; height:100px; border-radius:6px; box-shadow:inset 0 -18px 0 rgba(0,0,0,0.25); }}
+#shelves {{ background:#3a2a1c; border-radius:16px; border:10px solid #5a4028; }}
+#tv {{ background:#2a2e3a; border-radius:60px; box-shadow:0 30px 80px rgba(0,0,0,0.5); }}
+#tv .screen {{ position:absolute; left:40px; top:40px; right:170px; bottom:40px; border-radius:40px; background:#0b0d14;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; }}
+#tv .ant {{ position:absolute; top:-80px; width:10px; height:100px; background:#8b93a7; border-radius:5px; }}
+#tv .a1 {{ left:330px; transform-origin:50% 100%; rotate:-25deg; }}
+#tv .a2 {{ left:520px; transform-origin:50% 100%; rotate:25deg; }}
+#tv .knob {{ position:absolute; right:50px; width:80px; height:80px; border-radius:50%; background:#8b93a7; }}
+#tv .k1 {{ top:120px; }} #tv .k2 {{ top:260px; }}
+.cbox {{ position:absolute; left:80px; right:80px; top:240px; height:250px; border-radius:40px; background:#f1f3f6;
+  display:flex; align-items:center; gap:36px; padding-left:40px; }}
+.cav {{ width:170px; height:170px; border-radius:50%; background:#6366f1; display:flex; align-items:center; justify-content:center; flex:none; }}
+.caret {{ display:inline-block; width:10px; height:110px; background:{INK}; vertical-align:-14px; margin-left:8px; }}
+.cbtn {{ position:absolute; right:80px; bottom:70px; padding:24px 70px; border-radius:999px; background:{GOOD_BG}; color:#fff; font:900 100px {FONT}; }}
 """
 
 LIB_JS = """
@@ -544,9 +580,16 @@ function typeOn(sel, t0, t1) {
 
 
 def build_world():
+    sys.modules["gen"] = sys.modules[__name__]
+    import scenes2
     building()
     scene_hook()
     scene_idea()
+    scenes2.scene_ambient()
+    scenes2.scene_castings()
+    scenes2.scene_tejero()
+    scenes2.scene_estreno()
+    scenes2.scene_final()
     # partículas flotando (pantalla) para que nunca haya imagen congelada
     parts = "".join(
         f'<div class="pt" data-layout-ignore style="position:absolute;left:{(i * 137) % 1040 + 20}px;top:{(i * 263) % 1800 + 60}px;'
@@ -568,6 +611,7 @@ def build_world():
       {chr(10).join(HTML)}
     </div>
   </div>
+  <div id="scrim" data-layout-ignore></div>
 </div>
 <script>
 {LIB_JS % json.dumps(PIVOT)}
@@ -637,8 +681,8 @@ def build_captions():
             cls = "w"
             style = ""
             if key is w:
-                col = BAD if w["n"] in KEY_BAD else GOOD if w["n"] in KEY_GOOD else ACC
-                txtcol = "#fff" if col in (BAD, GOOD) else INK
+                col = BAD if w["n"] in KEY_BAD else GOOD_BG if w["n"] in KEY_GOOD else ACC
+                txtcol = "#fff" if col in (BAD, GOOD_BG) else INK
                 style = f'background:{col};color:{txtcol};'
                 cls += " key"
             spans.append(f'<span id="cw{gi}-{wi}" class="{cls}" style="{style}">{w["text"]}</span>')
@@ -712,4 +756,9 @@ if __name__ == "__main__":
     build_captions()
     build_index()
     json.dump(dict(duration=DUR, cues=sorted(SFX, key=lambda c: c["t"])), open("assets/sfx-cues.json", "w"), indent=1)
+    js_all = open("compositions/world.html").read()
+    rows = sorted(SYNC.values(), key=lambda r: r["empieza"])
+    missing = [r for r in rows if f"{r['empieza']:.3f}" not in js_all and f"{r['empieza'] - 0.15:.3f}" not in js_all]
+    json.dump(rows, open("assets/sync.json", "w"), ensure_ascii=False, indent=1)
+    print(f"Sincronía: {len(rows)} anclajes a palabras · sin animación en su instante exacto: {len(missing)}")
     print(f"OK · {DUR:.2f}s · {len(JS)} tweens · {len(SFX)} efectos · subtítulos={'no' if SIN_SUBS else 'sí'}")

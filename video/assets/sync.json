@@ -1,0 +1,297 @@
+[
+ {
+  "palabra": "Juan",
+  "vez": 1,
+  "empieza": 0.28
+ },
+ {
+  "palabra": "casi",
+  "vez": 1,
+  "empieza": 0.7
+ },
+ {
+  "palabra": "José",
+  "vez": 1,
+  "empieza": 1.33
+ },
+ {
+  "palabra": "y",
+  "vez": 1,
+  "empieza": 2.18
+ },
+ {
+  "palabra": "Emilio",
+  "vez": 1,
+  "empieza": 2.43
+ },
+ {
+  "palabra": "no",
+  "vez": 2,
+  "empieza": 2.73
+ },
+ {
+  "palabra": "portero.",
+  "vez": 1,
+  "empieza": 3.5
+ },
+ {
+  "palabra": "Uno:",
+  "vez": 1,
+  "empieza": 4.47
+ },
+ {
+  "palabra": "idea.",
+  "vez": 1,
+  "empieza": 4.87
+ },
+ {
+  "palabra": "1999,",
+  "vez": 1,
+  "empieza": 5.67
+ },
+ {
+  "palabra": "Alberto",
+  "vez": 1,
+  "empieza": 6.81
+ },
+ {
+  "palabra": "ofreció",
+  "vez": 1,
+  "empieza": 8.46
+ },
+ {
+  "palabra": "RTVE.",
+  "vez": 1,
+  "empieza": 9.24
+ },
+ {
+  "palabra": "sí,",
+  "vez": 1,
+  "empieza": 10.51
+ },
+ {
+  "palabra": "guardaron",
+  "vez": 1,
+  "empieza": 10.95
+ },
+ {
+  "palabra": "dos",
+  "vez": 1,
+  "empieza": 11.56
+ },
+ {
+  "palabra": "cajón.",
+  "vez": 1,
+  "empieza": 12.29
+ },
+ {
+  "palabra": "Acabó",
+  "vez": 1,
+  "empieza": 13.3
+ },
+ {
+  "palabra": "Antena",
+  "vez": 1,
+  "empieza": 13.58
+ },
+ {
+  "palabra": "donde",
+  "vez": 1,
+  "empieza": 14.22
+ },
+ {
+  "palabra": "llamaban,",
+  "vez": 1,
+  "empieza": 14.75
+ },
+ {
+  "palabra": "Percebe.",
+  "vez": 1,
+  "empieza": 16.39
+ },
+ {
+  "palabra": "Dos:",
+  "vez": 2,
+  "empieza": 17.48
+ },
+ {
+  "palabra": "iban",
+  "vez": 1,
+  "empieza": 18.06
+ },
+ {
+  "palabra": "Juan",
+  "vez": 2,
+  "empieza": 19.1
+ },
+ {
+  "palabra": "Pablo",
+  "vez": 1,
+  "empieza": 19.9
+ },
+ {
+  "palabra": "cine.",
+  "vez": 1,
+  "empieza": 21.82
+ },
+ {
+  "palabra": "Vicenta",
+  "vez": 1,
+  "empieza": 22.66
+ },
+ {
+  "palabra": "María",
+  "vez": 1,
+  "empieza": 23.15
+ },
+ {
+  "palabra": "guión",
+  "vez": 1,
+  "empieza": 25
+ },
+ {
+  "palabra": "yo",
+  "vez": 1,
+  "empieza": 25.62
+ },
+ {
+  "palabra": "Luis",
+  "vez": 2,
+  "empieza": 26.98
+ },
+ {
+  "palabra": "rechazó",
+  "vez": 1,
+  "empieza": 27.54
+ },
+ {
+  "palabra": "Mauri",
+  "vez": 1,
+  "empieza": 28.02
+ },
+ {
+  "palabra": "cuatro",
+  "vez": 1,
+  "empieza": 28.39
+ },
+ {
+  "palabra": "Tres:",
+  "vez": 1,
+  "empieza": 29.71
+ },
+ {
+  "palabra": "acabaron",
+  "vez": 1,
+  "empieza": 30.32
+ },
+ {
+  "palabra": "Fernando",
+  "vez": 1,
+  "empieza": 31.38
+ },
+ {
+  "palabra": "Paco,",
+  "vez": 1,
+  "empieza": 32.8
+ },
+ {
+  "palabra": "videoclub.",
+  "vez": 1,
+  "empieza": 33.52
+ },
+ {
+  "palabra": "Pidió",
+  "vez": 1,
+  "empieza": 34.64
+ },
+ {
+  "palabra": "portero,",
+  "vez": 2,
+  "empieza": 35.13
+ },
+ {
+  "palabra": "tres",
+  "vez": 2,
+  "empieza": 35.97
+ },
+ {
+  "palabra": "Emilio.",
+  "vez": 2,
+  "empieza": 36.68
+ },
+ {
+  "palabra": "Cuatro:",
+  "vez": 2,
+  "empieza": 37.56
+ },
+ {
+  "palabra": "estreno.",
+  "vez": 1,
+  "empieza": 37.92
+ },
+ {
+  "palabra": "septiembre",
+  "vez": 1,
+  "empieza": 39.04
+ },
+ {
+  "palabra": "2003",
+  "vez": 1,
+  "empieza": 39.53
+ },
+ {
+  "palabra": "dos",
+  "vez": 3,
+  "empieza": 40.6
+ },
+ {
+  "palabra": "noviembre,",
+  "vez": 1,
+  "empieza": 42.16
+ },
+ {
+  "palabra": "7,3",
+  "vez": 1,
+  "empieza": 42.84
+ },
+ {
+  "palabra": "40%",
+  "vez": 1,
+  "empieza": 44.59
+ },
+ {
+  "palabra": "Veinte",
+  "vez": 1,
+  "empieza": 46.3
+ },
+ {
+  "palabra": "después,",
+  "vez": 1,
+  "empieza": 46.6
+ },
+ {
+  "palabra": "5,9",
+  "vez": 1,
+  "empieza": 47.75
+ },
+ {
+  "palabra": "personas",
+  "vez": 1,
+  "empieza": 48.97
+ },
+ {
+  "palabra": "Comenta",
+  "vez": 1,
+  "empieza": 50.5
+ },
+ {
+  "palabra": "Desengaño",
+  "vez": 1,
+  "empieza": 51.33
+ },
+ {
+  "palabra": "serías",
+  "vez": 1,
+  "empieza": 52.3
+ }
+]
