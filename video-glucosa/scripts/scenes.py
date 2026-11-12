@@ -261,7 +261,7 @@ def scene_importa():
     card("st21", fx + 440, fy + 640, 520, 230, f'''
       <div style="position:absolute;left:30px;top:30px">{icon("users", 90, INK, 2.2)}</div>
       <div style="position:absolute;left:140px;top:24px;font:900 64px {FONT};color:{INK}">2021</div>
-      <div style="position:absolute;left:140px;top:110px;font:800 50px {FONT};color:#555">1.070 personas</div>''')
+      <div style="position:absolute;left:140px;top:112px;font:800 46px {FONT};color:#555;white-space:nowrap">1.070 personas</div>''')
     for i, txt in enumerate(["Más hambre", "Más calorías"]):
         add(f'''<div id="hn{i}" class="notif" style="{css_box(fx + 440, fy + 900 + i * 0, 520, 110, 8)}">
           <div class="nicon" style="background:{BAD}">{icon("cookie", 54, "#fff", 2.6)}</div><span>{txt}</span></div>''')
