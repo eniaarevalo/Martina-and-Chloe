@@ -1,0 +1,974 @@
+[
+ {
+  "text": "Cuando",
+  "start": 0.29,
+  "end": 0.32,
+  "id": "w0"
+ },
+ {
+  "text": "compras",
+  "start": 0.32,
+  "end": 0.68,
+  "id": "w1"
+ },
+ {
+  "text": "un",
+  "start": 0.73,
+  "end": 0.8,
+  "id": "w2"
+ },
+ {
+  "text": "cachorro,",
+  "start": 0.8,
+  "end": 1.31,
+  "id": "w3"
+ },
+ {
+  "text": "puede",
+  "start": 1.31,
+  "end": 1.5,
+  "id": "w4"
+ },
+ {
+  "text": "que",
+  "start": 1.71,
+  "end": 1.75,
+  "id": "w5"
+ },
+ {
+  "text": "estés",
+  "start": 1.75,
+  "end": 2.01,
+  "id": "w6"
+ },
+ {
+  "text": "pagando",
+  "start": 2.01,
+  "end": 2.38,
+  "id": "w7"
+ },
+ {
+  "text": "la",
+  "start": 2.38,
+  "end": 2.49,
+  "id": "w8"
+ },
+ {
+  "text": "explotación",
+  "start": 2.49,
+  "end": 3.03,
+  "id": "w9"
+ },
+ {
+  "text": "de",
+  "start": 3.08,
+  "end": 3.13,
+  "id": "w10"
+ },
+ {
+  "text": "su",
+  "start": 3.22,
+  "end": 3.29,
+  "id": "w11"
+ },
+ {
+  "text": "madre.",
+  "start": 3.29,
+  "end": 3.84,
+  "id": "w12"
+ },
+ {
+  "text": "Y",
+  "start": 3.84,
+  "end": 3.922,
+  "id": "w13"
+ },
+ {
+  "text": "hay",
+  "start": 3.922,
+  "end": 4.115,
+  "id": "w14"
+ },
+ {
+  "text": "más",
+  "start": 4.115,
+  "end": 4.39,
+  "id": "w15"
+ },
+ {
+  "text": "motivos",
+  "start": 4.39,
+  "end": 4.6,
+  "id": "w16"
+ },
+ {
+  "text": "para",
+  "start": 4.68,
+  "end": 4.91,
+  "id": "w17"
+ },
+ {
+  "text": "adoptar",
+  "start": 4.91,
+  "end": 5.34,
+  "id": "w18"
+ },
+ {
+  "text": "de",
+  "start": 5.34,
+  "end": 5.46,
+  "id": "w19"
+ },
+ {
+  "text": "los",
+  "start": 5.46,
+  "end": 5.6,
+  "id": "w20"
+ },
+ {
+  "text": "que",
+  "start": 5.6,
+  "end": 5.82,
+  "id": "w21"
+ },
+ {
+  "text": "crees.",
+  "start": 5.82,
+  "end": 6.34,
+  "id": "w22"
+ },
+ {
+  "text": "Uno:",
+  "start": 6.58,
+  "end": 6.76,
+  "id": "w23"
+ },
+ {
+  "text": "La",
+  "start": 6.87,
+  "end": 6.89,
+  "id": "w24"
+ },
+ {
+  "text": "madre.",
+  "start": 6.89,
+  "end": 7.44,
+  "id": "w25"
+ },
+ {
+  "text": "En",
+  "start": 7.44,
+  "end": 7.745,
+  "id": "w26"
+ },
+ {
+  "text": "muchos",
+  "start": 7.745,
+  "end": 8.05,
+  "id": "w27"
+ },
+ {
+  "text": "criaderos,",
+  "start": 8.05,
+  "end": 8.64,
+  "id": "w28"
+ },
+ {
+  "text": "las",
+  "start": 8.64,
+  "end": 8.83,
+  "id": "w29"
+ },
+ {
+  "text": "perras",
+  "start": 8.83,
+  "end": 9.21,
+  "id": "w30"
+ },
+ {
+  "text": "y",
+  "start": 9.21,
+  "end": 9.26,
+  "id": "w31"
+ },
+ {
+  "text": "gatas",
+  "start": 9.33,
+  "end": 9.58,
+  "id": "w32"
+ },
+ {
+  "text": "pasan",
+  "start": 9.58,
+  "end": 9.83,
+  "id": "w33"
+ },
+ {
+  "text": "la",
+  "start": 9.9,
+  "end": 10.01,
+  "id": "w34"
+ },
+ {
+  "text": "vida",
+  "start": 10.08,
+  "end": 10.28,
+  "id": "w35"
+ },
+ {
+  "text": "en",
+  "start": 10.28,
+  "end": 10.41,
+  "id": "w36"
+ },
+ {
+  "text": "jaulas,",
+  "start": 10.41,
+  "end": 11.02,
+  "id": "w37"
+ },
+ {
+  "text": "pariendo",
+  "start": 11.02,
+  "end": 11.48,
+  "id": "w38"
+ },
+ {
+  "text": "camada",
+  "start": 11.48,
+  "end": 11.67,
+  "id": "w39"
+ },
+ {
+  "text": "tras",
+  "start": 11.87,
+  "end": 12.05,
+  "id": "w40"
+ },
+ {
+  "text": "camada.",
+  "start": 12.05,
+  "end": 12.6,
+  "id": "w41"
+ },
+ {
+  "text": "Y",
+  "start": 12.84,
+  "end": 12.9,
+  "id": "w42"
+ },
+ {
+  "text": "cuando",
+  "start": 12.9,
+  "end": 13.04,
+  "id": "w43"
+ },
+ {
+  "text": "dejan",
+  "start": 13.13,
+  "end": 13.34,
+  "id": "w44"
+ },
+ {
+  "text": "de",
+  "start": 13.42,
+  "end": 13.47,
+  "id": "w45"
+ },
+ {
+  "text": "ser",
+  "start": 13.47,
+  "end": 13.65,
+  "id": "w46"
+ },
+ {
+  "text": "rentables,",
+  "start": 13.65,
+  "end": 14.34,
+  "id": "w47"
+ },
+ {
+  "text": "muchas",
+  "start": 14.56,
+  "end": 14.73,
+  "id": "w48"
+ },
+ {
+  "text": "acaban",
+  "start": 14.73,
+  "end": 15.09,
+  "id": "w49"
+ },
+ {
+  "text": "abandonadas.",
+  "start": 15.16,
+  "end": 16.08,
+  "id": "w50"
+ },
+ {
+  "text": "En",
+  "start": 16.08,
+  "end": 16.58,
+  "id": "w51"
+ },
+ {
+  "text": "2026,",
+  "start": 16.58,
+  "end": 17.08,
+  "id": "w52"
+ },
+ {
+  "text": "la",
+  "start": 17.08,
+  "end": 17.2,
+  "id": "w53"
+ },
+ {
+  "text": "Guardia",
+  "start": 17.2,
+  "end": 17.64,
+  "id": "w54"
+ },
+ {
+  "text": "Civil",
+  "start": 17.64,
+  "end": 17.84,
+  "id": "w55"
+ },
+ {
+  "text": "rescató",
+  "start": 18.05,
+  "end": 18.39,
+  "id": "w56"
+ },
+ {
+  "text": "a",
+  "start": 18.39,
+  "end": 18.4,
+  "id": "w57"
+ },
+ {
+  "text": "más",
+  "start": 18.48,
+  "end": 18.59,
+  "id": "w58"
+ },
+ {
+  "text": "de",
+  "start": 18.66,
+  "end": 18.75,
+  "id": "w59"
+ },
+ {
+  "text": "300",
+  "start": 18.75,
+  "end": 19.34,
+  "id": "w60"
+ },
+ {
+  "text": "perros",
+  "start": 19.34,
+  "end": 19.72,
+  "id": "w61"
+ },
+ {
+  "text": "de",
+  "start": 19.72,
+  "end": 19.84,
+  "id": "w62"
+ },
+ {
+  "text": "un",
+  "start": 19.84,
+  "end": 19.96,
+  "id": "w63"
+ },
+ {
+  "text": "solo",
+  "start": 19.96,
+  "end": 20.21,
+  "id": "w64"
+ },
+ {
+  "text": "criadero",
+  "start": 20.21,
+  "end": 20.71,
+  "id": "w65"
+ },
+ {
+  "text": "en",
+  "start": 20.71,
+  "end": 20.82,
+  "id": "w66"
+ },
+ {
+  "text": "Gijón.",
+  "start": 20.84,
+  "end": 21.52,
+  "id": "w67"
+ },
+ {
+  "text": "Dos:",
+  "start": 21.82,
+  "end": 21.98,
+  "id": "w68"
+ },
+ {
+  "text": "El",
+  "start": 22.11,
+  "end": 22.13,
+  "id": "w69"
+ },
+ {
+  "text": "cachorro.",
+  "start": 22.13,
+  "end": 22.95,
+  "id": "w70"
+ },
+ {
+  "text": "Muchos",
+  "start": 23.28,
+  "end": 23.32,
+  "id": "w71"
+ },
+ {
+  "text": "llegan",
+  "start": 23.55,
+  "end": 23.66,
+  "id": "w72"
+ },
+ {
+  "text": "en",
+  "start": 23.66,
+  "end": 23.77,
+  "id": "w73"
+ },
+ {
+  "text": "camiones",
+  "start": 23.77,
+  "end": 24.22,
+  "id": "w74"
+ },
+ {
+  "text": "desde",
+  "start": 24.22,
+  "end": 24.49,
+  "id": "w75"
+ },
+ {
+  "text": "Europa",
+  "start": 24.5,
+  "end": 24.78,
+  "id": "w76"
+ },
+ {
+  "text": "del",
+  "start": 24.99,
+  "end": 25.01,
+  "id": "w77"
+ },
+ {
+  "text": "Este,",
+  "start": 25.01,
+  "end": 25.34,
+  "id": "w78"
+ },
+ {
+  "text": "tras",
+  "start": 25.34,
+  "end": 25.53,
+  "id": "w79"
+ },
+ {
+  "text": "viajes",
+  "start": 25.6,
+  "end": 25.92,
+  "id": "w80"
+ },
+ {
+  "text": "de",
+  "start": 25.92,
+  "end": 26.03,
+  "id": "w81"
+ },
+ {
+  "text": "más",
+  "start": 26.03,
+  "end": 26.15,
+  "id": "w82"
+ },
+ {
+  "text": "de",
+  "start": 26.21,
+  "end": 26.31,
+  "id": "w83"
+ },
+ {
+  "text": "15",
+  "start": 26.31,
+  "end": 26.65,
+  "id": "w84"
+ },
+ {
+  "text": "horas.",
+  "start": 26.65,
+  "end": 27.17,
+  "id": "w85"
+ },
+ {
+  "text": "Con",
+  "start": 27.17,
+  "end": 27.47,
+  "id": "w86"
+ },
+ {
+  "text": "papeles",
+  "start": 27.47,
+  "end": 27.81,
+  "id": "w87"
+ },
+ {
+  "text": "falsos,",
+  "start": 27.81,
+  "end": 28.3,
+  "id": "w88"
+ },
+ {
+  "text": "y",
+  "start": 28.3,
+  "end": 28.31,
+  "id": "w89"
+ },
+ {
+  "text": "a",
+  "start": 28.36,
+  "end": 28.42,
+  "id": "w90"
+ },
+ {
+  "text": "veces",
+  "start": 28.42,
+  "end": 28.68,
+  "id": "w91"
+ },
+ {
+  "text": "con",
+  "start": 28.89,
+  "end": 28.93,
+  "id": "w92"
+ },
+ {
+  "text": "enfermedades",
+  "start": 28.93,
+  "end": 29.69,
+  "id": "w93"
+ },
+ {
+  "text": "como",
+  "start": 29.69,
+  "end": 29.94,
+  "id": "w94"
+ },
+ {
+  "text": "el",
+  "start": 29.94,
+  "end": 30.05,
+  "id": "w95"
+ },
+ {
+  "text": "parvovirus.",
+  "start": 30.11,
+  "end": 31,
+  "id": "w96"
+ },
+ {
+  "text": "Tres:",
+  "start": 31.23,
+  "end": 31.46,
+  "id": "w97"
+ },
+ {
+  "text": "El",
+  "start": 31.49,
+  "end": 31.61,
+  "id": "w98"
+ },
+ {
+  "text": "abandono.",
+  "start": 31.61,
+  "end": 32.46,
+  "id": "w99"
+ },
+ {
+  "text": "En",
+  "start": 32.46,
+  "end": 32.93,
+  "id": "w100"
+ },
+ {
+  "text": "2025,",
+  "start": 32.93,
+  "end": 33.5,
+  "id": "w101"
+ },
+ {
+  "text": "las",
+  "start": 33.5,
+  "end": 33.68,
+  "id": "w102"
+ },
+ {
+  "text": "protectoras",
+  "start": 33.69,
+  "end": 34.4,
+  "id": "w103"
+ },
+ {
+  "text": "de",
+  "start": 34.4,
+  "end": 34.53,
+  "id": "w104"
+ },
+ {
+  "text": "España",
+  "start": 34.53,
+  "end": 34.89,
+  "id": "w105"
+ },
+ {
+  "text": "recogieron",
+  "start": 34.96,
+  "end": 35.5,
+  "id": "w106"
+ },
+ {
+  "text": "más",
+  "start": 35.57,
+  "end": 35.75,
+  "id": "w107"
+ },
+ {
+  "text": "de",
+  "start": 35.75,
+  "end": 35.88,
+  "id": "w108"
+ },
+ {
+  "text": "285.000",
+  "start": 35.88,
+  "end": 37.23,
+  "id": "w109"
+ },
+ {
+  "text": "perros",
+  "start": 37.23,
+  "end": 37.59,
+  "id": "w110"
+ },
+ {
+  "text": "y",
+  "start": 37.59,
+  "end": 37.67,
+  "id": "w111"
+ },
+ {
+  "text": "gatos.",
+  "start": 37.67,
+  "end": 38.26,
+  "id": "w112"
+ },
+ {
+  "text": "Y",
+  "start": 38.26,
+  "end": 38.437,
+  "id": "w113"
+ },
+ {
+  "text": "la",
+  "start": 38.437,
+  "end": 38.85,
+  "id": "w114"
+ },
+ {
+  "text": "primera",
+  "start": 38.85,
+  "end": 38.93,
+  "id": "w115"
+ },
+ {
+  "text": "causa",
+  "start": 38.93,
+  "end": 39.24,
+  "id": "w116"
+ },
+ {
+  "text": "son",
+  "start": 39.29,
+  "end": 39.45,
+  "id": "w117"
+ },
+ {
+  "text": "las",
+  "start": 39.47,
+  "end": 39.67,
+  "id": "w118"
+ },
+ {
+  "text": "camadas",
+  "start": 39.67,
+  "end": 40.06,
+  "id": "w119"
+ },
+ {
+  "text": "no",
+  "start": 40.06,
+  "end": 40.28,
+  "id": "w120"
+ },
+ {
+  "text": "deseadas.",
+  "start": 40.28,
+  "end": 41.1,
+  "id": "w121"
+ },
+ {
+  "text": "Adoptar",
+  "start": 41.38,
+  "end": 41.63,
+  "id": "w122"
+ },
+ {
+  "text": "y",
+  "start": 41.67,
+  "end": 41.7,
+  "id": "w123"
+ },
+ {
+  "text": "esterilizar",
+  "start": 41.7,
+  "end": 42.51,
+  "id": "w124"
+ },
+ {
+  "text": "corta",
+  "start": 42.56,
+  "end": 42.88,
+  "id": "w125"
+ },
+ {
+  "text": "el",
+  "start": 42.88,
+  "end": 43.1,
+  "id": "w126"
+ },
+ {
+  "text": "ciclo.",
+  "start": 43.1,
+  "end": 43.78,
+  "id": "w127"
+ },
+ {
+  "text": "La",
+  "start": 43.78,
+  "end": 43.957,
+  "id": "w128"
+ },
+ {
+  "text": "ley",
+  "start": 43.957,
+  "end": 44.133,
+  "id": "w129"
+ },
+ {
+  "text": "de",
+  "start": 44.133,
+  "end": 44.31,
+  "id": "w130"
+ },
+ {
+  "text": "bienestar",
+  "start": 44.31,
+  "end": 44.76,
+  "id": "w131"
+ },
+ {
+  "text": "animal",
+  "start": 44.76,
+  "end": 45.13,
+  "id": "w132"
+ },
+ {
+  "text": "ya",
+  "start": 45.13,
+  "end": 45.25,
+  "id": "w133"
+ },
+ {
+  "text": "prohíbe",
+  "start": 45.25,
+  "end": 45.67,
+  "id": "w134"
+ },
+ {
+  "text": "vender",
+  "start": 45.73,
+  "end": 46.04,
+  "id": "w135"
+ },
+ {
+  "text": "perros",
+  "start": 46.04,
+  "end": 46.4,
+  "id": "w136"
+ },
+ {
+  "text": "y",
+  "start": 46.4,
+  "end": 46.46,
+  "id": "w137"
+ },
+ {
+  "text": "gatos",
+  "start": 46.46,
+  "end": 46.76,
+  "id": "w138"
+ },
+ {
+  "text": "en",
+  "start": 46.76,
+  "end": 46.88,
+  "id": "w139"
+ },
+ {
+  "text": "tiendas.",
+  "start": 46.88,
+  "end": 47.6,
+  "id": "w140"
+ },
+ {
+  "text": "Pero",
+  "start": 47.6,
+  "end": 47.855,
+  "id": "w141"
+ },
+ {
+  "text": "el",
+  "start": 47.855,
+  "end": 48.11,
+  "id": "w142"
+ },
+ {
+  "text": "negocio",
+  "start": 48.11,
+  "end": 48.28,
+  "id": "w143"
+ },
+ {
+  "text": "sigue",
+  "start": 48.28,
+  "end": 48.52,
+  "id": "w144"
+ },
+ {
+  "text": "mientras",
+  "start": 48.57,
+  "end": 48.96,
+  "id": "w145"
+ },
+ {
+  "text": "haya",
+  "start": 48.96,
+  "end": 49.17,
+  "id": "w146"
+ },
+ {
+  "text": "quien",
+  "start": 49.17,
+  "end": 49.34,
+  "id": "w147"
+ },
+ {
+  "text": "compra.",
+  "start": 49.56,
+  "end": 49.9,
+  "id": "w148"
+ },
+ {
+  "text": "Adopta,",
+  "start": 50.28,
+  "end": 50.52,
+  "id": "w149"
+ },
+ {
+  "text": "no",
+  "start": 50.57,
+  "end": 50.66,
+  "id": "w150"
+ },
+ {
+  "text": "compres.",
+  "start": 50.66,
+  "end": 51.41,
+  "id": "w151"
+ },
+ {
+  "text": "Y",
+  "start": 51.66,
+  "end": 51.756,
+  "id": "w152"
+ },
+ {
+  "text": "comparte",
+  "start": 51.756,
+  "end": 51.98,
+  "id": "w153"
+ },
+ {
+  "text": "esto",
+  "start": 51.98,
+  "end": 52.16,
+  "id": "w154"
+ },
+ {
+  "text": "con",
+  "start": 52.24,
+  "end": 52.4,
+  "id": "w155"
+ },
+ {
+  "text": "quien",
+  "start": 52.4,
+  "end": 52.66,
+  "id": "w156"
+ },
+ {
+  "text": "esté",
+  "start": 52.7,
+  "end": 52.94,
+  "id": "w157"
+ },
+ {
+  "text": "pensando",
+  "start": 52.94,
+  "end": 53.42,
+  "id": "w158"
+ },
+ {
+  "text": "en",
+  "start": 53.42,
+  "end": 53.54,
+  "id": "w159"
+ },
+ {
+  "text": "tener",
+  "start": 53.54,
+  "end": 53.84,
+  "id": "w160"
+ },
+ {
+  "text": "mascota.",
+  "start": 53.84,
+  "end": 54.43,
+  "id": "w161"
+ }
+]
