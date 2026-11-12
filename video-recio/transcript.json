@@ -1,0 +1,944 @@
+[
+ {
+  "text": "Antonio",
+  "start": 0.43,
+  "end": 0.49,
+  "id": "w0"
+ },
+ {
+  "text": "Recio",
+  "start": 0.49,
+  "end": 0.84,
+  "id": "w1"
+ },
+ {
+  "text": "es",
+  "start": 0.84,
+  "end": 0.98,
+  "id": "w2"
+ },
+ {
+  "text": "racista,",
+  "start": 0.98,
+  "end": 1.61,
+  "id": "w3"
+ },
+ {
+  "text": "homófobo",
+  "start": 1.61,
+  "end": 2.17,
+  "id": "w4"
+ },
+ {
+  "text": "y",
+  "start": 2.17,
+  "end": 2.24,
+  "id": "w5"
+ },
+ {
+  "text": "un",
+  "start": 2.24,
+  "end": 2.34,
+  "id": "w6"
+ },
+ {
+  "text": "tirano.",
+  "start": 2.43,
+  "end": 3.06,
+  "id": "w7"
+ },
+ {
+  "text": "Y",
+  "start": 3.06,
+  "end": 3.12,
+  "id": "w8"
+ },
+ {
+  "text": "aún",
+  "start": 3.12,
+  "end": 3.26,
+  "id": "w9"
+ },
+ {
+  "text": "así,",
+  "start": 3.46,
+  "end": 3.65,
+  "id": "w10"
+ },
+ {
+  "text": "el",
+  "start": 3.65,
+  "end": 3.78,
+  "id": "w11"
+ },
+ {
+  "text": "público",
+  "start": 3.78,
+  "end": 4.26,
+  "id": "w12"
+ },
+ {
+  "text": "lo",
+  "start": 4.26,
+  "end": 4.37,
+  "id": "w13"
+ },
+ {
+  "text": "adora.",
+  "start": 4.43,
+  "end": 4.922,
+  "id": "w14"
+ },
+ {
+  "text": "¿Por",
+  "start": 4.922,
+  "end": 5.25,
+  "id": "w15"
+ },
+ {
+  "text": "qué?",
+  "start": 5.44,
+  "end": 5.63,
+  "id": "w16"
+ },
+ {
+  "text": "Ningún",
+  "start": 5.63,
+  "end": 6,
+  "id": "w17"
+ },
+ {
+  "text": "estudio",
+  "start": 6,
+  "end": 6.44,
+  "id": "w18"
+ },
+ {
+  "text": "ha",
+  "start": 6.45,
+  "end": 6.55,
+  "id": "w19"
+ },
+ {
+  "text": "analizado",
+  "start": 6.62,
+  "end": 6.96,
+  "id": "w20"
+ },
+ {
+  "text": "a",
+  "start": 7.17,
+  "end": 7.2,
+  "id": "w21"
+ },
+ {
+  "text": "Recio,",
+  "start": 7.2,
+  "end": 7.63,
+  "id": "w22"
+ },
+ {
+  "text": "pero",
+  "start": 7.63,
+  "end": 7.88,
+  "id": "w23"
+ },
+ {
+  "text": "la",
+  "start": 7.88,
+  "end": 8,
+  "id": "w24"
+ },
+ {
+  "text": "psicología",
+  "start": 8,
+  "end": 8.63,
+  "id": "w25"
+ },
+ {
+  "text": "tiene",
+  "start": 8.63,
+  "end": 8.94,
+  "id": "w26"
+ },
+ {
+  "text": "tres",
+  "start": 8.94,
+  "end": 9.34,
+  "id": "w27"
+ },
+ {
+  "text": "respuestas.",
+  "start": 9.34,
+  "end": 9.84,
+  "id": "w28"
+ },
+ {
+  "text": "Uno,",
+  "start": 9.84,
+  "end": 10.175,
+  "id": "w29"
+ },
+ {
+  "text": "la",
+  "start": 10.175,
+  "end": 10.51,
+  "id": "w30"
+ },
+ {
+  "text": "distancia.",
+  "start": 10.51,
+  "end": 11.32,
+  "id": "w31"
+ },
+ {
+  "text": "En",
+  "start": 11.32,
+  "end": 11.43,
+  "id": "w32"
+ },
+ {
+  "text": "2010,",
+  "start": 11.43,
+  "end": 12.3,
+  "id": "w33"
+ },
+ {
+  "text": "un",
+  "start": 12.3,
+  "end": 12.42,
+  "id": "w34"
+ },
+ {
+  "text": "estudio",
+  "start": 12.42,
+  "end": 12.85,
+  "id": "w35"
+ },
+ {
+  "text": "de",
+  "start": 12.85,
+  "end": 12.91,
+  "id": "w36"
+ },
+ {
+  "text": "la",
+  "start": 12.97,
+  "end": 13.09,
+  "id": "w37"
+ },
+ {
+  "text": "Universidad",
+  "start": 13.09,
+  "end": 13.76,
+  "id": "w38"
+ },
+ {
+  "text": "de",
+  "start": 13.76,
+  "end": 13.92,
+  "id": "w39"
+ },
+ {
+  "text": "Colorado",
+  "start": 13.92,
+  "end": 14.12,
+  "id": "w40"
+ },
+ {
+  "text": "demostró",
+  "start": 14.33,
+  "end": 14.71,
+  "id": "w41"
+ },
+ {
+  "text": "que",
+  "start": 14.78,
+  "end": 14.9,
+  "id": "w42"
+ },
+ {
+  "text": "lo",
+  "start": 14.9,
+  "end": 14.99,
+  "id": "w43"
+ },
+ {
+  "text": "inmoral",
+  "start": 15.17,
+  "end": 15.4,
+  "id": "w44"
+ },
+ {
+  "text": "nos",
+  "start": 15.4,
+  "end": 15.57,
+  "id": "w45"
+ },
+ {
+  "text": "hace",
+  "start": 15.57,
+  "end": 15.79,
+  "id": "w46"
+ },
+ {
+  "text": "gracia",
+  "start": 15.8,
+  "end": 16.14,
+  "id": "w47"
+ },
+ {
+  "text": "cuando",
+  "start": 16.14,
+  "end": 16.49,
+  "id": "w48"
+ },
+ {
+  "text": "nos",
+  "start": 16.49,
+  "end": 16.66,
+  "id": "w49"
+ },
+ {
+  "text": "parece",
+  "start": 16.66,
+  "end": 17.01,
+  "id": "w50"
+ },
+ {
+  "text": "inofensivo.",
+  "start": 17.01,
+  "end": 17.73,
+  "id": "w51"
+ },
+ {
+  "text": "Y",
+  "start": 17.73,
+  "end": 17.799,
+  "id": "w52"
+ },
+ {
+  "text": "una",
+  "start": 17.799,
+  "end": 17.96,
+  "id": "w53"
+ },
+ {
+  "text": "pantalla",
+  "start": 17.96,
+  "end": 18.43,
+  "id": "w54"
+ },
+ {
+  "text": "de",
+  "start": 18.43,
+  "end": 18.54,
+  "id": "w55"
+ },
+ {
+  "text": "distancia",
+  "start": 18.54,
+  "end": 19.18,
+  "id": "w56"
+ },
+ {
+  "text": "lo",
+  "start": 19.18,
+  "end": 19.36,
+  "id": "w57"
+ },
+ {
+  "text": "vuelve",
+  "start": 19.59,
+  "end": 19.7,
+  "id": "w58"
+ },
+ {
+  "text": "inofensivo.",
+  "start": 19.7,
+  "end": 20.43,
+  "id": "w59"
+ },
+ {
+  "text": "Jordi",
+  "start": 20.43,
+  "end": 20.69,
+  "id": "w60"
+ },
+ {
+  "text": "Sánchez",
+  "start": 20.76,
+  "end": 21.08,
+  "id": "w61"
+ },
+ {
+  "text": "lo",
+  "start": 21.08,
+  "end": 21.31,
+  "id": "w62"
+ },
+ {
+  "text": "resume",
+  "start": 21.31,
+  "end": 21.54,
+  "id": "w63"
+ },
+ {
+  "text": "así,",
+  "start": 21.63,
+  "end": 21.98,
+  "id": "w64"
+ },
+ {
+  "text": "como",
+  "start": 21.98,
+  "end": 22.26,
+  "id": "w65"
+ },
+ {
+  "text": "vecino",
+  "start": 22.26,
+  "end": 22.68,
+  "id": "w66"
+ },
+ {
+  "text": "no",
+  "start": 22.68,
+  "end": 22.82,
+  "id": "w67"
+ },
+ {
+  "text": "lo",
+  "start": 22.82,
+  "end": 22.96,
+  "id": "w68"
+ },
+ {
+  "text": "soportarías,",
+  "start": 22.96,
+  "end": 23.83,
+  "id": "w69"
+ },
+ {
+  "text": "por",
+  "start": 23.89,
+  "end": 24.11,
+  "id": "w70"
+ },
+ {
+  "text": "la",
+  "start": 24.11,
+  "end": 24.28,
+  "id": "w71"
+ },
+ {
+  "text": "tele",
+  "start": 24.28,
+  "end": 24.4,
+  "id": "w72"
+ },
+ {
+  "text": "sí.",
+  "start": 24.52,
+  "end": 24.66,
+  "id": "w73"
+ },
+ {
+  "text": "Dos,",
+  "start": 24.92,
+  "end": 25.02,
+  "id": "w74"
+ },
+ {
+  "text": "el",
+  "start": 25.02,
+  "end": 25.19,
+  "id": "w75"
+ },
+ {
+  "text": "niño",
+  "start": 25.19,
+  "end": 25.45,
+  "id": "w76"
+ },
+ {
+  "text": "malo.",
+  "start": 25.45,
+  "end": 25.96,
+  "id": "w77"
+ },
+ {
+  "text": "A",
+  "start": 25.96,
+  "end": 26.03,
+  "id": "w78"
+ },
+ {
+  "text": "Recio",
+  "start": 26.03,
+  "end": 26.39,
+  "id": "w79"
+ },
+ {
+  "text": "todo",
+  "start": 26.39,
+  "end": 26.66,
+  "id": "w80"
+ },
+ {
+  "text": "le",
+  "start": 26.66,
+  "end": 26.87,
+  "id": "w81"
+ },
+ {
+  "text": "sale",
+  "start": 26.87,
+  "end": 27.1,
+  "id": "w82"
+ },
+ {
+  "text": "mal,",
+  "start": 27.19,
+  "end": 27.47,
+  "id": "w83"
+ },
+ {
+  "text": "y",
+  "start": 27.47,
+  "end": 27.54,
+  "id": "w84"
+ },
+ {
+  "text": "se",
+  "start": 27.54,
+  "end": 27.68,
+  "id": "w85"
+ },
+ {
+  "text": "enfada",
+  "start": 27.68,
+  "end": 28.02,
+  "id": "w86"
+ },
+ {
+  "text": "como",
+  "start": 28.23,
+  "end": 28.41,
+  "id": "w87"
+ },
+ {
+  "text": "un",
+  "start": 28.41,
+  "end": 28.55,
+  "id": "w88"
+ },
+ {
+  "text": "crío.",
+  "start": 28.55,
+  "end": 29.13,
+  "id": "w89"
+ },
+ {
+  "text": "Su",
+  "start": 29.13,
+  "end": 29.43,
+  "id": "w90"
+ },
+ {
+  "text": "actor",
+  "start": 29.43,
+  "end": 29.57,
+  "id": "w91"
+ },
+ {
+  "text": "cree",
+  "start": 29.57,
+  "end": 29.81,
+  "id": "w92"
+ },
+ {
+  "text": "que",
+  "start": 29.81,
+  "end": 29.99,
+  "id": "w93"
+ },
+ {
+  "text": "esa",
+  "start": 29.99,
+  "end": 30.17,
+  "id": "w94"
+ },
+ {
+  "text": "actitud",
+  "start": 30.17,
+  "end": 30.58,
+  "id": "w95"
+ },
+ {
+  "text": "infantil",
+  "start": 30.58,
+  "end": 31.04,
+  "id": "w96"
+ },
+ {
+  "text": "es",
+  "start": 31.11,
+  "end": 31.16,
+  "id": "w97"
+ },
+ {
+  "text": "la",
+  "start": 31.16,
+  "end": 31.28,
+  "id": "w98"
+ },
+ {
+  "text": "que",
+  "start": 31.28,
+  "end": 31.46,
+  "id": "w99"
+ },
+ {
+  "text": "despierta",
+  "start": 31.46,
+  "end": 31.98,
+  "id": "w100"
+ },
+ {
+  "text": "cariño.",
+  "start": 31.98,
+  "end": 32.58,
+  "id": "w101"
+ },
+ {
+  "text": "Tres,",
+  "start": 32.8,
+  "end": 32.94,
+  "id": "w102"
+ },
+ {
+  "text": "la",
+  "start": 32.94,
+  "end": 33.07,
+  "id": "w103"
+ },
+ {
+  "text": "desconexión",
+  "start": 33.07,
+  "end": 33.69,
+  "id": "w104"
+ },
+ {
+  "text": "moral.",
+  "start": 33.78,
+  "end": 34.21,
+  "id": "w105"
+ },
+ {
+  "text": "Los",
+  "start": 34.21,
+  "end": 34.33,
+  "id": "w106"
+ },
+ {
+  "text": "estudios",
+  "start": 34.4,
+  "end": 34.88,
+  "id": "w107"
+ },
+ {
+  "text": "sobre",
+  "start": 34.88,
+  "end": 35.19,
+  "id": "w108"
+ },
+ {
+  "text": "antihéroes",
+  "start": 35.19,
+  "end": 35.79,
+  "id": "w109"
+ },
+ {
+  "text": "muestran",
+  "start": 35.79,
+  "end": 36.27,
+  "id": "w110"
+ },
+ {
+  "text": "que,",
+  "start": 36.27,
+  "end": 36.68,
+  "id": "w111"
+ },
+ {
+  "text": "si",
+  "start": 36.68,
+  "end": 36.975,
+  "id": "w112"
+ },
+ {
+  "text": "un",
+  "start": 36.975,
+  "end": 37.27,
+  "id": "w113"
+ },
+ {
+  "text": "personaje",
+  "start": 37.27,
+  "end": 37.54,
+  "id": "w114"
+ },
+ {
+  "text": "nos",
+  "start": 37.54,
+  "end": 37.72,
+  "id": "w115"
+ },
+ {
+  "text": "hace",
+  "start": 37.73,
+  "end": 37.99,
+  "id": "w116"
+ },
+ {
+  "text": "disfrutar,",
+  "start": 37.99,
+  "end": 38.7,
+  "id": "w117"
+ },
+ {
+  "text": "dejamos",
+  "start": 38.7,
+  "end": 39.15,
+  "id": "w118"
+ },
+ {
+  "text": "de",
+  "start": 39.15,
+  "end": 39.28,
+  "id": "w119"
+ },
+ {
+  "text": "juzgarlo.",
+  "start": 39.28,
+  "end": 40.04,
+  "id": "w120"
+ },
+ {
+  "text": "Según",
+  "start": 40.04,
+  "end": 40.37,
+  "id": "w121"
+ },
+ {
+  "text": "su",
+  "start": 40.37,
+  "end": 40.5,
+  "id": "w122"
+ },
+ {
+  "text": "actor,",
+  "start": 40.5,
+  "end": 40.89,
+  "id": "w123"
+ },
+ {
+  "text": "Recio",
+  "start": 40.89,
+  "end": 41.38,
+  "id": "w124"
+ },
+ {
+  "text": "nació",
+  "start": 41.38,
+  "end": 41.64,
+  "id": "w125"
+ },
+ {
+  "text": "como",
+  "start": 41.64,
+  "end": 41.9,
+  "id": "w126"
+ },
+ {
+  "text": "una",
+  "start": 41.9,
+  "end": 42.08,
+  "id": "w127"
+ },
+ {
+  "text": "crítica",
+  "start": 42.09,
+  "end": 42.54,
+  "id": "w128"
+ },
+ {
+  "text": "al",
+  "start": 42.54,
+  "end": 42.67,
+  "id": "w129"
+ },
+ {
+  "text": "intolerante.",
+  "start": 42.67,
+  "end": 43.54,
+  "id": "w130"
+ },
+ {
+  "text": "Y",
+  "start": 43.63,
+  "end": 43.687,
+  "id": "w131"
+ },
+ {
+  "text": "aún",
+  "start": 43.687,
+  "end": 43.82,
+  "id": "w132"
+ },
+ {
+  "text": "así,",
+  "start": 43.82,
+  "end": 44.22,
+  "id": "w133"
+ },
+ {
+  "text": "su",
+  "start": 44.22,
+  "end": 44.35,
+  "id": "w134"
+ },
+ {
+  "text": "creador",
+  "start": 44.35,
+  "end": 44.8,
+  "id": "w135"
+ },
+ {
+  "text": "admite",
+  "start": 44.8,
+  "end": 45.18,
+  "id": "w136"
+ },
+ {
+  "text": "que",
+  "start": 45.18,
+  "end": 45.24,
+  "id": "w137"
+ },
+ {
+  "text": "hay",
+  "start": 45.45,
+  "end": 45.56,
+  "id": "w138"
+ },
+ {
+  "text": "gente",
+  "start": 45.63,
+  "end": 45.94,
+  "id": "w139"
+ },
+ {
+  "text": "cuyo",
+  "start": 46.07,
+  "end": 46.2,
+  "id": "w140"
+ },
+ {
+  "text": "héroe",
+  "start": 46.21,
+  "end": 46.53,
+  "id": "w141"
+ },
+ {
+  "text": "es",
+  "start": 46.53,
+  "end": 46.65,
+  "id": "w142"
+ },
+ {
+  "text": "Antonio",
+  "start": 46.65,
+  "end": 47.13,
+  "id": "w143"
+ },
+ {
+  "text": "Recio.",
+  "start": 47.16,
+  "end": 47.64,
+  "id": "w144"
+ },
+ {
+  "text": "¿Y",
+  "start": 47.64,
+  "end": 47.8,
+  "id": "w145"
+ },
+ {
+  "text": "tú,",
+  "start": 47.89,
+  "end": 48.06,
+  "id": "w146"
+ },
+ {
+  "text": "te",
+  "start": 48.06,
+  "end": 48.12,
+  "id": "w147"
+ },
+ {
+  "text": "ríes",
+  "start": 48.21,
+  "end": 48.45,
+  "id": "w148"
+ },
+ {
+  "text": "de",
+  "start": 48.45,
+  "end": 48.58,
+  "id": "w149"
+ },
+ {
+  "text": "Recio,",
+  "start": 48.58,
+  "end": 49.03,
+  "id": "w150"
+ },
+ {
+  "text": "o",
+  "start": 49.03,
+  "end": 49.05,
+  "id": "w151"
+ },
+ {
+  "text": "te",
+  "start": 49.05,
+  "end": 49.25,
+  "id": "w152"
+ },
+ {
+  "text": "ríes",
+  "start": 49.25,
+  "end": 49.5,
+  "id": "w153"
+ },
+ {
+  "text": "con",
+  "start": 49.5,
+  "end": 49.7,
+  "id": "w154"
+ },
+ {
+  "text": "Recio?",
+  "start": 49.7,
+  "end": 50.41,
+  "id": "w155"
+ },
+ {
+  "text": "Comenta.",
+  "start": 50.48,
+  "end": 50.98,
+  "id": "w156"
+ }
+]

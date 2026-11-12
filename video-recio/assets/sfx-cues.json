@@ -1,0 +1,345 @@
+{
+ "duration": 51.984354,
+ "cues": [
+  {
+   "t": 0.0,
+   "file": "whoosh",
+   "vol": 0.4
+  },
+  {
+   "t": 0.4,
+   "file": "golpe",
+   "vol": 0.45
+  },
+  {
+   "t": 1.26,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 1.89,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 2.71,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 3.78,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 4.43,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 4.43,
+   "file": "pop2",
+   "vol": 0.25
+  },
+  {
+   "t": 4.922,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 5.63,
+   "file": "pop2",
+   "vol": 0.22
+  },
+  {
+   "t": 7.48,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 8,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 8.94,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 9.84,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 9.84,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 9.89,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 11.43,
+   "file": "pop2",
+   "vol": 0.22
+  },
+  {
+   "t": 15.17,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 15.8,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 17.01,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 17.73,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 17.96,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 19.7,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 20.43,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 21.98,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 22.143,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 22.26,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 22.305,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 22.468,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 22.63,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 22.793,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 22.955,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 23.118,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 23.24,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 23.28,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 23.443,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 23.605,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 23.768,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 23.93,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 24.093,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 24.255,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 24.28,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 24.418,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 24.48,
+   "file": "check",
+   "vol": 0.4
+  },
+  {
+   "t": 24.71,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 24.92,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 24.92,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 26.03,
+   "file": "pop2",
+   "vol": 0.25
+  },
+  {
+   "t": 26.43,
+   "file": "pop2",
+   "vol": 0.25
+  },
+  {
+   "t": 27.19,
+   "file": "pop2",
+   "vol": 0.25
+  },
+  {
+   "t": 27.49,
+   "file": "pop2",
+   "vol": 0.25
+  },
+  {
+   "t": 28.55,
+   "file": "golpe",
+   "vol": 0.3
+  },
+  {
+   "t": 31.98,
+   "file": "whoosh-corto",
+   "vol": 0.2
+  },
+  {
+   "t": 32.18,
+   "file": "pop2",
+   "vol": 0.25
+  },
+  {
+   "t": 32.63,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 32.8,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 32.8,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 34.4,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 37.27,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 39.43,
+   "file": "click",
+   "vol": 0.4
+  },
+  {
+   "t": 42.37,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 43.387,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 46.21,
+   "file": "golpe-climax",
+   "vol": 0.55
+  },
+  {
+   "t": 47.89,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 48.45,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 49.5,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 50.48,
+   "file": "click",
+   "vol": 0.5
+  },
+  {
+   "t": 50.98,
+   "file": "whoosh",
+   "vol": 0.35
+  }
+ ]
+}
