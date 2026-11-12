@@ -6,7 +6,6 @@ def norm(s):
     s = unicodedata.normalize("NFD", s.lower())
     s = "".join(c for c in s if unicodedata.category(c) != "Mn")
     for k, v in NUM.items(): s = s.replace(k, v)
-    s = s.replace("rue del", "ruedel")
     return re.findall(r"[a-z0-9,%]+(?<!,)|\d+,\d+", s)
 g = norm(open("guion.txt").read())
 words = json.load(open("transcript.json"))
