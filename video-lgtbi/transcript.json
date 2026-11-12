@@ -1,19 +1,19 @@
 [
  {
   "text": "Antes",
-  "start": 0.26,
+  "start": 0.24,
   "end": 0.3,
   "id": "w0"
  },
  {
   "text": "de",
   "start": 0.3,
-  "end": 0.4,
+  "end": 0.39,
   "id": "w1"
  },
  {
   "text": "que",
-  "start": 0.45,
+  "start": 0.44,
   "end": 0.6,
   "id": "w2"
  },
@@ -68,660 +68,660 @@
  {
   "text": "pareja",
   "start": 3.19,
-  "end": 3.58,
+  "end": 3.6,
   "id": "w11"
  },
  {
   "text": "en",
-  "start": 3.67,
+  "start": 3.69,
   "end": 3.75,
   "id": "w12"
  },
  {
   "text": "prime",
   "start": 3.75,
-  "end": 4.1,
+  "end": 4.14,
   "id": "w13"
  },
  {
   "text": "time,",
-  "start": 4.1,
-  "end": 4.49,
+  "start": 4.14,
+  "end": 4.53,
   "id": "w14"
  },
  {
   "text": "y",
-  "start": 4.49,
-  "end": 4.69,
+  "start": 4.53,
+  "end": 4.72,
   "id": "w15"
  },
  {
   "text": "cambiaron",
-  "start": 4.69,
-  "end": 5.19,
+  "start": 4.72,
+  "end": 5.22,
   "id": "w16"
  },
  {
   "text": "muchas",
-  "start": 5.19,
-  "end": 5.52,
+  "start": 5.22,
+  "end": 5.54,
   "id": "w17"
  },
  {
   "text": "vidas.",
-  "start": 5.52,
-  "end": 6,
+  "start": 5.54,
+  "end": 6.02,
   "id": "w18"
  },
  {
   "text": "Uno:",
-  "start": 6.26,
-  "end": 6.5,
+  "start": 6.29,
+  "end": 6.54,
   "id": "w19"
  },
  {
   "text": "El",
-  "start": 6.5,
-  "end": 6.66,
+  "start": 6.54,
+  "end": 6.7,
   "id": "w20"
  },
  {
   "text": "armario.",
-  "start": 6.66,
-  "end": 7.42,
+  "start": 6.7,
+  "end": 7.46,
   "id": "w21"
  },
  {
   "text": "En",
-  "start": 7.42,
-  "end": 7.49,
+  "start": 7.46,
+  "end": 7.52,
   "id": "w22"
  },
  {
   "text": "la",
-  "start": 7.54,
-  "end": 7.63,
+  "start": 7.58,
+  "end": 7.67,
   "id": "w23"
  },
  {
   "text": "primera",
-  "start": 7.63,
-  "end": 8.01,
+  "start": 7.67,
+  "end": 8.05,
   "id": "w24"
  },
  {
   "text": "temporada,",
-  "start": 8.02,
-  "end": 8.62,
+  "start": 8.06,
+  "end": 8.66,
   "id": "w25"
  },
  {
   "text": "Fernando",
-  "start": 8.62,
-  "end": 9.06,
+  "start": 8.66,
+  "end": 9.1,
   "id": "w26"
  },
  {
   "text": "no",
-  "start": 9.06,
-  "end": 9.16,
+  "start": 9.1,
+  "end": 9.21,
   "id": "w27"
  },
  {
   "text": "quería",
-  "start": 9.17,
-  "end": 9.5,
+  "start": 9.21,
+  "end": 9.54,
   "id": "w28"
  },
  {
   "text": "que",
-  "start": 9.5,
-  "end": 9.66,
+  "start": 9.54,
+  "end": 9.7,
   "id": "w29"
  },
  {
   "text": "nadie",
-  "start": 9.66,
-  "end": 9.93,
+  "start": 9.7,
+  "end": 9.97,
   "id": "w30"
  },
  {
   "text": "lo",
-  "start": 9.93,
-  "end": 10.04,
+  "start": 9.97,
+  "end": 10.08,
   "id": "w31"
  },
  {
   "text": "supiera.",
-  "start": 10.04,
-  "end": 10.64,
+  "start": 10.08,
+  "end": 10.68,
   "id": "w32"
  },
  {
   "text": "Mauri",
-  "start": 10.96,
-  "end": 10.99,
+  "start": 10.98,
+  "end": 11.03,
   "id": "w33"
  },
  {
   "text": "le",
-  "start": 10.99,
+  "start": 11.03,
   "end": 11.22,
   "id": "w34"
  },
  {
   "text": "dio",
   "start": 11.22,
-  "end": 11.34,
+  "end": 11.37,
   "id": "w35"
  },
  {
   "text": "un",
-  "start": 11.34,
-  "end": 11.48,
+  "start": 11.42,
+  "end": 11.52,
   "id": "w36"
  },
  {
   "text": "ultimátum,",
-  "start": 11.48,
-  "end": 12.24,
+  "start": 11.52,
+  "end": 12.26,
   "id": "w37"
  },
  {
   "text": "o",
-  "start": 12.24,
-  "end": 12.32,
+  "start": 12.31,
+  "end": 12.36,
   "id": "w38"
  },
  {
   "text": "sales",
-  "start": 12.32,
-  "end": 12.65,
+  "start": 12.36,
+  "end": 12.71,
   "id": "w39"
  },
  {
   "text": "del",
-  "start": 12.66,
-  "end": 12.8,
+  "start": 12.71,
+  "end": 12.82,
   "id": "w40"
  },
  {
   "text": "armario,",
-  "start": 13.02,
-  "end": 13.51,
+  "start": 13.06,
+  "end": 13.55,
   "id": "w41"
  },
  {
   "text": "o",
-  "start": 13.51,
-  "end": 13.57,
+  "start": 13.55,
+  "end": 13.62,
   "id": "w42"
  },
  {
   "text": "me",
-  "start": 13.58,
-  "end": 13.72,
+  "start": 13.62,
+  "end": 13.76,
   "id": "w43"
  },
  {
   "text": "dejas.",
-  "start": 13.72,
+  "start": 13.76,
   "end": 14.36,
   "id": "w44"
  },
  {
   "text": "Dos:",
-  "start": 14.66,
-  "end": 14.8,
+  "start": 14.68,
+  "end": 14.82,
   "id": "w45"
  },
  {
   "text": "La",
   "start": 14.92,
-  "end": 14.95,
+  "end": 14.97,
   "id": "w46"
  },
  {
   "text": "familia.",
-  "start": 14.95,
-  "end": 15.69,
+  "start": 14.97,
+  "end": 15.71,
   "id": "w47"
  },
  {
   "text": "Bea,",
-  "start": 15.69,
-  "end": 16.05,
+  "start": 15.71,
+  "end": 16.07,
   "id": "w48"
  },
  {
   "text": "su",
-  "start": 16.05,
-  "end": 16.2,
+  "start": 16.07,
+  "end": 16.22,
   "id": "w49"
  },
  {
   "text": "mejor",
-  "start": 16.2,
-  "end": 16.5,
+  "start": 16.22,
+  "end": 16.52,
   "id": "w50"
  },
  {
   "text": "amiga,",
-  "start": 16.72,
-  "end": 17.08,
+  "start": 16.76,
+  "end": 17.1,
   "id": "w51"
  },
  {
   "text": "era",
-  "start": 17.08,
-  "end": 17.3,
+  "start": 17.1,
+  "end": 17.32,
   "id": "w52"
  },
  {
   "text": "lesbiana",
-  "start": 17.3,
-  "end": 17.88,
+  "start": 17.32,
+  "end": 17.9,
   "id": "w53"
  },
  {
   "text": "y",
-  "start": 17.88,
-  "end": 17.95,
+  "start": 17.9,
+  "end": 17.97,
   "id": "w54"
  },
  {
   "text": "quería",
-  "start": 17.95,
-  "end": 18.39,
+  "start": 17.97,
+  "end": 18.41,
   "id": "w55"
  },
  {
   "text": "ser",
-  "start": 18.39,
+  "start": 18.41,
   "end": 18.61,
   "id": "w56"
  },
  {
   "text": "madre.",
-  "start": 18.61,
-  "end": 19.14,
+  "start": 18.65,
+  "end": 19.2,
   "id": "w57"
  },
  {
   "text": "Le",
-  "start": 19.14,
-  "end": 19.58,
+  "start": 19.2,
+  "end": 19.6,
   "id": "w58"
  },
  {
   "text": "pidió",
-  "start": 19.58,
-  "end": 19.68,
+  "start": 19.6,
+  "end": 19.7,
   "id": "w59"
  },
  {
   "text": "a",
-  "start": 19.68,
+  "start": 19.7,
   "end": 19.84,
   "id": "w60"
  },
  {
   "text": "Mauri",
   "start": 19.84,
-  "end": 19.98,
+  "end": 19.99,
   "id": "w61"
  },
  {
   "text": "tener",
-  "start": 20.03,
-  "end": 20.23,
+  "start": 20.04,
+  "end": 20.3,
   "id": "w62"
  },
  {
   "text": "un",
-  "start": 20.29,
+  "start": 20.3,
   "end": 20.35,
   "id": "w63"
  },
  {
   "text": "hijo",
-  "start": 20.44,
-  "end": 20.61,
+  "start": 20.45,
+  "end": 20.63,
   "id": "w64"
  },
  {
   "text": "juntos",
-  "start": 20.61,
-  "end": 20.94,
+  "start": 20.63,
+  "end": 20.96,
   "id": "w65"
  },
  {
   "text": "por",
-  "start": 20.94,
-  "end": 21.1,
+  "start": 20.96,
+  "end": 21.12,
   "id": "w66"
  },
  {
   "text": "inseminación",
-  "start": 21.1,
-  "end": 21.76,
+  "start": 21.12,
+  "end": 21.78,
   "id": "w67"
  },
  {
   "text": "artificial.",
-  "start": 21.76,
-  "end": 22.57,
+  "start": 21.78,
+  "end": 22.6,
   "id": "w68"
  },
  {
   "text": "Una",
-  "start": 22.57,
-  "end": 22.905,
+  "start": 22.6,
+  "end": 22.92,
   "id": "w69"
  },
  {
   "text": "madre",
-  "start": 22.905,
+  "start": 22.92,
   "end": 23.24,
   "id": "w70"
  },
  {
   "text": "lesbiana",
   "start": 23.24,
-  "end": 23.63,
+  "end": 23.64,
   "id": "w71"
  },
  {
   "text": "y",
-  "start": 23.68,
-  "end": 23.71,
+  "start": 23.69,
+  "end": 23.73,
   "id": "w72"
  },
  {
   "text": "un",
-  "start": 23.71,
-  "end": 23.75,
+  "start": 23.73,
+  "end": 23.86,
   "id": "w73"
  },
  {
   "text": "padre",
-  "start": 23.84,
-  "end": 24.18,
+  "start": 23.86,
+  "end": 24.2,
   "id": "w74"
  },
  {
   "text": "gay",
-  "start": 24.18,
-  "end": 24.38,
+  "start": 24.2,
+  "end": 24.4,
   "id": "w75"
  },
  {
   "text": "criando",
-  "start": 24.38,
-  "end": 24.81,
+  "start": 24.4,
+  "end": 24.83,
   "id": "w76"
  },
  {
   "text": "a",
-  "start": 24.81,
-  "end": 24.925,
+  "start": 24.83,
+  "end": 24.955,
   "id": "w77"
  },
  {
   "text": "un",
-  "start": 24.925,
-  "end": 25.04,
+  "start": 24.955,
+  "end": 25.08,
   "id": "w78"
  },
  {
   "text": "bebé,",
-  "start": 25.04,
-  "end": 25.42,
+  "start": 25.08,
+  "end": 25.45,
   "id": "w79"
  },
  {
   "text": "en",
-  "start": 25.5,
-  "end": 25.55,
+  "start": 25.45,
+  "end": 25.58,
   "id": "w80"
  },
  {
   "text": "la",
-  "start": 25.56,
-  "end": 25.69,
+  "start": 25.58,
+  "end": 25.71,
   "id": "w81"
  },
  {
   "text": "tele",
-  "start": 25.69,
-  "end": 25.95,
+  "start": 25.71,
+  "end": 25.98,
   "id": "w82"
  },
  {
   "text": "de",
-  "start": 25.96,
-  "end": 26.09,
+  "start": 25.98,
+  "end": 26.11,
   "id": "w83"
  },
  {
   "text": "entonces,",
-  "start": 26.09,
-  "end": 26.77,
+  "start": 26.11,
+  "end": 26.79,
   "id": "w84"
  },
  {
   "text": "eso",
-  "start": 26.77,
-  "end": 26.97,
+  "start": 26.79,
+  "end": 26.99,
   "id": "w85"
  },
  {
   "text": "era",
-  "start": 26.97,
-  "end": 27.14,
+  "start": 26.99,
+  "end": 27.18,
   "id": "w86"
  },
  {
   "text": "tabú.",
-  "start": 27.22,
-  "end": 27.86,
+  "start": 27.18,
+  "end": 27.88,
   "id": "w87"
  },
  {
   "text": "Así",
-  "start": 27.86,
-  "end": 28.11,
+  "start": 27.88,
+  "end": 28.12,
   "id": "w88"
  },
  {
   "text": "nació",
-  "start": 28.11,
-  "end": 28.37,
+  "start": 28.12,
+  "end": 28.39,
   "id": "w89"
  },
  {
   "text": "Zequi,",
-  "start": 28.37,
-  "end": 28.75,
+  "start": 28.39,
+  "end": 28.77,
   "id": "w90"
  },
  {
   "text": "y",
-  "start": 28.75,
-  "end": 28.8,
+  "start": 28.77,
+  "end": 28.83,
   "id": "w91"
  },
  {
   "text": "la",
-  "start": 28.81,
-  "end": 28.94,
+  "start": 28.83,
+  "end": 28.96,
   "id": "w92"
  },
  {
   "text": "serie",
-  "start": 28.94,
-  "end": 29.26,
+  "start": 28.96,
+  "end": 29.28,
   "id": "w93"
  },
  {
   "text": "lo",
-  "start": 29.27,
-  "end": 29.4,
+  "start": 29.29,
+  "end": 29.42,
   "id": "w94"
  },
  {
   "text": "trató",
-  "start": 29.4,
-  "end": 29.7,
+  "start": 29.42,
+  "end": 29.72,
   "id": "w95"
  },
  {
   "text": "con",
-  "start": 29.7,
-  "end": 29.92,
+  "start": 29.72,
+  "end": 29.96,
   "id": "w96"
  },
  {
   "text": "total",
-  "start": 29.92,
-  "end": 30.24,
+  "start": 29.96,
+  "end": 30.26,
   "id": "w97"
  },
  {
   "text": "naturalidad.",
-  "start": 30.24,
-  "end": 31.21,
+  "start": 30.26,
+  "end": 31.25,
   "id": "w98"
  },
  {
   "text": "Tres:",
-  "start": 31.42,
-  "end": 31.6,
+  "start": 31.44,
+  "end": 31.62,
   "id": "w99"
  },
  {
   "text": "La",
   "start": 31.64,
-  "end": 31.72,
+  "end": 31.74,
   "id": "w100"
  },
  {
   "text": "boda.",
-  "start": 31.72,
-  "end": 32.14,
+  "start": 31.74,
+  "end": 32.15,
   "id": "w101"
  },
  {
   "text": "En",
-  "start": 32.14,
-  "end": 32.26,
+  "start": 32.25,
+  "end": 32.28,
   "id": "w102"
  },
  {
   "text": "2005,",
-  "start": 32.26,
-  "end": 33.12,
+  "start": 32.28,
+  "end": 33.14,
   "id": "w103"
  },
  {
   "text": "España",
-  "start": 33.12,
-  "end": 33.49,
+  "start": 33.14,
+  "end": 33.51,
   "id": "w104"
  },
  {
   "text": "legalizó",
-  "start": 33.49,
-  "end": 33.98,
+  "start": 33.51,
+  "end": 34,
   "id": "w105"
  },
  {
   "text": "el",
-  "start": 33.98,
-  "end": 34.1,
+  "start": 34,
+  "end": 34.12,
   "id": "w106"
  },
  {
   "text": "matrimonio",
-  "start": 34.1,
-  "end": 34.7,
+  "start": 34.12,
+  "end": 34.72,
   "id": "w107"
  },
  {
   "text": "igualitario.",
-  "start": 34.7,
-  "end": 35.68,
+  "start": 34.72,
+  "end": 35.7,
   "id": "w108"
  },
  {
   "text": "Un",
-  "start": 35.68,
-  "end": 35.93,
+  "start": 35.7,
+  "end": 35.94,
   "id": "w109"
  },
  {
   "text": "año",
-  "start": 35.93,
+  "start": 35.94,
   "end": 36.18,
   "id": "w110"
  },
  {
   "text": "después,",
   "start": 36.18,
-  "end": 36.55,
+  "end": 36.57,
   "id": "w111"
  },
  {
   "text": "Mauri",
-  "start": 36.55,
-  "end": 36.86,
+  "start": 36.57,
+  "end": 36.88,
   "id": "w112"
  },
  {
   "text": "y",
-  "start": 36.86,
-  "end": 36.92,
+  "start": 36.88,
+  "end": 36.94,
   "id": "w113"
  },
  {
   "text": "Fernando",
-  "start": 36.92,
-  "end": 37.42,
+  "start": 36.94,
+  "end": 37.44,
   "id": "w114"
  },
  {
   "text": "se",
-  "start": 37.42,
-  "end": 37.54,
+  "start": 37.44,
+  "end": 37.56,
   "id": "w115"
  },
  {
   "text": "casaron",
-  "start": 37.54,
-  "end": 37.75,
+  "start": 37.56,
+  "end": 37.78,
   "id": "w116"
  },
  {
   "text": "en",
-  "start": 37.98,
-  "end": 38.1,
+  "start": 38.02,
+  "end": 38.12,
   "id": "w117"
  },
  {
   "text": "la",
-  "start": 38.1,
-  "end": 38.22,
+  "start": 38.12,
+  "end": 38.24,
   "id": "w118"
  },
  {
   "text": "serie.",
-  "start": 38.22,
-  "end": 38.8,
+  "start": 38.24,
+  "end": 38.81,
   "id": "w119"
  },
  {
   "text": "Cuatro:",
-  "start": 39.12,
+  "start": 39.14,
   "end": 39.3,
   "id": "w120"
  },
@@ -734,379 +734,379 @@
  {
   "text": "vida",
   "start": 39.46,
-  "end": 39.77,
+  "end": 39.78,
   "id": "w122"
  },
  {
   "text": "real.",
   "start": 39.83,
-  "end": 40.39,
+  "end": 40.4,
   "id": "w123"
  },
  {
   "text": "Luis",
-  "start": 40.39,
-  "end": 40.64,
+  "start": 40.4,
+  "end": 40.65,
   "id": "w124"
  },
  {
   "text": "Merlo",
-  "start": 40.64,
-  "end": 40.94,
+  "start": 40.65,
+  "end": 40.95,
   "id": "w125"
  },
  {
   "text": "rechazó",
-  "start": 40.94,
-  "end": 41.36,
+  "start": 40.95,
+  "end": 41.37,
   "id": "w126"
  },
  {
   "text": "a",
-  "start": 41.36,
-  "end": 41.42,
+  "start": 41.37,
+  "end": 41.43,
   "id": "w127"
  },
  {
   "text": "Mauri",
-  "start": 41.42,
-  "end": 41.72,
+  "start": 41.43,
+  "end": 41.73,
   "id": "w128"
  },
  {
   "text": "cuatro",
-  "start": 41.72,
-  "end": 42.08,
+  "start": 41.73,
+  "end": 42.1,
   "id": "w129"
  },
  {
   "text": "veces",
-  "start": 42.09,
-  "end": 42.39,
+  "start": 42.1,
+  "end": 42.41,
   "id": "w130"
  },
  {
   "text": "por",
-  "start": 42.39,
-  "end": 42.57,
+  "start": 42.41,
+  "end": 42.59,
   "id": "w131"
  },
  {
   "text": "miedo",
-  "start": 42.57,
-  "end": 42.87,
+  "start": 42.59,
+  "end": 42.9,
   "id": "w132"
  },
  {
   "text": "a",
-  "start": 42.87,
-  "end": 42.93,
+  "start": 42.9,
+  "end": 42.96,
   "id": "w133"
  },
  {
   "text": "un",
-  "start": 42.93,
-  "end": 42.99,
+  "start": 42.96,
+  "end": 43.07,
   "id": "w134"
  },
  {
   "text": "gay",
-  "start": 43.05,
-  "end": 43.23,
+  "start": 43.11,
+  "end": 43.26,
   "id": "w135"
  },
  {
   "text": "en",
-  "start": 43.23,
-  "end": 43.28,
+  "start": 43.26,
+  "end": 43.32,
   "id": "w136"
  },
  {
   "text": "prime",
-  "start": 43.36,
-  "end": 43.61,
+  "start": 43.38,
+  "end": 43.8,
   "id": "w137"
  },
  {
   "text": "time.",
-  "start": 43.81,
-  "end": 44.18,
+  "start": 43.8,
+  "end": 44.22,
   "id": "w138"
  },
  {
   "text": "Hoy",
-  "start": 44.18,
-  "end": 44.44,
+  "start": 44.22,
+  "end": 44.47,
   "id": "w139"
  },
  {
   "text": "dice",
-  "start": 44.44,
-  "end": 44.7,
+  "start": 44.47,
+  "end": 44.72,
   "id": "w140"
  },
  {
   "text": "que",
-  "start": 44.7,
-  "end": 44.81,
+  "start": 44.72,
+  "end": 44.85,
   "id": "w141"
  },
  {
   "text": "Mauri",
-  "start": 44.81,
-  "end": 45.09,
+  "start": 44.85,
+  "end": 45.12,
   "id": "w142"
  },
  {
   "text": "cambió",
-  "start": 45.15,
-  "end": 45.49,
+  "start": 45.17,
+  "end": 45.52,
   "id": "w143"
  },
  {
   "text": "muchas",
-  "start": 45.49,
-  "end": 45.86,
+  "start": 45.52,
+  "end": 45.88,
   "id": "w144"
  },
  {
   "text": "vidas.",
-  "start": 45.86,
-  "end": 46.28,
+  "start": 45.89,
+  "end": 46.33,
   "id": "w145"
  },
  {
   "text": "Adrià",
-  "start": 46.28,
-  "end": 46.89,
+  "start": 46.33,
+  "end": 46.93,
   "id": "w146"
  },
  {
   "text": "Collado",
-  "start": 46.89,
-  "end": 47.06,
+  "start": 46.93,
+  "end": 47.1,
   "id": "w147"
  },
  {
   "text": "cuenta",
-  "start": 47.06,
-  "end": 47.4,
+  "start": 47.1,
+  "end": 47.44,
   "id": "w148"
  },
  {
   "text": "que",
-  "start": 47.4,
-  "end": 47.57,
+  "start": 47.44,
+  "end": 47.61,
   "id": "w149"
  },
  {
   "text": "aún",
-  "start": 47.57,
-  "end": 47.74,
+  "start": 47.61,
+  "end": 47.78,
   "id": "w150"
  },
  {
   "text": "le",
-  "start": 47.74,
-  "end": 47.85,
+  "start": 47.78,
+  "end": 47.89,
   "id": "w151"
  },
  {
   "text": "paran",
-  "start": 47.85,
-  "end": 48.13,
+  "start": 47.89,
+  "end": 48.17,
   "id": "w152"
  },
  {
   "text": "por",
-  "start": 48.13,
-  "end": 48.3,
+  "start": 48.17,
+  "end": 48.34,
   "id": "w153"
  },
  {
   "text": "la",
-  "start": 48.3,
-  "end": 48.41,
+  "start": 48.34,
+  "end": 48.45,
   "id": "w154"
  },
  {
   "text": "calle",
-  "start": 48.41,
-  "end": 48.52,
+  "start": 48.45,
+  "end": 48.56,
   "id": "w155"
  },
  {
   "text": "para",
-  "start": 48.74,
-  "end": 48.91,
+  "start": 48.8,
+  "end": 48.95,
   "id": "w156"
  },
  {
   "text": "darle",
-  "start": 48.91,
-  "end": 49.12,
+  "start": 48.95,
+  "end": 49.2,
   "id": "w157"
  },
  {
   "text": "las",
-  "start": 49.2,
-  "end": 49.36,
+  "start": 49.28,
+  "end": 49.4,
   "id": "w158"
  },
  {
   "text": "gracias.",
-  "start": 49.36,
-  "end": 49.98,
+  "start": 49.4,
+  "end": 50.02,
   "id": "w159"
  },
  {
   "text": "Y",
-  "start": 49.98,
-  "end": 50.2,
+  "start": 50.02,
+  "end": 50.241,
   "id": "w160"
  },
  {
   "text": "que",
-  "start": 50.2,
-  "end": 50.61,
+  "start": 50.241,
+  "end": 50.65,
   "id": "w161"
  },
  {
   "text": "muchos,",
-  "start": 50.61,
-  "end": 50.73,
+  "start": 50.65,
+  "end": 50.77,
   "id": "w162"
  },
  {
   "text": "al",
-  "start": 50.73,
-  "end": 50.85,
+  "start": 50.77,
+  "end": 50.89,
   "id": "w163"
  },
  {
   "text": "ver",
-  "start": 50.85,
-  "end": 51.03,
+  "start": 50.89,
+  "end": 51.06,
   "id": "w164"
  },
  {
   "text": "cómo",
-  "start": 51.09,
-  "end": 51.29,
+  "start": 51.11,
+  "end": 51.33,
   "id": "w165"
  },
  {
   "text": "el",
-  "start": 51.29,
-  "end": 51.41,
+  "start": 51.33,
+  "end": 51.45,
   "id": "w166"
  },
  {
   "text": "público",
-  "start": 51.41,
-  "end": 51.84,
+  "start": 51.45,
+  "end": 51.87,
   "id": "w167"
  },
  {
   "text": "los",
-  "start": 51.86,
-  "end": 52.05,
+  "start": 51.9,
+  "end": 52.09,
   "id": "w168"
  },
  {
   "text": "quería,",
-  "start": 52.05,
-  "end": 52.55,
+  "start": 52.09,
+  "end": 52.59,
   "id": "w169"
  },
  {
   "text": "se",
-  "start": 52.55,
-  "end": 52.67,
+  "start": 52.59,
+  "end": 52.71,
   "id": "w170"
  },
  {
   "text": "atrevieron",
-  "start": 52.67,
-  "end": 53.3,
+  "start": 52.71,
+  "end": 53.34,
   "id": "w171"
  },
  {
   "text": "a",
-  "start": 53.3,
-  "end": 53.35,
+  "start": 53.34,
+  "end": 53.4,
   "id": "w172"
  },
  {
   "text": "contarlo",
-  "start": 53.36,
-  "end": 53.86,
+  "start": 53.4,
+  "end": 53.9,
   "id": "w173"
  },
  {
   "text": "en",
-  "start": 53.86,
-  "end": 53.96,
+  "start": 53.9,
+  "end": 54.02,
   "id": "w174"
  },
  {
   "text": "casa.",
-  "start": 54.05,
-  "end": 54.54,
+  "start": 54.02,
+  "end": 54.6,
   "id": "w175"
  },
  {
   "text": "Si",
-  "start": 54.54,
+  "start": 54.6,
   "end": 54.82,
   "id": "w176"
  },
  {
   "text": "Mauri",
   "start": 54.82,
-  "end": 54.95,
+  "end": 54.99,
   "id": "w177"
  },
  {
   "text": "y",
-  "start": 54.95,
-  "end": 54.96,
+  "start": 54.99,
+  "end": 55.05,
   "id": "w178"
  },
  {
   "text": "Fernando",
-  "start": 55.01,
-  "end": 55.48,
+  "start": 55.05,
+  "end": 55.52,
   "id": "w179"
  },
  {
   "text": "te",
-  "start": 55.48,
-  "end": 55.59,
+  "start": 55.52,
+  "end": 55.63,
   "id": "w180"
  },
  {
   "text": "ayudaron,",
-  "start": 55.59,
-  "end": 56.16,
+  "start": 55.63,
+  "end": 56.2,
   "id": "w181"
  },
  {
   "text": "cuéntalo",
-  "start": 56.16,
-  "end": 56.61,
+  "start": 56.2,
+  "end": 56.65,
   "id": "w182"
  },
  {
   "text": "en",
-  "start": 56.62,
-  "end": 56.72,
+  "start": 56.68,
+  "end": 56.76,
   "id": "w183"
  },
  {
   "text": "comentarios.",
-  "start": 56.72,
-  "end": 57.66,
+  "start": 56.76,
+  "end": 57.7,
   "id": "w184"
  }
 ]

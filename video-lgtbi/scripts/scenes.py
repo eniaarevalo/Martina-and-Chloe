@@ -272,13 +272,13 @@ def scene_tabu():
     fx, fy, fw, fh = F(1, 0)
     add(f'''<div id="tag" style="{css_box(fx + 180, fy + 10, 600, 160, 8)}border-radius:30px;background:{BAD}">
       <div id="tag-a" class="tagt">TABÚ</div><div id="tag-b" class="tagt" style="opacity:0">NATURAL ✓</div></div>''')
-    for nid, kind, x, lab in (("nm", "bea", fx + 20, "MADRE<br>LESBIANA"), ("np", "mauri", fx + 540, "PADRE<br>GAY")):
-        card(nid, x, fy + 230, 400, 230, f'''
+    for nid, kind, x, lab in (("nm", "bea", fx, "MADRE<br>LESBIANA"), ("np", "mauri", fx + 500, "PADRE<br>GAY")):
+        card(nid, x, fy + 230, 460, 230, f'''
           <div style="position:absolute;left:20px;top:30px">{avatar(nid + "-av", kind, 170)}</div>
-          <div style="position:absolute;left:206px;top:44px;font:900 50px {FONT};color:{INK};line-height:1.15">{lab}</div>''')
+          <div style="position:absolute;left:204px;top:52px;font:900 48px {FONT};color:{INK};line-height:1.15">{lab}</div>''')
     add(f'''<svg id="tree" data-layout-ignore style="{css_box(fx, fy + 460, 960, 200, 4)}overflow:visible" viewBox="0 0 960 200">
-      <path id="tree-l" d="M 220 0 L 220 80 L 480 80 L 480 190" stroke="#fff" stroke-width="10" fill="none" stroke-linejoin="round"/>
-      <path id="tree-r" d="M 740 0 L 740 80 L 480 80" stroke="#fff" stroke-width="10" fill="none" stroke-linejoin="round"/></svg>''')
+      <path id="tree-l" d="M 230 0 L 230 80 L 480 80 L 480 190" stroke="#fff" stroke-width="10" fill="none" stroke-linejoin="round"/>
+      <path id="tree-r" d="M 730 0 L 730 80 L 480 80" stroke="#fff" stroke-width="10" fill="none" stroke-linejoin="round"/></svg>''')
     card("baby", fx + 260, fy + 650, 440, 400, f'''
       <svg id="pram" style="position:absolute;left:60px;top:20px" width="320" height="260" viewBox="0 0 320 260">
         <path d="M 40 40 L 40 150 Q 40 190 90 190 L 250 190 Q 290 190 290 150 L 290 110 L 150 110 L 150 40 Z" fill="{PURPLE}"/>
@@ -349,7 +349,7 @@ def scene_boda():
         for k, a in enumerate(range(0, 181, 15)))
     add(f'''<svg id="arch" data-layout-ignore style="{css_box(fx + 130, fy + 200, 700, 860, 3)}overflow:visible" viewBox="0 0 700 860">
       <path d="M 50 860 L 50 380 A 300 300 0 0 1 650 380 L 650 860" stroke="#e5e7eb" stroke-width="30" fill="none"/>{flowers}</svg>''')
-    card("si", fx + 80, fy + 10, 800, 160, f'''
+    card("si", fx + 80, fy + 40, 800, 160, f'''
       <div style="position:absolute;left:0;right:0;top:12px;text-align:center;font:900 52px {FONT};color:#666">JUNIO 2006</div>
       <div style="position:absolute;left:0;right:0;top:66px;text-align:center;font:900 76px {FONT};color:{GOOD_BG}">¡SÍ, QUIERO!</div>''')
     add(f'<div id="rings" class="sticker" style="{css_box(fx + 400, fy + 340, 160, 160, 9)}">{icon("gem", 100, PURPLE, 2.4)}</div>')
@@ -362,8 +362,8 @@ def scene_boda():
     add("".join(conf))
     t_ano, t_mau, t_fer, t_cas = P("ano"), P("mauri", 4), P("fernando", 3), P("casaron")
     travel(t_ano, F(2, 1), 2, 1630, dur=0.8)
-    js(f'tl.fromTo("#mau3", {{x:-520}}, {{x:0, duration:0.8, ease:"power2.out"}}, {t_mau - 0.3:.3f}); walk("mau3", {t_mau - 0.3:.3f}, {t_mau + 0.5:.3f}, 0.15);')
-    js(f'face("fer3", -1, 0); tl.fromTo("#fer3", {{x:520}}, {{x:0, duration:0.8, ease:"power2.out"}}, {t_fer - 0.3:.3f}); walk("fer3", {t_fer - 0.3:.3f}, {t_fer + 0.5:.3f}, 0.15); face("fer3", 1, {t_fer + 0.55:.3f});')
+    js(f'tl.fromTo("#mau3", {{x:-520, opacity:0}}, {{x:0, opacity:1, duration:0.8, ease:"power2.out"}}, {t_mau - 0.3:.3f}); walk("mau3", {t_mau - 0.3:.3f}, {t_mau + 0.5:.3f}, 0.15);')
+    js(f'face("fer3", -1, 0); tl.fromTo("#fer3", {{x:520, opacity:0}}, {{x:0, opacity:1, duration:0.8, ease:"power2.out"}}, {t_fer - 0.3:.3f}); walk("fer3", {t_fer - 0.3:.3f}, {t_fer + 0.5:.3f}, 0.15); face("fer3", 1, {t_fer + 0.55:.3f});')
     life("mau3", t_mau + 0.5, G.DUR, 9)
     life("fer3", t_fer + 0.6, G.DUR, 10)
     hold_hands("mau3", "fer3", t_cas - 0.1)
@@ -373,7 +373,7 @@ def scene_boda():
     js(f'tl.fromTo(".cf", {{opacity:0, y:-80, rotation:0}}, {{opacity:1, y:820, rotation:540, duration:2.2, ease:"power1.in", stagger:0.03}}, {t_cas:.3f});')
     js(f'tl.to(".cf", {{opacity:0, duration:0.3}}, {t_cas + 2.6:.3f});')
     js(f'jump("mau3", {t_cas + 0.4:.3f}, 45); jump("fer3", {t_cas + 0.5:.3f}, 45);')
-    cam(E("serie") + 0.0, ROW(2), dur=0.45)
+    cam(E("serie", 2) + 0.0, ROW(2), dur=0.45)
 
 
 # ================================================================= 4 · LA VIDA REAL
@@ -393,10 +393,10 @@ def scene_merlo():
         add(f'<div id="mx{i}" class="xdot" style="{css_box(fx + 240 + i * 70, fy + 380, 60, 60, 8)}">'
             f'<div class="xa">{icon("x", 44, "#fff", 3.6)}</div><div class="xb" style="opacity:0">{icon("check", 44, "#fff", 3.6)}</div></div>')
     quote = "«Mauri cambió muchas vidas»"
-    add(f'''<div id="mq" style="{css_box(fx + 20, fy + 500, 920, 210, 8)}border-radius:36px;background:{BAD}">
+    add(f'''<div id="mq" style="{css_box(fx + 20, fy + 480, 920, 180, 8)}border-radius:36px;background:{BAD}">
       <div id="mq-a" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:900 64px {FONT};color:#fff">¿Un gay en prime time?</div>
-      <div id="mq-b" style="position:absolute;left:40px;right:40px;top:40px;opacity:0;font:900 66px {FONT};color:{INK};line-height:1.1">{chars(quote, "mc")}</div></div>''')
-    add(character("mau4", "mauri", fx + 780, fl, 1.05, z=6))
+      <div id="mq-b" style="position:absolute;left:40px;right:40px;top:22px;opacity:0;font:900 66px {FONT};color:{INK};line-height:1.1">{chars(quote, "mc")}</div></div>''')
+    add(character("mau4", "mauri", fx + 800, fl, 0.9, z=6))
     t_cua, t_vid, t_lui, t_rec, t_cua2, t_mie = P("cuatro"), P("vida"), P("luis"), P("rechazo"), P("cuatro", 2), P("miedo")
     travel(t_cua, F(3, 1), 3, 1630, dur=0.9)
     header_in("h4", t_cua, t_vid, year=True)
@@ -430,11 +430,11 @@ def scene_collado():
       <div style="position:absolute;left:240px;top:40px;font:900 74px {FONT};color:{INK}">ADRIÀ COLLADO</div>
       <div style="position:absolute;left:240px;top:140px;font:800 52px {FONT};color:#555">el actor de Fernando</div>''')
     add(character("fer4", "fernando", fx + 800, fl, 1.15, z=6))
-    people = [("p1", "g1", fx + 120), ("p2", "g2", fx + 320), ("p3", "g3", fx + 520)]
-    for pid, kind, x in people:
+    people = [("p1", "g1", fx + 110), ("p2", "g2", fx + 340), ("p3", "g3", fx + 570)]
+    for k, (pid, kind, x) in enumerate(people):
         add(character(pid, kind, x, fl, 1.1, z=6))
-        add(f'<div id="{pid}-b" class="bubble big" style="{css_box(x - 115, fy + 500, 230, None, 9)}padding:20px 10px;text-align:center">'
-            f'<span style="font:900 50px {FONT};color:{GOOD_BG}">¡Gracias!</span></div>')
+        add(f'<div id="{pid}-b" class="bubble big" style="{css_box(x - 112, fy + 470 + (k % 2) * 110, 224, None, 9)}padding:18px 6px;text-align:center">'
+            f'<span style="font:900 46px {FONT};color:{GOOD_BG}">¡Gracias!</span></div>')
     t_adr, t_par, t_cal, t_gra = P("adria"), P("paran"), P("calle"), P("gracias")
     travel(t_adr, F(3, 0), 3, 570, dur=0.75)
     slide_in("#coll", t_adr + 0.1, dy=-60, sound="pop")
@@ -442,7 +442,7 @@ def scene_collado():
     js('face("fer4", -1, 0);')
     for k, (pid, kind, x) in enumerate(people):
         t0 = t_par - 0.4 + k * 0.15
-        js(f'tl.fromTo("#{pid}", {{x:{-700 - k * 80}}}, {{x:0, duration:1.0, ease:"power1.out"}}, {t0:.3f}); walk("{pid}", {t0:.3f}, {t0 + 1.0:.3f}, 0.14);')
+        js(f'tl.fromTo("#{pid}", {{x:{-700 - k * 80}, opacity:0}}, {{x:0, opacity:1, duration:1.0, ease:"power1.out"}}, {t0:.3f}); walk("{pid}", {t0:.3f}, {t0 + 1.0:.3f}, 0.14);')
         life(pid, t0 + 1.0, G.DUR, 20 + k)
         js(f'tl.fromTo("#{pid}-b", {{opacity:0, scale:0.4, transformOrigin:"50% 100%"}}, {{opacity:1, scale:1, duration:0.3, ease:"back.out(2.4)"}}, {t_gra + k * 0.16:.3f});')
         sfx(t_gra + k * 0.16, "pop", 0.25)
@@ -460,25 +460,27 @@ def scene_climax():
           <div class="hroof"></div><div class="hbody">
             <div id="win{i}" class="win"><div id="wc{i}" class="wchat">{chars(msg, f"w{i}c")}</div></div></div></div>''')
     cta = "Gracias a ellos…"
-    add(f'''<div id="cta" style="{css_box(330, y0 + 820, 1540, 420, 7)}" class="ctab">
+    add(f'''<div id="cta" style="{css_box(560, y0 + 720, 1080, 540, 7)}" class="ctab">
       <div style="position:absolute;left:60px;top:40px;display:flex;align-items:center;gap:26px">{icon("message-circle", 110, INK, 2.6)}
-        <span style="font:900 104px {FONT};color:{INK}">Comentarios</span></div>
-      <div id="cta-t" style="position:absolute;left:60px;top:190px;font:800 110px {FONT};color:{INK}">{chars(cta, "kc")}<span id="caret" class="caret"></span></div>
+        <span style="font:900 92px {FONT};color:{INK}">Comentarios</span></div>
+      <div id="cta-t" style="position:absolute;left:60px;top:180px;font:800 96px {FONT};color:{INK}">{chars(cta, "kc")}<span id="caret" class="caret"></span></div>
       <div id="cta-btn" class="cbtn">Publicar</div></div>''')
-    add(f'<div id="cur2" data-layout-ignore style="{css_box(1650, y0 + 1080, 170, 170, 12)}opacity:0">'
+    add(f'<div id="cur2" data-layout-ignore style="{css_box(1400, y0 + 1160, 170, 170, 12)}opacity:0">'
         f'{icon("mouse-pointer-2", 160, "#fff", 2.2).replace("<svg", "<svg fill=\"#111\"")}</div>')
-    add(character("mau5", "mauri", 170, floor(4), 1.45, z=8))
-    add(character("fer5", "fernando", 2030, floor(4), 1.45, z=8))
+    add(character("mau5", "mauri", 400, floor(4), 1.3, z=8))
+    add(character("fer5", "fernando", 1800, floor(4), 1.3, z=8))
 
-    t_muc, t_pub, t_que, t_atr, t_casa = P("muchos"), P("publico"), P("queria"), P("atrevieron"), P("casa")
+    t_muc, t_pub, t_que, t_atr, t_casa = P("muchos"), P("publico"), P("queria", 3), P("atrevieron"), P("casa")
     travel(t_muc - 0.25, (xs[0] + 300 - 480, y0 + 150, 960, 900), 4, 450, dur=0.7)
     for i, x in enumerate(xs):
-        tl0 = [t_muc + 0.3, t_pub + 0.2, t_que + 0.1][i]
+        tl0 = [t_muc + 0.25, t_pub + 0.15, t_que + 0.15][i]
         js(f'tl.to("#win{i}", {{backgroundColor:"#ffe8a3", duration:0.3}}, {tl0:.3f});')
         sfx(tl0, "click", 0.25)
-        type_on(f"#wc{i} .w{i}c", len(msg), tl0 + 0.1, t_atr + 0.35)
-    cam(t_pub, (xs[0] - 60, y0 + 150, 2020, 900), dur=0.7)
-    road_to(t_pub, 4, 2000, 1.0)
+        type_on(f"#wc{i} .w{i}c", len(msg), tl0 + 0.05, [t_pub, t_que, t_atr][i] + 0.1)
+    cam(t_pub - 0.1, (xs[1] + 300 - 480, y0 + 150, 960, 900), dur=0.5)
+    cam(t_que - 0.1, (xs[2] + 300 - 480, y0 + 150, 960, 900), dur=0.5)
+    road_to(t_pub - 0.1, 4, 2000, 1.2)
+    cam(t_atr, (xs[0] - 60, y0 + 150, 2020, 900), dur=0.6)
     shake(t_atr, 20)
     sfx(t_atr, "golpe-climax", 0.5)
     for i, x in enumerate(xs):
@@ -486,10 +488,10 @@ def scene_climax():
     js(f'tl.to("#hs0, #hs1, #hs2", {{y:-16, duration:0.18, yoyo:true, repeat:1, stagger:0.06}}, {t_casa:.3f});')
     # comentarios
     t_si, t_mau, t_fer, t_ayu, t_cue, t_com = P("si"), P("mauri", 7), P("fernando", 4), P("ayudaron"), P("cuentalo"), P("comentarios")
-    cam(t_si, (COLX[0], y0 + 150, 2120, 1150), dur=0.7)
+    cam(t_si, (230, y0 + 200, 1740, 1090), dur=0.7)
     slide_in("#cta", t_si, dy=200, dur=0.5)
-    js(f'tl.fromTo("#mau5", {{x:-500}}, {{x:0, duration:0.7, ease:"power2.out"}}, {t_mau - 0.2:.3f}); walk("mau5", {t_mau - 0.2:.3f}, {t_mau + 0.5:.3f}, 0.14);')
-    js(f'face("fer5", -1, 0); tl.fromTo("#fer5", {{x:500}}, {{x:0, duration:0.7, ease:"power2.out"}}, {t_fer - 0.2:.3f}); walk("fer5", {t_fer - 0.2:.3f}, {t_fer + 0.5:.3f}, 0.14);')
+    js(f'tl.fromTo("#mau5", {{x:-500, opacity:0}}, {{x:0, opacity:1, duration:0.7, ease:"power2.out"}}, {t_mau - 0.2:.3f}); walk("mau5", {t_mau - 0.2:.3f}, {t_mau + 0.5:.3f}, 0.14);')
+    js(f'face("fer5", -1, 0); tl.fromTo("#fer5", {{x:500, opacity:0}}, {{x:0, opacity:1, duration:0.7, ease:"power2.out"}}, {t_fer - 0.2:.3f}); walk("fer5", {t_fer - 0.2:.3f}, {t_fer + 0.5:.3f}, 0.14);')
     life("mau5", t_mau + 0.5, G.DUR, 31)
     life("fer5", t_fer + 0.5, G.DUR, 32)
     js(f'wave("mau5", {t_mau + 0.6:.3f}, {G.DUR - 0.05:.3f}); wave("fer5", {t_fer + 0.7:.3f}, {G.DUR - 0.05:.3f});')
@@ -500,7 +502,7 @@ def scene_climax():
     js(f'tl.to("#cta-btn", {{backgroundColor:"#166534", duration:0.2}}, {t_com + 0.4:.3f});')
     sfx(t_com + 0.3, "click", 0.5)
     sfx(t_com + 0.45, "check", 0.4)
-    hearts("hf-", 1100, y0 + 760, 6, t_com + 0.45, spread=1300, rise=500)
+    hearts("hf-", 1100, y0 + 160, 6, t_com + 0.45, spread=1300, rise=300)
 
 
 CSS = """
@@ -532,7 +534,7 @@ CSS = """
 .win {{ position:absolute; left:50px; right:50px; top:50px; height:380px; border-radius:22px; background:#0d1018; border:10px solid #8b93a7; }}
 .wchat {{ position:absolute; left:26px; right:26px; top:30px; font:900 62px {FONT}; color:{INK}; line-height:1.12; }}
 .ctab {{ border-radius:56px; background:#fff; box-shadow:0 30px 80px rgba(0,0,0,0.5); }}
-.ctab .cbtn {{ right:60px; bottom:40px; }}
+.ctab .cbtn {{ right:50px; bottom:40px; font-size:84px; padding:18px 56px; }}
 .cf {{ border-radius:4px; opacity:0; }}
 .heart {{ opacity:0; }}
 .htitle {{ font-size:78px; top:26px; }}
@@ -540,7 +542,30 @@ CSS = """
 """
 
 
+SPANS = {  # (primera palabra, n) -> tramo de voz que corresponde a cada escena
+    "scene_hook": ("antes", 1, "uno", 1), "scene_armario": ("uno", 1, "dos", 1), "scene_bea": ("dos", 1, "una", 1),
+    "scene_tabu": ("una", 1, "tres", 1), "scene_ley": ("tres", 1, "ano", 1), "scene_boda": ("ano", 1, "cuatro", 1),
+    "scene_merlo": ("cuatro", 1, "adria", 1), "scene_collado": ("adria", 1, "y", 99), "scene_climax": ("muchos", 1, None, 0)}
+
+
+def _guard(fn):
+    def run():
+        before = set(G.SYNC)
+        fn()
+        a, na, b, nb = SPANS[fn.__name__]
+        lo = P(a, na) - 1.0
+        hi = G.DUR + 1 if b is None or nb == 99 else P(b, nb) + 1.2
+        for k in set(G.SYNC) - before:
+            t = G.SYNC[k]["empieza"]
+            if not lo <= t <= hi:
+                raise SystemExit(f"{fn.__name__}: el anclaje {k} ({t}s) cae fuera de su tramo de voz [{lo:.1f}, {hi:.1f}]")
+    return run
+
+
 def build():
+    global scene_hook, scene_armario, scene_bea, scene_tabu, scene_ley, scene_boda, scene_merlo, scene_collado, scene_climax
+    scene_hook, scene_armario, scene_bea, scene_tabu, scene_ley, scene_boda, scene_merlo, scene_collado, scene_climax = map(
+        _guard, (scene_hook, scene_armario, scene_bea, scene_tabu, scene_ley, scene_boda, scene_merlo, scene_collado, scene_climax))
     world()
     scene_hook()
     scene_armario()

@@ -28,6 +28,14 @@ for x in w:
     if m and m.group(1) in BLOQUE and (not out or re.search(r"[.]$", out[-1]["text"])):
         x["text"] = BLOQUE[m.group(1)] + ":"
     x["text"] = SPELL.get(x["text"], x["text"])
+    m2 = re.fullmatch(r"(Maury)([.,:]?)", x["text"])
+    if m2:
+        x["text"] = "Mauri" + m2.group(2)
+    m3 = re.fullmatch(r"([Pp])rimetime([.,:]?)", x["text"])
+    if m3:  # «Primetime» -> «prime» + «time», repartiendo el tiempo
+        mid = round((x["start"] + x["end"]) / 2, 3)
+        out.append(dict(text=m3.group(1).lower() + "rime", start=x["start"], end=mid))
+        x = dict(text="time" + m3.group(2), start=mid, end=x["end"])
     if x["text"] == "Yque":  # palabras pegadas: se reparte el tiempo
         mid = round(x["start"] + (x["end"] - x["start"]) * 0.35, 3)
         out.append(dict(text="Y", start=x["start"], end=mid))

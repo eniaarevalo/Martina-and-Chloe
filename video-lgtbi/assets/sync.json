@@ -1,5 +1,10 @@
 [
  {
+  "palabra": "Antes",
+  "vez": 1,
+  "empieza": 0.24
+ },
+ {
   "palabra": "legal",
   "vez": 1,
   "empieza": 0.9
@@ -27,217 +32,227 @@
  {
   "palabra": "cambiaron",
   "vez": 1,
-  "empieza": 4.69
+  "empieza": 4.72
  },
  {
   "palabra": "vidas.",
   "vez": 1,
-  "empieza": 5.52
+  "empieza": 5.54
  },
  {
   "palabra": "Uno:",
   "vez": 1,
-  "empieza": 6.26
+  "empieza": 6.29
  },
  {
   "palabra": "armario.",
   "vez": 1,
-  "empieza": 6.66
+  "empieza": 6.7
  },
  {
   "palabra": "primera",
   "vez": 1,
-  "empieza": 7.63
+  "empieza": 7.67
  },
  {
   "palabra": "Fernando",
   "vez": 2,
-  "empieza": 8.62
- },
- {
-  "palabra": "quería",
-  "vez": 1,
-  "empieza": 9.17
+  "empieza": 8.66
  },
  {
   "palabra": "nadie",
   "vez": 1,
-  "empieza": 9.66
+  "empieza": 9.7
  },
  {
   "palabra": "supiera.",
   "vez": 1,
-  "empieza": 10.04
+  "empieza": 10.08
  },
  {
   "palabra": "Mauri",
   "vez": 2,
-  "empieza": 10.96
+  "empieza": 10.98
  },
  {
   "palabra": "ultimátum,",
   "vez": 1,
-  "empieza": 11.48
+  "empieza": 11.52
  },
  {
   "palabra": "sales",
   "vez": 1,
-  "empieza": 12.32
+  "empieza": 12.36
  },
  {
   "palabra": "armario,",
   "vez": 2,
-  "empieza": 13.02
+  "empieza": 13.06
  },
  {
   "palabra": "dejas.",
   "vez": 1,
-  "empieza": 13.72
+  "empieza": 13.76
+ },
+ {
+  "palabra": "dejas. (final)",
+  "vez": 1,
+  "empieza": 14.36
  },
  {
   "palabra": "Dos:",
   "vez": 1,
-  "empieza": 14.66
+  "empieza": 14.68
  },
  {
   "palabra": "familia.",
   "vez": 1,
-  "empieza": 14.95
+  "empieza": 14.97
  },
  {
   "palabra": "Bea,",
   "vez": 1,
-  "empieza": 15.69
+  "empieza": 15.71
  },
  {
   "palabra": "mejor",
   "vez": 1,
-  "empieza": 16.2
+  "empieza": 16.22
  },
  {
   "palabra": "lesbiana",
   "vez": 1,
-  "empieza": 17.3
+  "empieza": 17.32
  },
  {
   "palabra": "madre.",
   "vez": 1,
-  "empieza": 18.61
+  "empieza": 18.65
  },
  {
   "palabra": "pidió",
   "vez": 1,
-  "empieza": 19.58
+  "empieza": 19.6
  },
  {
   "palabra": "hijo",
   "vez": 1,
-  "empieza": 20.44
+  "empieza": 20.45
  },
  {
   "palabra": "inseminación",
   "vez": 1,
-  "empieza": 21.1
+  "empieza": 21.12
  },
  {
   "palabra": "Una",
   "vez": 1,
-  "empieza": 22.57
+  "empieza": 22.6
  },
  {
   "palabra": "madre",
   "vez": 2,
-  "empieza": 22.905
+  "empieza": 22.92
  },
  {
   "palabra": "padre",
   "vez": 1,
-  "empieza": 23.84
+  "empieza": 23.86
  },
  {
   "palabra": "criando",
   "vez": 1,
-  "empieza": 24.38
+  "empieza": 24.4
  },
  {
   "palabra": "bebé,",
   "vez": 1,
-  "empieza": 25.04
+  "empieza": 25.08
  },
  {
   "palabra": "tabú.",
   "vez": 1,
-  "empieza": 27.22
+  "empieza": 27.18
  },
  {
   "palabra": "Zequi,",
   "vez": 1,
-  "empieza": 28.37
+  "empieza": 28.39
  },
  {
   "palabra": "naturalidad.",
   "vez": 1,
-  "empieza": 30.24
+  "empieza": 30.26
+ },
+ {
+  "palabra": "naturalidad. (final)",
+  "vez": 1,
+  "empieza": 31.25
  },
  {
   "palabra": "Tres:",
   "vez": 1,
-  "empieza": 31.42
+  "empieza": 31.44
  },
  {
   "palabra": "boda.",
   "vez": 1,
-  "empieza": 31.72
+  "empieza": 31.74
  },
  {
   "palabra": "2005,",
   "vez": 1,
-  "empieza": 32.26
+  "empieza": 32.28
  },
  {
   "palabra": "España",
   "vez": 1,
-  "empieza": 33.12
+  "empieza": 33.14
  },
  {
   "palabra": "legalizó",
   "vez": 1,
-  "empieza": 33.49
+  "empieza": 33.51
  },
  {
   "palabra": "matrimonio",
   "vez": 1,
-  "empieza": 34.1
+  "empieza": 34.12
  },
  {
   "palabra": "igualitario.",
   "vez": 1,
-  "empieza": 34.7
+  "empieza": 34.72
  },
  {
   "palabra": "año",
   "vez": 1,
-  "empieza": 35.93
+  "empieza": 35.94
  },
  {
   "palabra": "Mauri",
   "vez": 4,
-  "empieza": 36.55
+  "empieza": 36.57
  },
  {
   "palabra": "Fernando",
   "vez": 3,
-  "empieza": 36.92
+  "empieza": 36.94
  },
  {
   "palabra": "casaron",
   "vez": 1,
-  "empieza": 37.54
+  "empieza": 37.56
+ },
+ {
+  "palabra": "serie. (final)",
+  "vez": 2,
+  "empieza": 38.81
  },
  {
   "palabra": "Cuatro:",
   "vez": 1,
-  "empieza": 39.12
+  "empieza": 39.14
  },
  {
   "palabra": "vida",
@@ -247,82 +262,87 @@
  {
   "palabra": "Luis",
   "vez": 1,
-  "empieza": 40.39
+  "empieza": 40.4
  },
  {
   "palabra": "rechazó",
   "vez": 1,
-  "empieza": 40.94
+  "empieza": 40.95
  },
  {
   "palabra": "cuatro",
   "vez": 2,
-  "empieza": 41.72
+  "empieza": 41.73
  },
  {
   "palabra": "miedo",
   "vez": 1,
-  "empieza": 42.57
+  "empieza": 42.59
  },
  {
   "palabra": "Hoy",
   "vez": 1,
-  "empieza": 44.18
+  "empieza": 44.22
  },
  {
   "palabra": "dice",
   "vez": 1,
-  "empieza": 44.44
+  "empieza": 44.47
  },
  {
   "palabra": "vidas.",
   "vez": 2,
-  "empieza": 45.86
+  "empieza": 45.89
  },
  {
   "palabra": "Adrià",
   "vez": 1,
-  "empieza": 46.28
+  "empieza": 46.33
  },
  {
   "palabra": "paran",
   "vez": 1,
-  "empieza": 47.85
+  "empieza": 47.89
  },
  {
   "palabra": "calle",
   "vez": 1,
-  "empieza": 48.41
+  "empieza": 48.45
  },
  {
   "palabra": "gracias.",
   "vez": 1,
-  "empieza": 49.36
+  "empieza": 49.4
  },
  {
   "palabra": "muchos,",
   "vez": 1,
-  "empieza": 50.61
+  "empieza": 50.65
  },
  {
   "palabra": "público",
   "vez": 1,
-  "empieza": 51.41
+  "empieza": 51.45
+ },
+ {
+  "palabra": "quería,",
+  "vez": 3,
+  "empieza": 52.09
  },
  {
   "palabra": "atrevieron",
   "vez": 1,
-  "empieza": 52.67
+  "empieza": 52.71
  },
  {
   "palabra": "casa.",
   "vez": 1,
-  "empieza": 54.05
+  "empieza": 54.02
  },
  {
   "palabra": "Si",
   "vez": 1,
-  "empieza": 54.54
+  "empieza": 54.6
  },
  {
   "palabra": "Mauri",
@@ -332,21 +352,21 @@
  {
   "palabra": "Fernando",
   "vez": 4,
-  "empieza": 55.01
+  "empieza": 55.05
  },
  {
   "palabra": "ayudaron,",
   "vez": 1,
-  "empieza": 55.59
+  "empieza": 55.63
  },
  {
   "palabra": "cuéntalo",
   "vez": 1,
-  "empieza": 56.16
+  "empieza": 56.2
  },
  {
   "palabra": "comentarios.",
   "vez": 1,
-  "empieza": 56.72
+  "empieza": 56.76
  }
 ]

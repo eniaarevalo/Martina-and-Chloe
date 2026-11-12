@@ -54,7 +54,9 @@ def E(word, n=1):
     """Final de esa palabra."""
     seq = [norm(x) for x in word.split()]
     hits = [i for i in range(len(NW)) if NW[i:i + len(seq)] == seq]
-    return round(WORDS[hits[n - 1] + len(seq) - 1]["end"], 3)
+    t = round(WORDS[hits[n - 1] + len(seq) - 1]["end"], 3)
+    SYNC.setdefault(f"E:{word}#{n}", dict(palabra=WORDS[hits[n - 1]]["text"] + " (final)", vez=n, empieza=t))
+    return t
 
 
 # ---------------------------------------------------------------- estilo
