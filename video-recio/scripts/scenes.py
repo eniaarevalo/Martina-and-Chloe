@@ -187,19 +187,16 @@ def scene_hook():
 
 def scene_porque():
     fx, fy, fw, fh = F(0, 1)
-    card("arch", fx + 60, fy + 30, 840, 300, f'''
-      <div style="position:absolute;left:40px;top:40px">{icon("file-search", 130, INK, 2.2)}</div>
-      <div style="position:absolute;left:200px;top:60px;font:900 56px {FONT};color:{INK};line-height:1.1">Estudios<br>sobre Recio</div>
-      <div id="cero" style="position:absolute;right:50px;top:40px;font:900 190px {FONT};color:{BAD};line-height:1">0</div>''')
-    add(f'''<div id="brain" style="{css_box(fx + 330, fy + 400, 300, 300, 5)}">{icon("brain", 300, "#f9a8d4", 1.8)}</div>''')
+    add(f'''<div id="brain" style="{css_box(fx + 255, fy + 60, 450, 450, 5)}">{icon("brain", 450, "#f9a8d4", 1.6)}</div>''')
+    add(f'<div id="qmark" style="{css_box(fx + 700, fy + 40, 180, 220, 6)}font:900 200px {FONT};color:{ACC};text-align:center;line-height:220px">?</div>')
     for i in range(3):
-        add(f'<div id="sl{i}" class="slot" style="{css_box(fx + 90 + i * 280, fy + 760, 220, 220, 6)}">{i + 1}</div>')
-    t_por, t_nin, t_psi, t_tres = P("por"), P("ningun"), P("psicologia"), P("tres")
+        add(f'<div id="sl{i}" class="slot" style="{css_box(fx + 90 + i * 280, fy + 640, 220, 220, 6)}">{i + 1}</div>')
+    t_por, t_psi, t_tres = P("por"), P("psicologia"), P("tres")
     travel(t_por, F(0, 1), 0, 1630, dur=0.7)
-    slide_in("#arch", t_nin, dy=-60)
-    stamp("#cero", P("recio", 2), rot=-6)
+    pop("#qmark", t_por + 0.2, sound="pop2")
+    js(f'tl.to("#qmark", {{rotation:12, y:-14, duration:0.3, yoyo:true, repeat:5, ease:"sine.inOut"}}, {t_por + 0.6:.3f});')
     pop("#brain", t_psi, sound="pop")
-    js(f'tl.to("#brain", {{scale:1.06, duration:0.6, yoyo:true, repeat:{int((G.DUR - t_psi) / 0.6)}, ease:"sine.inOut"}}, {t_psi + 0.4:.3f});')
+    js(f'tl.to("#brain", {{scale:1.05, duration:0.6, yoyo:true, repeat:{int((G.DUR - t_psi) / 0.6)}, ease:"sine.inOut"}}, {t_psi + 0.4:.3f});')
     js(f'tl.fromTo(".slot", {{opacity:0, scale:0.4}}, {{opacity:1, scale:1, duration:0.35, stagger:0.12, ease:"back.out(2)"}}, {t_tres:.3f});')
     sfx(t_tres, "pop2", 0.3)
     cam(E("respuestas") + 0.05, ROW(0), dur=0.4)
@@ -283,7 +280,7 @@ def scene_nino():
       <div style="position:absolute;left:24px;top:30px">{icon("user", 90, INK, 2.2)}</div>
       <div style="position:absolute;left:120px;top:20px;font:900 48px {FONT};color:{INK};white-space:nowrap">Jordi Sánchez</div>
       <div style="position:absolute;left:120px;top:82px;font:800 46px {FONT};color:#555">el actor</div>''')
-    t_dos, t_nin, t_rec, t_mal, t_enf, t_cri = P("dos"), P("nino"), P("recio", 3), P("mal"), P("enfada"), P("crio")
+    t_dos, t_nin, t_rec, t_mal, t_enf, t_cri = P("dos"), P("nino"), P("recio", 2), P("mal"), P("enfada"), P("crio")
     travel(t_dos, F(2, 0), 2, 570, dur=0.85)
     header_in("h2", t_dos, t_nin)
     life("rec3", 0, G.DUR, 4)

@@ -428,7 +428,7 @@ window.__timelines["world"] = tl;
 # ================================================================= SUBTÍTULOS
 FIX = {"Ruedel": "Rue del", "guión": "guion", "que": None}
 KEY_GOOD = {"adora", "gracia", "inofensivo", "carino", "disfrutar", "tele", "comenta", "heroe"}
-KEY_BAD = {"racista", "homofobo", "tirano", "inmoral", "soportarias", "mal", "enfada", "intolerante", "ningun"}
+KEY_BAD = {"racista", "homofobo", "tirano", "inmoral", "soportarias", "mal", "enfada", "intolerante"}
 KEY_ACC = {"recio", "uno", "dos", "tres", "distancia", "2010", "colorado", "jordi", "nino", "desconexion", "antiheroes",
            "satira", "creador", "psicologia", "pantalla", "infantil", "critica", "antonio", "con"}
 
