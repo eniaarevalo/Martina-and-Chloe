@@ -1,0 +1,195 @@
+{
+ "duration": 49.311417,
+ "cues": [
+  {
+   "t": 0.0,
+   "file": "puerta",
+   "vol": 0.5
+  },
+  {
+   "t": 0.05,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 0.12,
+   "file": "pop2",
+   "vol": 0.22
+  },
+  {
+   "t": 0.9,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 2.04,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 2.32,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 2.5,
+   "file": "pop2",
+   "vol": 0.35
+  },
+  {
+   "t": 3.6,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 4.2,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 4.2,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 5.24,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 5.29,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 8.37,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 9.74,
+   "file": "check",
+   "vol": 0.35
+  },
+  {
+   "t": 10.02,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 10.18,
+   "file": "papel",
+   "vol": 0.4
+  },
+  {
+   "t": 10.65,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 11.3,
+   "file": "madera",
+   "vol": 0.5
+  },
+  {
+   "t": 11.7,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 12.09,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 12.74,
+   "file": "pop2",
+   "vol": 0.22
+  },
+  {
+   "t": 13.17,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 13.288,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 13.406,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 13.524,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 13.642,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 13.76,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 13.878,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 13.996,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.114,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.232,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.35,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.468,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.586,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.704,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.822,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.99,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 15.14,
+   "file": "whoosh",
+   "vol": 0.35
+  }
+ ]
+}
