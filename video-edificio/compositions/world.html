@@ -1,0 +1,1034 @@
+<template>
+<style>
+#root { position:absolute; inset:0; overflow:hidden; background:#07080b; font-family:Inter, sans-serif; }
+#grid { position:absolute; inset:-200px; background-color:#08090d;
+  background-image: linear-gradient(rgba(255,255,255,0.045) 2px, transparent 2px),
+                    linear-gradient(90deg, rgba(255,255,255,0.045) 2px, transparent 2px);
+  background-size: 90px 90px; }
+#glow { position:absolute; left:-200px; right:-200px; bottom:-500px; height:1200px;
+  background: radial-gradient(ellipse at 50% 70%, rgba(92,108,255,0.38), rgba(46,196,182,0.12) 45%, transparent 70%); }
+#scrim { position:absolute; left:0; right:0; top:0; height:470px; pointer-events:none;
+  background:linear-gradient(rgba(7,8,11,0.92) 0%, rgba(7,8,11,0.8) 55%, rgba(7,8,11,0) 100%); }
+#shake { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+#wd { position:absolute; left:0; top:0; width:2200px; height:6600px; }
+.room { background:linear-gradient(#13151c,#0f1117); border:6px solid rgba(255,255,255,0.10); border-bottom:14px solid rgba(255,255,255,0.16); border-radius:10px; }
+.ghost { font:900 140px Inter; color:rgba(255,255,255,0.055); letter-spacing:-4px; }
+.wall { border:10px solid rgba(255,255,255,0.12); border-radius:16px; }
+.parapet { background:#1a1d26; border-top:8px solid rgba(255,255,255,0.18); }
+.hut { background:#151821; border:6px solid rgba(255,255,255,0.12); border-radius:18px 18px 0 0; }
+.hutdoor { position:absolute; left:70px; bottom:0; width:140px; height:300px; background:#0b0c10; border-radius:70px 70px 0 0; }
+.street { background:linear-gradient(#14161d, #07080b); border-top:10px solid rgba(255,255,255,0.12); }
+#bb { background:#ffffff; border-radius:60px; box-shadow:0 40px 120px rgba(0,0,0,0.5); }
+#bb-posts { background:repeating-linear-gradient(90deg, transparent 0 250px, #2a2e3a 250px 290px); }
+.bbface { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.bbt1, .bbt2 { font:900 210px Inter; color:#0f1115; line-height:0.95; letter-spacing:-6px; }
+.bbt2 { color:#ef4444; }
+.bbsub { font:700 90px Inter; color:#666; margin-top:20px; }
+.card { border-radius:40px; box-shadow:0 24px 60px rgba(0,0,0,0.45); overflow:visible; }
+.stamp { font:900 64px Inter; border:8px solid; border-radius:20px; padding:4px 22px; background:rgba(255,255,255,0.92); }
+.pill { font:900 50px Inter; padding:6px 24px; border-radius:999px; white-space:nowrap; }
+.badge { position:absolute; left:0; top:0; width:140px; height:140px; border-radius:50%; font:900 96px Inter;
+  color:#0f1115; text-align:center; line-height:140px; }
+.htitle { position:absolute; left:170px; top:14px; font:900 100px Inter; color:#fff; letter-spacing:-2px; white-space:nowrap; }
+.doorframe { position:absolute; inset:0; background:#2a1c12; border-radius:200px 200px 0 0; border:14px solid #5a3b22; }
+.doorleaf { position:absolute; top:40px; bottom:0; left:24px; width:186px; background:linear-gradient(90deg,#8a5a34,#a06a3e);
+  border-radius:150px 0 0 0; border:6px solid #5a3b22; }
+.doorleaf.r { left:auto; right:24px; border-radius:0 150px 0 0; }
+.counter { background:#d9d4c7; border-radius:16px 16px 0 0; }
+.counter-top { position:absolute; left:-20px; right:-20px; top:-26px; height:36px; background:#a58a5c; border-radius:12px; }
+.counter-sign { position:absolute; left:0; right:0; top:70px; text-align:center; font:900 72px Inter; color:#0f1115; }
+.desktop { position:absolute; left:0; right:0; top:0; height:44px; background:#a07a4c; border-radius:14px; }
+.deskbody { position:absolute; left:30px; right:30px; top:44px; bottom:0; background:#6e5233; border-radius:0 0 12px 12px; }
+.drawer { position:absolute; left:80px; right:80px; top:90px; height:170px; background:#8b6840; border:6px solid #4e3a22; border-radius:12px; }
+.handle { position:absolute; left:50%; top:60px; width:120px; height:30px; margin-left:-60px; background:#e8d3a8; border-radius:15px; }
+.dust { border-radius:50%; background:#cfc7b8; opacity:0; }
+.chathead { height:120px; background:#1f2430; border-radius:40px 40px 0 0; display:flex; align-items:center; padding-left:40px; }
+.chathead .dot { width:26px; height:26px; border-radius:50%; background:#22c55e; margin-right:20px; }
+.typing { position:absolute; left:40px; top:180px; background:#fff; border-radius:30px; padding:22px 30px; display:flex; gap:14px; opacity:0; }
+.typing span { width:22px; height:22px; border-radius:50%; background:#9aa3b2; display:block; }
+.bubble { position:absolute; background:#fff; border-radius:34px; padding:26px 34px; box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+.ch, .qc, .pc, .cc { opacity:0; }
+.avatar { position:relative; border-radius:50%; overflow:hidden; background:#e8ecf4; }
+.over { position:absolute; left:0; top:0; }
+.badge .over { width:100%; text-align:center; }
+.ph { border:6px dashed rgba(255,255,255,0.25); border-radius:40px; }
+.sticker { border-radius:50%; background:#fff; box-shadow:0 14px 30px rgba(0,0,0,0.35); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; }
+.stlab { font:900 30px Inter; color:#0f1115; margin-top:-4px; }
+.xdot { border-radius:50%; background:#ef4444; display:flex; align-items:center; justify-content:center; }
+.bubble.big { padding:30px 40px; box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+.tail { position:absolute; left:120px; top:-28px; width:0; height:0; border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:34px solid #fff; }
+.tail.l { left:-30px; top:auto; bottom:30px; border-left:none; border-bottom:24px solid transparent; border-top:24px solid transparent; border-right:34px solid #fff; }
+.sofa { background:#3b3f73; border-radius:60px 60px 20px 20px; border-top:60px solid #4b4f8a; }
+.lamp { border-left:10px solid #555a66; margin-left:40px; }
+#vc-sign { border-radius:30px; background:#141621; border:8px solid #3a3f55; text-align:center; font:900 96px Inter; line-height:114px; color:#7a809c; }
+#vc-on { width:100%; color:#ff4fd8; text-shadow:0 0 18px rgba(255,79,216,0.7); }
+.tape { position:absolute; width:48px; height:100px; border-radius:6px; box-shadow:inset 0 -18px 0 rgba(0,0,0,0.25); }
+#shelves { background:#3a2a1c; border-radius:16px; border:10px solid #5a4028; }
+#tv { background:#2a2e3a; border-radius:60px; box-shadow:0 30px 80px rgba(0,0,0,0.5); }
+#tv .screen { position:absolute; left:40px; top:40px; right:170px; bottom:40px; border-radius:40px; background:#0b0d14;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; }
+#tv .ant { position:absolute; top:-80px; width:10px; height:100px; background:#8b93a7; border-radius:5px; }
+#tv .a1 { left:330px; transform-origin:50% 100%; rotate:-25deg; }
+#tv .a2 { left:520px; transform-origin:50% 100%; rotate:25deg; }
+#tv .knob { position:absolute; right:50px; width:80px; height:80px; border-radius:50%; background:#8b93a7; }
+#tv .k1 { top:120px; } #tv .k2 { top:260px; }
+.cbox { position:absolute; left:80px; right:80px; top:240px; height:250px; border-radius:40px; background:#f1f3f6;
+  display:flex; align-items:center; gap:36px; padding-left:40px; }
+.cav { width:170px; height:170px; border-radius:50%; background:#6366f1; display:flex; align-items:center; justify-content:center; flex:none; }
+.caret { display:inline-block; width:10px; height:110px; background:#0f1115; vertical-align:-14px; margin-left:8px; }
+.cbtn { position:absolute; right:80px; bottom:70px; padding:24px 70px; border-radius:999px; background:#15803d; color:#fff; font:900 100px Inter; }
+
+.room { background:rgba(255,255,255,0.025); border:4px solid rgba(255,255,255,0.07); border-radius:40px; }
+.mile { border-radius:999px; background:#0b5cad; border:6px solid #fff; color:#fff; font:900 46px Inter; text-align:center; line-height:58px; }
+.htitle { font-size:78px; top:26px; }
+.facade { }
+.fbody { position:absolute; inset:0; background:#e8b84a; border-radius:10px; box-shadow:0 30px 70px rgba(0,0,0,0.45); }
+.fcorn { position:absolute; left:-18px; right:-18px; top:0; height:40px; background:#c98f2c; border-radius:8px; }
+.ffloor { position:absolute; left:0; right:0; border-bottom:8px solid #c98f2c; }
+.fwin { position:absolute; background:#33475b; border:6px solid #fff3d6; border-radius:6px 6px 0 0; }
+.frail { position:absolute; left:-12px; right:-12px; bottom:-18px; height:22px; border:5px solid #1f2937; border-top-width:6px; border-radius:3px; }
+.fshop { position:absolute; height:150px; }
+.sgt { position:absolute; left:0; right:0; top:0; }
+.fsign { position:relative; height:56px; border-radius:10px; background:#1f2937; color:#fff; font:900 30px Inter; text-align:center; line-height:56px; white-space:nowrap; overflow:hidden; }
+.fdoor { margin:12px auto 0; width:70%; height:80px; background:#5b3a1e; border-radius:8px 8px 0 0; }
+.plate { background:#fff; border-radius:26px; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+.plate-in { position:absolute; inset:14px; border:10px solid #1d4ed8; border-radius:16px; display:flex; align-items:center; justify-content:space-between; padding:0 36px; }
+.plate-t { font:900 64px Inter; color:#1d4ed8; letter-spacing:-1px; }
+.plate-n { font:900 120px Inter; color:#1d4ed8; }
+.bigx { border-radius:50%; box-shadow:0 20px 50px rgba(0,0,0,0.5); }
+.bigx .ic { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+.sword { opacity:0; }
+.mapbar { height:110px; background:#1d4ed8; border-radius:40px 40px 0 0; display:flex; align-items:center; padding-left:36px; }
+.sbox { position:absolute; left:40px; right:40px; top:160px; height:130px; border-radius:65px; background:#f1f3f6; border:4px solid #d1d5db; display:flex; align-items:center; padding-left:36px; }
+.sres { position:absolute; left:40px; right:40px; top:340px; height:150px; border-radius:30px; background:#ef4444; display:flex; align-items:center; justify-content:center; gap:24px; font:900 66px Inter; color:#fff; }
+.num { display:inline-block; width:94px; height:94px; margin-right:16px; border-radius:16px; background:#fff; border:6px solid #1d4ed8; color:#1d4ed8; font:900 50px Inter; text-align:center; line-height:82px; }
+.mapc { background:#eef2f7; border-radius:40px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.45); }
+.sname { position:absolute; font:900 46px Inter; color:#334155; white-space:nowrap; }
+.vlab { border-radius:24px; color:#fff; font:900 60px Inter; text-align:center; line-height:80px; }
+.cnt { border-radius:24px; background:#0f1115; border:5px solid #fff; display:flex; align-items:center; justify-content:center; }
+.lampc { border-radius:50%; background:#1f2937; display:flex; align-items:center; justify-content:center; border:5px solid #374151; }
+.beam { background:linear-gradient(rgba(255,212,59,0.18), rgba(255,212,59,0)); clip-path:polygon(10% 0, 90% 0, 100% 100%, 0 100%); }
+.setface { position:absolute; inset:0; }
+.setback { position:absolute; inset:0; background:#3b2a1a; border:10px solid #8b6840; border-radius:8px; }
+.lath { position:absolute; top:0; bottom:0; width:34px; background:#c49a6c; }
+.brace { position:absolute; left:-20px; right:-20px; top:280px; height:30px; background:#a07a4c; transform-origin:50% 50%; rotate:-28deg; }
+.brace.b2 { rotate:28deg; }
+.paper { background:#fffdf5; border-radius:12px; box-shadow:0 30px 70px rgba(0,0,0,0.5); }
+.pcut { position:absolute; border:6px dashed #9ca3af; border-radius:8px; background:repeating-linear-gradient(0deg, rgba(232,184,74,0.35) 0 40px, transparent 40px 80px); }
+.mroom { position:absolute; width:220px; height:130px; border-radius:10px; border:6px solid #e8b84a; }
+#mini { background:#fff7e6; border:14px solid #e8b84a; border-radius:14px; box-shadow:0 30px 70px rgba(0,0,0,0.5); }
+.mstair { position:absolute; left:226px; top:20px; width:8px; height:590px; background:#c98f2c; }
+.sendb { position:absolute; right:40px; bottom:40px; width:130px; height:130px; border-radius:50%; background:#16a34a; display:flex; align-items:center; justify-content:center; }
+.sq, .wc { opacity:0; }
+</style>
+<div id="root" data-composition-id="world" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+  <div id="grid" data-layout-ignore></div>
+  <div id="glow" data-layout-ignore></div>
+  <div id="particles" data-layout-ignore><div class="pt" data-layout-ignore style="position:absolute;left:20px;top:60px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:157px;top:323px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:294px;top:586px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:431px;top:849px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:568px;top:1112px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:705px;top:1375px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:842px;top:1638px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:979px;top:101px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:76px;top:364px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:213px;top:627px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:350px;top:890px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:487px;top:1153px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:624px;top:1416px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:761px;top:1679px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:898px;top:142px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:1035px;top:405px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:132px;top:668px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:269px;top:931px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:406px;top:1194px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:543px;top:1457px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:680px;top:1720px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:817px;top:183px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:954px;top:446px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:51px;top:709px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:188px;top:972px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:325px;top:1235px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div></div>
+  <div id="shake">
+    <div id="wd">
+      <div class="room" data-layout-ignore style="position:absolute;left:50px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<svg id="roadsvg" data-layout-ignore style="position:absolute;left:0px;top:0px;width:2200px;height:5300px;z-index:1;overflow:visible" viewBox="0 0 2200 5300">
+      <defs><linearGradient id="rb" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="5200">
+        <stop offset="0" stop-color="#ffd43b"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="#262a35" stroke-width="54" fill="none" stroke-linejoin="round"/>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="rgba(255,255,255,0.18)" stroke-width="5" fill="none" stroke-dasharray="26 22" stroke-linejoin="round"/>
+      <path id="road" d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="url(#rb)" stroke-width="16" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
+<div class="mile" data-layout-ignore style="position:absolute;left:310px;top:1306px;width:520px;height:70px;z-index:2;">C. del Desengaño</div>
+<div class="mile" data-layout-ignore style="position:absolute;left:1370px;top:2606px;width:520px;height:70px;z-index:2;">C. de Valverde</div>
+<div class="mile" data-layout-ignore style="position:absolute;left:310px;top:3906px;width:520px;height:70px;z-index:2;">C. de Colón</div>
+<div class="mile" data-layout-ignore style="position:absolute;left:1370px;top:5206px;width:520px;height:70px;z-index:2;">Moraleja de Enmedio</div>
+<div id="fac0" class="facade" style="position:absolute;left:220px;top:535px;width:700px;height:740px;z-index:4;"><div class="fbody"></div><div class="fcorn"></div><div id="fac0-fl0" class="ffloor" style="top:60px;height:128px"><div id="fac0-w0-0" class="fwin" style="left:41px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w0-1" class="fwin" style="left:181px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w0-2" class="fwin" style="left:321px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w0-3" class="fwin" style="left:461px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w0-4" class="fwin" style="left:601px;top:23px;width:57px;height:86px"><div class="frail"></div></div></div><div id="fac0-fl1" class="ffloor" style="top:188px;height:128px"><div id="fac0-w1-0" class="fwin" style="left:41px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w1-1" class="fwin" style="left:181px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w1-2" class="fwin" style="left:321px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w1-3" class="fwin" style="left:461px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w1-4" class="fwin" style="left:601px;top:23px;width:57px;height:86px"><div class="frail"></div></div></div><div id="fac0-fl2" class="ffloor" style="top:315px;height:128px"><div id="fac0-w2-0" class="fwin" style="left:41px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w2-1" class="fwin" style="left:181px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w2-2" class="fwin" style="left:321px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w2-3" class="fwin" style="left:461px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w2-4" class="fwin" style="left:601px;top:23px;width:57px;height:86px"><div class="frail"></div></div></div><div id="fac0-fl3" class="ffloor" style="top:442px;height:128px"><div id="fac0-w3-0" class="fwin" style="left:41px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w3-1" class="fwin" style="left:181px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w3-2" class="fwin" style="left:321px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w3-3" class="fwin" style="left:461px;top:23px;width:57px;height:86px"><div class="frail"></div></div><div id="fac0-w3-4" class="fwin" style="left:601px;top:23px;width:57px;height:86px"><div class="frail"></div></div></div><div id="fac0-sg0" class="fshop" style="left:20px;top:570px;width:310px"><div class="fsign"><span id="fac0-sa0" class="sgt">BANCO</span><span id="fac0-sb0" class="sgt" style="opacity:0"></span></div><div class="fdoor"></div></div><div id="fac0-sg1" class="fshop" style="left:370px;top:570px;width:310px"><div class="fsign"><span id="fac0-sa1" class="sgt">VIDEOCLUB</span><span id="fac0-sb1" class="sgt" style="opacity:0"></span></div><div class="fdoor"></div></div></div>
+<div id="plate" style="position:absolute;left:150px;top:245px;width:840px;height:250px;z-index:8;" class="plate">
+      <div class="plate-in"><div class="plate-t">C. DEL DESENGAÑO</div><div id="plate-n" class="plate-n">21</div></div></div>
+<div id="x0" class="bigx" style="position:absolute;left:730px;top:215px;width:200px;height:200px;z-index:9;background:#ef4444">
+      <div id="x0a" class="ic"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="140"
+  height="140"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="3.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div id="x0b" class="ic" style="opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="140"
+  height="140"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="3.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 6 9 17l-5-5" />
+</svg></div></div>
+<div id="h1" style="position:absolute;left:1150px;top:205px;width:960px;height:150px;z-index:6;">
+      <div id="h1-badge" class="badge" style="background:#ffd43b;color:#0f1115">1</div>
+      <div id="h1-title" class="htitle">LA CALLE</div></div>
+<div id="leyenda" class="card" style="position:absolute;left:1150px;top:375px;width:960px;height:210px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:36px;top:50px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="110"
+  height="110"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 7v14" />
+  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+</svg></div>
+      <div style="position:absolute;left:180px;top:30px;font:900 70px Inter;color:#0f1115">«¡Qué desengaño!»</div>
+      <div id="ley-tag" class="pill" style="position:absolute;left:180px;top:118px;background:#ffd43b;color:#0f1115;opacity:0">LEYENDA</div></div>
+<svg id="cab1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
+  style="position:absolute;left:1172px;top:768px;overflow:visible;z-index:6" color="#2563eb">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2563eb"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1b1b1b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="cab2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
+  style="position:absolute;left:1812px;top:768px;overflow:visible;z-index:6" color="#8e2a3c">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#2f3542"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#2f3542"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#8e2a3c"/>
+      <path d="M92 168 L120 190 L148 168 L148 182 L120 204 L92 182 Z" fill="#ffffff"/><path d="M74 240 L166 240" stroke="#6e1f2e" stroke-width="8"/><path d="M74 272 L166 272" stroke="#6e1f2e" stroke-width="8"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#efc29b"/>
+        <circle cx="120" cy="104" r="56" fill="#efc29b"/>
+        <circle cx="64" cy="108" r="10" fill="#efc29b"/><circle cx="176" cy="108" r="10" fill="#efc29b"/>
+        <path d="M64 102 Q62 46 120 44 Q178 46 176 102 Q170 74 150 68 Q120 60 92 70 Q70 78 64 102 Z" fill="#4a2f1f"/><rect x="60" y="92" width="10" height="26" rx="5" fill="#4a2f1f"/><rect x="170" y="92" width="10" height="26" rx="5" fill="#4a2f1f"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#8e2a3c"/><circle cx="71" cy="304" r="15" fill="#efc29b"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#8e2a3c"/><circle cx="169" cy="304" r="15" fill="#efc29b"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="dama" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
+  style="position:absolute;left:1492px;top:768px;overflow:visible;z-index:5" color="#f0883e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#e8c3a0"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#e8c3a0"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#f0883e"/>
+      <path d="M68 250 L172 250 L186 320 L54 320 Z" fill="currentColor" opacity="0.9"/><rect x="94" y="196" width="52" height="54" rx="10" fill="#ffffff" opacity="0.85"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f1cfae"/>
+        <circle cx="120" cy="104" r="56" fill="#f1cfae"/>
+        <circle cx="64" cy="108" r="10" fill="#f1cfae"/><circle cx="176" cy="108" r="10" fill="#f1cfae"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#e0b44e"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#f0883e"/><circle cx="71" cy="304" r="15" fill="#f1cfae"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#f0883e"/><circle cx="169" cy="304" r="15" fill="#f1cfae"/></g>
+    </g>
+  </g>
+</svg>
+<div id="sw1" class="sword" style="position:absolute;left:1400px;top:805px;width:150px;height:150px;z-index:7;"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="150"
+  height="150"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#d1d5db"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+  <line x1="13" x2="19" y1="19" y2="13" />
+  <line x1="16" x2="20" y1="16" y2="20" />
+  <line x1="19" x2="21" y1="21" y2="19" />
+</svg></div>
+<div id="sw2" class="sword" style="position:absolute;left:1710px;top:805px;width:150px;height:150px;z-index:7;"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="150"
+  height="150"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#d1d5db"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+  <line x1="13" x2="19" y1="19" y2="13" />
+  <line x1="16" x2="20" y1="16" y2="20" />
+  <line x1="19" x2="21" y1="21" y2="19" />
+</svg></div>
+<div id="veil" style="position:absolute;left:1550px;top:805px;width:160px;height:200px;z-index:7;border-radius:80px 80px 30px 30px;background:rgba(255,255,255,0.88)"></div>
+<div id="skull" style="position:absolute;left:1555px;top:825px;width:150px;height:150px;z-index:8;opacity:0"><svg fill="#111827"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="150"
+  height="150"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#f8fafc"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m12.5 17-.5-1-.5 1h1z" />
+  <path d="M15 22a1 1 0 0 0 1-1v-1a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z" />
+  <circle cx="15" cy="12" r="1" />
+  <circle cx="9" cy="12" r="1" />
+</svg></div>
+<div id="srch" class="card" style="position:absolute;left:1150px;top:1625px;width:960px;height:600px;z-index:6;background:#ffffff;">
+      <div class="mapbar"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="60"
+  height="60"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <line x1="3" x2="21" y1="22" y2="22" />
+  <line x1="6" x2="6" y1="18" y2="11" />
+  <line x1="10" x2="10" y1="18" y2="11" />
+  <line x1="14" x2="14" y1="18" y2="11" />
+  <line x1="18" x2="18" y1="18" y2="11" />
+  <polygon points="12 2 20 7 4 7" />
+</svg><span style="font:900 52px Inter;color:#fff;margin-left:18px">Callejero de Madrid</span></div>
+      <div class="sbox"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="64"
+  height="64"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#555"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="11" cy="11" r="8" />
+  <path d="m21 21-4.3-4.3" />
+</svg><div id="srch-q" style="font:800 64px Inter;color:#0f1115;margin-left:22px"><span style="display:inline-block;white-space:nowrap"><span class="sq">D</span><span class="sq">e</span><span class="sq">s</span><span class="sq">e</span><span class="sq">n</span><span class="sq">g</span><span class="sq">a</span><span class="sq">ñ</span><span class="sq">o</span></span> <span style="display:inline-block;white-space:nowrap"><span class="sq">2</span><span class="sq">1</span></span></div></div>
+      <div id="srch-r" class="sres" style="opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="80"
+  height="80"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m15 9-6 6" />
+  <path d="m9 9 6 6" />
+</svg><span>Sin resultados</span></div></div>
+<div id="nums" style="position:absolute;left:1190px;top:2285px;width:880px;height:120px;z-index:6;"><div class="num" id="n0">1</div><div class="num" id="n1">3</div><div class="num" id="n2">5</div><div class="num" id="n3">7</div><div class="num" id="n4">9</div><div class="num" id="n5">11</div><div class="num" id="n6">13</div><div class="num" id="n7">15</div></div>
+<div id="h2" style="position:absolute;left:90px;top:1505px;width:960px;height:150px;z-index:6;">
+      <div id="h2-badge" class="badge" style="background:#ffd43b;color:#0f1115">2</div>
+      <div id="h2-title" class="htitle">EL EDIFICIO</div></div>
+<div id="map" style="position:absolute;left:90px;top:1675px;width:960px;height:560px;z-index:4;" class="mapc">
+      <svg width="960" height="560" viewBox="0 0 960 560" style="position:absolute;inset:0">
+        <path d="M 60 150 L 900 150" stroke="#cbd5e1" stroke-width="44"/>
+        <path d="M 60 440 L 900 440" stroke="#cbd5e1" stroke-width="44"/>
+        <path id="valv" d="M 480 150 L 480 440" stroke="#ffd43b" stroke-width="44"/>
+        <path id="route" d="M 160 150 L 480 150 L 480 440 L 760 440" stroke="#ef4444" stroke-width="12" fill="none" stroke-dasharray="20 16"/></svg>
+      <div class="sname" style="left:70px;top:70px">C. del Desengaño</div>
+      <div class="sname" style="left:130px;top:265px">C. de Valverde</div>
+      <div class="sname" style="left:70px;top:480px">C. de Colón</div>
+      <div id="pin" style="position:absolute;left:700px;top:290px;opacity:0"><svg fill="#ef4444"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="130"
+  height="130"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+  <circle cx="12" cy="10" r="3" />
+</svg></div>
+      <div id="dist" class="pill" style="position:absolute;left:560px;top:20px;background:#0f1115;color:#fff;opacity:0">500 m</div></div>
+<div id="addr" class="card" style="position:absolute;left:150px;top:2265px;width:840px;height:150px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:30px;top:30px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="20" x="4" y="2" rx="2" ry="2" />
+  <path d="M9 22v-4h6v4" />
+  <path d="M8 6h.01" />
+  <path d="M16 6h.01" />
+  <path d="M12 6h.01" />
+  <path d="M12 10h.01" />
+  <path d="M12 14h.01" />
+  <path d="M16 10h.01" />
+  <path d="M16 14h.01" />
+  <path d="M8 10h.01" />
+  <path d="M8 14h.01" />
+</svg></div>
+      <div style="position:absolute;left:150px;top:18px;font:900 64px Inter;color:#0f1115">C. de Colón, 14</div>
+      <div style="position:absolute;left:150px;top:90px;font:800 46px Inter;color:#555">Malasaña · Madrid</div></div>
+<div id="crea" class="card" style="position:absolute;left:150px;top:2440px;width:840px;height:140px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:30px;top:25px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+  <circle cx="12" cy="7" r="4" />
+</svg></div>
+      <div style="position:absolute;left:150px;top:16px;font:900 56px Inter;color:#0f1115">Alberto Caballero</div>
+      <div style="position:absolute;left:150px;top:80px;font:800 46px Inter;color:#555">creador de la serie</div>
+      <div id="conf" class="sticker" style="position:absolute;right:20px;top:15px;width:110px;height:110px;background:#15803d;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="80"
+  height="80"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="3.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 6 9 17l-5-5" />
+</svg></div></div>
+<svg id="walk" class="chr " data-layout-ignore viewBox="0 0 240 440" width="101" height="185"
+  style="position:absolute;left:200px;top:1654px;overflow:visible;z-index:7" color="#db2777">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#db2777"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f2c9a5"/>
+        <circle cx="120" cy="104" r="56" fill="#f2c9a5"/>
+        <circle cx="64" cy="108" r="10" fill="#f2c9a5"/><circle cx="176" cy="108" r="10" fill="#f2c9a5"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#b45309"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="71" cy="304" r="15" fill="#f2c9a5"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="169" cy="304" r="15" fill="#f2c9a5"/></g>
+    </g>
+  </g>
+</svg>
+<div id="h3" style="position:absolute;left:90px;top:2805px;width:960px;height:150px;z-index:6;">
+      <div id="h3-badge" class="badge" style="background:#ffd43b;color:#0f1115">3</div>
+      <div id="h3-title" class="htitle">FICCIÓN vs REALIDAD</div></div>
+<div class="vlab" style="position:absolute;left:100px;top:2970px;width:450px;height:80px;z-index:6;background:#7c3aed">SERIE</div>
+<div class="vlab" style="position:absolute;left:590px;top:2970px;width:450px;height:80px;z-index:6;background:#15803d">REAL</div>
+<div id="fs" class="facade" style="position:absolute;left:100px;top:3075px;width:450px;height:700px;z-index:4;"><div class="fbody"></div><div class="fcorn"></div><div id="fs-fl0" class="ffloor" style="top:60px;height:118px"><div id="fs-w0-0" class="fwin" style="left:21px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w0-1" class="fwin" style="left:96px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w0-2" class="fwin" style="left:171px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w0-3" class="fwin" style="left:246px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w0-4" class="fwin" style="left:321px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w0-5" class="fwin" style="left:396px;top:21px;width:32px;height:48px"><div class="frail"></div></div></div><div id="fs-fl1" class="ffloor" style="top:178px;height:118px"><div id="fs-w1-0" class="fwin" style="left:21px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w1-1" class="fwin" style="left:96px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w1-2" class="fwin" style="left:171px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w1-3" class="fwin" style="left:246px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w1-4" class="fwin" style="left:321px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w1-5" class="fwin" style="left:396px;top:21px;width:32px;height:48px"><div class="frail"></div></div></div><div id="fs-fl2" class="ffloor" style="top:295px;height:118px"><div id="fs-w2-0" class="fwin" style="left:21px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w2-1" class="fwin" style="left:96px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w2-2" class="fwin" style="left:171px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w2-3" class="fwin" style="left:246px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w2-4" class="fwin" style="left:321px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w2-5" class="fwin" style="left:396px;top:21px;width:32px;height:48px"><div class="frail"></div></div></div><div id="fs-fl3" class="ffloor" style="top:412px;height:118px"><div id="fs-w3-0" class="fwin" style="left:21px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w3-1" class="fwin" style="left:96px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w3-2" class="fwin" style="left:171px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w3-3" class="fwin" style="left:246px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w3-4" class="fwin" style="left:321px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fs-w3-5" class="fwin" style="left:396px;top:21px;width:32px;height:48px"><div class="frail"></div></div></div><div id="fs-sg0" class="fshop" style="left:20px;top:530px;width:185px"><div class="fsign"><span id="fs-sa0" class="sgt">BANCO</span><span id="fs-sb0" class="sgt" style="opacity:0"></span></div><div class="fdoor"></div></div><div id="fs-sg1" class="fshop" style="left:245px;top:530px;width:185px"><div class="fsign"><span id="fs-sa1" class="sgt">VIDEOCLUB</span><span id="fs-sb1" class="sgt" style="opacity:0"></span></div><div class="fdoor"></div></div></div>
+<div id="fr" class="facade" style="position:absolute;left:590px;top:3075px;width:450px;height:700px;z-index:4;"><div class="fbody"></div><div class="fcorn"></div><div id="fr-fl0" class="ffloor" style="top:60px;height:118px"><div id="fr-w0-0" class="fwin" style="left:21px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w0-1" class="fwin" style="left:96px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w0-2" class="fwin" style="left:171px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w0-3" class="fwin" style="left:246px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w0-4" class="fwin" style="left:321px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w0-5" class="fwin" style="left:396px;top:21px;width:32px;height:48px"><div class="frail"></div></div></div><div id="fr-fl1" class="ffloor" style="top:178px;height:118px"><div id="fr-w1-0" class="fwin" style="left:21px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w1-1" class="fwin" style="left:96px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w1-2" class="fwin" style="left:171px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w1-3" class="fwin" style="left:246px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w1-4" class="fwin" style="left:321px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w1-5" class="fwin" style="left:396px;top:21px;width:32px;height:48px"><div class="frail"></div></div></div><div id="fr-fl2" class="ffloor" style="top:295px;height:118px"><div id="fr-w2-0" class="fwin" style="left:21px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w2-1" class="fwin" style="left:96px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w2-2" class="fwin" style="left:171px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w2-3" class="fwin" style="left:246px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w2-4" class="fwin" style="left:321px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w2-5" class="fwin" style="left:396px;top:21px;width:32px;height:48px"><div class="frail"></div></div></div><div id="fr-fl3" class="ffloor" style="top:412px;height:118px"><div id="fr-w3-0" class="fwin" style="left:21px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w3-1" class="fwin" style="left:96px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w3-2" class="fwin" style="left:171px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w3-3" class="fwin" style="left:246px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w3-4" class="fwin" style="left:321px;top:21px;width:32px;height:48px"><div class="frail"></div></div><div id="fr-w3-5" class="fwin" style="left:396px;top:21px;width:32px;height:48px"><div class="frail"></div></div></div><div id="fr-sg0" class="fshop" style="left:20px;top:530px;width:185px"><div class="fsign"><span id="fr-sa0" class="sgt">BANCO</span><span id="fr-sb0" class="sgt" style="opacity:0">CREPERÍA</span></div><div class="fdoor"></div></div><div id="fr-sg1" class="fshop" style="left:245px;top:530px;width:185px"><div class="fsign"><span id="fr-sa1" class="sgt">VIDEOCLUB</span><span id="fr-sb1" class="sgt" style="opacity:0">FERRETERÍA</span></div><div class="fdoor"></div></div></div>
+<div id="cs" class="cnt" style="position:absolute;left:270px;top:3790px;width:110px;height:90px;z-index:8;"><span id="c6" class="roller" style="display:inline-block;font-size:70px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:78px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="c6-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span></span></div>
+<div id="cr" class="cnt" style="position:absolute;left:760px;top:3790px;width:110px;height:90px;z-index:8;"><span id="c4" class="roller" style="display:inline-block;font-size:70px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:78px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="c4-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span></span></div>
+<div id="h4" style="position:absolute;left:1150px;top:2805px;width:960px;height:150px;z-index:6;">
+      <div id="h4-badge" class="badge" style="background:#ffd43b;color:#0f1115">4</div>
+      <div id="h4-title" class="htitle">EL PLATÓ</div></div>
+<div id="lamp0" class="lampc" style="position:absolute;left:1210px;top:2965px;width:120px;height:120px;z-index:6;"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg></div>
+<div id="lamp1" class="lampc" style="position:absolute;left:1560px;top:2965px;width:120px;height:120px;z-index:6;"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg></div>
+<div id="lamp2" class="lampc" style="position:absolute;left:1910px;top:2965px;width:120px;height:120px;z-index:6;"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg></div>
+<div id="beam" class="beam" data-layout-ignore style="position:absolute;left:1190px;top:3075px;width:880px;height:620px;z-index:2;"></div>
+<div id="set" style="position:absolute;left:1330px;top:3105px;width:600px;height:600px;z-index:4;">
+      <div id="set-f" class="setface"></div>
+      <div id="set-b" class="setback" style="opacity:0"><div class="lath" style="left:40px"></div><div class="lath" style="left:170px"></div><div class="lath" style="left:300px"></div><div class="lath" style="left:430px"></div><div class="lath" style="left:560px"></div>
+        <div class="brace"></div><div class="brace b2"></div></div></div>
+<div id="fp" class="facade" style="position:absolute;left:1330px;top:3105px;width:600px;height:600px;z-index:5;"><div class="fbody"></div><div class="fcorn"></div><div id="fp-fl0" class="ffloor" style="top:60px;height:92px"><div id="fp-w0-0" class="fwin" style="left:54px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w0-1" class="fwin" style="left:204px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w0-2" class="fwin" style="left:354px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w0-3" class="fwin" style="left:504px;top:17px;width:42px;height:62px"><div class="frail"></div></div></div><div id="fp-fl1" class="ffloor" style="top:152px;height:92px"><div id="fp-w1-0" class="fwin" style="left:54px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w1-1" class="fwin" style="left:204px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w1-2" class="fwin" style="left:354px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w1-3" class="fwin" style="left:504px;top:17px;width:42px;height:62px"><div class="frail"></div></div></div><div id="fp-fl2" class="ffloor" style="top:245px;height:92px"><div id="fp-w2-0" class="fwin" style="left:54px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w2-1" class="fwin" style="left:204px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w2-2" class="fwin" style="left:354px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w2-3" class="fwin" style="left:504px;top:17px;width:42px;height:62px"><div class="frail"></div></div></div><div id="fp-fl3" class="ffloor" style="top:338px;height:92px"><div id="fp-w3-0" class="fwin" style="left:54px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w3-1" class="fwin" style="left:204px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w3-2" class="fwin" style="left:354px;top:17px;width:42px;height:62px"><div class="frail"></div></div><div id="fp-w3-3" class="fwin" style="left:504px;top:17px;width:42px;height:62px"><div class="frail"></div></div></div><div id="fp-sg0" class="fshop" style="left:20px;top:430px;width:260px"><div class="fsign"><span id="fp-sa0" class="sgt">BANCO</span><span id="fp-sb0" class="sgt" style="opacity:0"></span></div><div class="fdoor"></div></div><div id="fp-sg1" class="fshop" style="left:320px;top:430px;width:260px"><div class="fsign"><span id="fp-sa1" class="sgt">VIDEOCLUB</span><span id="fp-sb1" class="sgt" style="opacity:0"></span></div><div class="fdoor"></div></div></div>
+<div id="m2c" class="pill" style="position:absolute;left:1170px;top:3725px;z-index:8;background:#fff;color:#0f1115;font-size:62px"><span id="m2" class="roller" style="display:inline-block;font-size:70px;font-weight:900;color:#0f1115;font-variant-numeric:tabular-nums;line-height:78px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="m2-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span style="display:inline-block;height:78px;line-height:78px;vertical-align:top">.</span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="m2-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="m2-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="m2-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span></span> m²</div>
+<div id="mor" class="pill" style="position:absolute;left:1620px;top:3735px;z-index:8;background:#0f1115;color:#fff;border:4px solid #fff"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="44"
+  height="44"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+  <circle cx="12" cy="10" r="3" />
+</svg> Moraleja</div>
+<div id="clap" class="sticker" style="position:absolute;left:1940px;top:3085px;width:160px;height:160px;z-index:9;"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="96"
+  height="96"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z" />
+  <path d="m6.2 5.3 3.1 3.9" />
+  <path d="m12.4 3.4 3.1 4" />
+  <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
+</svg></div>
+<div id="cal6" class="cnt" style="position:absolute;left:1480px;top:3325px;width:300px;height:110px;z-index:9;background:#ef4444;width:300px"><span id="yr6" class="roller" style="display:inline-block;font-size:70px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:78px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="yr6-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="yr6-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="yr6-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="yr6-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span></span></div>
+<div id="paper" style="position:absolute;left:1270px;top:4185px;width:720px;height:900px;z-index:4;" class="paper">
+      <div class="pcut" style="left:60px;top:60px;width:600px;height:640px"></div>
+      <div class="pcut" style="left:60px;top:730px;width:290px;height:120px"></div>
+      <div class="pcut" style="left:370px;top:730px;width:290px;height:120px"></div>
+      <div id="scis" style="position:absolute;left:30px;top:20px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="6" cy="6" r="3" />
+  <path d="M8.12 8.12 12 12" />
+  <path d="M20 4 8.12 15.88" />
+  <circle cx="6" cy="18" r="3" />
+  <path d="M14.8 14.8 20 20" />
+</svg></div></div>
+<div id="mini" style="position:absolute;left:1380px;top:4405px;width:500px;height:640px;z-index:6;opacity:0">
+      <div class="mroom" style="left:20px;top:20px;background:#fde68a"></div><div class="mroom" style="left:260px;top:20px;background:#bfdbfe"></div><div class="mroom" style="left:20px;top:170px;background:#fbcfe8"></div><div class="mroom" style="left:260px;top:170px;background:#bbf7d0"></div><div class="mroom" style="left:20px;top:320px;background:#fed7aa"></div><div class="mroom" style="left:260px;top:320px;background:#ddd6fe"></div><div class="mroom" style="left:20px;top:470px;background:#fecaca"></div><div class="mroom" style="left:260px;top:470px;background:#a5f3fc"></div>
+      <div class="mstair"></div></div>
+<div id="mlab" class="pill" style="position:absolute;left:1370px;top:5065px;z-index:8;background:#ffd43b;color:#0f1115;opacity:0">MAQUETA RECORTABLE</div>
+<div id="wa" class="card" style="position:absolute;left:90px;top:4205px;width:960px;height:560px;z-index:6;background:#f4f5f7;">
+      <div class="chathead"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="54"
+  height="54"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <circle cx="9" cy="7" r="4" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+</svg><span style="font:900 52px Inter;color:#fff;margin-left:16px">Amigos</span></div>
+      <div class="bubble" style="left:auto;right:30px;top:150px;width:760px;background:#d9fdd3">
+        <div id="wa-t" style="font:800 58px Inter;color:#0f1115;line-height:1.12"><span style="display:inline-block;white-space:nowrap"><span class="wc">¿</span><span class="wc">S</span><span class="wc">a</span><span class="wc">b</span><span class="wc">í</span><span class="wc">a</span><span class="wc">s</span></span> <span style="display:inline-block;white-space:nowrap"><span class="wc">q</span><span class="wc">u</span><span class="wc">e</span></span> <span style="display:inline-block;white-space:nowrap"><span class="wc">D</span><span class="wc">e</span><span class="wc">s</span><span class="wc">e</span><span class="wc">n</span><span class="wc">g</span><span class="wc">a</span><span class="wc">ñ</span><span class="wc">o</span></span> <span style="display:inline-block;white-space:nowrap"><span class="wc">2</span><span class="wc">1</span></span> <span style="display:inline-block;white-space:nowrap"><span class="wc">n</span><span class="wc">o</span></span> <span style="display:inline-block;white-space:nowrap"><span class="wc">e</span><span class="wc">x</span><span class="wc">i</span><span class="wc">s</span><span class="wc">t</span><span class="wc">e</span><span class="wc">?</span></span></div>
+        <div id="wa-v" style="text-align:right;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="54"
+  height="54"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#34b7f1"
+  stroke-width="2.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 7 17l-5-5" />
+  <path d="m22 10-7.5 7.5L13 16" />
+</svg></div></div>
+      <div id="wa-send" class="sendb"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="64"
+  height="64"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" />
+  <path d="m21.854 2.147-10.94 10.939" />
+</svg></div></div>
+<div id="cur" data-layout-ignore style="position:absolute;left:870px;top:4665px;width:140px;height:140px;z-index:12;opacity:0"><svg fill="#111"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="130"
+  height="130"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z" />
+</svg></div>
+<svg id="f1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="264" height="484"
+  style="position:absolute;left:208px;top:4689px;overflow:visible;z-index:6" color="#2563eb">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2563eb"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1b1b1b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="f2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="264" height="484"
+  style="position:absolute;left:658px;top:4689px;overflow:visible;z-index:6" color="#16a34a">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#3f3f46"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#3f3f46"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#16a34a"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#8d5a3b"/>
+        <circle cx="120" cy="104" r="56" fill="#8d5a3b"/>
+        <circle cx="64" cy="108" r="10" fill="#8d5a3b"/><circle cx="176" cy="108" r="10" fill="#8d5a3b"/>
+        <path d="M64 102 Q62 46 120 44 Q178 46 176 102 Q170 74 150 68 Q120 60 92 70 Q70 78 64 102 Z" fill="#111111"/><rect x="60" y="92" width="10" height="26" rx="5" fill="#111111"/><rect x="170" y="92" width="10" height="26" rx="5" fill="#111111"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#16a34a"/><circle cx="71" cy="304" r="15" fill="#8d5a3b"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#16a34a"/><circle cx="169" cy="304" r="15" fill="#8d5a3b"/></g>
+    </g>
+  </g>
+</svg>
+    </div>
+  </div>
+  <div id="scrim" data-layout-ignore></div>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const PIV = {"armL": "71 188", "armR": "169 188", "legL": "107 296", "legR": "133 296", "head": "120 160", "upper": "120 300", "eyes": "120 106", "rig": "120 430"};
+const Q = (id, part) => document.querySelector('#' + id + ' .' + part);
+function life(id, t0, t1, seed) {
+  const n = Math.max(1, Math.floor((t1 - t0) / 1.8));
+  tl.fromTo(Q(id,'upper'), {scaleY:1}, {scaleY:1.03, svgOrigin:PIV.upper, duration:0.9, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const m = Math.max(1, Math.floor((t1 - t0) / (1.4 + (seed % 4) * 0.15)));
+  tl.fromTo(Q(id,'head'), {rotation:-2.5}, {rotation:2.5, svgOrigin:PIV.head, duration:1.4 + (seed % 4) * 0.15, ease:'sine.inOut', yoyo:true, repeat:m-1, immediateRender:false}, t0 + 0.1);
+  let r = (seed * 7919) % 997, t = t0 + 0.5 + (seed % 5) * 0.23;
+  const ey = Q(id,'eyes');
+  while (t < t1 - 0.2) {
+    tl.to(ey, {scaleY:0.08, svgOrigin:PIV.eyes, duration:0.06}, t);
+    tl.to(ey, {scaleY:1, svgOrigin:PIV.eyes, duration:0.09}, t + 0.1);
+    r = (r * 7919 + 13) % 997; t += 2.1 + (r / 997) * 2.3;
+  }
+}
+function walk(id, t0, t1, step) {
+  const n = Math.max(2, Math.round((t1 - t0) / step));
+  tl.fromTo(Q(id,'legL'), {rotation:-26}, {rotation:26, svgOrigin:PIV.legL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'legR'), {rotation:26}, {rotation:-26, svgOrigin:PIV.legR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armL'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armR'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'rig'), {y:0}, {y:-14, duration:step/2, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const te = t0 + n * step;
+  ['legL','legR','armL','armR'].forEach(p => tl.to(Q(id,p), {rotation:0, svgOrigin:PIV[p], duration:0.15}, te));
+  tl.to(Q(id,'rig'), {y:0, duration:0.15}, te);
+}
+function face(id, dir, t) { tl.set(Q(id,'rig'), {scaleX:dir, svgOrigin:PIV.rig}, t); }
+function jump(id, t, h) {
+  tl.to(Q(id,'rig'), {keyframes:[{scaleY:0.9, y:0, duration:0.08},{scaleY:1.05, y:-h, duration:0.18, ease:'power2.out'},
+    {scaleY:1, y:0, duration:0.18, ease:'power2.in'},{scaleY:0.95, duration:0.06},{scaleY:1, duration:0.08}], svgOrigin:PIV.rig}, t);
+}
+function point(id, side, t0, t1, ang) {
+  const arm = Q(id, 'arm' + side);
+  tl.to(arm, {rotation:ang, svgOrigin:PIV['arm' + side], duration:0.3, ease:'back.out(2)'}, t0);
+  tl.to(arm, {rotation:0, svgOrigin:PIV['arm' + side], duration:0.35, ease:'power2.inOut'}, t1);
+}
+function wave(id, t0, t1) {
+  const arm = Q(id, 'armR');
+  tl.to(arm, {rotation:-150, svgOrigin:PIV.armR, duration:0.3, ease:'back.out(2)'}, t0);
+  const n = Math.max(1, Math.floor((t1 - t0 - 0.3) / 0.28));
+  tl.fromTo(arm, {rotation:-150}, {rotation:-118, svgOrigin:PIV.armR, duration:0.28, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0 + 0.3);
+}
+function tilt(id, t) {
+  tl.to(Q(id,'brows'), {y:-8, duration:0.2, ease:'back.out(3)'}, t);
+  tl.to(Q(id,'brows'), {y:0, duration:0.3}, t + 1.2);
+}
+function typeOn(sel, t0, t1) {
+  const els = document.querySelectorAll(sel);
+  const dt = (t1 - t0) / Math.max(1, els.length);
+  els.forEach((e, i) => tl.set(e, {opacity:1}, t0 + i * dt));
+}
+
+tl.set("#road", {strokeDasharray:12140.0, strokeDashoffset:12140.0}, 0);
+tl.set("#wd", {x:-81.8, y:487.3, scale:1.0909, transformOrigin:"0 0"}, 0);
+tl.set("#grid", {backgroundPosition:"-20px 122px"}, 0);
+tl.to("#wd", {x:-30.0, y:195.0, scale:1.0, duration:0.9, ease:"power3.inOut"}, 0.150);
+tl.to("#grid", {backgroundPosition:"-8px 49px", duration:0.9, ease:"power3.inOut"}, 0.150);
+tl.fromTo("#plate", {y:-500, rotation:-8}, {y:0, rotation:0, duration:0.35, ease:"bounce.out"}, 0);
+tl.to("#shake", {keyframes:[{x:-14,y:8},{x:11,y:-6},{x:-7,y:4},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 0.330);
+tl.fromTo("#x0", {opacity:0, scale:2.6, rotation:-22}, {opacity:1, scale:1, rotation:-8, duration:0.32, ease:"power4.in"}, 0.990);
+tl.to("#plate-n", {color:"#ef4444", duration:0.2}, 0.990);
+tl.fromTo("#fac0-fl3", {opacity:0, y:40}, {opacity:1, y:0, duration:0.25, ease:"back.out(2)"}, 0.100);
+tl.fromTo("#fac0-fl2", {opacity:0, y:40}, {opacity:1, y:0, duration:0.25, ease:"back.out(2)"}, 0.200);
+tl.fromTo("#fac0-fl1", {opacity:0, y:40}, {opacity:1, y:0, duration:0.25, ease:"back.out(2)"}, 0.300);
+tl.fromTo("#fac0-fl0", {opacity:0, y:40}, {opacity:1, y:0, duration:0.25, ease:"back.out(2)"}, 0.400);
+tl.fromTo("#fac0 .fshop", {opacity:0}, {opacity:1, duration:0.25}, 0.05);
+tl.to("#fac0", {scale:1.04, duration:0.18, yoyo:true, repeat:1, transformOrigin:"50% 100%"}, 2.050);
+tl.to("#x0", {scaleY:0, duration:0.14, ease:"power2.in"}, 4.020);
+tl.set("#x0a", {opacity:0}, 4.160);
+tl.set("#x0b", {opacity:1}, 4.160);
+tl.set("#x0", {backgroundColor:"#15803d"}, 4.160);
+tl.to("#x0", {scaleY:1, duration:0.26, ease:"back.out(2.2)"}, 4.160);
+tl.to("#plate", {y:"-=6", duration:1.30, ease:"sine.inOut", yoyo:true, repeat:38}, 4.520);
+tl.to("#wd", {x:41.9, y:611.7, scale:0.4528, duration:0.5, ease:"power3.inOut"}, 4.410);
+tl.to("#grid", {backgroundPosition:"10px 153px", duration:0.5, ease:"power3.inOut"}, 4.410);
+tl.to("#wd", {filter:"blur(5px)", duration:0.20, ease:"power1.in"}, 4.410);
+tl.to("#wd", {filter:"blur(0px)", duration:0.23, ease:"power1.out"}, 4.660);
+tl.to("#wd", {x:-1090.0, y:195.0, scale:1.0, duration:0.8, ease:"power3.inOut"}, 4.720);
+tl.to("#grid", {backgroundPosition:"-272px 49px", duration:0.8, ease:"power3.inOut"}, 4.720);
+tl.to("#wd", {filter:"blur(5px)", duration:0.32, ease:"power1.in"}, 4.720);
+tl.to("#wd", {filter:"blur(0px)", duration:0.36, ease:"power1.out"}, 5.120);
+tl.to("#road", {strokeDashoffset:10580.0, duration:0.80, ease:"power2.inOut"}, 4.720);
+tl.fromTo("#h1-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 4.720);
+tl.fromTo("#h1-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 5.020);
+tl.fromTo("#leyenda", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 6.300);
+tl.fromTo("#ley-tag", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 8.690);
+life("cab1", 0.000, 56.365, 1);
+life("cab2", 0.000, 56.365, 2);
+life("dama", 0.000, 56.365, 3);
+face("cab2", -1, 0);
+tl.fromTo("#cab1", {x:-300, opacity:0}, {x:0, opacity:1, duration:0.5}, 9.320); walk("cab1", 9.320, 9.820, 0.13);
+tl.fromTo("#cab2", {x:300, opacity:0}, {x:0, opacity:1, duration:0.5}, 9.420); walk("cab2", 9.420, 9.920, 0.13);
+tl.fromTo("#sw1", {opacity:0, rotation:-60}, {opacity:1, rotation:20, duration:0.25}, 10.220);
+tl.fromTo("#sw2", {opacity:0, rotation:150}, {opacity:1, rotation:70, duration:0.25}, 10.220);
+tl.to("#sw1", {rotation:30, x:20, duration:0.11, yoyo:true, repeat:1}, 10.520);
+tl.to("#sw2", {rotation:60, x:-20, duration:0.11, yoyo:true, repeat:1}, 10.520);
+tl.to("#sw1", {rotation:5, x:0, duration:0.11, yoyo:true, repeat:1}, 10.740);
+tl.to("#sw2", {rotation:85, x:0, duration:0.11, yoyo:true, repeat:1}, 10.740);
+tl.to("#sw1", {rotation:30, x:20, duration:0.11, yoyo:true, repeat:1}, 10.960);
+tl.to("#sw2", {rotation:60, x:-20, duration:0.11, yoyo:true, repeat:1}, 10.960);
+tl.fromTo("#dama", {opacity:0, y:30}, {opacity:1, y:0, duration:0.4}, 11.020); tl.fromTo("#veil", {opacity:0}, {opacity:1, duration:0.4}, 11.020);
+tl.to("#veil", {y:-160, opacity:0, duration:0.4, ease:"power2.in"}, 11.870);
+tl.to("#skull", {opacity:1, scale:1.15, duration:0.25, ease:"back.out(3)"}, 12.690);
+jump("cab1", 12.790, 70); jump("cab2", 12.840, 70);
+tl.to("#sw1, #sw2", {y:500, rotation:"+=180", opacity:0, duration:0.6, ease:"power2.in"}, 12.890);
+tl.to("#wd", {x:-1090.0, y:-1105.0, scale:1.0, duration:0.8, ease:"power3.inOut"}, 13.930);
+tl.to("#grid", {backgroundPosition:"-272px -276px", duration:0.8, ease:"power3.inOut"}, 13.930);
+tl.to("#wd", {filter:"blur(5px)", duration:0.32, ease:"power1.in"}, 13.930);
+tl.to("#wd", {filter:"blur(0px)", duration:0.36, ease:"power1.out"}, 14.330);
+tl.to("#road", {strokeDashoffset:8280.0, duration:0.80, ease:"power2.inOut"}, 13.930);
+tl.fromTo("#srch", {opacity:0, x:0, y:80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 14.480);
+tl.fromTo(".num", {opacity:0, y:30}, {opacity:1, y:0, duration:0.25, stagger:0.07}, 15.530);
+typeOn("#srch-q .sq", 16.360, 17.240);
+tl.fromTo("#srch-r", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 17.290);
+tl.to("#srch", {keyframes:[{x:-10},{x:10},{x:-6},{x:0}], duration:0.3}, 17.340);
+tl.to("#wd", {x:55.1, y:333.9, scale:0.4408, duration:0.5, ease:"power3.inOut"}, 17.780);
+tl.to("#grid", {backgroundPosition:"14px 83px", duration:0.5, ease:"power3.inOut"}, 17.780);
+tl.to("#wd", {filter:"blur(5px)", duration:0.20, ease:"power1.in"}, 17.780);
+tl.to("#wd", {filter:"blur(0px)", duration:0.23, ease:"power1.out"}, 18.030);
+tl.to("#wd", {x:-30.0, y:-1105.0, scale:1.0, duration:0.8, ease:"power3.inOut"}, 17.680);
+tl.to("#grid", {backgroundPosition:"-8px -276px", duration:0.8, ease:"power3.inOut"}, 17.680);
+tl.to("#wd", {filter:"blur(5px)", duration:0.32, ease:"power1.in"}, 17.680);
+tl.to("#wd", {filter:"blur(0px)", duration:0.36, ease:"power1.out"}, 18.080);
+tl.to("#road", {strokeDashoffset:7220.0, duration:0.80, ease:"power2.inOut"}, 17.680);
+tl.fromTo("#h2-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 17.680);
+tl.fromTo("#h2-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 18.310);
+tl.fromTo("#map", {opacity:0, x:0, y:60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 19.630);
+tl.fromTo("#pin", {opacity:0, y:-160}, {opacity:1, y:0, duration:0.45, ease:"bounce.out"}, 21.060);
+tl.fromTo("#addr", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 21.990);
+tl.fromTo("#addr div:last-child", {opacity:0}, {opacity:1, duration:0.3}, 22.750);
+tl.set("#route", {strokeDasharray:"20 16", strokeDashoffset:0}, 0); tl.set("#route", {opacity:0}, 0);
+tl.to("#route", {opacity:1, duration:0.2}, 23.900);
+tl.fromTo("#dist", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 24.100);
+life("walk", 0.000, 56.365, 4);
+tl.fromTo("#walk", {opacity:0}, {opacity:1, duration:0.2}, 23.900);
+tl.to("#walk", {keyframes:[{x:320, duration:0.6},{y:290, duration:0.7},{x:600, duration:0.6}], ease:"none"}, 24.000);
+walk("walk", 24.000, 25.900, 0.12);
+tl.fromTo("#crea", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 25.730);
+tl.fromTo("#conf", {opacity:0, scale:2.6, rotation:-20}, {opacity:1, scale:1, rotation:-6, duration:0.32, ease:"power4.in"}, 26.970);
+tl.set("#conf", {opacity:0}, 0);
+tl.to("#wd", {x:41.9, y:23.0, scale:0.4528, duration:0.45, ease:"power3.inOut"}, 28.250);
+tl.to("#grid", {backgroundPosition:"10px 6px", duration:0.45, ease:"power3.inOut"}, 28.250);
+tl.to("#wd", {filter:"blur(5px)", duration:0.18, ease:"power1.in"}, 28.250);
+tl.to("#wd", {filter:"blur(0px)", duration:0.20, ease:"power1.out"}, 28.475);
+tl.to("#wd", {x:-30.0, y:-2405.0, scale:1.0, duration:0.85, ease:"power3.inOut"}, 28.390);
+tl.to("#grid", {backgroundPosition:"-8px -601px", duration:0.85, ease:"power3.inOut"}, 28.390);
+tl.to("#wd", {filter:"blur(5px)", duration:0.34, ease:"power1.in"}, 28.390);
+tl.to("#wd", {filter:"blur(0px)", duration:0.38, ease:"power1.out"}, 28.815);
+tl.to("#road", {strokeDashoffset:4920.0, duration:0.85, ease:"power2.inOut"}, 28.390);
+tl.fromTo("#h3-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 28.390);
+tl.fromTo("#h3-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 28.580);
+tl.fromTo("#fs", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 28.580);
+tl.fromTo("#fr", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 29.390);
+tl.fromTo("#cr", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 30.730);
+tl.set("#c4-d0", {y:0}, 0);
+tl.to("#c4-d0", {y:-1092, duration:0.50, ease:"power3.out"}, 30.830);
+tl.to("#fr-w0-4", {scale:0, opacity:0, duration:0.3, ease:"back.in(2)"}, 30.980);
+tl.to("#fr-w0-5", {scale:0, opacity:0, duration:0.3, ease:"back.in(2)"}, 30.980);
+tl.to("#fr-w0-0", {x:19, duration:0.35, ease:"power2.inOut"}, 31.180);
+tl.to("#fr-w0-1", {x:56, duration:0.35, ease:"power2.inOut"}, 31.180);
+tl.to("#fr-w0-2", {x:94, duration:0.35, ease:"power2.inOut"}, 31.180);
+tl.to("#fr-w0-3", {x:131, duration:0.35, ease:"power2.inOut"}, 31.180);
+tl.to("#fr-w1-4", {scale:0, opacity:0, duration:0.3, ease:"back.in(2)"}, 31.030);
+tl.to("#fr-w1-5", {scale:0, opacity:0, duration:0.3, ease:"back.in(2)"}, 31.030);
+tl.to("#fr-w1-0", {x:19, duration:0.35, ease:"power2.inOut"}, 31.230);
+tl.to("#fr-w1-1", {x:56, duration:0.35, ease:"power2.inOut"}, 31.230);
+tl.to("#fr-w1-2", {x:94, duration:0.35, ease:"power2.inOut"}, 31.230);
+tl.to("#fr-w1-3", {x:131, duration:0.35, ease:"power2.inOut"}, 31.230);
+tl.to("#fr-w2-4", {scale:0, opacity:0, duration:0.3, ease:"back.in(2)"}, 31.080);
+tl.to("#fr-w2-5", {scale:0, opacity:0, duration:0.3, ease:"back.in(2)"}, 31.080);
+tl.to("#fr-w2-0", {x:19, duration:0.35, ease:"power2.inOut"}, 31.280);
+tl.to("#fr-w2-1", {x:56, duration:0.35, ease:"power2.inOut"}, 31.280);
+tl.to("#fr-w2-2", {x:94, duration:0.35, ease:"power2.inOut"}, 31.280);
+tl.to("#fr-w2-3", {x:131, duration:0.35, ease:"power2.inOut"}, 31.280);
+tl.to("#fr-w3-4", {scale:0, opacity:0, duration:0.3, ease:"back.in(2)"}, 31.130);
+tl.to("#fr-w3-5", {scale:0, opacity:0, duration:0.3, ease:"back.in(2)"}, 31.130);
+tl.to("#fr-w3-0", {x:19, duration:0.35, ease:"power2.inOut"}, 31.330);
+tl.to("#fr-w3-1", {x:56, duration:0.35, ease:"power2.inOut"}, 31.330);
+tl.to("#fr-w3-2", {x:94, duration:0.35, ease:"power2.inOut"}, 31.330);
+tl.to("#fr-w3-3", {x:131, duration:0.35, ease:"power2.inOut"}, 31.330);
+tl.fromTo("#cs", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 32.790);
+tl.set("#c6-d0", {y:0}, 0);
+tl.to("#c6-d0", {y:-1248, duration:0.50, ease:"power3.out"}, 33.440);
+tl.to("#fs .fwin", {scale:1.12, duration:0.15, yoyo:true, repeat:1, stagger:0.01}, 33.440);
+tl.to("#fr-sg0, #fs-sg0", {scale:1.1, duration:0.15, yoyo:true, repeat:1}, 34.500); tl.to("#fr-sg1, #fs-sg1", {scale:1.1, duration:0.15, yoyo:true, repeat:1}, 34.900);
+tl.to("#fr-sg0 .fsign", {scaleY:0, duration:0.12}, 35.840); tl.set("#fr-sa0", {opacity:0}, 35.960); tl.set("#fr-sb0", {opacity:1}, 35.960);
+tl.set("#fr-sg0 .fsign", {backgroundColor:"#15803d"}, 35.960); tl.to("#fr-sg0 .fsign", {scaleY:1, duration:0.25, ease:"back.out(2)"}, 35.960);
+tl.to("#fr-sg1 .fsign", {scaleY:0, duration:0.12}, 36.520); tl.set("#fr-sa1", {opacity:0}, 36.640); tl.set("#fr-sb1", {opacity:1}, 36.640);
+tl.set("#fr-sg1 .fsign", {backgroundColor:"#15803d"}, 36.640); tl.to("#fr-sg1 .fsign", {scaleY:1, duration:0.25, ease:"back.out(2)"}, 36.640);
+tl.to("#wd", {x:-1090.0, y:-2405.0, scale:1.0, duration:0.8, ease:"power3.inOut"}, 37.680);
+tl.to("#grid", {backgroundPosition:"-272px -601px", duration:0.8, ease:"power3.inOut"}, 37.680);
+tl.to("#wd", {filter:"blur(5px)", duration:0.32, ease:"power1.in"}, 37.680);
+tl.to("#wd", {filter:"blur(0px)", duration:0.36, ease:"power1.out"}, 38.080);
+tl.to("#road", {strokeDashoffset:3860.0, duration:0.80, ease:"power2.inOut"}, 37.680);
+tl.fromTo("#h4-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 37.680);
+tl.fromTo("#h4-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 37.980);
+tl.fromTo(".lampc", {opacity:0, y:-60}, {opacity:1, y:0, duration:0.3, stagger:0.1}, 37.980);
+tl.fromTo("#beam", {opacity:0}, {opacity:1, duration:0.4}, 38.180);
+tl.fromTo("#fp", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 16.270);
+tl.fromTo("#clap", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 39.840);
+tl.to("#fp", {scaleX:0, duration:0.2, ease:"power2.in"}, 40.810); tl.set("#fp", {opacity:0}, 41.010);
+tl.set("#set-b", {opacity:1}, 41.010); tl.fromTo("#set", {scaleX:0}, {scaleX:1, duration:0.3, ease:"back.out(2)", immediateRender:false}, 41.010);
+tl.fromTo("#m2c", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 41.380);
+tl.set("#m2-d0", {y:0}, 0);
+tl.set("#m2-d1", {y:0}, 0);
+tl.set("#m2-d2", {y:0}, 0);
+tl.set("#m2-d3", {y:0}, 0);
+tl.to("#m2-d0", {y:-936, duration:0.60, ease:"power3.out"}, 41.480);
+tl.to("#m2-d1", {y:-780, duration:0.60, ease:"power3.out"}, 41.540);
+tl.to("#m2-d2", {y:-780, duration:0.60, ease:"power3.out"}, 41.600);
+tl.to("#m2-d3", {y:-780, duration:0.60, ease:"power3.out"}, 41.660);
+tl.fromTo("#mor", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 43.090);
+tl.fromTo("#cal6", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 44.440);
+tl.set("#yr6-d0", {y:-156}, 0);
+tl.set("#yr6-d1", {y:0}, 0);
+tl.set("#yr6-d2", {y:0}, 0);
+tl.set("#yr6-d3", {y:-234}, 0);
+tl.to("#yr6-d3", {y:-1248, duration:0.5, ease:"power3.out"}, 44.590);
+tl.to("#set-b .lath, #set-b .brace", {y:300, rotation:40, opacity:0, duration:0.5, stagger:0.06, ease:"power2.in"}, 46.500);
+tl.to("#beam", {opacity:0, duration:0.4}, 46.800); tl.to(".lampc", {opacity:0.35, duration:0.3}, 46.800);
+tl.to("#wd", {x:41.9, y:-565.7, scale:0.4528, duration:0.45, ease:"power3.inOut"}, 47.360);
+tl.to("#grid", {backgroundPosition:"10px -141px", duration:0.45, ease:"power3.inOut"}, 47.360);
+tl.to("#wd", {filter:"blur(5px)", duration:0.18, ease:"power1.in"}, 47.360);
+tl.to("#wd", {filter:"blur(0px)", duration:0.20, ease:"power1.out"}, 47.585);
+tl.to("#wd", {x:-1090.0, y:-3705.0, scale:1.0, duration:0.75, ease:"power3.inOut"}, 47.490);
+tl.to("#grid", {backgroundPosition:"-272px -926px", duration:0.75, ease:"power3.inOut"}, 47.490);
+tl.to("#wd", {filter:"blur(5px)", duration:0.30, ease:"power1.in"}, 47.490);
+tl.to("#wd", {filter:"blur(0px)", duration:0.34, ease:"power1.out"}, 47.865);
+tl.to("#road", {strokeDashoffset:1560.0, duration:0.75, ease:"power2.inOut"}, 47.490);
+tl.fromTo("#paper", {opacity:0, y:120, rotation:-6}, {opacity:1, y:0, rotation:0, duration:0.5, ease:"power3.out"}, 48.620);
+tl.to("#scis", {keyframes:[{x:600, duration:0.5},{y:620, duration:0.5},{x:0, duration:0.5}], ease:"none"}, 49.070);
+tl.to("#paper", {scaleY:0.05, y:420, duration:0.35, ease:"power3.in"}, 50.380);
+tl.set("#paper", {opacity:0}, 50.730);
+tl.fromTo("#mini", {opacity:1, scaleY:0, transformOrigin:"50% 100%"}, {opacity:1, scaleY:1, duration:0.55, ease:"back.out(1.8)", immediateRender:false}, 50.630);
+tl.set("#mini", {opacity:0}, 0);
+tl.fromTo(".mroom", {scale:0}, {scale:1, duration:0.3, stagger:0.05, ease:"back.out(2)", immediateRender:false}, 50.930);
+tl.to("#shake", {keyframes:[{x:-20,y:12},{x:16,y:-8},{x:-10,y:6},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 50.630);
+tl.fromTo("#mlab", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 51.150);
+tl.to("#mini", {y:"-=8", duration:1.20, ease:"sine.inOut", yoyo:true, repeat:3}, 51.550);
+tl.to("#wd", {x:-30.0, y:-3705.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 52.120);
+tl.to("#grid", {backgroundPosition:"-8px -926px", duration:0.7, ease:"power3.inOut"}, 52.120);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 52.120);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 52.470);
+tl.to("#road", {strokeDashoffset:500.0, duration:0.70, ease:"power2.inOut"}, 52.120);
+tl.fromTo("#wa", {opacity:0, x:0, y:80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 52.320);
+typeOn("#wa-t .wc", 52.520, 54.590);
+tl.fromTo("#cur", {opacity:0, x:200, y:200}, {opacity:1, x:0, y:0, duration:0.4}, 53.780);
+tl.to("#cur", {scale:0.85, duration:0.08, yoyo:true, repeat:1}, 54.690); tl.to("#wa-send", {scale:0.88, duration:0.08, yoyo:true, repeat:1}, 54.690);
+tl.to("#wa-v", {opacity:1, duration:0.2}, 54.990);
+life("f1", 0.000, 56.365, 50);
+tl.fromTo("#f1", {opacity:0, x:-300}, {opacity:1, x:0, duration:0.6}, 52.930); walk("f1", 52.930, 53.530, 0.13);
+wave("f1", 54.890, 56.315);
+life("f2", 0.000, 56.365, 51);
+tl.fromTo("#f2", {opacity:0, x:300}, {opacity:1, x:0, duration:0.6}, 52.930); walk("f2", 52.930, 53.530, 0.13);
+wave("f2", 54.890, 56.315);
+tl.to("#wd", {x:307.3, y:368.8, scale:0.2115, duration:0.8, ease:"power3.inOut"}, 55.140);
+tl.to("#grid", {backgroundPosition:"77px 92px", duration:0.8, ease:"power3.inOut"}, 55.140);
+tl.to("#wd", {filter:"blur(5px)", duration:0.32, ease:"power1.in"}, 55.140);
+tl.to("#wd", {filter:"blur(0px)", duration:0.36, ease:"power1.out"}, 55.540);
+tl.fromTo(".pt:nth-child(1)", {y:0, x:0}, {y:-120, x:-40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(2)", {y:0, x:0}, {y:-150, x:0, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(3)", {y:0, x:0}, {y:-180, x:40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(4)", {y:0, x:0}, {y:-210, x:-40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(5)", {y:0, x:0}, {y:-240, x:0, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(6)", {y:0, x:0}, {y:-120, x:40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(7)", {y:0, x:0}, {y:-150, x:-40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(8)", {y:0, x:0}, {y:-180, x:0, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(9)", {y:0, x:0}, {y:-210, x:40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(10)", {y:0, x:0}, {y:-240, x:-40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(11)", {y:0, x:0}, {y:-120, x:0, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(12)", {y:0, x:0}, {y:-150, x:40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(13)", {y:0, x:0}, {y:-180, x:-40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(14)", {y:0, x:0}, {y:-210, x:0, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(15)", {y:0, x:0}, {y:-240, x:40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(16)", {y:0, x:0}, {y:-120, x:-40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(17)", {y:0, x:0}, {y:-150, x:0, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(18)", {y:0, x:0}, {y:-180, x:40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(19)", {y:0, x:0}, {y:-210, x:-40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(20)", {y:0, x:0}, {y:-240, x:0, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(21)", {y:0, x:0}, {y:-120, x:40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(22)", {y:0, x:0}, {y:-150, x:-40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(23)", {y:0, x:0}, {y:-180, x:0, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(24)", {y:0, x:0}, {y:-210, x:40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(25)", {y:0, x:0}, {y:-240, x:-40, duration:56.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(26)", {y:0, x:0}, {y:-120, x:0, duration:56.37, ease:"none"}, 0);
+tl.fromTo("#glow", {opacity:0.75}, {opacity:1, duration:2.5, ease:"sine.inOut", yoyo:true, repeat:22}, 0);
+window.__timelines["world"] = tl;
+</script>
+</template>

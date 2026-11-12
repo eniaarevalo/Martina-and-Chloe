@@ -9,3 +9,6 @@ video/muestras/*.wav
 video-lgtbi/voz-raw.wav
 video-lgtbi/assets/.premix.wav
 video-lgtbi/assets/.mix-graph.txt
+video-edificio/voz-raw.wav
+video-edificio/assets/.premix.wav
+video-edificio/assets/.mix-graph.txt
