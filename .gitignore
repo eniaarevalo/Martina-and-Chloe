@@ -34,3 +34,8 @@ video-musica/assets/.premix.wav
 video-musica/assets/.mix-graph.txt
 video-musica/.hyperframes/
 video-musica/node_modules/
+video-aviones/voz-raw.wav
+video-aviones/assets/.premix.wav
+video-aviones/assets/.mix-graph.txt
+video-aviones/.hyperframes/
+video-aviones/node_modules/
