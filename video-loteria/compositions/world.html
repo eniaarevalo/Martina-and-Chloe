@@ -1,0 +1,1227 @@
+<template>
+<style>
+#root { position:absolute; inset:0; overflow:hidden; background:#07080b; font-family:Inter, sans-serif; }
+#grid { position:absolute; inset:-200px; background-color:#08090d;
+  background-image: linear-gradient(rgba(255,255,255,0.045) 2px, transparent 2px),
+                    linear-gradient(90deg, rgba(255,255,255,0.045) 2px, transparent 2px);
+  background-size: 90px 90px; }
+#glow { position:absolute; left:-200px; right:-200px; bottom:-500px; height:1200px;
+  background: radial-gradient(ellipse at 50% 70%, rgba(92,108,255,0.38), rgba(46,196,182,0.12) 45%, transparent 70%); }
+#scrim { position:absolute; left:0; right:0; top:0; height:520px; pointer-events:none;
+  background:linear-gradient(rgba(7,8,11,0.97) 0%, rgba(7,8,11,0.94) 62%, rgba(7,8,11,0) 100%); }
+#shake { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+#wd { position:absolute; left:0; top:0; width:2200px; height:6600px; }
+.room { background:linear-gradient(#13151c,#0f1117); border:6px solid rgba(255,255,255,0.10); border-bottom:14px solid rgba(255,255,255,0.16); border-radius:10px; }
+.ghost { font:900 140px Inter; color:rgba(255,255,255,0.055); letter-spacing:-4px; }
+.wall { border:10px solid rgba(255,255,255,0.12); border-radius:16px; }
+.parapet { background:#1a1d26; border-top:8px solid rgba(255,255,255,0.18); }
+.hut { background:#151821; border:6px solid rgba(255,255,255,0.12); border-radius:18px 18px 0 0; }
+.hutdoor { position:absolute; left:70px; bottom:0; width:140px; height:300px; background:#0b0c10; border-radius:70px 70px 0 0; }
+.street { background:linear-gradient(#14161d, #07080b); border-top:10px solid rgba(255,255,255,0.12); }
+#bb { background:#ffffff; border-radius:60px; box-shadow:0 40px 120px rgba(0,0,0,0.5); }
+#bb-posts { background:repeating-linear-gradient(90deg, transparent 0 250px, #2a2e3a 250px 290px); }
+.bbface { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.bbt1, .bbt2 { font:900 210px Inter; color:#0f1115; line-height:0.95; letter-spacing:-6px; }
+.bbt2 { color:#ef4444; }
+.bbsub { font:700 90px Inter; color:#666; margin-top:20px; }
+.card { border-radius:40px; box-shadow:0 24px 60px rgba(0,0,0,0.45); overflow:visible; }
+.stamp { font:900 64px Inter; border:8px solid; border-radius:20px; padding:4px 22px; background:rgba(255,255,255,0.92); }
+.pill { font:900 50px Inter; padding:6px 24px; border-radius:999px; white-space:nowrap; }
+.badge { position:absolute; left:0; top:0; width:140px; height:140px; border-radius:50%; font:900 96px Inter;
+  color:#0f1115; text-align:center; line-height:140px; }
+.htitle { position:absolute; left:170px; top:14px; font:900 100px Inter; color:#fff; letter-spacing:-2px; white-space:nowrap; }
+.doorframe { position:absolute; inset:0; background:#2a1c12; border-radius:200px 200px 0 0; border:14px solid #5a3b22; }
+.doorleaf { position:absolute; top:40px; bottom:0; left:24px; width:186px; background:linear-gradient(90deg,#8a5a34,#a06a3e);
+  border-radius:150px 0 0 0; border:6px solid #5a3b22; }
+.doorleaf.r { left:auto; right:24px; border-radius:0 150px 0 0; }
+.counter { background:#d9d4c7; border-radius:16px 16px 0 0; }
+.counter-top { position:absolute; left:-20px; right:-20px; top:-26px; height:36px; background:#a58a5c; border-radius:12px; }
+.counter-sign { position:absolute; left:0; right:0; top:70px; text-align:center; font:900 72px Inter; color:#0f1115; }
+.desktop { position:absolute; left:0; right:0; top:0; height:44px; background:#a07a4c; border-radius:14px; }
+.deskbody { position:absolute; left:30px; right:30px; top:44px; bottom:0; background:#6e5233; border-radius:0 0 12px 12px; }
+.drawer { position:absolute; left:80px; right:80px; top:90px; height:170px; background:#8b6840; border:6px solid #4e3a22; border-radius:12px; }
+.handle { position:absolute; left:50%; top:60px; width:120px; height:30px; margin-left:-60px; background:#e8d3a8; border-radius:15px; }
+.dust { border-radius:50%; background:#cfc7b8; opacity:0; }
+.chathead { height:120px; background:#1f2430; border-radius:40px 40px 0 0; display:flex; align-items:center; padding-left:40px; }
+.chathead .dot { width:26px; height:26px; border-radius:50%; background:#22c55e; margin-right:20px; }
+.typing { position:absolute; left:40px; top:180px; background:#fff; border-radius:30px; padding:22px 30px; display:flex; gap:14px; opacity:0; }
+.typing span { width:22px; height:22px; border-radius:50%; background:#9aa3b2; display:block; }
+.bubble { position:absolute; background:#fff; border-radius:34px; padding:26px 34px; box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+.ch, .qc, .pc, .cc { opacity:0; }
+.avatar { position:relative; border-radius:50%; overflow:hidden; background:#e8ecf4; }
+.over { position:absolute; left:0; top:0; }
+.badge .over { width:100%; text-align:center; }
+.ph { border:6px dashed rgba(255,255,255,0.25); border-radius:40px; }
+.sticker { border-radius:50%; background:#fff; box-shadow:0 14px 30px rgba(0,0,0,0.35); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; }
+.stlab { font:900 30px Inter; color:#0f1115; margin-top:-4px; }
+.xdot { border-radius:50%; background:#ef4444; display:flex; align-items:center; justify-content:center; }
+.bubble.big { padding:30px 40px; box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+.tail { position:absolute; left:120px; top:-28px; width:0; height:0; border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:34px solid #fff; }
+.tail.l { left:-30px; top:auto; bottom:30px; border-left:none; border-bottom:24px solid transparent; border-top:24px solid transparent; border-right:34px solid #fff; }
+.sofa { background:#3b3f73; border-radius:60px 60px 20px 20px; border-top:60px solid #4b4f8a; }
+.lamp { border-left:10px solid #555a66; margin-left:40px; }
+#vc-sign { border-radius:30px; background:#141621; border:8px solid #3a3f55; text-align:center; font:900 96px Inter; line-height:114px; color:#7a809c; }
+#vc-on { width:100%; color:#ff4fd8; text-shadow:0 0 18px rgba(255,79,216,0.7); }
+.tape { position:absolute; width:48px; height:100px; border-radius:6px; box-shadow:inset 0 -18px 0 rgba(0,0,0,0.25); }
+#shelves { background:#3a2a1c; border-radius:16px; border:10px solid #5a4028; }
+#tv { background:#2a2e3a; border-radius:60px; box-shadow:0 30px 80px rgba(0,0,0,0.5); }
+#tv .screen { position:absolute; left:40px; top:40px; right:170px; bottom:40px; border-radius:40px; background:#0b0d14;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; }
+#tv .ant { position:absolute; top:-80px; width:10px; height:100px; background:#8b93a7; border-radius:5px; }
+#tv .a1 { left:330px; transform-origin:50% 100%; rotate:-25deg; }
+#tv .a2 { left:520px; transform-origin:50% 100%; rotate:25deg; }
+#tv .knob { position:absolute; right:50px; width:80px; height:80px; border-radius:50%; background:#8b93a7; }
+#tv .k1 { top:120px; } #tv .k2 { top:260px; }
+.cbox { position:absolute; left:80px; right:80px; top:240px; height:250px; border-radius:40px; background:#f1f3f6;
+  display:flex; align-items:center; gap:36px; padding-left:40px; }
+.cav { width:170px; height:170px; border-radius:50%; background:#6366f1; display:flex; align-items:center; justify-content:center; flex:none; }
+.caret { display:inline-block; width:10px; height:110px; background:#0f1115; vertical-align:-14px; margin-left:8px; }
+.cbtn { position:absolute; right:80px; bottom:70px; padding:24px 70px; border-radius:999px; background:#15803d; color:#fff; font:900 100px Inter; }
+
+.room { background:rgba(255,255,255,0.025); border:4px solid rgba(255,255,255,0.07); border-radius:40px; }
+.mile { border-radius:999px; background:#0f172a; border:6px solid #fff; color:#fff; font:900 46px Inter; text-align:center; line-height:58px; }
+.htitle { font-size:76px; top:28px; }
+.cnt { border-radius:28px; border:5px solid #fff; display:flex; align-items:center; justify-content:center; gap:12px; }
+.lball { border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff7e0, #e8c9a0 55%, #b98b5a); box-shadow:0 14px 30px rgba(0,0,0,0.45);
+  display:flex; align-items:center; justify-content:center; }
+.lball span { font-family:Inter; font-weight:900; color:#3b2412; letter-spacing:-1px; }
+.lball.gold { background:radial-gradient(circle at 35% 30%, #fff7cc, #f5c542 50%, #b45309); box-shadow:0 0 80px 20px rgba(245,197,66,0.55); }
+.dec { border-radius:14px; background:linear-gradient(135deg,#fef3c7,#fde68a); border:4px solid #b45309; box-shadow:0 12px 26px rgba(0,0,0,0.4); }
+.dech { position:absolute; left:0; right:0; top:10px; text-align:center; font:900 26px Inter; color:#7c2d12; letter-spacing:1px; }
+.decn { position:absolute; left:0; right:0; top:46px; text-align:center; font:900 72px Inter; color:#7c2d12; letter-spacing:4px; }
+.decf { position:absolute; right:14px; bottom:8px; font:900 28px Inter; color:#7c2d12; }
+.calc { border-radius:30px; background:#fff; box-shadow:0 20px 50px rgba(0,0,0,0.45); overflow:hidden; }
+.calh { height:80px; background:#dc2626; color:#fff; font:900 46px Inter; text-align:center; line-height:80px; }
+.caln { font:900 170px Inter; color:#0f1115; text-align:center; line-height:200px; }
+.ckr { position:absolute; left:30px; right:30px; display:flex; align-items:center; gap:16px; }
+.cck { width:50px; height:50px; border-radius:12px; background:#15803d; display:flex; align-items:center; justify-content:center; opacity:0; }
+.ckl { flex:1; height:16px; border-radius:8px; background:#cbd5e1; }
+.tline { border-radius:7px; background:linear-gradient(90deg,#f5c542,#dc2626); }
+.tdot { border-radius:50%; background:#fff; border:10px solid #f5c542; }
+.tlab { font:900 76px Inter; color:#fff; text-align:center; }
+.mapb { border-radius:30px; background:#0c4a6e; overflow:hidden; border:6px solid #e2e8f0; }
+.coast { position:absolute; left:-40px; top:-40px; width:420px; height:420px; border-radius:46% 54% 40% 60%; background:#d6b88a; }
+.pinw { position:absolute; left:250px; top:70px; width:120px; height:120px; }
+.cz { position:absolute; left:200px; top:200px; font:900 70px Inter; color:#fff; text-shadow:0 4px 12px rgba(0,0,0,0.6); }
+.school { background:#e7d3b0; border-radius:14px; border:6px solid #b08968; }
+.roof { position:absolute; left:-30px; right:-30px; top:-110px; height:120px; background:#9a3412; clip-path:polygon(8% 100%, 50% 0, 92% 100%); }
+.ssign { position:absolute; left:110px; right:110px; top:24px; padding:10px 0; border-radius:12px; background:#7c2d12; color:#fde68a; font:900 50px Inter; text-align:center; }
+.col { position:absolute; top:120px; width:44px; height:620px; border-radius:8px; background:#f5ead6; box-shadow:inset -8px 0 0 rgba(0,0,0,0.1); }
+.sdoor { position:absolute; left:290px; bottom:0; width:140px; height:240px; border-radius:70px 70px 0 0; background:#5b3a24; }
+.qmark { border-radius:50%; background:#f5c542; color:#0f1115; font:900 230px Inter; text-align:center; line-height:300px; }
+.coin { border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff3b0, #facc15 60%, #b45309); border:5px solid #92400e; font:900 56px Inter; color:#78350f; text-align:center; line-height:80px; }
+.lect { border-radius:20px 20px 0 0; background:linear-gradient(#7c2d12,#5b1d0b); border:6px solid #b08968; }
+.lect::before { content:"LOTERÍA"; position:absolute; left:0; right:0; top:40px; text-align:center; font:900 50px Inter; color:#fde68a; }
+.cage { position:absolute; left:0; top:0; border-radius:50%; border:16px solid; background:rgba(245,197,66,0.08); box-shadow:0 20px 50px rgba(0,0,0,0.45); overflow:hidden; }
+.spk { position:absolute; left:calc(50% - 4px); top:0; width:8px; height:100%; background:rgba(255,255,255,0.35); }
+.mini { position:absolute; width:34px; height:34px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff7e0, #d9b688); }
+.dstand { position:absolute; background:#475569; border-radius:12px 12px 0 0; }
+.eur { font:900 96px Inter; color:#0f1115; margin-left:12px; }
+.conf { border-radius:4px; }
+.garl { }
+.wire { position:absolute; left:0; right:0; top:40px; height:6px; background:#334155; border-radius:3px; }
+.lt { position:absolute; width:40px; height:56px; border-radius:50% 50% 45% 45%; box-shadow:0 0 30px 6px rgba(255,255,255,0.35); }
+.mas { font:900 90px Inter; color:#0f1115; margin:0 8px; }
+.pubb { position:absolute; right:40px; bottom:36px; padding:14px 46px; border-radius:999px; background:#15803d; color:#fff; font:900 66px Inter; }
+.kc { opacity:0; }
+</style>
+<div id="root" data-composition-id="world" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+  <div id="grid" data-layout-ignore></div>
+  <div id="glow" data-layout-ignore></div>
+  <div id="particles" data-layout-ignore><div class="pt" data-layout-ignore style="position:absolute;left:20px;top:60px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:157px;top:323px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:294px;top:586px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:431px;top:849px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:568px;top:1112px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:705px;top:1375px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:842px;top:1638px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:979px;top:101px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:76px;top:364px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:213px;top:627px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:350px;top:890px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:487px;top:1153px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:624px;top:1416px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:761px;top:1679px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:898px;top:142px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:1035px;top:405px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:132px;top:668px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:269px;top:931px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:406px;top:1194px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:543px;top:1457px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:680px;top:1720px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:817px;top:183px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:954px;top:446px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:51px;top:709px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:188px;top:972px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:325px;top:1235px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div></div>
+  <div id="shake">
+    <div id="wd">
+      <div class="room" data-layout-ignore style="position:absolute;left:50px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<svg id="roadsvg" data-layout-ignore style="position:absolute;left:0px;top:0px;width:2200px;height:5300px;z-index:1;overflow:visible" viewBox="0 0 2200 5300">
+      <defs><linearGradient id="rb" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="5200">
+        <stop offset="0" stop-color="#dc2626"/><stop offset="0.5" stop-color="#f5c542"/><stop offset="1" stop-color="#16a34a"/></linearGradient></defs>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="#262a35" stroke-width="54" fill="none" stroke-linejoin="round"/>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="rgba(255,255,255,0.18)" stroke-width="5" fill="none" stroke-dasharray="26 22" stroke-linejoin="round"/>
+      <path id="road" d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="url(#rb)" stroke-width="16" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
+<div id="mile0" class="mile" data-layout-ignore style="position:absolute;left:1390px;top:1306px;width:480px;height:70px;z-index:2;">Madrid · 1771</div>
+<div id="mile1" class="mile" data-layout-ignore style="position:absolute;left:330px;top:2606px;width:480px;height:70px;z-index:2;">Madrid</div>
+<div id="mile2" class="mile" data-layout-ignore style="position:absolute;left:1390px;top:3906px;width:480px;height:70px;z-index:2;">Ensayos</div>
+<div id="mile3" class="mile" data-layout-ignore style="position:absolute;left:1390px;top:5206px;width:480px;height:70px;z-index:2;">22 de diciembre</div>
+<div id="dc0" class="dec" style="position:absolute;left:130px;top:265px;width:300px;height:170px;z-index:3;transform:rotate(-12deg)">
+      <div class="dech">LOTERÍA NACIONAL</div><div class="decn">48302</div><div class="decf">20 €</div></div>
+<div id="dc1" class="dec" style="position:absolute;left:730px;top:245px;width:300px;height:170px;z-index:3;transform:rotate(10deg)">
+      <div class="dech">LOTERÍA NACIONAL</div><div class="decn">07215</div><div class="decf">20 €</div></div>
+<div id="dc2" class="dec" style="position:absolute;left:110px;top:645px;width:300px;height:170px;z-index:3;transform:rotate(8deg)">
+      <div class="dech">LOTERÍA NACIONAL</div><div class="decn">91877</div><div class="decf">20 €</div></div>
+<div id="dc3" class="dec" style="position:absolute;left:750px;top:625px;width:300px;height:170px;z-index:3;transform:rotate(-9deg)">
+      <div class="dech">LOTERÍA NACIONAL</div><div class="decn">33410</div><div class="decf">20 €</div></div>
+<div id="cal" class="calc" style="position:absolute;left:420px;top:385px;width:300px;height:300px;z-index:8;">
+      <div class="calh">DICIEMBRE</div><div class="caln">22</div></div>
+<div id="b0" class="lball" style="position:absolute;left:490px;top:245px;width:160px;height:160px;z-index:9;"><span style="font-size:54px">22</span></div>
+<svg id="k1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="204" height="374"
+  style="position:absolute;left:238px;top:896px;overflow:visible;z-index:6" color="#2563eb">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2563eb"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1b1b1b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="k2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="204" height="374"
+  style="position:absolute;left:688px;top:896px;overflow:visible;z-index:6" color="#db2777">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#db2777"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f2c9a5"/>
+        <circle cx="120" cy="104" r="56" fill="#f2c9a5"/>
+        <circle cx="64" cy="108" r="10" fill="#f2c9a5"/><circle cx="176" cy="108" r="10" fill="#f2c9a5"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#b45309"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="71" cy="304" r="15" fill="#f2c9a5"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="169" cy="304" r="15" fill="#f2c9a5"/></g>
+    </g>
+  </g>
+</svg>
+<div id="pq" class="pill" style="position:absolute;left:260px;top:745px;z-index:10;background:#ef4444;color:#fff;font-size:70px;opacity:0">¿POR QUÉ NIÑOS?</div>
+<div id="n0-0" data-layout-ignore style="position:absolute;left:325px;top:865px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="n0-1" data-layout-ignore style="position:absolute;left:465px;top:865px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="n0-2" data-layout-ignore style="position:absolute;left:605px;top:865px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="n0-3" data-layout-ignore style="position:absolute;left:745px;top:865px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="h1" style="position:absolute;left:1150px;top:205px;width:960px;height:150px;z-index:6;">
+      <div id="h1-badge" class="badge" style="background:#f5c542;color:#0f1115">1</div>
+      <div id="h1-title" class="htitle">EL ORIGEN</div></div>
+<div id="ycb" class="cnt" style="position:absolute;left:1190px;top:395px;width:340px;height:140px;z-index:8;background:#0f1115;opacity:0"><span id="y71" class="roller" style="display:inline-block;font-size:80px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:90px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:90px;overflow:hidden;vertical-align:top"><span id="y71-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:90px;overflow:hidden;vertical-align:top"><span id="y71-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:90px;overflow:hidden;vertical-align:top"><span id="y71-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:90px;overflow:hidden;vertical-align:top"><span id="y71-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span><span style="display:block;height:90px;line-height:90px">0</span><span style="display:block;height:90px;line-height:90px">1</span><span style="display:block;height:90px;line-height:90px">2</span><span style="display:block;height:90px;line-height:90px">3</span><span style="display:block;height:90px;line-height:90px">4</span><span style="display:block;height:90px;line-height:90px">5</span><span style="display:block;height:90px;line-height:90px">6</span><span style="display:block;height:90px;line-height:90px">7</span><span style="display:block;height:90px;line-height:90px">8</span><span style="display:block;height:90px;line-height:90px">9</span></span></span></span></div>
+<div id="crown" class="pill" style="position:absolute;left:1570px;top:415px;z-index:8;background:#f5c542;color:#0f1115;font-size:54px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="52"
+  height="52"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" />
+  <path d="M5 21h14" />
+</svg> CARLOS III</div>
+<div id="sch" class="pill" style="position:absolute;left:1190px;top:585px;z-index:8;background:#fff;color:#0f1115;font-size:52px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M14 22v-4a2 2 0 1 0-4 0v4" />
+  <path d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10" />
+  <path d="M18 5v17" />
+  <path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6" />
+  <path d="M6 5v17" />
+  <circle cx="12" cy="9" r="2" />
+</svg> ALUMNO DE SAN ILDEFONSO</div>
+<svg id="k3" class="chr " data-layout-ignore viewBox="0 0 240 440" width="240" height="440"
+  style="position:absolute;left:1290px;top:832px;overflow:visible;z-index:6" color="#2563eb">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2563eb"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1b1b1b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg>
+<div id="b1" class="lball" style="position:absolute;left:1710px;top:845px;width:200px;height:200px;z-index:7;"><span style="font-size:68px">1.º</span></div>
+<div id="prem" class="pill" style="position:absolute;left:1670px;top:1075px;z-index:9;background:#15803d;color:#fff;font-size:56px;opacity:0">¡PREMIADO!</div>
+<div id="n1-0" data-layout-ignore style="position:absolute;left:1275px;top:765px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="n1-1" data-layout-ignore style="position:absolute;left:1375px;top:765px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="n1-2" data-layout-ignore style="position:absolute;left:1475px;top:765px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="tline" class="tline" style="position:absolute;left:1230px;top:1805px;width:800px;height:14px;z-index:4;"></div>
+<div id="td0" class="tdot" style="position:absolute;left:1200px;top:1782px;width:60px;height:60px;z-index:5;opacity:0"></div>
+<div id="tl0" class="tlab" style="position:absolute;left:1100px;top:1665px;width:260px;height:90px;z-index:5;opacity:0">1771</div>
+<div id="td1" class="tdot" style="position:absolute;left:2000px;top:1782px;width:60px;height:60px;z-index:5;opacity:0"></div>
+<div id="tl1" class="tlab" style="position:absolute;left:1900px;top:1665px;width:260px;height:90px;z-index:5;opacity:0">1812</div>
+<div id="lnav" class="card" style="position:absolute;left:1270px;top:1925px;width:720px;height:220px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:36px;top:30px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect x="3" y="8" width="18" height="4" rx="1" />
+  <path d="M12 8v13" />
+  <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" />
+  <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" />
+</svg></div>
+      <div style="position:absolute;left:190px;top:40px;font:900 58px Inter;color:#0f1115;line-height:1.15">LOTERÍA<br>DE NAVIDAD</div></div>
+<div id="map" class="mapb" style="position:absolute;left:1330px;top:2205px;width:600px;height:340px;z-index:4;opacity:0">
+      <div class="coast"></div><div id="pin" class="pinw"><svg fill="#fecaca"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+  <circle cx="12" cy="10" r="3" />
+</svg></div>
+      <div class="cz">CÁDIZ</div></div>
+<div id="h2" style="position:absolute;left:90px;top:1505px;width:960px;height:150px;z-index:6;">
+      <div id="h2-badge" class="badge" style="background:#dc2626;color:#fff">2</div>
+      <div id="h2-title" class="htitle">EL COLEGIO</div></div>
+<div id="school" class="school" style="position:absolute;left:210px;top:1805px;width:720px;height:760px;z-index:3;">
+      <div class="roof"></div><div class="ssign">SAN ILDEFONSO</div><i class="col" style="left:60px"></i><i class="col" style="left:190px"></i><i class="col" style="left:320px"></i><i class="col" style="left:450px"></i><i class="col" style="left:580px"></i><div id="door" class="sdoor"></div></div>
+<div id="mad" class="pill" style="position:absolute;left:690px;top:1695px;z-index:8;background:#fff;color:#0f1115;font-size:52px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+  <circle cx="12" cy="10" r="3" />
+</svg> MADRID</div>
+<div id="sig" class="pill" style="position:absolute;left:130px;top:1695px;z-index:8;background:#f5c542;color:#0f1115;font-size:52px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 22h14" />
+  <path d="M5 2h14" />
+  <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+  <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+</svg> SIGLOS</div>
+<svg id="o0" class="chr " data-layout-ignore viewBox="0 0 240 440" width="144" height="264"
+  style="position:absolute;left:118px;top:2304px;overflow:visible;z-index:6" color="#16a34a">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#3f3f46"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#3f3f46"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#16a34a"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#8d5a3b"/>
+        <circle cx="120" cy="104" r="56" fill="#8d5a3b"/>
+        <circle cx="64" cy="108" r="10" fill="#8d5a3b"/><circle cx="176" cy="108" r="10" fill="#8d5a3b"/>
+        <path d="M64 102 Q62 46 120 44 Q178 46 176 102 Q170 74 150 68 Q120 60 92 70 Q70 78 64 102 Z" fill="#111111"/><rect x="60" y="92" width="10" height="26" rx="5" fill="#111111"/><rect x="170" y="92" width="10" height="26" rx="5" fill="#111111"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#16a34a"/><circle cx="71" cy="304" r="15" fill="#8d5a3b"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#16a34a"/><circle cx="169" cy="304" r="15" fill="#8d5a3b"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="o1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="144" height="264"
+  style="position:absolute;left:228px;top:2304px;overflow:visible;z-index:6" color="#db2777">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#db2777"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f2c9a5"/>
+        <circle cx="120" cy="104" r="56" fill="#f2c9a5"/>
+        <circle cx="64" cy="108" r="10" fill="#f2c9a5"/><circle cx="176" cy="108" r="10" fill="#f2c9a5"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#b45309"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="71" cy="304" r="15" fill="#f2c9a5"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="169" cy="304" r="15" fill="#f2c9a5"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="o2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="144" height="264"
+  style="position:absolute;left:338px;top:2304px;overflow:visible;z-index:6" color="#2563eb">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2563eb"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1b1b1b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg>
+<div id="qm" class="qmark" style="position:absolute;left:420px;top:2845px;width:300px;height:300px;z-index:8;opacity:0">?</div>
+<div id="nad" class="pill" style="position:absolute;left:270px;top:3165px;z-index:8;background:#334155;color:#fff;font-size:52px;opacity:0">NADIE LO SABE SEGURO</div>
+<div id="teo" class="pill" style="position:absolute;left:390px;top:3275px;z-index:8;background:#f5c542;color:#0f1115;font-size:54px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="52"
+  height="52"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg> TEORÍA</div>
+<div id="pig" style="position:absolute;left:370px;top:3445px;width:400px;height:400px;z-index:6;opacity:0"><svg fill="#f9a8d4"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="380"
+  height="380"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#9d174d"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2V5z" />
+  <path d="M2 9v1c0 1.1.9 2 2 2h1" />
+  <path d="M16 11h.01" />
+</svg></div>
+<div id="pigl" class="pill" style="position:absolute;left:420px;top:3785px;z-index:8;background:#fff;color:#0f1115;font-size:44px;opacity:0">COLEGIO</div>
+<div id="coin0" class="coin" data-layout-ignore style="position:absolute;left:480px;top:3325px;width:90px;height:90px;z-index:9;opacity:0">€</div>
+<div id="coin1" class="coin" data-layout-ignore style="position:absolute;left:540px;top:3325px;width:90px;height:90px;z-index:9;opacity:0">€</div>
+<div id="coin2" class="coin" data-layout-ignore style="position:absolute;left:600px;top:3325px;width:90px;height:90px;z-index:9;opacity:0">€</div>
+<div id="coin3" class="coin" data-layout-ignore style="position:absolute;left:480px;top:3325px;width:90px;height:90px;z-index:9;opacity:0">€</div>
+<div id="coin4" class="coin" data-layout-ignore style="position:absolute;left:540px;top:3325px;width:90px;height:90px;z-index:9;opacity:0">€</div>
+<div id="alu" class="pill" style="position:absolute;left:750px;top:3565px;z-index:8;background:#15803d;color:#fff;font-size:46px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="44"
+  height="44"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <circle cx="9" cy="7" r="4" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+</svg> ALUMNOS</div>
+<div id="h3" style="position:absolute;left:1150px;top:2805px;width:960px;height:150px;z-index:6;">
+      <div id="h3-badge" class="badge" style="background:#15803d;color:#fff">3</div>
+      <div id="h3-title" class="htitle">EL RITUAL</div></div>
+<div id="ycb2" class="cnt" style="position:absolute;left:1190px;top:2985px;width:320px;height:120px;z-index:8;background:#0f1115;opacity:0"><span id="y84" class="roller" style="display:inline-block;font-size:70px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:78px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="y84-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="y84-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="y84-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="y84-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span></span></div>
+<div id="chi" class="pill" style="position:absolute;left:1550px;top:3005px;z-index:8;background:#1d4ed8;color:#fff;font-size:50px;opacity:0">SOLO CHICOS</div>
+<div id="ambos" class="pill" style="position:absolute;left:1550px;top:3005px;z-index:9;background:#be185d;color:#fff;font-size:50px;opacity:0">NIÑOS Y NIÑAS</div>
+<div id="lect" class="lect" style="position:absolute;left:1290px;top:3562px;width:420px;height:300px;z-index:5;"></div>
+<svg id="boy" class="chr " data-layout-ignore viewBox="0 0 240 440" width="228" height="418"
+  style="position:absolute;left:1276px;top:3394px;overflow:visible;z-index:4" color="#2563eb">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2563eb"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1b1b1b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="girl" class="chr " data-layout-ignore viewBox="0 0 240 440" width="228" height="418"
+  style="position:absolute;left:1496px;top:3394px;overflow:visible;z-index:4" color="#db2777">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#db2777"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f2c9a5"/>
+        <circle cx="120" cy="104" r="56" fill="#f2c9a5"/>
+        <circle cx="64" cy="108" r="10" fill="#f2c9a5"/><circle cx="176" cy="108" r="10" fill="#f2c9a5"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#b45309"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="71" cy="304" r="15" fill="#f2c9a5"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="169" cy="304" r="15" fill="#f2c9a5"/></g>
+    </g>
+  </g>
+</svg>
+<div id="cal2" class="calc wide" style="position:absolute;left:1750px;top:3225px;width:320px;height:330px;z-index:8;opacity:0">
+      <div class="calh">OCT → DIC</div>
+      <div class="ckr" style="top:110px"><span id="cc0" class="cck"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="34"
+  height="34"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="3.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 6 9 17l-5-5" />
+</svg></span><span class="ckl"></span></div><div class="ckr" style="top:180px"><span id="cc1" class="cck"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="34"
+  height="34"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="3.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 6 9 17l-5-5" />
+</svg></span><span class="ckl"></span></div><div class="ckr" style="top:250px"><span id="cc2" class="cck"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="34"
+  height="34"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="3.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 6 9 17l-5-5" />
+</svg></span><span class="ckl"></span></div></div>
+<div id="nf" class="pill" style="position:absolute;left:1750px;top:3595px;z-index:8;background:#ef4444;color:#fff;font-size:44px;opacity:0">CERO FALLOS</div>
+<div id="n3-0" data-layout-ignore style="position:absolute;left:1315px;top:3342px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="n3-1" data-layout-ignore style="position:absolute;left:1415px;top:3342px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="n3-2" data-layout-ignore style="position:absolute;left:1515px;top:3342px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="n3-3" data-layout-ignore style="position:absolute;left:1615px;top:3342px;width:70px;height:70px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 18V5l12-2v13" />
+  <circle cx="6" cy="18" r="3" />
+  <circle cx="18" cy="16" r="3" />
+</svg></div>
+<div id="dbig" style="position:absolute;left:1190px;top:4225px;width:480px;height:600px;z-index:4;">
+      <div class="dstand" style="left:144px;top:384px;width:192px;height:216px"></div>
+      <div id="dbig-cage" class="cage" style="width:480px;height:480px;border-color:#f5c542"><i class="spk" style="transform:rotate(0deg)"></i><i class="spk" style="transform:rotate(30deg)"></i><i class="spk" style="transform:rotate(60deg)"></i><i class="spk" style="transform:rotate(90deg)"></i><i class="spk" style="transform:rotate(120deg)"></i><i class="spk" style="transform:rotate(150deg)"></i>
+        <b class="mini" style="left:30px;top:216px"></b><b class="mini" style="left:83px;top:253px"></b><b class="mini" style="left:136px;top:290px"></b><b class="mini" style="left:189px;top:327px"></b><b class="mini" style="left:242px;top:364px"></b><b class="mini" style="left:295px;top:401px"></b><b class="mini" style="left:348px;top:246px"></b><b class="mini" style="left:401px;top:283px"></b><b class="mini" style="left:64px;top:320px"></b><b class="mini" style="left:117px;top:357px"></b><b class="mini" style="left:170px;top:394px"></b><b class="mini" style="left:223px;top:239px"></b><b class="mini" style="left:276px;top:276px"></b><b class="mini" style="left:329px;top:313px"></b><b class="mini" style="left:382px;top:350px"></b><b class="mini" style="left:45px;top:387px"></b></div></div>
+<div id="dsm" style="position:absolute;left:1770px;top:4405px;width:280px;height:350px;z-index:4;">
+      <div class="dstand" style="left:84px;top:224px;width:112px;height:126px"></div>
+      <div id="dsm-cage" class="cage" style="width:280px;height:280px;border-color:#e2e8f0"><i class="spk" style="transform:rotate(0deg)"></i><i class="spk" style="transform:rotate(30deg)"></i><i class="spk" style="transform:rotate(60deg)"></i><i class="spk" style="transform:rotate(90deg)"></i><i class="spk" style="transform:rotate(120deg)"></i><i class="spk" style="transform:rotate(150deg)"></i>
+        <b class="mini" style="left:30px;top:126px"></b><b class="mini" style="left:83px;top:163px"></b><b class="mini" style="left:136px;top:200px"></b><b class="mini" style="left:189px;top:237px"></b><b class="mini" style="left:52px;top:162px"></b><b class="mini" style="left:105px;top:199px"></b><b class="mini" style="left:158px;top:236px"></b><b class="mini" style="left:211px;top:161px"></b><b class="mini" style="left:74px;top:198px"></b></div></div>
+<div id="c100" class="cnt" style="position:absolute;left:1210px;top:4125px;width:440px;height:100px;z-index:8;background:#0f1115;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#f5c542"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <circle cx="12" cy="12" r="1" />
+</svg><span id="cnt100" class="roller" style="display:inline-block;font-size:60px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:67px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:67px;overflow:hidden;vertical-align:top"><span id="cnt100-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:67px;overflow:hidden;vertical-align:top"><span id="cnt100-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:67px;overflow:hidden;vertical-align:top"><span id="cnt100-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span></span></span><span style="display:inline-block;height:67px;line-height:67px;vertical-align:top">.</span><span class="dg" data-layout-ignore style="display:inline-block;height:67px;overflow:hidden;vertical-align:top"><span id="cnt100-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:67px;overflow:hidden;vertical-align:top"><span id="cnt100-d4" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:67px;overflow:hidden;vertical-align:top"><span id="cnt100-d5" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span><span style="display:block;height:67px;line-height:67px">0</span><span style="display:block;height:67px;line-height:67px">1</span><span style="display:block;height:67px;line-height:67px">2</span><span style="display:block;height:67px;line-height:67px">3</span><span style="display:block;height:67px;line-height:67px">4</span><span style="display:block;height:67px;line-height:67px">5</span><span style="display:block;height:67px;line-height:67px">6</span><span style="display:block;height:67px;line-height:67px">7</span><span style="display:block;height:67px;line-height:67px">8</span><span style="display:block;height:67px;line-height:67px">9</span></span></span></span></div>
+<div id="bn" class="lball" style="position:absolute;left:1370px;top:4665px;width:130px;height:130px;z-index:8;"><span style="font-size:32px">48302</span></div>
+<div id="bp" class="lball" style="position:absolute;left:1850px;top:4745px;width:120px;height:120px;z-index:8;"><span style="font-size:25px">PREMIO</span></div>
+<div id="bg" class="lball gold" style="position:absolute;left:1480px;top:4405px;width:300px;height:300px;z-index:11;"><span style="font-size:75px">GORDO</span></div>
+<div id="gbox" class="cnt" style="position:absolute;left:1210px;top:4785px;width:840px;height:200px;z-index:12;background:#f5c542;border-color:#fff;opacity:0"><span id="mil4" class="roller" style="display:inline-block;font-size:96px;font-weight:900;color:#0f1115;font-variant-numeric:tabular-nums;line-height:108px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="mil4-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span><span style="display:inline-block;height:108px;line-height:108px;vertical-align:top">.</span><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="mil4-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="mil4-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="mil4-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span><span style="display:inline-block;height:108px;line-height:108px;vertical-align:top">.</span><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="mil4-d4" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="mil4-d5" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:108px;overflow:hidden;vertical-align:top"><span id="mil4-d6" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span><span style="display:block;height:108px;line-height:108px">0</span><span style="display:block;height:108px;line-height:108px">1</span><span style="display:block;height:108px;line-height:108px">2</span><span style="display:block;height:108px;line-height:108px">3</span><span style="display:block;height:108px;line-height:108px">4</span><span style="display:block;height:108px;line-height:108px">5</span><span style="display:block;height:108px;line-height:108px">6</span><span style="display:block;height:108px;line-height:108px">7</span><span style="display:block;height:108px;line-height:108px">8</span><span style="display:block;height:108px;line-height:108px">9</span></span></span></span><span class="eur">€</span></div>
+<div id="cf0" class="conf" data-layout-ignore style="position:absolute;left:1170px;top:4065px;width:20px;height:34px;z-index:12;background:#ef4444;opacity:0"></div>
+<div id="cf1" class="conf" data-layout-ignore style="position:absolute;left:1267px;top:4065px;width:20px;height:34px;z-index:12;background:#facc15;opacity:0"></div>
+<div id="cf2" class="conf" data-layout-ignore style="position:absolute;left:1364px;top:4065px;width:20px;height:34px;z-index:12;background:#22c55e;opacity:0"></div>
+<div id="cf3" class="conf" data-layout-ignore style="position:absolute;left:1461px;top:4065px;width:20px;height:34px;z-index:12;background:#3b82f6;opacity:0"></div>
+<div id="cf4" class="conf" data-layout-ignore style="position:absolute;left:1558px;top:4065px;width:20px;height:34px;z-index:12;background:#ec4899;opacity:0"></div>
+<div id="cf5" class="conf" data-layout-ignore style="position:absolute;left:1655px;top:4065px;width:20px;height:34px;z-index:12;background:#f97316;opacity:0"></div>
+<div id="cf6" class="conf" data-layout-ignore style="position:absolute;left:1752px;top:4065px;width:20px;height:34px;z-index:12;background:#ef4444;opacity:0"></div>
+<div id="cf7" class="conf" data-layout-ignore style="position:absolute;left:1849px;top:4065px;width:20px;height:34px;z-index:12;background:#facc15;opacity:0"></div>
+<div id="cf8" class="conf" data-layout-ignore style="position:absolute;left:1946px;top:4065px;width:20px;height:34px;z-index:12;background:#22c55e;opacity:0"></div>
+<div id="cf9" class="conf" data-layout-ignore style="position:absolute;left:2043px;top:4065px;width:20px;height:34px;z-index:12;background:#3b82f6;opacity:0"></div>
+<div id="cf10" class="conf" data-layout-ignore style="position:absolute;left:1240px;top:4065px;width:20px;height:34px;z-index:12;background:#ec4899;opacity:0"></div>
+<div id="cf11" class="conf" data-layout-ignore style="position:absolute;left:1337px;top:4065px;width:20px;height:34px;z-index:12;background:#f97316;opacity:0"></div>
+<div id="cf12" class="conf" data-layout-ignore style="position:absolute;left:1434px;top:4065px;width:20px;height:34px;z-index:12;background:#ef4444;opacity:0"></div>
+<div id="cf13" class="conf" data-layout-ignore style="position:absolute;left:1531px;top:4065px;width:20px;height:34px;z-index:12;background:#facc15;opacity:0"></div>
+<div id="cf14" class="conf" data-layout-ignore style="position:absolute;left:1628px;top:4065px;width:20px;height:34px;z-index:12;background:#22c55e;opacity:0"></div>
+<div id="cf15" class="conf" data-layout-ignore style="position:absolute;left:1725px;top:4065px;width:20px;height:34px;z-index:12;background:#3b82f6;opacity:0"></div>
+<div id="cf16" class="conf" data-layout-ignore style="position:absolute;left:1822px;top:4065px;width:20px;height:34px;z-index:12;background:#ec4899;opacity:0"></div>
+<div id="cf17" class="conf" data-layout-ignore style="position:absolute;left:1919px;top:4065px;width:20px;height:34px;z-index:12;background:#f97316;opacity:0"></div>
+<div id="cf18" class="conf" data-layout-ignore style="position:absolute;left:2016px;top:4065px;width:20px;height:34px;z-index:12;background:#ef4444;opacity:0"></div>
+<div id="cf19" class="conf" data-layout-ignore style="position:absolute;left:1213px;top:4065px;width:20px;height:34px;z-index:12;background:#facc15;opacity:0"></div>
+<div id="cf20" class="conf" data-layout-ignore style="position:absolute;left:1310px;top:4065px;width:20px;height:34px;z-index:12;background:#22c55e;opacity:0"></div>
+<div id="cf21" class="conf" data-layout-ignore style="position:absolute;left:1407px;top:4065px;width:20px;height:34px;z-index:12;background:#3b82f6;opacity:0"></div>
+<div id="cf22" class="conf" data-layout-ignore style="position:absolute;left:1504px;top:4065px;width:20px;height:34px;z-index:12;background:#ec4899;opacity:0"></div>
+<div id="cf23" class="conf" data-layout-ignore style="position:absolute;left:1601px;top:4065px;width:20px;height:34px;z-index:12;background:#f97316;opacity:0"></div>
+<div id="cf24" class="conf" data-layout-ignore style="position:absolute;left:1698px;top:4065px;width:20px;height:34px;z-index:12;background:#ef4444;opacity:0"></div>
+<div id="cf25" class="conf" data-layout-ignore style="position:absolute;left:1795px;top:4065px;width:20px;height:34px;z-index:12;background:#facc15;opacity:0"></div>
+<div id="garl" class="garl" style="position:absolute;left:90px;top:4605px;width:960px;height:100px;z-index:5;"><div class="wire"></div><i id="lt0" class="lt" style="left:20px;top:30px;background:#ef4444"></i><i id="lt1" class="lt" style="left:92px;top:48px;background:#facc15"></i><i id="lt2" class="lt" style="left:164px;top:30px;background:#22c55e"></i><i id="lt3" class="lt" style="left:236px;top:48px;background:#3b82f6"></i><i id="lt4" class="lt" style="left:308px;top:30px;background:#ef4444"></i><i id="lt5" class="lt" style="left:380px;top:48px;background:#facc15"></i><i id="lt6" class="lt" style="left:452px;top:30px;background:#22c55e"></i><i id="lt7" class="lt" style="left:524px;top:48px;background:#3b82f6"></i><i id="lt8" class="lt" style="left:596px;top:30px;background:#ef4444"></i><i id="lt9" class="lt" style="left:668px;top:48px;background:#facc15"></i><i id="lt10" class="lt" style="left:740px;top:30px;background:#22c55e"></i><i id="lt11" class="lt" style="left:812px;top:48px;background:#3b82f6"></i><i id="lt12" class="lt" style="left:884px;top:30px;background:#ef4444"></i></div>
+<div id="y250b" class="cnt" style="position:absolute;left:270px;top:4745px;width:600px;height:200px;z-index:7;background:#fff;border-color:#f5c542;opacity:0"><span class="mas">+</span><span id="y250" class="roller" style="display:inline-block;font-size:120px;font-weight:900;color:#0f1115;font-variant-numeric:tabular-nums;line-height:134px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:134px;overflow:hidden;vertical-align:top"><span id="y250-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:134px;line-height:134px">0</span><span style="display:block;height:134px;line-height:134px">1</span><span style="display:block;height:134px;line-height:134px">2</span><span style="display:block;height:134px;line-height:134px">3</span><span style="display:block;height:134px;line-height:134px">4</span><span style="display:block;height:134px;line-height:134px">5</span><span style="display:block;height:134px;line-height:134px">6</span><span style="display:block;height:134px;line-height:134px">7</span><span style="display:block;height:134px;line-height:134px">8</span><span style="display:block;height:134px;line-height:134px">9</span><span style="display:block;height:134px;line-height:134px">0</span><span style="display:block;height:134px;line-height:134px">1</span><span style="display:block;height:134px;line-height:134px">2</span><span style="display:block;height:134px;line-height:134px">3</span><span style="display:block;height:134px;line-height:134px">4</span><span style="display:block;height:134px;line-height:134px">5</span><span style="display:block;height:134px;line-height:134px">6</span><span style="display:block;height:134px;line-height:134px">7</span><span style="display:block;height:134px;line-height:134px">8</span><span style="display:block;height:134px;line-height:134px">9</span><span style="display:block;height:134px;line-height:134px">0</span><span style="display:block;height:134px;line-height:134px">1</span><span style="display:block;height:134px;line-height:134px">2</span><span style="display:block;height:134px;line-height:134px">3</span><span style="display:block;height:134px;line-height:134px">4</span><span style="display:block;height:134px;line-height:134px">5</span><span style="display:block;height:134px;line-height:134px">6</span><span style="display:block;height:134px;line-height:134px">7</span><span style="display:block;height:134px;line-height:134px">8</span><span style="display:block;height:134px;line-height:134px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:134px;overflow:hidden;vertical-align:top"><span id="y250-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:134px;line-height:134px">0</span><span style="display:block;height:134px;line-height:134px">1</span><span style="display:block;height:134px;line-height:134px">2</span><span style="display:block;height:134px;line-height:134px">3</span><span style="display:block;height:134px;line-height:134px">4</span><span style="display:block;height:134px;line-height:134px">5</span><span style="display:block;height:134px;line-height:134px">6</span><span style="display:block;height:134px;line-height:134px">7</span><span style="display:block;height:134px;line-height:134px">8</span><span style="display:block;height:134px;line-height:134px">9</span><span style="display:block;height:134px;line-height:134px">0</span><span style="display:block;height:134px;line-height:134px">1</span><span style="display:block;height:134px;line-height:134px">2</span><span style="display:block;height:134px;line-height:134px">3</span><span style="display:block;height:134px;line-height:134px">4</span><span style="display:block;height:134px;line-height:134px">5</span><span style="display:block;height:134px;line-height:134px">6</span><span style="display:block;height:134px;line-height:134px">7</span><span style="display:block;height:134px;line-height:134px">8</span><span style="display:block;height:134px;line-height:134px">9</span><span style="display:block;height:134px;line-height:134px">0</span><span style="display:block;height:134px;line-height:134px">1</span><span style="display:block;height:134px;line-height:134px">2</span><span style="display:block;height:134px;line-height:134px">3</span><span style="display:block;height:134px;line-height:134px">4</span><span style="display:block;height:134px;line-height:134px">5</span><span style="display:block;height:134px;line-height:134px">6</span><span style="display:block;height:134px;line-height:134px">7</span><span style="display:block;height:134px;line-height:134px">8</span><span style="display:block;height:134px;line-height:134px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:134px;overflow:hidden;vertical-align:top"><span id="y250-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:134px;line-height:134px">0</span><span style="display:block;height:134px;line-height:134px">1</span><span style="display:block;height:134px;line-height:134px">2</span><span style="display:block;height:134px;line-height:134px">3</span><span style="display:block;height:134px;line-height:134px">4</span><span style="display:block;height:134px;line-height:134px">5</span><span style="display:block;height:134px;line-height:134px">6</span><span style="display:block;height:134px;line-height:134px">7</span><span style="display:block;height:134px;line-height:134px">8</span><span style="display:block;height:134px;line-height:134px">9</span><span style="display:block;height:134px;line-height:134px">0</span><span style="display:block;height:134px;line-height:134px">1</span><span style="display:block;height:134px;line-height:134px">2</span><span style="display:block;height:134px;line-height:134px">3</span><span style="display:block;height:134px;line-height:134px">4</span><span style="display:block;height:134px;line-height:134px">5</span><span style="display:block;height:134px;line-height:134px">6</span><span style="display:block;height:134px;line-height:134px">7</span><span style="display:block;height:134px;line-height:134px">8</span><span style="display:block;height:134px;line-height:134px">9</span><span style="display:block;height:134px;line-height:134px">0</span><span style="display:block;height:134px;line-height:134px">1</span><span style="display:block;height:134px;line-height:134px">2</span><span style="display:block;height:134px;line-height:134px">3</span><span style="display:block;height:134px;line-height:134px">4</span><span style="display:block;height:134px;line-height:134px">5</span><span style="display:block;height:134px;line-height:134px">6</span><span style="display:block;height:134px;line-height:134px">7</span><span style="display:block;height:134px;line-height:134px">8</span><span style="display:block;height:134px;line-height:134px">9</span></span></span></span><span class="mas">AÑOS</span></div>
+<div id="voz" class="pill" style="position:absolute;left:280px;top:4985px;z-index:8;background:#dc2626;color:#fff;font-size:56px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="52"
+  height="52"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+  <line x1="12" x2="12" y1="19" y2="22" />
+</svg> LA VOZ DE LA NAVIDAD</div>
+<div id="cbox" class="card" style="position:absolute;left:130px;top:4125px;width:880px;height:440px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:40px;top:34px;display:flex;align-items:center;gap:22px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="84"
+  height="84"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+</svg>
+        <span style="font:900 68px Inter;color:#0f1115">Comentarios</span></div>
+      <div style="position:absolute;left:40px;top:150px;font:900 50px Inter;color:#555">¿Te ha tocado alguna vez?</div>
+      <div id="ctt" style="position:absolute;left:40px;top:240px;font:800 66px Inter;color:#0f1115;white-space:nowrap"><span style="display:inline-block;white-space:nowrap"><span class="kc">U</span><span class="kc">n</span><span class="kc">a</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">v</span><span class="kc">e</span><span class="kc">z</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">m</span><span class="kc">e</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">t</span><span class="kc">o</span><span class="kc">c</span><span class="kc">ó</span><span class="kc">…</span></span></div>
+      <div id="pub" class="pubb">Publicar</div></div>
+<div id="cur" data-layout-ignore style="position:absolute;left:870px;top:4475px;width:130px;height:130px;z-index:12;opacity:0"><svg fill="#111"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z" />
+</svg></div>
+    </div>
+  </div>
+  <div id="scrim" data-layout-ignore></div>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const PIV = {"armL": "71 188", "armR": "169 188", "legL": "107 296", "legR": "133 296", "head": "120 160", "upper": "120 300", "eyes": "120 106", "rig": "120 430"};
+const Q = (id, part) => document.querySelector('#' + id + ' .' + part);
+function life(id, t0, t1, seed) {
+  const n = Math.max(1, Math.floor((t1 - t0) / 1.8));
+  tl.fromTo(Q(id,'upper'), {scaleY:1}, {scaleY:1.03, svgOrigin:PIV.upper, duration:0.9, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const m = Math.max(1, Math.floor((t1 - t0) / (1.4 + (seed % 4) * 0.15)));
+  tl.fromTo(Q(id,'head'), {rotation:-2.5}, {rotation:2.5, svgOrigin:PIV.head, duration:1.4 + (seed % 4) * 0.15, ease:'sine.inOut', yoyo:true, repeat:m-1, immediateRender:false}, t0 + 0.1);
+  let r = (seed * 7919) % 997, t = t0 + 0.5 + (seed % 5) * 0.23;
+  const ey = Q(id,'eyes');
+  while (t < t1 - 0.2) {
+    tl.to(ey, {scaleY:0.08, svgOrigin:PIV.eyes, duration:0.06}, t);
+    tl.to(ey, {scaleY:1, svgOrigin:PIV.eyes, duration:0.09}, t + 0.1);
+    r = (r * 7919 + 13) % 997; t += 2.1 + (r / 997) * 2.3;
+  }
+}
+function walk(id, t0, t1, step) {
+  const n = Math.max(2, Math.round((t1 - t0) / step));
+  tl.fromTo(Q(id,'legL'), {rotation:-26}, {rotation:26, svgOrigin:PIV.legL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'legR'), {rotation:26}, {rotation:-26, svgOrigin:PIV.legR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armL'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armR'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'rig'), {y:0}, {y:-14, duration:step/2, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const te = t0 + n * step;
+  ['legL','legR','armL','armR'].forEach(p => tl.to(Q(id,p), {rotation:0, svgOrigin:PIV[p], duration:0.15}, te));
+  tl.to(Q(id,'rig'), {y:0, duration:0.15}, te);
+}
+function face(id, dir, t) { tl.set(Q(id,'rig'), {scaleX:dir, svgOrigin:PIV.rig}, t); }
+function jump(id, t, h) {
+  tl.to(Q(id,'rig'), {keyframes:[{scaleY:0.9, y:0, duration:0.08},{scaleY:1.05, y:-h, duration:0.18, ease:'power2.out'},
+    {scaleY:1, y:0, duration:0.18, ease:'power2.in'},{scaleY:0.95, duration:0.06},{scaleY:1, duration:0.08}], svgOrigin:PIV.rig}, t);
+}
+function point(id, side, t0, t1, ang) {
+  const arm = Q(id, 'arm' + side);
+  tl.to(arm, {rotation:ang, svgOrigin:PIV['arm' + side], duration:0.3, ease:'back.out(2)'}, t0);
+  tl.to(arm, {rotation:0, svgOrigin:PIV['arm' + side], duration:0.35, ease:'power2.inOut'}, t1);
+}
+function wave(id, t0, t1) {
+  const arm = Q(id, 'armR');
+  tl.to(arm, {rotation:-150, svgOrigin:PIV.armR, duration:0.3, ease:'back.out(2)'}, t0);
+  const n = Math.max(1, Math.floor((t1 - t0 - 0.3) / 0.28));
+  tl.fromTo(arm, {rotation:-150}, {rotation:-118, svgOrigin:PIV.armR, duration:0.28, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0 + 0.3);
+}
+function tilt(id, t) {
+  tl.to(Q(id,'brows'), {y:-8, duration:0.2, ease:'back.out(3)'}, t);
+  tl.to(Q(id,'brows'), {y:0, duration:0.3}, t + 1.2);
+}
+function typeOn(sel, t0, t1) {
+  const els = document.querySelectorAll(sel);
+  const dt = (t1 - t0) / Math.max(1, els.length);
+  els.forEach((e, i) => tl.set(e, {opacity:1}, t0 + i * dt));
+}
+
+tl.set("#road", {strokeDasharray:12140.0, strokeDashoffset:12140.0}, 0);
+tl.set("#wd", {x:-30.0, y:195.0, scale:1.0, transformOrigin:"0 0"}, 0);
+tl.set("#grid", {backgroundPosition:"-8px 49px"}, 0);
+tl.fromTo("#b0", {y:0, rotation:-180}, {y:877, rotation:0, duration:0.55, ease:"bounce.out"}, 0);
+tl.fromTo("[id^=dc]", {opacity:1, scale:1.35}, {opacity:1, scale:1, duration:0.4, stagger:0.05, ease:"back.out(2)"}, 0);
+tl.fromTo("#cal", {opacity:1, scale:1.6}, {opacity:1, scale:1, duration:0.45, ease:"back.out(2)"}, 0);
+tl.to("#shake", {keyframes:[{x:-12,y:7},{x:10,y:-5},{x:-6,y:4},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 0.500);
+life("k1", 0.000, 57.375, 1);
+life("k2", 0.000, 57.375, 2);
+tl.to("[id^=dc]", {y:"+=20", duration:0.15, yoyo:true, repeat:1}, 1.920);
+tl.fromTo("#k1, #k2", {opacity:0, y:40}, {opacity:1, y:0, duration:0.35, stagger:0.1}, 3.020);
+tl.to(Q("k1","mouth"), {scaleY:2, svgOrigin:"120 136", duration:0.15, yoyo:true, repeat:5}, 3.420); tl.to(Q("k2","mouth"), {scaleY:2, svgOrigin:"120 136", duration:0.15, yoyo:true, repeat:5}, 3.520);
+tl.fromTo("#n0-0", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 3.420);
+tl.to("#n0-0", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 3.870);
+tl.fromTo("#n0-1", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 3.540);
+tl.to("#n0-1", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 3.990);
+tl.fromTo("#n0-2", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 3.660);
+tl.to("#n0-2", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 4.110);
+tl.fromTo("#n0-3", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 3.780);
+tl.to("#n0-3", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 4.230);
+tl.to("#b0", {scale:1.15, duration:0.15, yoyo:true, repeat:1}, 3.780);
+tl.fromTo("#pq", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 4.810);
+tl.to("#wd", {x:-1090.0, y:195.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 5.330);
+tl.to("#grid", {backgroundPosition:"-272px 49px", duration:0.6, ease:"power3.inOut"}, 5.330);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 5.330);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 5.630);
+tl.to("#road", {strokeDashoffset:10580.0, duration:0.60, ease:"power2.inOut"}, 5.330);
+tl.fromTo("#h1-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 5.580);
+tl.fromTo("#h1-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 6.000);
+tl.fromTo("#ycb", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 6.880);
+tl.set("#y71-d0", {y:0}, 0);
+tl.set("#y71-d1", {y:0}, 0);
+tl.set("#y71-d2", {y:0}, 0);
+tl.set("#y71-d3", {y:0}, 0);
+tl.to("#y71-d0", {y:-990, duration:0.60, ease:"power3.out"}, 6.980);
+tl.to("#y71-d1", {y:-1530, duration:0.60, ease:"power3.out"}, 7.040);
+tl.to("#y71-d2", {y:-1530, duration:0.60, ease:"power3.out"}, 7.100);
+tl.to("#y71-d3", {y:-990, duration:0.60, ease:"power3.out"}, 7.160);
+tl.fromTo("#crown", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 8.680);
+tl.fromTo("#sch", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 9.750);
+life("k3", 0.000, 57.375, 3);
+tl.fromTo("#k3", {opacity:0, x:-100}, {opacity:1, x:0, duration:0.4}, 9.750);
+tl.fromTo("#b1", {opacity:0, scale:0.3, rotation:-180}, {opacity:1, scale:1, rotation:0, duration:0.45, ease:"back.out(2)"}, 10.900);
+point("k3", "R", 11.000, 13.360, -100);
+tl.to(Q("k3","mouth"), {scaleY:2, svgOrigin:"120 136", duration:0.15, yoyo:true, repeat:5}, 11.000);
+tl.fromTo("#n1-0", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 11.000);
+tl.to("#n1-0", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 11.450);
+tl.fromTo("#n1-1", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 11.120);
+tl.to("#n1-1", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 11.570);
+tl.fromTo("#n1-2", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 11.240);
+tl.to("#n1-2", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 11.690);
+tl.fromTo("#prem", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 12.760);
+tl.to("#wd", {x:-1090.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 12.980);
+tl.to("#grid", {backgroundPosition:"-272px -276px", duration:0.7, ease:"power3.inOut"}, 12.980);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 12.980);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 13.330);
+tl.to("#road", {strokeDashoffset:8280.0, duration:0.70, ease:"power2.inOut"}, 12.980);
+tl.to("#mile0", {opacity:0, duration:0.3}, 13.480);
+tl.fromTo("#tline", {scaleX:0}, {scaleX:1, transformOrigin:"0% 50%", duration:0.8, ease:"power2.inOut"}, 13.280);
+tl.fromTo("#td0, #tl0", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.3, ease:"back.out(2)"}, 13.280);
+tl.fromTo("#lnav", {opacity:0, x:0, y:60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 14.890);
+tl.to("#lnav", {scale:1.05, duration:0.15, yoyo:true, repeat:1}, 15.590);
+tl.fromTo("#map", {opacity:0, y:40}, {opacity:1, y:0, duration:0.35}, 16.050);
+tl.fromTo("#pin", {y:-120, opacity:0}, {y:0, opacity:1, duration:0.4, ease:"bounce.out"}, 16.350);
+tl.fromTo("#td1, #tl1", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.3, ease:"back.out(2)"}, 16.880);
+tl.to("#wd", {x:-30.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 18.060);
+tl.to("#grid", {backgroundPosition:"-8px -276px", duration:0.7, ease:"power3.inOut"}, 18.060);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 18.060);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 18.410);
+tl.to("#road", {strokeDashoffset:7220.0, duration:0.70, ease:"power2.inOut"}, 18.060);
+tl.fromTo("#h2-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 18.360);
+tl.fromTo("#h2-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 18.680);
+tl.fromTo("#school", {opacity:0, y:80}, {opacity:1, y:0, duration:0.5, ease:"power3.out"}, 19.460);
+tl.to("#school .ssign", {scale:1.08, duration:0.15, yoyo:true, repeat:1}, 21.570);
+tl.fromTo("#mad", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 21.970);
+tl.fromTo("#sig", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 23.130);
+tl.to("#door", {scaleX:0.15, transformOrigin:"0% 50%", duration:0.4}, 23.590);
+life("o0", 0.000, 57.375, 10);
+tl.fromTo("#o0", {opacity:0, x:-120}, {opacity:1, x:180, duration:0.9, ease:"power1.out"}, 23.590); walk("o0", 23.590, 24.630, 0.12);
+life("o1", 0.000, 57.375, 11);
+tl.fromTo("#o1", {opacity:0, x:-120}, {opacity:1, x:140, duration:0.9, ease:"power1.out"}, 23.740); walk("o1", 23.740, 24.630, 0.12);
+life("o2", 0.000, 57.375, 12);
+tl.fromTo("#o2", {opacity:0, x:-120}, {opacity:1, x:100, duration:0.9, ease:"power1.out"}, 23.890); walk("o2", 23.890, 24.630, 0.12);
+tl.to("#wd", {x:-30.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 24.580);
+tl.to("#grid", {backgroundPosition:"-8px -601px", duration:0.7, ease:"power3.inOut"}, 24.580);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 24.580);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 24.930);
+tl.to("#road", {strokeDashoffset:4920.0, duration:0.70, ease:"power2.inOut"}, 24.580);
+tl.to("#mile1", {opacity:0, duration:0.3}, 25.080);
+tl.fromTo("#qm", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 24.880);
+tl.fromTo("#nad", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 25.150);
+tl.to("#qm", {rotation:15, duration:0.2, yoyo:true, repeat:3}, 26.040);
+tl.fromTo("#teo", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 26.980);
+tl.fromTo("#pig", {opacity:0, scale:0.5}, {opacity:1, scale:1, duration:0.4, ease:"back.out(2)"}, 28.480);
+tl.fromTo("#pigl", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 28.680);
+tl.fromTo("#coin0", {opacity:0, y:-120}, {opacity:1, y:160, duration:0.4, ease:"power2.in", immediateRender:false}, 28.850); tl.to("#coin0", {opacity:0, duration:0.1}, 29.250);
+tl.fromTo("#coin1", {opacity:0, y:-120}, {opacity:1, y:160, duration:0.4, ease:"power2.in", immediateRender:false}, 29.030); tl.to("#coin1", {opacity:0, duration:0.1}, 29.430);
+tl.fromTo("#coin2", {opacity:0, y:-120}, {opacity:1, y:160, duration:0.4, ease:"power2.in", immediateRender:false}, 29.210); tl.to("#coin2", {opacity:0, duration:0.1}, 29.610);
+tl.fromTo("#coin3", {opacity:0, y:-120}, {opacity:1, y:160, duration:0.4, ease:"power2.in", immediateRender:false}, 29.390); tl.to("#coin3", {opacity:0, duration:0.1}, 29.790);
+tl.fromTo("#coin4", {opacity:0, y:-120}, {opacity:1, y:160, duration:0.4, ease:"power2.in", immediateRender:false}, 29.570); tl.to("#coin4", {opacity:0, duration:0.1}, 29.970);
+tl.to("#pig", {scale:1.08, duration:0.15, yoyo:true, repeat:3}, 29.240);
+tl.fromTo("#alu", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 30.050);
+tl.to("#wd", {x:-1090.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 30.760);
+tl.to("#grid", {backgroundPosition:"-272px -601px", duration:0.7, ease:"power3.inOut"}, 30.760);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 30.760);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 31.110);
+tl.to("#road", {strokeDashoffset:3860.0, duration:0.70, ease:"power2.inOut"}, 30.760);
+tl.fromTo("#h3-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 31.060);
+tl.fromTo("#h3-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 31.410);
+tl.fromTo("#ycb2", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 32.100);
+tl.set("#y84-d0", {y:0}, 0);
+tl.set("#y84-d1", {y:0}, 0);
+tl.set("#y84-d2", {y:0}, 0);
+tl.set("#y84-d3", {y:0}, 0);
+tl.to("#y84-d0", {y:-858, duration:0.60, ease:"power3.out"}, 32.500);
+tl.to("#y84-d1", {y:-1482, duration:0.60, ease:"power3.out"}, 32.560);
+tl.to("#y84-d2", {y:-1404, duration:0.60, ease:"power3.out"}, 32.620);
+tl.to("#y84-d3", {y:-1092, duration:0.60, ease:"power3.out"}, 32.680);
+life("boy", 0.000, 57.375, 4);
+life("girl", 0.000, 57.375, 5);
+tl.fromTo("#lect, #boy", {opacity:0, y:40}, {opacity:1, y:0, duration:0.4}, 32.700);
+tl.fromTo("#chi", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 34.490);
+tl.to("#chi", {opacity:0, duration:0.2}, 35.930);
+tl.fromTo("#ambos", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 36.030);
+tl.fromTo("#girl", {opacity:0, x:200}, {opacity:1, x:0, duration:0.5, ease:"back.out(1.6)"}, 35.260); walk("girl", 35.260, 35.760, 0.12);
+tl.to(Q("boy","mouth"), {scaleY:2, svgOrigin:"120 136", duration:0.15, yoyo:true, repeat:5}, 39.000); tl.to(Q("girl","mouth"), {scaleY:2, svgOrigin:"120 136", duration:0.15, yoyo:true, repeat:5}, 39.100);
+tl.fromTo("#cal2", {opacity:0, scale:0.6}, {opacity:1, scale:1, duration:0.35, ease:"back.out(2)"}, 39.000);
+tl.fromTo("#cc0", {scale:0, opacity:0}, {scale:1, opacity:1, duration:0.2, ease:"back.out(3)"}, 39.450);
+tl.fromTo("#cc1", {scale:0, opacity:0}, {scale:1, opacity:1, duration:0.2, ease:"back.out(3)"}, 39.650);
+tl.fromTo("#cc2", {scale:0, opacity:0}, {scale:1, opacity:1, duration:0.2, ease:"back.out(3)"}, 39.850);
+tl.fromTo("#n3-0", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 39.000);
+tl.to("#n3-0", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 39.450);
+tl.fromTo("#n3-1", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 39.120);
+tl.to("#n3-1", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 39.570);
+tl.fromTo("#n3-2", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 39.240);
+tl.to("#n3-2", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 39.690);
+tl.fromTo("#n3-3", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.4, ease:"back.out(2)", immediateRender:false}, 39.360);
+tl.to("#n3-3", {y:-200, opacity:0, duration:0.9, ease:"power1.in"}, 39.810);
+tl.fromTo("#nf", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 40.180);
+tl.to("#wd", {x:-1090.0, y:-3705.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 41.060);
+tl.to("#grid", {backgroundPosition:"-272px -926px", duration:0.7, ease:"power3.inOut"}, 41.060);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 41.060);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 41.410);
+tl.to("#road", {strokeDashoffset:1560.0, duration:0.70, ease:"power2.inOut"}, 41.060);
+tl.to("#mile2", {opacity:0, duration:0.3}, 41.560);
+tl.fromTo("#dbig, #dsm", {opacity:0}, {opacity:1, duration:0.3}, 41.160);
+tl.to("#dbig-cage", {rotation:720, duration:7.99, ease:"none"}, 41.360);
+tl.to("#dsm-cage", {rotation:-720, duration:7.99, ease:"none"}, 41.360);
+tl.fromTo("#bn", {opacity:0, y:-260, scale:0.3}, {opacity:1, y:0, scale:1, duration:0.45, ease:"bounce.out"}, 41.820);
+tl.fromTo("#c100", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 42.520);
+tl.set("#cnt100-d0", {y:0}, 0);
+tl.set("#cnt100-d1", {y:0}, 0);
+tl.set("#cnt100-d2", {y:0}, 0);
+tl.set("#cnt100-d3", {y:0}, 0);
+tl.set("#cnt100-d4", {y:0}, 0);
+tl.set("#cnt100-d5", {y:0}, 0);
+tl.to("#cnt100-d0", {y:-737, duration:0.60, ease:"power3.out"}, 42.620);
+tl.to("#cnt100-d1", {y:-670, duration:0.60, ease:"power3.out"}, 42.680);
+tl.to("#cnt100-d2", {y:-670, duration:0.60, ease:"power3.out"}, 42.740);
+tl.to("#cnt100-d3", {y:-670, duration:0.60, ease:"power3.out"}, 42.800);
+tl.to("#cnt100-d4", {y:-670, duration:0.60, ease:"power3.out"}, 42.860);
+tl.to("#cnt100-d5", {y:-670, duration:0.60, ease:"power3.out"}, 42.920);
+tl.fromTo("#bp", {opacity:0, y:-200, scale:0.3}, {opacity:1, y:0, scale:1, duration:0.45, ease:"bounce.out"}, 44.670);
+tl.to("#bn, #bp", {opacity:0.25, duration:0.3}, 46.250);
+tl.fromTo("#bg", {opacity:0, scale:0.2, rotation:-200}, {opacity:1, scale:1, rotation:0, duration:0.6, ease:"back.out(1.8)"}, 46.200);
+tl.to("#shake", {keyframes:[{x:-22,y:13},{x:18,y:-9},{x:-11,y:7},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 46.450);
+tl.to("#bg", {scale:1.08, duration:0.2, yoyo:true, repeat:5}, 46.880);
+tl.fromTo("#gbox", {opacity:0, scale:0.5}, {opacity:1, scale:1, duration:0.4, ease:"back.out(2)"}, 48.100);
+tl.set("#mil4-d0", {y:0}, 0);
+tl.set("#mil4-d1", {y:0}, 0);
+tl.set("#mil4-d2", {y:0}, 0);
+tl.set("#mil4-d3", {y:0}, 0);
+tl.set("#mil4-d4", {y:0}, 0);
+tl.set("#mil4-d5", {y:0}, 0);
+tl.set("#mil4-d6", {y:0}, 0);
+tl.to("#mil4-d0", {y:-1512, duration:0.70, ease:"power3.out"}, 48.300);
+tl.to("#mil4-d1", {y:-1080, duration:0.70, ease:"power3.out"}, 48.360);
+tl.to("#mil4-d2", {y:-1080, duration:0.70, ease:"power3.out"}, 48.420);
+tl.to("#mil4-d3", {y:-1080, duration:0.70, ease:"power3.out"}, 48.480);
+tl.to("#mil4-d4", {y:-1080, duration:0.70, ease:"power3.out"}, 48.540);
+tl.to("#mil4-d5", {y:-1080, duration:0.70, ease:"power3.out"}, 48.600);
+tl.to("#mil4-d6", {y:-1080, duration:0.70, ease:"power3.out"}, 48.660);
+tl.fromTo("#cf0", {opacity:1, y:0, rotation:0}, {opacity:1, y:700, x:-80, rotation:360, duration:1.6, ease:"power1.in", immediateRender:false}, 48.480);
+tl.to("#cf0", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf1", {opacity:1, y:0, rotation:0}, {opacity:1, y:753, x:-40, rotation:400, duration:1.9, ease:"power1.in", immediateRender:false}, 48.530);
+tl.to("#cf1", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf2", {opacity:1, y:0, rotation:0}, {opacity:1, y:806, x:0, rotation:440, duration:2.2, ease:"power1.in", immediateRender:false}, 48.580);
+tl.to("#cf2", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf3", {opacity:1, y:0, rotation:0}, {opacity:1, y:859, x:40, rotation:480, duration:2.5, ease:"power1.in", immediateRender:false}, 48.630);
+tl.to("#cf3", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf4", {opacity:1, y:0, rotation:0}, {opacity:1, y:912, x:80, rotation:520, duration:1.6, ease:"power1.in", immediateRender:false}, 48.680);
+tl.to("#cf4", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf5", {opacity:1, y:0, rotation:0}, {opacity:1, y:965, x:-80, rotation:560, duration:1.9, ease:"power1.in", immediateRender:false}, 48.730);
+tl.to("#cf5", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf6", {opacity:1, y:0, rotation:0}, {opacity:1, y:718, x:-40, rotation:600, duration:2.2, ease:"power1.in", immediateRender:false}, 48.780);
+tl.to("#cf6", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf7", {opacity:1, y:0, rotation:0}, {opacity:1, y:771, x:0, rotation:640, duration:2.5, ease:"power1.in", immediateRender:false}, 48.480);
+tl.to("#cf7", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf8", {opacity:1, y:0, rotation:0}, {opacity:1, y:824, x:40, rotation:680, duration:1.6, ease:"power1.in", immediateRender:false}, 48.530);
+tl.to("#cf8", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf9", {opacity:1, y:0, rotation:0}, {opacity:1, y:877, x:80, rotation:720, duration:1.9, ease:"power1.in", immediateRender:false}, 48.580);
+tl.to("#cf9", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf10", {opacity:1, y:0, rotation:0}, {opacity:1, y:930, x:-80, rotation:760, duration:2.2, ease:"power1.in", immediateRender:false}, 48.630);
+tl.to("#cf10", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf11", {opacity:1, y:0, rotation:0}, {opacity:1, y:983, x:-40, rotation:800, duration:2.5, ease:"power1.in", immediateRender:false}, 48.680);
+tl.to("#cf11", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf12", {opacity:1, y:0, rotation:0}, {opacity:1, y:736, x:0, rotation:840, duration:1.6, ease:"power1.in", immediateRender:false}, 48.730);
+tl.to("#cf12", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf13", {opacity:1, y:0, rotation:0}, {opacity:1, y:789, x:40, rotation:880, duration:1.9, ease:"power1.in", immediateRender:false}, 48.780);
+tl.to("#cf13", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf14", {opacity:1, y:0, rotation:0}, {opacity:1, y:842, x:80, rotation:920, duration:2.2, ease:"power1.in", immediateRender:false}, 48.480);
+tl.to("#cf14", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf15", {opacity:1, y:0, rotation:0}, {opacity:1, y:895, x:-80, rotation:960, duration:2.5, ease:"power1.in", immediateRender:false}, 48.530);
+tl.to("#cf15", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf16", {opacity:1, y:0, rotation:0}, {opacity:1, y:948, x:-40, rotation:1000, duration:1.6, ease:"power1.in", immediateRender:false}, 48.580);
+tl.to("#cf16", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf17", {opacity:1, y:0, rotation:0}, {opacity:1, y:701, x:0, rotation:1040, duration:1.9, ease:"power1.in", immediateRender:false}, 48.630);
+tl.to("#cf17", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf18", {opacity:1, y:0, rotation:0}, {opacity:1, y:754, x:40, rotation:1080, duration:2.2, ease:"power1.in", immediateRender:false}, 48.680);
+tl.to("#cf18", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf19", {opacity:1, y:0, rotation:0}, {opacity:1, y:807, x:80, rotation:1120, duration:2.5, ease:"power1.in", immediateRender:false}, 48.730);
+tl.to("#cf19", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf20", {opacity:1, y:0, rotation:0}, {opacity:1, y:860, x:-80, rotation:1160, duration:1.6, ease:"power1.in", immediateRender:false}, 48.780);
+tl.to("#cf20", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf21", {opacity:1, y:0, rotation:0}, {opacity:1, y:913, x:-40, rotation:1200, duration:1.9, ease:"power1.in", immediateRender:false}, 48.480);
+tl.to("#cf21", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf22", {opacity:1, y:0, rotation:0}, {opacity:1, y:966, x:0, rotation:1240, duration:2.2, ease:"power1.in", immediateRender:false}, 48.530);
+tl.to("#cf22", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf23", {opacity:1, y:0, rotation:0}, {opacity:1, y:719, x:40, rotation:1280, duration:2.5, ease:"power1.in", immediateRender:false}, 48.580);
+tl.to("#cf23", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf24", {opacity:1, y:0, rotation:0}, {opacity:1, y:772, x:80, rotation:1320, duration:1.6, ease:"power1.in", immediateRender:false}, 48.630);
+tl.to("#cf24", {opacity:0, duration:0.3}, 50.880);
+tl.fromTo("#cf25", {opacity:1, y:0, rotation:0}, {opacity:1, y:825, x:-80, rotation:1360, duration:1.9, ease:"power1.in", immediateRender:false}, 48.680);
+tl.to("#cf25", {opacity:0, duration:0.3}, 50.880);
+tl.to("#gbox", {scale:1.06, duration:0.15, yoyo:true, repeat:3}, 49.190);
+tl.to("#wd", {x:-30.0, y:-3705.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 49.400);
+tl.to("#grid", {backgroundPosition:"-8px -926px", duration:0.7, ease:"power3.inOut"}, 49.400);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 49.400);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 49.750);
+tl.to("#road", {strokeDashoffset:500.0, duration:0.70, ease:"power2.inOut"}, 49.400);
+tl.fromTo("#garl", {opacity:0}, {opacity:1, duration:0.3}, 49.700);
+tl.fromTo("[id^=lt]", {opacity:0.2, scale:0.6}, {opacity:1, scale:1, duration:0.15, stagger:0.06}, 49.700);
+tl.to("[id^=lt]", {opacity:0.4, duration:0.3, yoyo:true, repeat:9, stagger:{each:0.05, from:"random"}}, 52.470);
+tl.fromTo("#y250b", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 49.980);
+tl.set("#y250-d0", {y:0}, 0);
+tl.set("#y250-d1", {y:0}, 0);
+tl.set("#y250-d2", {y:0}, 0);
+tl.to("#y250-d0", {y:-1608, duration:0.60, ease:"power3.out"}, 50.080);
+tl.to("#y250-d1", {y:-2010, duration:0.60, ease:"power3.out"}, 50.140);
+tl.to("#y250-d2", {y:-1340, duration:0.60, ease:"power3.out"}, 50.200);
+tl.fromTo("#voz", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 52.470);
+tl.to("#voz", {scale:1.06, duration:0.15, yoyo:true, repeat:1}, 52.940);
+tl.fromTo("#cbox", {opacity:0, x:0, y:-80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 53.467);
+typeOn("#ctt .kc", 54.090, 55.550);
+tl.fromTo("#cur", {opacity:0, x:200, y:200}, {opacity:1, x:0, y:0, duration:0.4}, 55.090);
+tl.to("#cur", {scale:0.85, duration:0.08, yoyo:true, repeat:1}, 55.850); tl.to("#pub", {scale:0.9, backgroundColor:"#166534", duration:0.1, yoyo:true, repeat:1}, 55.850);
+tl.to(".mile", {opacity:1, duration:0.4}, 56.440);
+tl.to("#wd", {x:307.3, y:368.8, scale:0.2115, duration:0.6, ease:"power3.inOut"}, 56.340);
+tl.to("#grid", {backgroundPosition:"77px 92px", duration:0.6, ease:"power3.inOut"}, 56.340);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 56.340);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 56.640);
+tl.fromTo(".pt:nth-child(1)", {y:0, x:0}, {y:-120, x:-40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(2)", {y:0, x:0}, {y:-150, x:0, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(3)", {y:0, x:0}, {y:-180, x:40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(4)", {y:0, x:0}, {y:-210, x:-40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(5)", {y:0, x:0}, {y:-240, x:0, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(6)", {y:0, x:0}, {y:-120, x:40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(7)", {y:0, x:0}, {y:-150, x:-40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(8)", {y:0, x:0}, {y:-180, x:0, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(9)", {y:0, x:0}, {y:-210, x:40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(10)", {y:0, x:0}, {y:-240, x:-40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(11)", {y:0, x:0}, {y:-120, x:0, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(12)", {y:0, x:0}, {y:-150, x:40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(13)", {y:0, x:0}, {y:-180, x:-40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(14)", {y:0, x:0}, {y:-210, x:0, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(15)", {y:0, x:0}, {y:-240, x:40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(16)", {y:0, x:0}, {y:-120, x:-40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(17)", {y:0, x:0}, {y:-150, x:0, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(18)", {y:0, x:0}, {y:-180, x:40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(19)", {y:0, x:0}, {y:-210, x:-40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(20)", {y:0, x:0}, {y:-240, x:0, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(21)", {y:0, x:0}, {y:-120, x:40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(22)", {y:0, x:0}, {y:-150, x:-40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(23)", {y:0, x:0}, {y:-180, x:0, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(24)", {y:0, x:0}, {y:-210, x:40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(25)", {y:0, x:0}, {y:-240, x:-40, duration:57.37, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(26)", {y:0, x:0}, {y:-120, x:0, duration:57.37, ease:"none"}, 0);
+tl.fromTo("#glow", {opacity:0.75}, {opacity:1, duration:2.5, ease:"sine.inOut", yoyo:true, repeat:22}, 0);
+window.__timelines["world"] = tl;
+</script>
+</template>

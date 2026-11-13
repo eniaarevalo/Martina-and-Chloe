@@ -44,3 +44,8 @@ video-perro/assets/.premix.wav
 video-perro/assets/.mix-graph.txt
 video-perro/.hyperframes/
 video-perro/node_modules/
+video-loteria/voz-raw.wav
+video-loteria/assets/.premix.wav
+video-loteria/assets/.mix-graph.txt
+video-loteria/.hyperframes/
+video-loteria/node_modules/

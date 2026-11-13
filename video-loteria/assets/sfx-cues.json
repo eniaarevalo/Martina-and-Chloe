@@ -1,0 +1,305 @@
+{
+ "duration": 57.374792,
+ "cues": [
+  {
+   "t": 0.0,
+   "file": "whoosh",
+   "vol": 0.4
+  },
+  {
+   "t": 0.45,
+   "file": "madera",
+   "vol": 0.5
+  },
+  {
+   "t": 4.96,
+   "file": "golpe",
+   "vol": 0.45
+  },
+  {
+   "t": 5.09,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 5.33,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 5.58,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 6.98,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 8.68,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 9.75,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 12.76,
+   "file": "check",
+   "vol": 0.4
+  },
+  {
+   "t": 12.98,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 13.04,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 13.28,
+   "file": "whoosh-corto",
+   "vol": 0.3
+  },
+  {
+   "t": 14.89,
+   "file": "pop",
+   "vol": 0.22
+  },
+  {
+   "t": 16.35,
+   "file": "pop",
+   "vol": 0.35
+  },
+  {
+   "t": 16.88,
+   "file": "check",
+   "vol": 0.3
+  },
+  {
+   "t": 18.06,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 18.36,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 19.56,
+   "file": "puerta",
+   "vol": 0.3
+  },
+  {
+   "t": 21.97,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 23.13,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 24.58,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 24.88,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 25.16,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 26.98,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 29.23,
+   "file": "click",
+   "vol": 0.2
+  },
+  {
+   "t": 29.41,
+   "file": "click",
+   "vol": 0.2
+  },
+  {
+   "t": 29.59,
+   "file": "click",
+   "vol": 0.2
+  },
+  {
+   "t": 29.77,
+   "file": "click",
+   "vol": 0.2
+  },
+  {
+   "t": 29.95,
+   "file": "click",
+   "vol": 0.2
+  },
+  {
+   "t": 30.05,
+   "file": "check",
+   "vol": 0.3
+  },
+  {
+   "t": 30.76,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 31.06,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 32.5,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 34.49,
+   "file": "pop2",
+   "vol": 0.3
+  },
+  {
+   "t": 36.03,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 39.45,
+   "file": "check",
+   "vol": 0.3
+  },
+  {
+   "t": 40.18,
+   "file": "golpe",
+   "vol": 0.3
+  },
+  {
+   "t": 40.46,
+   "file": "golpe",
+   "vol": 0.35
+  },
+  {
+   "t": 41.06,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 41.36,
+   "file": "tic-rodillo",
+   "vol": 0.3
+  },
+  {
+   "t": 41.92,
+   "file": "madera",
+   "vol": 0.4
+  },
+  {
+   "t": 42.62,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 44.87,
+   "file": "madera",
+   "vol": 0.4
+  },
+  {
+   "t": 46.35,
+   "file": "golpe-climax",
+   "vol": 0.55
+  },
+  {
+   "t": 48.3,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 48.58,
+   "file": "check",
+   "vol": 0.45
+  },
+  {
+   "t": 49.4,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 50.08,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 50.28,
+   "file": "check",
+   "vol": 0.35
+  },
+  {
+   "t": 52.47,
+   "file": "pop",
+   "vol": 0.3
+  },
+  {
+   "t": 53.467,
+   "file": "pop2",
+   "vol": 0.22
+  },
+  {
+   "t": 54.09,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 54.364,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 54.638,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 54.911,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 55.185,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 55.459,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 55.85,
+   "file": "click",
+   "vol": 0.5
+  },
+  {
+   "t": 56.34,
+   "file": "whoosh",
+   "vol": 0.35
+  }
+ ]
+}
