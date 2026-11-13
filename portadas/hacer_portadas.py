@@ -26,6 +26,7 @@ PORTADAS = {
     "video-perro":      (2.2,  ["LO QUE UN PERRO", "HACE EN", "TU CABEZA"], "TU CABEZA", "#ec4899", "PSICOLOGÍA"),
     "video-loteria":    (2.3,  ["¿POR QUÉ CANTAN", "NIÑOS", "LA LOTERÍA?"], "LA LOTERÍA?", "#facc15", "NAVIDAD"),
     "video-montepinar": (3.9,  ["¿EXISTE", "MONTEPINAR?"], "MONTEPINAR?", "#f97316", "LA QUE SE AVECINA"),
+    "video-dedos":      (3.2,  ["¿POR QUÉ", "CRUZAMOS", "LOS DEDOS?"], "LOS DEDOS?", "#facc15", "SUPERSTICIONES"),
 }
 
 HTML = """<!doctype html><html><head><meta charset="utf-8"><style>
