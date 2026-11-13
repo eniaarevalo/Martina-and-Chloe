@@ -54,3 +54,8 @@ video-montepinar/assets/.premix.wav
 video-montepinar/assets/.mix-graph.txt
 video-montepinar/.hyperframes/
 video-montepinar/node_modules/
+video-dedos/voz-raw.wav
+video-dedos/assets/.premix.wav
+video-dedos/assets/.mix-graph.txt
+video-dedos/.hyperframes/
+video-dedos/node_modules/

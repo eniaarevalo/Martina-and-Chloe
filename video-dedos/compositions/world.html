@@ -1,0 +1,951 @@
+<template>
+<style>
+#root { position:absolute; inset:0; overflow:hidden; background:#07080b; font-family:Inter, sans-serif; }
+#grid { position:absolute; inset:-200px; background-color:#08090d;
+  background-image: linear-gradient(rgba(255,255,255,0.045) 2px, transparent 2px),
+                    linear-gradient(90deg, rgba(255,255,255,0.045) 2px, transparent 2px);
+  background-size: 90px 90px; }
+#glow { position:absolute; left:-200px; right:-200px; bottom:-500px; height:1200px;
+  background: radial-gradient(ellipse at 50% 70%, rgba(92,108,255,0.38), rgba(46,196,182,0.12) 45%, transparent 70%); }
+#scrim { position:absolute; left:0; right:0; top:0; height:520px; pointer-events:none;
+  background:linear-gradient(rgba(7,8,11,0.97) 0%, rgba(7,8,11,0.94) 62%, rgba(7,8,11,0) 100%); }
+#shake { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+#wd { position:absolute; left:0; top:0; width:2200px; height:6600px; }
+.room { background:linear-gradient(#13151c,#0f1117); border:6px solid rgba(255,255,255,0.10); border-bottom:14px solid rgba(255,255,255,0.16); border-radius:10px; }
+.ghost { font:900 140px Inter; color:rgba(255,255,255,0.055); letter-spacing:-4px; }
+.wall { border:10px solid rgba(255,255,255,0.12); border-radius:16px; }
+.parapet { background:#1a1d26; border-top:8px solid rgba(255,255,255,0.18); }
+.hut { background:#151821; border:6px solid rgba(255,255,255,0.12); border-radius:18px 18px 0 0; }
+.hutdoor { position:absolute; left:70px; bottom:0; width:140px; height:300px; background:#0b0c10; border-radius:70px 70px 0 0; }
+.street { background:linear-gradient(#14161d, #07080b); border-top:10px solid rgba(255,255,255,0.12); }
+#bb { background:#ffffff; border-radius:60px; box-shadow:0 40px 120px rgba(0,0,0,0.5); }
+#bb-posts { background:repeating-linear-gradient(90deg, transparent 0 250px, #2a2e3a 250px 290px); }
+.bbface { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.bbt1, .bbt2 { font:900 210px Inter; color:#0f1115; line-height:0.95; letter-spacing:-6px; }
+.bbt2 { color:#ef4444; }
+.bbsub { font:700 90px Inter; color:#666; margin-top:20px; }
+.card { border-radius:40px; box-shadow:0 24px 60px rgba(0,0,0,0.45); overflow:visible; }
+.stamp { font:900 64px Inter; border:8px solid; border-radius:20px; padding:4px 22px; background:rgba(255,255,255,0.92); }
+.pill { font:900 50px Inter; padding:6px 24px; border-radius:999px; white-space:nowrap; }
+.badge { position:absolute; left:0; top:0; width:140px; height:140px; border-radius:50%; font:900 96px Inter;
+  color:#0f1115; text-align:center; line-height:140px; }
+.htitle { position:absolute; left:170px; top:14px; font:900 100px Inter; color:#fff; letter-spacing:-2px; white-space:nowrap; }
+.doorframe { position:absolute; inset:0; background:#2a1c12; border-radius:200px 200px 0 0; border:14px solid #5a3b22; }
+.doorleaf { position:absolute; top:40px; bottom:0; left:24px; width:186px; background:linear-gradient(90deg,#8a5a34,#a06a3e);
+  border-radius:150px 0 0 0; border:6px solid #5a3b22; }
+.doorleaf.r { left:auto; right:24px; border-radius:0 150px 0 0; }
+.counter { background:#d9d4c7; border-radius:16px 16px 0 0; }
+.counter-top { position:absolute; left:-20px; right:-20px; top:-26px; height:36px; background:#a58a5c; border-radius:12px; }
+.counter-sign { position:absolute; left:0; right:0; top:70px; text-align:center; font:900 72px Inter; color:#0f1115; }
+.desktop { position:absolute; left:0; right:0; top:0; height:44px; background:#a07a4c; border-radius:14px; }
+.deskbody { position:absolute; left:30px; right:30px; top:44px; bottom:0; background:#6e5233; border-radius:0 0 12px 12px; }
+.drawer { position:absolute; left:80px; right:80px; top:90px; height:170px; background:#8b6840; border:6px solid #4e3a22; border-radius:12px; }
+.handle { position:absolute; left:50%; top:60px; width:120px; height:30px; margin-left:-60px; background:#e8d3a8; border-radius:15px; }
+.dust { border-radius:50%; background:#cfc7b8; opacity:0; }
+.chathead { height:120px; background:#1f2430; border-radius:40px 40px 0 0; display:flex; align-items:center; padding-left:40px; }
+.chathead .dot { width:26px; height:26px; border-radius:50%; background:#22c55e; margin-right:20px; }
+.typing { position:absolute; left:40px; top:180px; background:#fff; border-radius:30px; padding:22px 30px; display:flex; gap:14px; opacity:0; }
+.typing span { width:22px; height:22px; border-radius:50%; background:#9aa3b2; display:block; }
+.bubble { position:absolute; background:#fff; border-radius:34px; padding:26px 34px; box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+.ch, .qc, .pc, .cc { opacity:0; }
+.avatar { position:relative; border-radius:50%; overflow:hidden; background:#e8ecf4; }
+.over { position:absolute; left:0; top:0; }
+.badge .over { width:100%; text-align:center; }
+.ph { border:6px dashed rgba(255,255,255,0.25); border-radius:40px; }
+.sticker { border-radius:50%; background:#fff; box-shadow:0 14px 30px rgba(0,0,0,0.35); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; }
+.stlab { font:900 30px Inter; color:#0f1115; margin-top:-4px; }
+.xdot { border-radius:50%; background:#ef4444; display:flex; align-items:center; justify-content:center; }
+.bubble.big { padding:30px 40px; box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+.tail { position:absolute; left:120px; top:-28px; width:0; height:0; border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:34px solid #fff; }
+.tail.l { left:-30px; top:auto; bottom:30px; border-left:none; border-bottom:24px solid transparent; border-top:24px solid transparent; border-right:34px solid #fff; }
+.sofa { background:#3b3f73; border-radius:60px 60px 20px 20px; border-top:60px solid #4b4f8a; }
+.lamp { border-left:10px solid #555a66; margin-left:40px; }
+#vc-sign { border-radius:30px; background:#141621; border:8px solid #3a3f55; text-align:center; font:900 96px Inter; line-height:114px; color:#7a809c; }
+#vc-on { width:100%; color:#ff4fd8; text-shadow:0 0 18px rgba(255,79,216,0.7); }
+.tape { position:absolute; width:48px; height:100px; border-radius:6px; box-shadow:inset 0 -18px 0 rgba(0,0,0,0.25); }
+#shelves { background:#3a2a1c; border-radius:16px; border:10px solid #5a4028; }
+#tv { background:#2a2e3a; border-radius:60px; box-shadow:0 30px 80px rgba(0,0,0,0.5); }
+#tv .screen { position:absolute; left:40px; top:40px; right:170px; bottom:40px; border-radius:40px; background:#0b0d14;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; }
+#tv .ant { position:absolute; top:-80px; width:10px; height:100px; background:#8b93a7; border-radius:5px; }
+#tv .a1 { left:330px; transform-origin:50% 100%; rotate:-25deg; }
+#tv .a2 { left:520px; transform-origin:50% 100%; rotate:25deg; }
+#tv .knob { position:absolute; right:50px; width:80px; height:80px; border-radius:50%; background:#8b93a7; }
+#tv .k1 { top:120px; } #tv .k2 { top:260px; }
+.cbox { position:absolute; left:80px; right:80px; top:240px; height:250px; border-radius:40px; background:#f1f3f6;
+  display:flex; align-items:center; gap:36px; padding-left:40px; }
+.cav { width:170px; height:170px; border-radius:50%; background:#6366f1; display:flex; align-items:center; justify-content:center; flex:none; }
+.caret { display:inline-block; width:10px; height:110px; background:#0f1115; vertical-align:-14px; margin-left:8px; }
+.cbtn { position:absolute; right:80px; bottom:70px; padding:24px 70px; border-radius:999px; background:#15803d; color:#fff; font:900 100px Inter; }
+
+.room { background:rgba(255,255,255,0.025); border:4px solid rgba(255,255,255,0.07); border-radius:40px; }
+.mile { border-radius:999px; background:#0f172a; border:6px solid #fff; color:#fff; font:900 46px Inter; text-align:center; line-height:58px; white-space:nowrap; }
+.htitle { font-size:76px; top:28px; }
+.cnt { border-radius:28px; border:5px solid #fff; display:flex; align-items:center; justify-content:center; gap:12px; }
+.halo { border-radius:50%; background:radial-gradient(circle, rgba(250,204,21,0.45), rgba(250,204,21,0) 65%); }
+.handw svg { filter:drop-shadow(0 20px 30px rgba(0,0,0,0.45)); }
+.bigq { border-radius:30px; background:#ffd43b; color:#0f1115; font:900 120px Inter; text-align:center; line-height:170px; white-space:nowrap; }
+.bigstamp { border:14px solid #ef4444; border-radius:24px; color:#ef4444; background:rgba(255,255,255,0.92); font:900 110px Inter; text-align:center; line-height:170px; transform:rotate(-10deg); white-space:nowrap; }
+.bigstamp.sm { font-size:80px; line-height:104px; border-width:10px; }
+.eqs { font:900 120px Inter; color:#fff; text-align:center; line-height:120px; }
+.xray { border-radius:50%; border:10px dashed #38bdf8; background:rgba(56,189,248,0.12); }
+.xrl { position:absolute; left:0; right:0; top:-70px; text-align:center; font:900 46px Inter; color:#38bdf8; }
+.bub2 { border-radius:40px; background:#fff; color:#0f1115; font:900 58px Inter; text-align:center; line-height:160px; white-space:nowrap; }
+.def { width:90px; height:60px; border-radius:8px; overflow:hidden; display:flex; flex-direction:column; margin-right:14px; border:3px solid #fff; }
+.def i { flex:1; }
+.green { border-radius:40px; background:radial-gradient(ellipse at 60% 30%, #4ade80, #15803d 70%); border:8px solid #166534; }
+.hole { position:absolute; left:640px; top:100px; width:120px; height:60px; border-radius:50%; background:#052e16; box-shadow:inset 0 8px 0 rgba(0,0,0,0.5); }
+.hole.big { position:absolute; left:auto; top:auto; background:#052e16; border:8px solid #4ade80; }
+.gflag { position:absolute; left:695px; top:-90px; width:10px; height:200px; background:#fff; }
+.gflag::after { content:""; position:absolute; left:10px; top:0; width:90px; height:60px; background:#ef4444; clip-path:polygon(0 0, 100% 50%, 0 100%); }
+.gball { border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff, #e2e8f0 60%, #94a3b8); display:flex; align-items:center; justify-content:center; box-shadow:0 10px 20px rgba(0,0,0,0.4); }
+.vbar2 { border-radius:40px; border:8px solid #e2e8f0; background:rgba(255,255,255,0.06); overflow:hidden; }
+.vbf2 { position:absolute; left:0; right:0; bottom:0; height:100%; background:linear-gradient(#22c55e,#15803d); }
+.tl2 { font:900 46px Inter; color:#fff; text-align:center; }
+.ctit { position:absolute; left:0; right:0; top:30px; display:flex; align-items:center; justify-content:center; font:900 54px Inter; color:#0f1115; }
+.flagvn { width:90px; height:60px; border-radius:8px; background:#da251d; position:relative; margin-right:14px; }
+.flagvn i { position:absolute; left:30px; top:15px; width:30px; height:30px; background:#ffcd00; clip-path:polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.pubb { position:absolute; right:40px; bottom:36px; padding:14px 46px; border-radius:999px; background:#15803d; color:#fff; font:900 66px Inter; }
+.kc { opacity:0; }
+</style>
+<div id="root" data-composition-id="world" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+  <div id="grid" data-layout-ignore></div>
+  <div id="glow" data-layout-ignore></div>
+  <div id="particles" data-layout-ignore><div class="pt" data-layout-ignore style="position:absolute;left:20px;top:60px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:157px;top:323px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:294px;top:586px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:431px;top:849px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:568px;top:1112px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:705px;top:1375px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:842px;top:1638px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:979px;top:101px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:76px;top:364px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:213px;top:627px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:350px;top:890px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:487px;top:1153px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:624px;top:1416px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:761px;top:1679px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:898px;top:142px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:1035px;top:405px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:132px;top:668px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:269px;top:931px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:406px;top:1194px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:543px;top:1457px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:680px;top:1720px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:817px;top:183px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:954px;top:446px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:51px;top:709px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:188px;top:972px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:325px;top:1235px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div></div>
+  <div id="shake">
+    <div id="wd">
+      <div class="room" data-layout-ignore style="position:absolute;left:50px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<svg id="roadsvg" data-layout-ignore style="position:absolute;left:0px;top:0px;width:2200px;height:5300px;z-index:1;overflow:visible" viewBox="0 0 2200 5300">
+      <defs><linearGradient id="rb" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="5200">
+        <stop offset="0" stop-color="#facc15"/><stop offset="0.5" stop-color="#22c55e"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="#262a35" stroke-width="54" fill="none" stroke-linejoin="round"/>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="rgba(255,255,255,0.18)" stroke-width="5" fill="none" stroke-dasharray="26 22" stroke-linejoin="round"/>
+      <path id="road" d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="url(#rb)" stroke-width="16" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
+<div id="mile0" class="mile" data-layout-ignore style="position:absolute;left:1370px;top:1306px;width:520px;height:70px;z-index:2;">Cristianismo</div>
+<div id="mile1" class="mile" data-layout-ignore style="position:absolute;left:310px;top:2606px;width:520px;height:70px;z-index:2;">La espalda</div>
+<div id="mile2" class="mile" data-layout-ignore style="position:absolute;left:1370px;top:3906px;width:520px;height:70px;z-index:2;">Alemania · 2010</div>
+<div id="mile3" class="mile" data-layout-ignore style="position:absolute;left:1370px;top:5206px;width:520px;height:70px;z-index:2;">El mundo</div>
+<div id="halo" class="halo" data-layout-ignore style="position:absolute;left:270px;top:405px;width:600px;height:600px;z-index:3;"></div>
+<div id="h0" class="handw" style="position:absolute;left:390px;top:425px;width:360px;height:480px;z-index:6;"><svg viewBox="0 0 300 400" width="100%" height="100%" style="overflow:visible">
+      <rect x="100" y="320" width="110" height="80" rx="20" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="70" y="170" width="170" height="175" rx="60" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="175" y="165" width="70" height="48" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="180" y="205" width="62" height="44" rx="22" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <g transform="rotate(-32 70 270)"><rect x="30" y="210" width="52" height="110" rx="26" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h0-idx"><rect x="92" y="28" width="48" height="182" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h0-mid"><rect x="142" y="14" width="50" height="196" rx="25" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+    </svg></div>
+<div id="pq" class="bigq" style="position:absolute;left:250px;top:965px;width:640px;height:170px;z-index:9;opacity:0">¿POR QUÉ?</div>
+<div id="sk0-0" data-layout-ignore style="position:absolute;left:835px;top:630px;width:70px;height:70px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sk0-1" data-layout-ignore style="position:absolute;left:722px;top:865px;width:70px;height:70px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sk0-2" data-layout-ignore style="position:absolute;left:468px;top:922px;width:70px;height:70px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sk0-3" data-layout-ignore style="position:absolute;left:265px;top:760px;width:70px;height:70px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sk0-4" data-layout-ignore style="position:absolute;left:265px;top:500px;width:70px;height:70px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sk0-5" data-layout-ignore style="position:absolute;left:468px;top:338px;width:70px;height:70px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sk0-6" data-layout-ignore style="position:absolute;left:722px;top:395px;width:70px;height:70px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="h1" style="position:absolute;left:1150px;top:205px;width:960px;height:150px;z-index:6;">
+      <div id="h1-badge" class="badge" style="background:#ffd43b;color:#0f1115">1</div>
+      <div id="h1-title" class="htitle">LA CRUZ</div></div>
+<div id="acp" class="pill" style="position:absolute;left:1190px;top:385px;z-index:8;background:#15803d;color:#fff;font-size:52px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+  <path d="m9 12 2 2 4-4" />
+</svg> LA MÁS ACEPTADA</div>
+<div id="h1h" class="handw" style="position:absolute;left:1210px;top:545px;width:280px;height:373px;z-index:6;"><svg viewBox="0 0 300 400" width="100%" height="100%" style="overflow:visible">
+      <rect x="100" y="320" width="110" height="80" rx="20" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="70" y="170" width="170" height="175" rx="60" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="175" y="165" width="70" height="48" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="180" y="205" width="62" height="44" rx="22" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <g transform="rotate(-32 70 270)"><rect x="30" y="210" width="52" height="110" rx="26" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h1h-idx"><rect x="92" y="28" width="48" height="182" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h1h-mid"><rect x="142" y="14" width="50" height="196" rx="25" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+    </svg></div>
+<div id="eq" class="eqs" style="position:absolute;left:1510px;top:675px;width:120px;height:120px;z-index:7;opacity:0">=</div>
+<div id="crs" style="position:absolute;left:1650px;top:525px;width:360px;height:360px;z-index:6;opacity:0"><svg fill="#78350f"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="340"
+  height="340"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 9a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h4a1 1 0 0 1 1 1v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4a1 1 0 0 1 1-1h4a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-4a1 1 0 0 1-1-1V4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4a1 1 0 0 1-1 1z" />
+</svg></div>
+<div id="shd" style="position:absolute;left:1710px;top:945px;width:260px;height:260px;z-index:7;opacity:0"><svg fill="#1d4ed8"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="250"
+  height="250"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#bfdbfe"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+</svg></div>
+<div id="gh0" style="position:absolute;left:1530px;top:965px;width:110px;height:110px;z-index:6;opacity:0"><svg fill="#6b21a8"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="100"
+  height="100"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#e9d5ff"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 10h.01" />
+  <path d="M15 10h.01" />
+  <path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z" />
+</svg></div>
+<div id="gh1" style="position:absolute;left:1570px;top:1125px;width:110px;height:110px;z-index:6;opacity:0"><svg fill="#6b21a8"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="100"
+  height="100"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#e9d5ff"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 10h.01" />
+  <path d="M15 10h.01" />
+  <path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z" />
+</svg></div>
+<div id="gh2" style="position:absolute;left:2030px;top:1025px;width:110px;height:110px;z-index:6;opacity:0"><svg fill="#6b21a8"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="100"
+  height="100"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#e9d5ff"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9 10h.01" />
+  <path d="M15 10h.01" />
+  <path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z" />
+</svg></div>
+<div id="enc" class="pill" style="position:absolute;left:1210px;top:1035px;z-index:8;background:#fff;color:#0f1115;font-size:48px;opacity:0">COMO LLEVARLA ENCIMA</div>
+<div id="pa" style="position:absolute;left:1270px;top:1805px;width:300px;height:300px;z-index:6;"><div style="width:100%;height:100%;transform:rotate(35deg)"><svg fill="#f3c9a0"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="300"
+  height="300"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#a86b3c"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 14a8 8 0 0 1-8 8" />
+  <path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2" />
+  <path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1" />
+  <path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10" />
+  <path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" />
+</svg></div></div>
+<div id="pb" style="position:absolute;left:1690px;top:1805px;width:300px;height:300px;z-index:6;"><div style="width:100%;height:100%;transform:scaleX(-1) rotate(35deg)"><svg fill="#f3c9a0"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="300"
+  height="300"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#a86b3c"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 14a8 8 0 0 1-8 8" />
+  <path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2" />
+  <path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1" />
+  <path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10" />
+  <path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" />
+</svg></div></div>
+<div id="star" style="position:absolute;left:1530px;top:1625px;width:200px;height:200px;z-index:8;opacity:0"><svg fill="#facc15"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="200"
+  height="200"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+</svg></div>
+<div id="des" class="pill" style="position:absolute;left:1480px;top:2155px;z-index:8;background:#ffd43b;color:#0f1115;font-size:58px;opacity:0">DESEO</div>
+<div id="scr" style="position:absolute;left:1530px;top:2265px;width:200px;height:200px;z-index:6;opacity:0"><svg fill="#78350f"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="190"
+  height="190"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fde68a"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 17V5a2 2 0 0 0-2-2H4" />
+  <path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" />
+</svg></div>
+<div id="sp" class="bigstamp sm" style="position:absolute;left:1290px;top:2325px;width:680px;height:130px;z-index:10;opacity:0">SIN PRUEBAS</div>
+<div id="h2" style="position:absolute;left:90px;top:1505px;width:960px;height:150px;z-index:6;">
+      <div id="h2-badge" class="badge" style="background:#ef4444;color:#fff">2</div>
+      <div id="h2-title" class="htitle">LAS MENTIRAS</div></div>
+<svg id="lia" class="chr " data-layout-ignore viewBox="0 0 240 440" width="300" height="550"
+  style="position:absolute;left:240px;top:2024px;overflow:visible;z-index:6" color="#2563eb">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2563eb"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1b1b1b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg>
+<div id="xr" class="xray" style="position:absolute;left:630px;top:1925px;width:380px;height:380px;z-index:8;opacity:0"><div class="xrl">DETRÁS</div></div>
+<div id="h2h" class="handw" style="position:absolute;left:730px;top:1975px;width:190px;height:253px;z-index:9;"><svg viewBox="0 0 300 400" width="100%" height="100%" style="overflow:visible">
+      <rect x="100" y="320" width="110" height="80" rx="20" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="70" y="170" width="170" height="175" rx="60" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="175" y="165" width="70" height="48" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="180" y="205" width="62" height="44" rx="22" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <g transform="rotate(-32 70 270)"><rect x="30" y="210" width="52" height="110" rx="26" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h2h-idx"><rect x="92" y="28" width="48" height="182" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h2h-mid"><rect x="142" y="14" width="50" height="196" rx="25" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+    </svg></div>
+<div id="bub" class="bub2" style="position:absolute;left:470px;top:1705px;width:520px;height:160px;z-index:8;opacity:0">"¡Te lo prometo!"</div>
+<div id="cul" class="pill" style="position:absolute;left:650px;top:2365px;z-index:9;background:#fff;color:#0f1115;font-size:56px;opacity:0;text-decoration:line-through;text-decoration-color:#ef4444;text-decoration-thickness:8px">CULPA</div>
+<div id="h3" style="position:absolute;left:90px;top:2805px;width:960px;height:150px;z-index:6;">
+      <div id="h3-badge" class="badge" style="background:#16a34a;color:#fff">3</div>
+      <div id="h3-title" class="htitle">LA CIENCIA</div></div>
+<div id="deb" class="cnt" style="position:absolute;left:130px;top:2985px;width:380px;height:120px;z-index:8;background:#0f1115;opacity:0"><span class="def"><i style="background:#111"></i><i style="background:#dc2626"></i><i style="background:#facc15"></i></span><span id="y10" class="roller" style="display:inline-block;font-size:64px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:72px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:72px;overflow:hidden;vertical-align:top"><span id="y10-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:72px;overflow:hidden;vertical-align:top"><span id="y10-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:72px;overflow:hidden;vertical-align:top"><span id="y10-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:72px;overflow:hidden;vertical-align:top"><span id="y10-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span><span style="display:block;height:72px;line-height:72px">0</span><span style="display:block;height:72px;line-height:72px">1</span><span style="display:block;height:72px;line-height:72px">2</span><span style="display:block;height:72px;line-height:72px">3</span><span style="display:block;height:72px;line-height:72px">4</span><span style="display:block;height:72px;line-height:72px">5</span><span style="display:block;height:72px;line-height:72px">6</span><span style="display:block;height:72px;line-height:72px">7</span><span style="display:block;height:72px;line-height:72px">8</span><span style="display:block;height:72px;line-height:72px">9</span></span></span></span></div>
+<div id="psy" class="pill" style="position:absolute;left:540px;top:3005px;z-index:8;background:#fff;color:#0f1115;font-size:48px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="46"
+  height="46"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
+  <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" />
+  <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" />
+  <path d="M17.599 6.5a3 3 0 0 0 .399-1.375" />
+  <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" />
+  <path d="M3.477 10.896a4 4 0 0 1 .585-.396" />
+  <path d="M19.938 10.5a4 4 0 0 1 .585.396" />
+  <path d="M6 18a4 4 0 0 1-1.967-.516" />
+  <path d="M19.967 17.484A4 4 0 0 1 18 18" />
+</svg> PSICÓLOGOS</div>
+<div id="green" class="green" style="position:absolute;left:110px;top:3165px;width:920px;height:680px;z-index:3;opacity:0">
+      <div class="hole"></div><div class="gflag"></div></div>
+<div id="ball" class="gball" style="position:absolute;left:250px;top:3685px;width:90px;height:90px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="56"
+  height="56"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#15803d"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16.17 7.83 2 22" />
+  <path d="M4.02 12a2.827 2.827 0 1 1 3.81-4.17A2.827 2.827 0 1 1 12 4.02a2.827 2.827 0 1 1 4.17 3.81A2.827 2.827 0 1 1 19.98 12a2.827 2.827 0 1 1-3.81 4.17A2.827 2.827 0 1 1 12 19.98a2.827 2.827 0 1 1-4.17-3.81A1 1 0 1 1 4 12" />
+  <path d="m7.83 7.83 8.34 8.34" />
+</svg></div>
+<div id="luck" class="pill" style="position:absolute;left:150px;top:3565px;z-index:9;background:#15803d;color:#fff;font-size:46px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="44"
+  height="44"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16.17 7.83 2 22" />
+  <path d="M4.02 12a2.827 2.827 0 1 1 3.81-4.17A2.827 2.827 0 1 1 12 4.02a2.827 2.827 0 1 1 4.17 3.81A2.827 2.827 0 1 1 19.98 12a2.827 2.827 0 1 1-3.81 4.17A2.827 2.827 0 1 1 12 19.98a2.827 2.827 0 1 1-4.17-3.81A1 1 0 1 1 4 12" />
+  <path d="m7.83 7.83 8.34 8.34" />
+</svg> "DA SUERTE"</div>
+<div id="pcb" class="cnt" style="position:absolute;left:690px;top:3565px;width:320px;height:150px;z-index:9;background:#0f1115;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="60"
+  height="60"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M7 22V2l10 5-10 5" />
+</svg><span id="putts" class="roller" style="display:inline-block;font-size:90px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:101px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:101px;overflow:hidden;vertical-align:top"><span id="putts-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span><span style="display:block;height:101px;line-height:101px">0</span><span style="display:block;height:101px;line-height:101px">1</span><span style="display:block;height:101px;line-height:101px">2</span><span style="display:block;height:101px;line-height:101px">3</span><span style="display:block;height:101px;line-height:101px">4</span><span style="display:block;height:101px;line-height:101px">5</span><span style="display:block;height:101px;line-height:101px">6</span><span style="display:block;height:101px;line-height:101px">7</span><span style="display:block;height:101px;line-height:101px">8</span><span style="display:block;height:101px;line-height:101px">9</span></span></span></span></div>
+<div id="conf" class="vbar2" style="position:absolute;left:1210px;top:2925px;width:200px;height:640px;z-index:6;opacity:0"><div id="conf-f" class="vbf2"></div></div>
+      <div id="confl" class="tl2" style="position:absolute;left:1170px;top:3585px;width:280px;height:70px;z-index:6;opacity:0">CONFIANZA</div>
+<div id="arr" style="position:absolute;left:1480px;top:3105px;width:260px;height:160px;z-index:7;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="250"
+  height="250"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="3"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 8L22 12L18 16" />
+  <path d="M2 12H22" />
+</svg></div>
+<div id="hole2" class="hole big" style="position:absolute;left:1790px;top:3135px;width:220px;height:110px;z-index:5;opacity:0"></div>
+<div id="ayu" class="pill" style="position:absolute;left:1670px;top:3285px;z-index:8;background:#15803d;color:#fff;font-size:52px;opacity:0">TE AYUDA</div>
+<div id="ball2" class="gball" style="position:absolute;left:1530px;top:3505px;width:90px;height:90px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="56"
+  height="56"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#15803d"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16.17 7.83 2 22" />
+  <path d="M4.02 12a2.827 2.827 0 1 1 3.81-4.17A2.827 2.827 0 1 1 12 4.02a2.827 2.827 0 1 1 4.17 3.81A2.827 2.827 0 1 1 19.98 12a2.827 2.827 0 1 1-3.81 4.17A2.827 2.827 0 1 1 12 19.98a2.827 2.827 0 1 1-4.17-3.81A1 1 0 1 1 4 12" />
+  <path d="m7.83 7.83 8.34 8.34" />
+</svg></div>
+<div id="hole3" class="hole big" style="position:absolute;left:1790px;top:3505px;width:220px;height:110px;z-index:5;opacity:0"></div>
+<div id="nsr" class="bigstamp sm" style="position:absolute;left:1290px;top:3685px;width:700px;height:130px;z-index:10;opacity:0">NO SE REPITIÓ</div>
+<div id="vn" class="card" style="position:absolute;left:1190px;top:4225px;width:420px;height:640px;z-index:6;background:#ffffff;">
+      <div class="ctit"><span class="flagvn"><i></i></span>VIETNAM</div></div>
+<div id="h3h" class="handw" style="position:absolute;left:1290px;top:4405px;width:220px;height:293px;z-index:7;"><svg viewBox="0 0 300 400" width="100%" height="100%" style="overflow:visible">
+      <rect x="100" y="320" width="110" height="80" rx="20" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="70" y="170" width="170" height="175" rx="60" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="175" y="165" width="70" height="48" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="180" y="205" width="62" height="44" rx="22" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <g transform="rotate(-32 70 270)"><rect x="30" y="210" width="52" height="110" rx="26" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h3h-idx"><rect x="92" y="28" width="48" height="182" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h3h-mid"><rect x="142" y="14" width="50" height="196" rx="25" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+    </svg></div>
+<div id="vnx" style="position:absolute;left:1260px;top:4405px;width:280px;height:290px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="280"
+  height="280"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ef4444"
+  stroke-width="3.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div>
+<div id="ins" class="pill" style="position:absolute;left:1250px;top:4745px;z-index:9;background:#ef4444;color:#fff;font-size:50px;opacity:0">INSULTO</div>
+<div id="de" class="card" style="position:absolute;left:1650px;top:4225px;width:420px;height:640px;z-index:6;background:#ffffff;">
+      <div class="ctit"><span class="def"><i style="background:#111"></i><i style="background:#dc2626"></i><i style="background:#facc15"></i></span>ALEMANIA</div></div>
+<div id="fs" style="position:absolute;left:1730px;top:4405px;width:260px;height:260px;z-index:7;"><svg viewBox="0 0 300 300" width="100%" height="100%" style="overflow:visible">
+      <rect x="60" y="60" width="190" height="190" rx="60" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="70" y="40" width="45" height="80" rx="22" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/><rect x="115" y="40" width="45" height="80" rx="22" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/><rect x="160" y="40" width="45" height="80" rx="22" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/><rect x="205" y="40" width="45" height="80" rx="22" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect id="fs-th" x="80" y="110" width="120" height="44" rx="22" fill="#e9b689" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="110" y="240" width="100" height="60" rx="18" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></svg></div>
+<div id="sue" class="pill" style="position:absolute;left:1710px;top:4745px;z-index:9;background:#15803d;color:#fff;font-size:48px;opacity:0">= SUERTE</div>
+<div id="via" class="pill" style="position:absolute;left:1450px;top:4935px;z-index:9;background:#fff;color:#0f1115;font-size:52px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
+</svg> ¡CUIDADO!</div>
+<div id="h4" class="handw" style="position:absolute;left:420px;top:4625px;width:300px;height:400px;z-index:6;"><svg viewBox="0 0 300 400" width="100%" height="100%" style="overflow:visible">
+      <rect x="100" y="320" width="110" height="80" rx="20" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="70" y="170" width="170" height="175" rx="60" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="175" y="165" width="70" height="48" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <rect x="180" y="205" width="62" height="44" rx="22" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/>
+      <g transform="rotate(-32 70 270)"><rect x="30" y="210" width="52" height="110" rx="26" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h4-idx"><rect x="92" y="28" width="48" height="182" rx="24" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+      <g id="h4-mid"><rect x="142" y="14" width="50" height="196" rx="25" fill="#f3c9a0" stroke="#a86b3c" stroke-width="7"/></g>
+    </svg></div>
+<div id="hrt" style="position:absolute;left:710px;top:4665px;width:200px;height:200px;z-index:7;opacity:0"><svg fill="#ef4444"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="190"
+  height="190"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ef4444"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="qz" class="pill" style="position:absolute;left:210px;top:5005px;z-index:9;background:#ffd43b;color:#0f1115;font-size:58px;opacity:0">QUIZÁ CÓMO TE SIENTES</div>
+<div id="nsu" class="pill" style="position:absolute;left:250px;top:4665px;z-index:9;background:#334155;color:#fff;font-size:46px;opacity:0;text-decoration:line-through">SUERTE</div>
+<div id="cbox" class="card" style="position:absolute;left:130px;top:4125px;width:880px;height:440px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:40px;top:34px;display:flex;align-items:center;gap:22px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="84"
+  height="84"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+</svg>
+        <span style="font:900 68px Inter;color:#0f1115">Comentarios</span></div>
+      <div style="position:absolute;left:40px;top:150px;font:900 50px Inter;color:#555">¿Tú cruzas los dedos?</div>
+      <div id="ctt" style="position:absolute;left:40px;top:240px;font:800 64px Inter;color:#0f1115;white-space:nowrap"><span style="display:inline-block;white-space:nowrap"><span class="kc">Y</span><span class="kc">o</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">s</span><span class="kc">i</span><span class="kc">e</span><span class="kc">m</span><span class="kc">p</span><span class="kc">r</span><span class="kc">e</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">a</span><span class="kc">n</span><span class="kc">t</span><span class="kc">e</span><span class="kc">s</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">d</span><span class="kc">e</span><span class="kc">…</span></span></div>
+      <div id="pub" class="pubb">Publicar</div></div>
+<div id="cur" data-layout-ignore style="position:absolute;left:870px;top:4475px;width:130px;height:130px;z-index:12;opacity:0"><svg fill="#111"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z" />
+</svg></div>
+    </div>
+  </div>
+  <div id="scrim" data-layout-ignore></div>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const PIV = {"armL": "71 188", "armR": "169 188", "legL": "107 296", "legR": "133 296", "head": "120 160", "upper": "120 300", "eyes": "120 106", "rig": "120 430"};
+const Q = (id, part) => document.querySelector('#' + id + ' .' + part);
+function life(id, t0, t1, seed) {
+  const n = Math.max(1, Math.floor((t1 - t0) / 1.8));
+  tl.fromTo(Q(id,'upper'), {scaleY:1}, {scaleY:1.03, svgOrigin:PIV.upper, duration:0.9, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const m = Math.max(1, Math.floor((t1 - t0) / (1.4 + (seed % 4) * 0.15)));
+  tl.fromTo(Q(id,'head'), {rotation:-2.5}, {rotation:2.5, svgOrigin:PIV.head, duration:1.4 + (seed % 4) * 0.15, ease:'sine.inOut', yoyo:true, repeat:m-1, immediateRender:false}, t0 + 0.1);
+  let r = (seed * 7919) % 997, t = t0 + 0.5 + (seed % 5) * 0.23;
+  const ey = Q(id,'eyes');
+  while (t < t1 - 0.2) {
+    tl.to(ey, {scaleY:0.08, svgOrigin:PIV.eyes, duration:0.06}, t);
+    tl.to(ey, {scaleY:1, svgOrigin:PIV.eyes, duration:0.09}, t + 0.1);
+    r = (r * 7919 + 13) % 997; t += 2.1 + (r / 997) * 2.3;
+  }
+}
+function walk(id, t0, t1, step) {
+  const n = Math.max(2, Math.round((t1 - t0) / step));
+  tl.fromTo(Q(id,'legL'), {rotation:-26}, {rotation:26, svgOrigin:PIV.legL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'legR'), {rotation:26}, {rotation:-26, svgOrigin:PIV.legR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armL'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armR'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'rig'), {y:0}, {y:-14, duration:step/2, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const te = t0 + n * step;
+  ['legL','legR','armL','armR'].forEach(p => tl.to(Q(id,p), {rotation:0, svgOrigin:PIV[p], duration:0.15}, te));
+  tl.to(Q(id,'rig'), {y:0, duration:0.15}, te);
+}
+function face(id, dir, t) { tl.set(Q(id,'rig'), {scaleX:dir, svgOrigin:PIV.rig}, t); }
+function jump(id, t, h) {
+  tl.to(Q(id,'rig'), {keyframes:[{scaleY:0.9, y:0, duration:0.08},{scaleY:1.05, y:-h, duration:0.18, ease:'power2.out'},
+    {scaleY:1, y:0, duration:0.18, ease:'power2.in'},{scaleY:0.95, duration:0.06},{scaleY:1, duration:0.08}], svgOrigin:PIV.rig}, t);
+}
+function point(id, side, t0, t1, ang) {
+  const arm = Q(id, 'arm' + side);
+  tl.to(arm, {rotation:ang, svgOrigin:PIV['arm' + side], duration:0.3, ease:'back.out(2)'}, t0);
+  tl.to(arm, {rotation:0, svgOrigin:PIV['arm' + side], duration:0.35, ease:'power2.inOut'}, t1);
+}
+function wave(id, t0, t1) {
+  const arm = Q(id, 'armR');
+  tl.to(arm, {rotation:-150, svgOrigin:PIV.armR, duration:0.3, ease:'back.out(2)'}, t0);
+  const n = Math.max(1, Math.floor((t1 - t0 - 0.3) / 0.28));
+  tl.fromTo(arm, {rotation:-150}, {rotation:-118, svgOrigin:PIV.armR, duration:0.28, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0 + 0.3);
+}
+function tilt(id, t) {
+  tl.to(Q(id,'brows'), {y:-8, duration:0.2, ease:'back.out(3)'}, t);
+  tl.to(Q(id,'brows'), {y:0, duration:0.3}, t + 1.2);
+}
+function typeOn(sel, t0, t1) {
+  const els = document.querySelectorAll(sel);
+  const dt = (t1 - t0) / Math.max(1, els.length);
+  els.forEach((e, i) => tl.set(e, {opacity:1}, t0 + i * dt));
+}
+
+tl.set("#road", {strokeDasharray:12140.0, strokeDashoffset:12140.0}, 0);
+tl.set("#h0-idx", {rotation:24, svgOrigin:"116 200"}, 0); tl.set("#h0-mid", {rotation:-22, svgOrigin:"167 200"}, 0);
+tl.set("#wd", {x:-30.0, y:195.0, scale:1.0, transformOrigin:"0 0"}, 0);
+tl.set("#grid", {backgroundPosition:"-8px 49px"}, 0);
+tl.fromTo("#h0", {scale:1.4, rotation:-12}, {scale:1, rotation:0, duration:0.45, ease:"back.out(2.2)"}, 0);
+tl.fromTo("#h0-mid", {rotation:0}, {rotation:-22, svgOrigin:"167 200", duration:0.3, ease:"back.out(3)", immediateRender:false}, 0.15);
+tl.fromTo("#h0-idx", {rotation:0}, {rotation:24, svgOrigin:"116 200", duration:0.3, ease:"back.out(3)", immediateRender:false}, 0.15);
+tl.fromTo("#halo", {scale:0.4, opacity:1}, {scale:1, opacity:0.8, duration:0.6, ease:"power2.out"}, 0.1);
+tl.to("#shake", {keyframes:[{x:-10,y:6},{x:8,y:-4},{x:-5,y:3},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 0.450);
+tl.fromTo("#sk0-0", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.35, ease:"back.out(3)", immediateRender:false}, 0.400);
+tl.to("#sk0-0", {opacity:0, scale:0.6, duration:0.5}, 1.600);
+tl.fromTo("#sk0-1", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.35, ease:"back.out(3)", immediateRender:false}, 0.450);
+tl.to("#sk0-1", {opacity:0, scale:0.6, duration:0.5}, 1.650);
+tl.fromTo("#sk0-2", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.35, ease:"back.out(3)", immediateRender:false}, 0.500);
+tl.to("#sk0-2", {opacity:0, scale:0.6, duration:0.5}, 1.700);
+tl.fromTo("#sk0-3", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.35, ease:"back.out(3)", immediateRender:false}, 0.550);
+tl.to("#sk0-3", {opacity:0, scale:0.6, duration:0.5}, 1.750);
+tl.fromTo("#sk0-4", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.35, ease:"back.out(3)", immediateRender:false}, 0.600);
+tl.to("#sk0-4", {opacity:0, scale:0.6, duration:0.5}, 1.800);
+tl.fromTo("#sk0-5", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.35, ease:"back.out(3)", immediateRender:false}, 0.650);
+tl.to("#sk0-5", {opacity:0, scale:0.6, duration:0.5}, 1.850);
+tl.fromTo("#sk0-6", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.35, ease:"back.out(3)", immediateRender:false}, 0.700);
+tl.to("#sk0-6", {opacity:0, scale:0.6, duration:0.5}, 1.900);
+tl.to("#h0", {y:-20, duration:0.25, yoyo:true, repeat:1}, 1.820);
+tl.to("#halo", {scale:1.1, duration:0.4, yoyo:true, repeat:3}, 1.580);
+tl.fromTo("#pq", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 2.444);
+tl.set("#h1h-idx", {rotation:24, svgOrigin:"116 200"}, 0); tl.set("#h1h-mid", {rotation:-22, svgOrigin:"167 200"}, 0);
+tl.to("#wd", {x:-1090.0, y:195.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 3.140);
+tl.to("#grid", {backgroundPosition:"-272px 49px", duration:0.6, ease:"power3.inOut"}, 3.140);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 3.140);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 3.440);
+tl.to("#road", {strokeDashoffset:10580.0, duration:0.60, ease:"power2.inOut"}, 3.140);
+tl.fromTo("#h1-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 3.390);
+tl.fromTo("#h1-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 3.990);
+tl.fromTo("#acp", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 5.840);
+tl.fromTo("#h1h", {opacity:0, x:-100}, {opacity:1, x:0, duration:0.4}, 6.670);
+tl.fromTo("#eq", {opacity:0, scale:0.3}, {opacity:1, scale:1, duration:0.3, ease:"back.out(3)"}, 7.860);
+tl.fromTo("#crs", {opacity:0, scale:0.3, rotation:-45}, {opacity:1, scale:1, rotation:0, duration:0.45, ease:"back.out(2)"}, 7.960);
+tl.to("#h1h-mid, #h1h-idx", {y:-10, duration:0.15, yoyo:true, repeat:1}, 8.490);
+tl.fromTo("#shd", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.4, ease:"back.out(2)"}, 8.980);
+tl.fromTo("#gh0", {opacity:0, x:0}, {opacity:1, duration:0.2}, 9.640); tl.to("#gh0", {x:-180, y:-60, opacity:0, duration:0.5, ease:"power2.out"}, 10.040);
+tl.fromTo("#gh1", {opacity:0, x:0}, {opacity:1, duration:0.2}, 9.720); tl.to("#gh1", {x:-160, y:80, opacity:0, duration:0.5, ease:"power2.out"}, 10.120);
+tl.fromTo("#gh2", {opacity:0, x:0}, {opacity:1, duration:0.2}, 9.800); tl.to("#gh2", {x:200, y:40, opacity:0, duration:0.5, ease:"power2.out"}, 10.200);
+tl.to("#h1h", {filter:"drop-shadow(0 0 40px #facc15)", duration:0.4}, 10.170); tl.to("#crs", {scale:0.45, x:-330, y:110, duration:0.6, ease:"power2.inOut"}, 11.420); tl.to("#eq", {opacity:0, duration:0.2}, 11.420);
+tl.fromTo("#enc", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 12.090);
+tl.to("#wd", {x:-1090.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 12.820);
+tl.to("#grid", {backgroundPosition:"-272px -276px", duration:0.7, ease:"power3.inOut"}, 12.820);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 12.820);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 13.170);
+tl.to("#road", {strokeDashoffset:8280.0, duration:0.70, ease:"power2.inOut"}, 12.820);
+tl.to("#mile0", {opacity:0, duration:0.3}, 13.320);
+tl.fromTo("#pa", {opacity:0, x:-200}, {opacity:1, x:0, duration:0.4}, 14.080); tl.fromTo("#pb", {opacity:0, x:200}, {opacity:1, x:0, duration:0.4}, 14.230);
+tl.to("#pa", {x:110, y:-30, duration:0.4, ease:"back.out(2)"}, 15.590); tl.to("#pb", {x:-110, y:-30, duration:0.4, ease:"back.out(2)"}, 15.590);
+tl.fromTo("#star", {opacity:0, scale:0.2, rotation:-90}, {opacity:1, scale:1, rotation:0, duration:0.5, ease:"back.out(2)"}, 16.220);
+tl.to("#star", {scale:1.15, duration:0.2, yoyo:true, repeat:3}, 16.560);
+tl.fromTo("#des", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 17.140);
+tl.fromTo("#scr", {opacity:0, y:40}, {opacity:1, y:0, duration:0.3}, 17.600);
+tl.fromTo("#sp", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 18.420);
+tl.set("#h2h-idx", {rotation:24, svgOrigin:"116 200"}, 0); tl.set("#h2h-mid", {rotation:-22, svgOrigin:"167 200"}, 0);
+tl.to("#wd", {x:-30.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 19.000);
+tl.to("#grid", {backgroundPosition:"-8px -276px", duration:0.7, ease:"power3.inOut"}, 19.000);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 19.000);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 19.350);
+tl.to("#road", {strokeDashoffset:7220.0, duration:0.70, ease:"power2.inOut"}, 19.000);
+tl.fromTo("#h2-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 19.300);
+tl.fromTo("#h2-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 20.030);
+life("lia", 0.000, 54.793, 2);
+tl.set("#h2h", {opacity:0}, 0);
+tl.fromTo("#lia", {opacity:0, y:40}, {opacity:1, y:0, duration:0.4}, 21.040);
+tl.to(Q("lia","mouth"), {scaleX:1.35, svgOrigin:"120 136", duration:0.2}, 21.440); tilt("lia", 21.440);
+tl.fromTo("#bub", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 21.440);
+tl.to(Q("lia","armR"), {rotation:30, svgOrigin:PIV.armR, duration:0.3}, 21.870);
+tl.fromTo("#xr", {opacity:0, scale:0.5}, {opacity:1, scale:1, duration:0.35, ease:"back.out(2)"}, 21.970);
+tl.to("#h2h", {opacity:1, duration:0.2}, 22.170);
+tl.to("#xr", {scale:1.05, duration:0.15, yoyo:true, repeat:1}, 23.090);
+tl.to("#h2h", {filter:"drop-shadow(0 0 30px #facc15)", duration:0.3}, 24.040);
+tl.fromTo("#cul", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 24.380);
+tl.to("#cul", {scale:0.85, opacity:0.5, duration:0.3}, 25.190);
+tl.to("#wd", {x:-30.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 25.150);
+tl.to("#grid", {backgroundPosition:"-8px -601px", duration:0.7, ease:"power3.inOut"}, 25.150);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 25.150);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 25.500);
+tl.to("#road", {strokeDashoffset:4920.0, duration:0.70, ease:"power2.inOut"}, 25.150);
+tl.to("#mile1", {opacity:0, duration:0.3}, 25.650);
+tl.fromTo("#h3-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 25.450);
+tl.fromTo("#h3-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 25.900);
+tl.fromTo("#deb", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 27.020);
+tl.set("#y10-d0", {y:0}, 0);
+tl.set("#y10-d1", {y:0}, 0);
+tl.set("#y10-d2", {y:0}, 0);
+tl.set("#y10-d3", {y:0}, 0);
+tl.to("#y10-d0", {y:-864, duration:0.60, ease:"power3.out"}, 27.120);
+tl.to("#y10-d1", {y:-720, duration:0.60, ease:"power3.out"}, 27.180);
+tl.to("#y10-d2", {y:-792, duration:0.60, ease:"power3.out"}, 27.240);
+tl.to("#y10-d3", {y:-720, duration:0.60, ease:"power3.out"}, 27.300);
+tl.fromTo("#psy", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 28.170);
+tl.fromTo("#green", {opacity:0, y:60}, {opacity:1, y:0, duration:0.4}, 30.450);
+tl.fromTo("#ball", {opacity:0, scale:0.3}, {opacity:1, scale:1, duration:0.35, ease:"back.out(3)"}, 30.750);
+tl.fromTo("#luck", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 31.300);
+tl.fromTo("#pcb", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 31.980);
+tl.set("#putts-d0", {y:0}, 0);
+tl.to("#ball", {x:520, y:-370, duration:0.6, ease:"power2.out"}, 32.080); tl.to("#ball", {scale:0.5, opacity:0, duration:0.15}, 32.680);
+tl.to("#putts-d0", {y:-1111, duration:0.30, ease:"power3.out"}, 32.680);
+tl.set("#ball", {x:0, y:0}, 32.880); tl.to("#ball", {opacity:1, scale:1, duration:0.2}, 32.930);
+tl.to("#ball", {x:520, y:-370, duration:0.5, ease:"power2.out"}, 32.560); tl.to("#ball", {scale:0.5, opacity:0, duration:0.15}, 33.060);
+tl.to("#putts-d0", {y:-1212, duration:0.30, ease:"power3.out"}, 33.060);
+tl.to("#pcb", {scale:1.08, duration:0.15, yoyo:true, repeat:1}, 33.160);
+tl.to("#wd", {x:-1090.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 32.470);
+tl.to("#grid", {backgroundPosition:"-272px -601px", duration:0.7, ease:"power3.inOut"}, 32.470);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 32.470);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 32.820);
+tl.to("#road", {strokeDashoffset:3860.0, duration:0.70, ease:"power2.inOut"}, 32.470);
+tl.fromTo("#conf, #confl", {opacity:0}, {opacity:1, duration:0.3}, 33.540);
+tl.set("#conf-f", {scaleY:0.1, transformOrigin:"50% 100%"}, 0);
+tl.to("#conf-f", {scaleY:0.9, duration:0.9, ease:"back.out(1.4)"}, 34.940);
+tl.fromTo("#arr", {opacity:0, x:-60}, {opacity:1, x:0, duration:0.4}, 35.900); tl.fromTo("#hole2", {opacity:0}, {opacity:1, duration:0.3}, 35.900);
+tl.fromTo("#ayu", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 36.540);
+tl.fromTo("#ball2, #hole3", {opacity:0}, {opacity:1, duration:0.3}, 37.050);
+tl.to("#conf, #confl, #arr, #hole2, #ayu", {opacity:0.25, duration:0.3}, 37.050);
+tl.to("#ball2", {x:420, duration:0.7, ease:"power2.out"}, 38.760); tl.to("#ball2", {y:-120, x:500, duration:0.4, ease:"power1.out"}, 39.520);
+tl.fromTo("#nsr", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 40.260);
+tl.to("#ball2", {opacity:0.4, duration:0.3}, 40.860);
+tl.set("#h3h-idx", {rotation:24, svgOrigin:"116 200"}, 0); tl.set("#h3h-mid", {rotation:-22, svgOrigin:"167 200"}, 0);
+tl.to("#wd", {x:-1090.0, y:-3705.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 41.040);
+tl.to("#grid", {backgroundPosition:"-272px -926px", duration:0.7, ease:"power3.inOut"}, 41.040);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 41.040);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 41.390);
+tl.to("#road", {strokeDashoffset:1560.0, duration:0.70, ease:"power2.inOut"}, 41.040);
+tl.to("#mile2", {opacity:0, duration:0.3}, 41.540);
+tl.fromTo("#via", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 41.640);
+tl.to("#via", {rotation:-4, duration:0.1, yoyo:true, repeat:3}, 41.940);
+tl.fromTo("#vn", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 42.680);
+tl.fromTo("#h3h", {opacity:0, scale:0.6}, {opacity:1, scale:1, duration:0.35, ease:"back.out(2)"}, 42.880);
+tl.fromTo("#vnx", {opacity:0, scale:1.6}, {opacity:1, scale:1, duration:0.3, ease:"back.out(2)"}, 43.330);
+tl.fromTo("#ins", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 43.430);
+tl.fromTo("#de", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 43.960);
+tl.fromTo("#fs", {opacity:0, scale:0.6}, {opacity:1, scale:1, duration:0.35, ease:"back.out(2)"}, 44.160);
+tl.fromTo("#sue", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 44.800);
+tl.to("#fs", {scale:0.9, duration:0.12, yoyo:true, repeat:5}, 45.630); tl.to("#fs-th", {fill:"#d99a66", duration:0.2}, 46.560);
+tl.set("#h4-idx", {rotation:24, svgOrigin:"116 200"}, 0); tl.set("#h4-mid", {rotation:-22, svgOrigin:"167 200"}, 0);
+tl.to("#wd", {x:-30.0, y:-3705.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 46.900);
+tl.to("#grid", {backgroundPosition:"-8px -926px", duration:0.7, ease:"power3.inOut"}, 46.900);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 46.900);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 47.250);
+tl.to("#road", {strokeDashoffset:500.0, duration:0.70, ease:"power2.inOut"}, 46.900);
+tl.fromTo("#h4", {opacity:0, y:60}, {opacity:1, y:0, duration:0.4}, 47.200);
+tl.fromTo("#nsu", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 49.020);
+tl.fromTo("#hrt", {opacity:0, scale:0.3}, {opacity:1, scale:1, duration:0.4, ease:"back.out(3)"}, 49.780); tl.to("#hrt", {scale:1.12, duration:0.2, yoyo:true, repeat:3}, 50.600);
+tl.fromTo("#qz", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 50.500);
+tl.fromTo("#cbox", {opacity:0, x:0, y:-80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 50.880);
+tl.to("#h4-mid", {rotation:-30, svgOrigin:"167 200", duration:0.2, yoyo:true, repeat:1}, 51.260);
+typeOn("#ctt .kc", 51.460, 53.280);
+tl.fromTo("#cur", {opacity:0, x:200, y:200}, {opacity:1, x:0, y:0, duration:0.4}, 52.380);
+tl.to("#cur", {scale:0.85, duration:0.08, yoyo:true, repeat:1}, 53.480); tl.to("#pub", {scale:0.9, backgroundColor:"#166534", duration:0.1, yoyo:true, repeat:1}, 53.480);
+tl.to(".mile", {opacity:1, duration:0.4}, 53.690);
+tl.to("#wd", {x:307.3, y:368.8, scale:0.2115, duration:0.45, ease:"power3.inOut"}, 53.640);
+tl.to("#grid", {backgroundPosition:"77px 92px", duration:0.45, ease:"power3.inOut"}, 53.640);
+tl.to("#wd", {filter:"blur(5px)", duration:0.18, ease:"power1.in"}, 53.640);
+tl.to("#wd", {filter:"blur(0px)", duration:0.20, ease:"power1.out"}, 53.865);
+tl.fromTo(".pt:nth-child(1)", {y:0, x:0}, {y:-120, x:-40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(2)", {y:0, x:0}, {y:-150, x:0, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(3)", {y:0, x:0}, {y:-180, x:40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(4)", {y:0, x:0}, {y:-210, x:-40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(5)", {y:0, x:0}, {y:-240, x:0, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(6)", {y:0, x:0}, {y:-120, x:40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(7)", {y:0, x:0}, {y:-150, x:-40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(8)", {y:0, x:0}, {y:-180, x:0, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(9)", {y:0, x:0}, {y:-210, x:40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(10)", {y:0, x:0}, {y:-240, x:-40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(11)", {y:0, x:0}, {y:-120, x:0, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(12)", {y:0, x:0}, {y:-150, x:40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(13)", {y:0, x:0}, {y:-180, x:-40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(14)", {y:0, x:0}, {y:-210, x:0, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(15)", {y:0, x:0}, {y:-240, x:40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(16)", {y:0, x:0}, {y:-120, x:-40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(17)", {y:0, x:0}, {y:-150, x:0, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(18)", {y:0, x:0}, {y:-180, x:40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(19)", {y:0, x:0}, {y:-210, x:-40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(20)", {y:0, x:0}, {y:-240, x:0, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(21)", {y:0, x:0}, {y:-120, x:40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(22)", {y:0, x:0}, {y:-150, x:-40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(23)", {y:0, x:0}, {y:-180, x:0, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(24)", {y:0, x:0}, {y:-210, x:40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(25)", {y:0, x:0}, {y:-240, x:-40, duration:54.79, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(26)", {y:0, x:0}, {y:-120, x:0, duration:54.79, ease:"none"}, 0);
+tl.fromTo("#glow", {opacity:0.75}, {opacity:1, duration:2.5, ease:"sine.inOut", yoyo:true, repeat:21}, 0);
+window.__timelines["world"] = tl;
+</script>
+</template>
