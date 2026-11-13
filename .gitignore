@@ -39,3 +39,8 @@ video-aviones/assets/.premix.wav
 video-aviones/assets/.mix-graph.txt
 video-aviones/.hyperframes/
 video-aviones/node_modules/
+video-perro/voz-raw.wav
+video-perro/assets/.premix.wav
+video-perro/assets/.mix-graph.txt
+video-perro/.hyperframes/
+video-perro/node_modules/
