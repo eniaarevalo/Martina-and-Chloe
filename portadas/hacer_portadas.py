@@ -28,6 +28,7 @@ PORTADAS = {
     "video-montepinar": (3.9,  ["¿EXISTE", "MONTEPINAR?"], "MONTEPINAR?", "#f97316", "LA QUE SE AVECINA"),
     "video-dedos":      (3.2,  ["¿POR QUÉ", "CRUZAMOS", "LOS DEDOS?"], "LOS DEDOS?", "#facc15", "SUPERSTICIONES"),
     "video-supernenas": (5.2,  ["MARISA, CONCHA", "Y VICENTA:", "LAS SUPERNENAS"], "LAS SUPERNENAS", "#a78bfa", "AQUÍ NO HAY QUIEN VIVA"),
+    "video-terror":     (41.5, ["NUNCA RESPONDAS", "A SUS", "PREGUNTAS"], "PREGUNTAS", "#dc2626", "HISTORIA DE TERROR"),
 }
 
 HTML = """<!doctype html><html><head><meta charset="utf-8"><style>
