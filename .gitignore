@@ -74,3 +74,8 @@ video-belen/assets/.premix.wav
 video-belen/assets/.mix-graph.txt
 video-belen/.hyperframes/
 video-belen/node_modules/
+video-hora/voz-raw.wav
+video-hora/assets/.premix.wav
+video-hora/assets/.mix-graph.txt
+video-hora/.hyperframes/
+video-hora/node_modules/
