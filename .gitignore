@@ -64,3 +64,8 @@ video-supernenas/assets/.premix.wav
 video-supernenas/assets/.mix-graph.txt
 video-supernenas/.hyperframes/
 video-supernenas/node_modules/
+video-terror/voz-raw.wav
+video-terror/assets/.premix.wav
+video-terror/assets/.mix-graph.txt
+video-terror/.hyperframes/
+video-terror/node_modules/

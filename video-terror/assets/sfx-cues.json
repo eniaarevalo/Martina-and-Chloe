@@ -1,0 +1,650 @@
+{
+ "duration": 70.539292,
+ "cues": [
+  {
+   "t": 0.0,
+   "file": "viento",
+   "vol": 0.18
+  },
+  {
+   "t": 0.0,
+   "file": "transicion-terror",
+   "vol": 0.35
+  },
+  {
+   "t": 0.44,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 6.24,
+   "file": "golpe-terror",
+   "vol": 0.3
+  },
+  {
+   "t": 6.48,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 9.1,
+   "file": "swish-terror",
+   "vol": 0.4
+  },
+  {
+   "t": 12.8,
+   "file": "latido",
+   "vol": 0.35
+  },
+  {
+   "t": 13.782,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 14.182,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.381,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.58,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.778,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 14.977,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 15.176,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 15.34,
+   "file": "golpe-terror",
+   "vol": 0.25
+  },
+  {
+   "t": 15.375,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 15.574,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 15.834,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 16.03,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 16.226,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 16.422,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 16.619,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 16.815,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 17.011,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 17.207,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 17.403,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 17.43,
+   "file": "golpe-terror",
+   "vol": 0.25
+  },
+  {
+   "t": 17.599,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 17.816,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 17.97,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 18.123,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 18.277,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 18.431,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 18.584,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 18.738,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 18.892,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 19.045,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 19.199,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 19.353,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 19.507,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 19.66,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 19.77,
+   "file": "golpe-terror",
+   "vol": 0.25
+  },
+  {
+   "t": 19.814,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 19.968,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 19.98,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 23.2,
+   "file": "golpe-terror",
+   "vol": 0.3
+  },
+  {
+   "t": 25.28,
+   "file": "impacto",
+   "vol": 0.45
+  },
+  {
+   "t": 26.718,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 26.92,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 27.121,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 27.323,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 27.525,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 27.726,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 27.928,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 28.13,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 28.331,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 28.533,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 31.95,
+   "file": "swish-terror",
+   "vol": 0.35
+  },
+  {
+   "t": 32.18,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 33,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 33.178,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 33.355,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 33.533,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 33.711,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 33.888,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 34.066,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 34.244,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 34.422,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 34.599,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 34.777,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 34.955,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 35.132,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 35.31,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 35.488,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 35.49,
+   "file": "golpe-terror",
+   "vol": 0.25
+  },
+  {
+   "t": 35.665,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 35.67,
+   "file": "golpe-terror",
+   "vol": 0.25
+  },
+  {
+   "t": 35.843,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 35.85,
+   "file": "golpe-terror",
+   "vol": 0.25
+  },
+  {
+   "t": 35.89,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 36.021,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 38.61,
+   "file": "papel",
+   "vol": 0.4
+  },
+  {
+   "t": 39.1,
+   "file": "madera",
+   "vol": 0.4
+  },
+  {
+   "t": 41.41,
+   "file": "latido",
+   "vol": 0.45
+  },
+  {
+   "t": 43.57,
+   "file": "swish-terror",
+   "vol": 0.35
+  },
+  {
+   "t": 44.74,
+   "file": "impacto",
+   "vol": 0.45
+  },
+  {
+   "t": 48.28,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 48.457,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 48.635,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 48.812,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 48.989,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 49.167,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 49.344,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 49.521,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 49.699,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 49.876,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 50.053,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 50.231,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 50.408,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 50.54,
+   "file": "golpe-terror",
+   "vol": 0.4
+  },
+  {
+   "t": 50.585,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 50.763,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 50.84,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 50.94,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 51.36,
+   "file": "tic-rodillo",
+   "vol": 0.25
+  },
+  {
+   "t": 51.56,
+   "file": "latido",
+   "vol": 0.5
+  },
+  {
+   "t": 54.79,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 54.985,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 55.181,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 55.376,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 55.43,
+   "file": "transicion-terror",
+   "vol": 0.45
+  },
+  {
+   "t": 55.571,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 55.767,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 55.962,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 56.157,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 56.353,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 56.548,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 56.743,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 56.939,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 57.134,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 57.329,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 57.45,
+   "file": "impacto",
+   "vol": 0.5
+  },
+  {
+   "t": 57.524,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 57.62,
+   "file": "whoosh",
+   "vol": 0.35
+  },
+  {
+   "t": 57.72,
+   "file": "teclado-tic",
+   "vol": 0.18
+  },
+  {
+   "t": 58.18,
+   "file": "golpe-terror",
+   "vol": 0.3
+  },
+  {
+   "t": 64.23,
+   "file": "papel",
+   "vol": 0.4
+  },
+  {
+   "t": 66.4,
+   "file": "impacto",
+   "vol": 0.6
+  },
+  {
+   "t": 68.75,
+   "file": "golpe-terror",
+   "vol": 0.35
+  }
+ ]
+}
