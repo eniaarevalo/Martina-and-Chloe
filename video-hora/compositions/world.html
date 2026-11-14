@@ -1,0 +1,757 @@
+<template>
+<style>
+#root { position:absolute; inset:0; overflow:hidden; background:#07080b; font-family:Inter, sans-serif; }
+#grid { position:absolute; inset:-200px; background-color:#08090d;
+  background-image: linear-gradient(rgba(255,255,255,0.045) 2px, transparent 2px),
+                    linear-gradient(90deg, rgba(255,255,255,0.045) 2px, transparent 2px);
+  background-size: 90px 90px; }
+#glow { position:absolute; left:-200px; right:-200px; bottom:-500px; height:1200px;
+  background: radial-gradient(ellipse at 50% 70%, rgba(92,108,255,0.38), rgba(46,196,182,0.12) 45%, transparent 70%); }
+#scrim { position:absolute; left:0; right:0; top:0; height:520px; pointer-events:none;
+  background:linear-gradient(rgba(7,8,11,0.97) 0%, rgba(7,8,11,0.94) 62%, rgba(7,8,11,0) 100%); }
+#shake { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+#wd { position:absolute; left:0; top:0; width:2200px; height:6600px; }
+.room { background:linear-gradient(#13151c,#0f1117); border:6px solid rgba(255,255,255,0.10); border-bottom:14px solid rgba(255,255,255,0.16); border-radius:10px; }
+.ghost { font:900 140px Inter; color:rgba(255,255,255,0.055); letter-spacing:-4px; }
+.wall { border:10px solid rgba(255,255,255,0.12); border-radius:16px; }
+.parapet { background:#1a1d26; border-top:8px solid rgba(255,255,255,0.18); }
+.hut { background:#151821; border:6px solid rgba(255,255,255,0.12); border-radius:18px 18px 0 0; }
+.hutdoor { position:absolute; left:70px; bottom:0; width:140px; height:300px; background:#0b0c10; border-radius:70px 70px 0 0; }
+.street { background:linear-gradient(#14161d, #07080b); border-top:10px solid rgba(255,255,255,0.12); }
+#bb { background:#ffffff; border-radius:60px; box-shadow:0 40px 120px rgba(0,0,0,0.5); }
+#bb-posts { background:repeating-linear-gradient(90deg, transparent 0 250px, #2a2e3a 250px 290px); }
+.bbface { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.bbt1, .bbt2 { font:900 210px Inter; color:#0f1115; line-height:0.95; letter-spacing:-6px; }
+.bbt2 { color:#ef4444; }
+.bbsub { font:700 90px Inter; color:#666; margin-top:20px; }
+.card { border-radius:40px; box-shadow:0 24px 60px rgba(0,0,0,0.45); overflow:visible; }
+.stamp { font:900 64px Inter; border:8px solid; border-radius:20px; padding:4px 22px; background:rgba(255,255,255,0.92); }
+.pill { font:900 50px Inter; padding:6px 24px; border-radius:999px; white-space:nowrap; }
+.badge { position:absolute; left:0; top:0; width:140px; height:140px; border-radius:50%; font:900 96px Inter;
+  color:#0f1115; text-align:center; line-height:140px; }
+.htitle { position:absolute; left:170px; top:14px; font:900 100px Inter; color:#fff; letter-spacing:-2px; white-space:nowrap; }
+.doorframe { position:absolute; inset:0; background:#2a1c12; border-radius:200px 200px 0 0; border:14px solid #5a3b22; }
+.doorleaf { position:absolute; top:40px; bottom:0; left:24px; width:186px; background:linear-gradient(90deg,#8a5a34,#a06a3e);
+  border-radius:150px 0 0 0; border:6px solid #5a3b22; }
+.doorleaf.r { left:auto; right:24px; border-radius:0 150px 0 0; }
+.counter { background:#d9d4c7; border-radius:16px 16px 0 0; }
+.counter-top { position:absolute; left:-20px; right:-20px; top:-26px; height:36px; background:#a58a5c; border-radius:12px; }
+.counter-sign { position:absolute; left:0; right:0; top:70px; text-align:center; font:900 72px Inter; color:#0f1115; }
+.desktop { position:absolute; left:0; right:0; top:0; height:44px; background:#a07a4c; border-radius:14px; }
+.deskbody { position:absolute; left:30px; right:30px; top:44px; bottom:0; background:#6e5233; border-radius:0 0 12px 12px; }
+.drawer { position:absolute; left:80px; right:80px; top:90px; height:170px; background:#8b6840; border:6px solid #4e3a22; border-radius:12px; }
+.handle { position:absolute; left:50%; top:60px; width:120px; height:30px; margin-left:-60px; background:#e8d3a8; border-radius:15px; }
+.dust { border-radius:50%; background:#cfc7b8; opacity:0; }
+.chathead { height:120px; background:#1f2430; border-radius:40px 40px 0 0; display:flex; align-items:center; padding-left:40px; }
+.chathead .dot { width:26px; height:26px; border-radius:50%; background:#22c55e; margin-right:20px; }
+.typing { position:absolute; left:40px; top:180px; background:#fff; border-radius:30px; padding:22px 30px; display:flex; gap:14px; opacity:0; }
+.typing span { width:22px; height:22px; border-radius:50%; background:#9aa3b2; display:block; }
+.bubble { position:absolute; background:#fff; border-radius:34px; padding:26px 34px; box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+.ch, .qc, .pc, .cc { opacity:0; }
+.avatar { position:relative; border-radius:50%; overflow:hidden; background:#e8ecf4; }
+.over { position:absolute; left:0; top:0; }
+.badge .over { width:100%; text-align:center; }
+.ph { border:6px dashed rgba(255,255,255,0.25); border-radius:40px; }
+.sticker { border-radius:50%; background:#fff; box-shadow:0 14px 30px rgba(0,0,0,0.35); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; }
+.stlab { font:900 30px Inter; color:#0f1115; margin-top:-4px; }
+.xdot { border-radius:50%; background:#ef4444; display:flex; align-items:center; justify-content:center; }
+.bubble.big { padding:30px 40px; box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+.tail { position:absolute; left:120px; top:-28px; width:0; height:0; border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:34px solid #fff; }
+.tail.l { left:-30px; top:auto; bottom:30px; border-left:none; border-bottom:24px solid transparent; border-top:24px solid transparent; border-right:34px solid #fff; }
+.sofa { background:#3b3f73; border-radius:60px 60px 20px 20px; border-top:60px solid #4b4f8a; }
+.lamp { border-left:10px solid #555a66; margin-left:40px; }
+#vc-sign { border-radius:30px; background:#141621; border:8px solid #3a3f55; text-align:center; font:900 96px Inter; line-height:114px; color:#7a809c; }
+#vc-on { width:100%; color:#ff4fd8; text-shadow:0 0 18px rgba(255,79,216,0.7); }
+.tape { position:absolute; width:48px; height:100px; border-radius:6px; box-shadow:inset 0 -18px 0 rgba(0,0,0,0.25); }
+#shelves { background:#3a2a1c; border-radius:16px; border:10px solid #5a4028; }
+#tv { background:#2a2e3a; border-radius:60px; box-shadow:0 30px 80px rgba(0,0,0,0.5); }
+#tv .screen { position:absolute; left:40px; top:40px; right:170px; bottom:40px; border-radius:40px; background:#0b0d14;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; }
+#tv .ant { position:absolute; top:-80px; width:10px; height:100px; background:#8b93a7; border-radius:5px; }
+#tv .a1 { left:330px; transform-origin:50% 100%; rotate:-25deg; }
+#tv .a2 { left:520px; transform-origin:50% 100%; rotate:25deg; }
+#tv .knob { position:absolute; right:50px; width:80px; height:80px; border-radius:50%; background:#8b93a7; }
+#tv .k1 { top:120px; } #tv .k2 { top:260px; }
+.cbox { position:absolute; left:80px; right:80px; top:240px; height:250px; border-radius:40px; background:#f1f3f6;
+  display:flex; align-items:center; gap:36px; padding-left:40px; }
+.cav { width:170px; height:170px; border-radius:50%; background:#6366f1; display:flex; align-items:center; justify-content:center; flex:none; }
+.caret { display:inline-block; width:10px; height:110px; background:#0f1115; vertical-align:-14px; margin-left:8px; }
+.cbtn { position:absolute; right:80px; bottom:70px; padding:24px 70px; border-radius:999px; background:#15803d; color:#fff; font:900 100px Inter; }
+
+.room { background:rgba(255,255,255,0.025); border:4px solid rgba(255,255,255,0.07); border-radius:40px; }
+.mile { border-radius:999px; background:#0f172a; border:6px solid #fff; color:#fff; font:900 46px Inter; text-align:center; line-height:58px; white-space:nowrap; }
+.htitle { font-size:70px; top:32px; }
+.cnt { border-radius:28px; border:5px solid #fff; display:flex; align-items:center; justify-content:center; gap:12px; }
+.aclock { border-radius:50%; background:#f8fafc; border:16px solid; box-shadow:0 24px 60px rgba(0,0,0,0.5); }
+.tkw { position:absolute; inset:0; }
+.tk { position:absolute; left:calc(50% - 4px); top:6px; width:8px; height:24px; border-radius:4px; background:#94a3b8; }
+.hand { position:absolute; left:calc(50% - 6px); bottom:50%; width:12px; border-radius:6px; transform-origin:50% 100%; }
+.hh { height:28%; background:#0f1115; } .mh { height:40%; background:#ef4444; }
+.hub { position:absolute; left:calc(50% - 14px); top:calc(50% - 14px); width:28px; height:28px; border-radius:50%; background:#0f1115; }
+.tbig { font:900 100px Inter; color:#ffd43b; text-align:center; line-height:120px; }
+.stampbox { border:12px solid #ef4444; border-radius:24px; color:#ef4444; background:rgba(255,255,255,0.94); font:900 100px Inter; text-align:center; line-height:146px; transform:rotate(-8deg); white-space:nowrap; }
+.plate2 { border-radius:50%; background:radial-gradient(circle, #f8fafc 0 55%, #e2e8f0 56% 70%, #cbd5e1 71%); box-shadow:0 20px 50px rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; }
+.dclock { border-radius:24px; border:5px solid #334155; }
+.dl { position:absolute; left:0; right:0; top:14px; text-align:center; font:900 34px Inter; color:#94a3b8; white-space:nowrap; }
+.dt { position:absolute; left:0; right:0; top:58px; text-align:center; font:900 86px Inter; font-variant-numeric:tabular-nums; }
+.dt2 { font:900 86px Inter; text-align:center; line-height:110px; font-variant-numeric:tabular-nums; }
+.axis { border-radius:6px; background:linear-gradient(90deg,#38bdf8,#f8fafc,#ef4444); }
+.axl { font:900 40px Inter; color:#94a3b8; text-align:center; }
+.dot { border-radius:50%; background:#fff; border:8px solid #ffd43b; }
+.sun { border-radius:50%; background:radial-gradient(circle,#fde68a,#f59e0b 60%,#d97706); box-shadow:0 0 70px 20px rgba(245,158,11,0.5); }
+.horiz { background:#475569; border-radius:5px; }
+.opts { display:flex; flex-direction:column; gap:20px; }
+.op { border-radius:999px; background:#fff; color:#0f1115; font:900 42px Inter; display:flex; align-items:center; gap:14px; padding:14px 28px; white-space:nowrap; }
+.poll { position:absolute; left:40px; right:40px; height:56px; display:flex; align-items:center; gap:20px; }
+.poll span { width:170px; font:900 44px Inter; color:#0f1115; font-variant-numeric:tabular-nums; }
+.poll i { flex:1; height:32px; border-radius:16px; }
+.pubb { position:absolute; right:40px; bottom:30px; padding:12px 44px; border-radius:999px; background:#15803d; color:#fff; font:900 62px Inter; }
+.kc { opacity:0; }
+</style>
+<div id="root" data-composition-id="world" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+  <div id="grid" data-layout-ignore></div>
+  <div id="glow" data-layout-ignore></div>
+  <div id="particles" data-layout-ignore><div class="pt" data-layout-ignore style="position:absolute;left:20px;top:60px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:157px;top:323px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:294px;top:586px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:431px;top:849px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:568px;top:1112px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:705px;top:1375px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:842px;top:1638px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:979px;top:101px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:76px;top:364px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:213px;top:627px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:350px;top:890px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:487px;top:1153px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:624px;top:1416px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:761px;top:1679px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:898px;top:142px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:1035px;top:405px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:132px;top:668px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:269px;top:931px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:406px;top:1194px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:543px;top:1457px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:680px;top:1720px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:817px;top:183px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:954px;top:446px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:51px;top:709px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:188px;top:972px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:325px;top:1235px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div></div>
+  <div id="shake">
+    <div id="wd">
+      <div class="room" data-layout-ignore style="position:absolute;left:50px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<svg id="roadsvg" data-layout-ignore style="position:absolute;left:0px;top:0px;width:2200px;height:5300px;z-index:1;overflow:visible" viewBox="0 0 2200 5300">
+      <defs><linearGradient id="rb" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="5200">
+        <stop offset="0" stop-color="#f59e0b"/><stop offset="0.5" stop-color="#ef4444"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="#262a35" stroke-width="54" fill="none" stroke-linejoin="round"/>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="rgba(255,255,255,0.18)" stroke-width="5" fill="none" stroke-dasharray="26 22" stroke-linejoin="round"/>
+      <path id="road" d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="url(#rb)" stroke-width="16" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
+<div id="mile0" class="mile" data-layout-ignore style="position:absolute;left:1330px;top:1306px;width:600px;height:70px;z-index:2;">1940</div>
+<div id="mile1" class="mile" data-layout-ignore style="position:absolute;left:270px;top:2606px;width:600px;height:70px;z-index:2;">Galicia · Londres · Polonia</div>
+<div id="mile2" class="mile" data-layout-ignore style="position:absolute;left:1330px;top:3906px;width:600px;height:70px;z-index:2;">La posguerra</div>
+<div id="mile3" class="mile" data-layout-ignore style="position:absolute;left:1330px;top:5206px;width:600px;height:70px;z-index:2;">Hoy</div>
+<div id="pl0" class="plate2" style="position:absolute;left:170px;top:765px;width:420px;height:420px;z-index:5;">
+      <div class="pin"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="168.0"
+  height="168.0"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#94a3b8"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+  <path d="M7 2v20" />
+  <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+</svg></div></div>
+<div id="ck0" class="aclock" style="position:absolute;left:610px;top:325px;width:380px;height:380px;z-index:6;border-color:#e2e8f0">
+      <div class="tkw"><i class="tk" style="transform-origin:4px 168px;transform:rotate(0deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(30deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(60deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(90deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(120deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(150deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(180deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(210deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(240deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(270deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(300deg)"></i><i class="tk" style="transform-origin:4px 168px;transform:rotate(330deg)"></i></div>
+      <div id="ck0-h" class="hand hh" style="transform:rotate(300.0deg)"></div>
+      <div id="ck0-m" class="hand mh" style="transform:rotate(0deg)"></div><div class="hub"></div></div>
+<div id="t22" class="tbig" style="position:absolute;left:650px;top:725px;width:300px;height:120px;z-index:7;">22:00</div>
+<div id="hit" class="pill" style="position:absolute;left:170px;top:385px;z-index:8;background:#fff;color:#0f1115;font-size:52px;opacity:0">¿POR CULPA DE HITLER?</div>
+<div id="mito" class="stampbox" style="position:absolute;left:570px;top:905px;width:420px;height:170px;z-index:9;opacity:0">¿MITO?</div>
+<div id="h1" style="position:absolute;left:1150px;top:205px;width:960px;height:150px;z-index:6;">
+      <div id="h1-badge" class="badge" style="background:#f59e0b;color:#0f1115">1</div>
+      <div id="h1-title" class="htitle">EL CAMBIO</div></div>
+<div id="ycb" class="cnt" style="position:absolute;left:1190px;top:385px;width:330px;height:120px;z-index:8;background:#0f1115;opacity:0"><span id="y40" class="roller" style="display:inline-block;font-size:70px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:78px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="y40-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="y40-d1" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="y40-d2" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span><span class="dg" data-layout-ignore style="display:inline-block;height:78px;overflow:hidden;vertical-align:top"><span id="y40-d3" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span><span style="display:block;height:78px;line-height:78px">0</span><span style="display:block;height:78px;line-height:78px">1</span><span style="display:block;height:78px;line-height:78px">2</span><span style="display:block;height:78px;line-height:78px">3</span><span style="display:block;height:78px;line-height:78px">4</span><span style="display:block;height:78px;line-height:78px">5</span><span style="display:block;height:78px;line-height:78px">6</span><span style="display:block;height:78px;line-height:78px">7</span><span style="display:block;height:78px;line-height:78px">8</span><span style="display:block;height:78px;line-height:78px">9</span></span></span></span></div>
+<div id="fr" class="pill" style="position:absolute;left:1560px;top:405px;z-index:8;background:#fff;color:#0f1115;font-size:48px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="46"
+  height="46"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg> FRANCO ADELANTA</div>
+<div id="ck1" class="aclock" style="position:absolute;left:1480px;top:545px;width:300px;height:300px;z-index:6;border-color:#e2e8f0">
+      <div class="tkw"><i class="tk" style="transform-origin:4px 128px;transform:rotate(0deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(30deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(60deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(90deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(120deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(150deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(180deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(210deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(240deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(270deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(300deg)"></i><i class="tk" style="transform-origin:4px 128px;transform:rotate(330deg)"></i></div>
+      <div id="ck1-h" class="hand hh" style="transform:rotate(0.0deg)"></div>
+      <div id="ck1-m" class="hand mh" style="transform:rotate(0deg)"></div><div class="hub"></div></div>
+<div id="dpt" class="dclock" style="position:absolute;left:1170px;top:905px;width:300px;height:170px;z-index:7;background:#0b1220">
+      <div class="dl">PORTUGAL</div><div id="dpt-t" class="dt" style="color:#fff">12:00</div></div>
+<div id="des" class="dclock" style="position:absolute;left:1480px;top:905px;width:300px;height:170px;z-index:7;background:#0b1220">
+      <div class="dl">ESPAÑA</div><div id="des-t" class="dt" style="color:#ffd43b">12:00</div></div>
+<div id="duk" class="dclock" style="position:absolute;left:1790px;top:905px;width:300px;height:170px;z-index:7;background:#0b1220">
+      <div class="dl">LONDRES</div><div id="duk-t" class="dt" style="color:#fff">12:00</div></div>
+<div id="des2" class="dt2" style="position:absolute;left:1480px;top:965px;width:300px;height:110px;z-index:9;opacity:0;color:#ef4444">13:00</div>
+<div id="axis" class="axis" style="position:absolute;left:1190px;top:2205px;width:880px;height:12px;z-index:4;"></div>
+<div id="wl" class="axl" style="position:absolute;left:1180px;top:2235px;width:140px;height:60px;z-index:4;">OESTE</div>
+<div id="el" class="axl" style="position:absolute;left:1940px;top:2235px;width:140px;height:60px;z-index:4;">ESTE</div>
+<div id="gal-p" class="dot" style="position:absolute;left:1278px;top:2189px;width:44px;height:44px;z-index:6;opacity:0"></div>
+<div id="gal-c" class="dclock" style="position:absolute;left:1180px;top:1965px;width:240px;height:170px;z-index:7;background:#0b1220">
+      <div class="dl">GALICIA</div><div id="gal-c-t" class="dt" style="color:#ffd43b">13:00</div></div>
+<div id="lon-p" class="dot" style="position:absolute;left:1558px;top:2189px;width:44px;height:44px;z-index:6;opacity:0"></div>
+<div id="lon-c" class="dclock" style="position:absolute;left:1460px;top:1965px;width:240px;height:170px;z-index:7;background:#0b1220">
+      <div class="dl">LONDRES</div><div id="lon-c-t" class="dt" style="color:#fff">12:00</div></div>
+<div id="pol-p" class="dot" style="position:absolute;left:1928px;top:2189px;width:44px;height:44px;z-index:6;opacity:0"></div>
+<div id="pol-c" class="dclock" style="position:absolute;left:1830px;top:1965px;width:240px;height:170px;z-index:7;background:#0b1220">
+      <div class="dl">POLONIA</div><div id="pol-c-t" class="dt" style="color:#ffd43b">13:00</div></div>
+<div id="same" class="pill" style="position:absolute;left:1390px;top:1725px;z-index:8;background:#ffd43b;color:#0f1115;font-size:50px;opacity:0">= MISMA HORA</div>
+<div id="oeste" class="pill" style="position:absolute;left:1210px;top:2345px;z-index:8;background:#ef4444;color:#fff;font-size:46px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="44"
+  height="44"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m12 19-7-7 7-7" />
+  <path d="M19 12H5" />
+</svg> MÁS AL OESTE QUE LONDRES</div>
+<svg id="arc" data-layout-ignore style="position:absolute;left:150px;top:1665px;width:840px;height:600px;z-index:3;overflow:visible" viewBox="0 0 840 600">
+      <path id="arcp" d="M 20 560 Q 420 -200 820 560" stroke="rgba(245,158,11,0.5)" stroke-width="8" fill="none" stroke-dasharray="16 14"/></svg>
+<div id="sun" class="sun" style="position:absolute;left:110px;top:2145px;width:160px;height:160px;z-index:5;"></div>
+<div id="hor" class="horiz" data-layout-ignore style="position:absolute;left:110px;top:2265px;width:920px;height:10px;z-index:4;"></div>
+<div id="dsol" class="dclock" style="position:absolute;left:390px;top:2325px;width:360px;height:170px;z-index:7;background:#0b1220">
+      <div class="dl">MEDIODÍA SOLAR</div><div id="dsol-t" class="dt" style="color:#ffd43b">12:00</div></div>
+<div id="inv" class="pill" style="position:absolute;left:150px;top:1685px;z-index:8;background:#1e3a8a;color:#fff;font-size:48px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="46"
+  height="46"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <line x1="2" x2="22" y1="12" y2="12" />
+  <line x1="12" x2="12" y1="2" y2="22" />
+  <path d="m20 16-4-4 4-4" />
+  <path d="m4 8 4 4-4 4" />
+  <path d="m16 4-4 4-4-4" />
+  <path d="m8 20 4-4 4 4" />
+</svg> INVIERNO</div>
+<div id="retr" class="pill" style="position:absolute;left:650px;top:1685px;z-index:8;background:#ef4444;color:#fff;font-size:48px;opacity:0">CON RETRASO</div>
+<div id="dsol2" class="dt2" style="position:absolute;left:390px;top:2385px;width:360px;height:110px;z-index:9;opacity:0;color:#ef4444">13:30</div>
+<div id="h2" style="position:absolute;left:90px;top:2805px;width:960px;height:150px;z-index:6;">
+      <div id="h2-badge" class="badge" style="background:#ef4444;color:#fff">2</div>
+      <div id="h2-title" class="htitle">EL MITO</div></div>
+<div id="pv" class="pill" style="position:absolute;left:130px;top:2995px;z-index:8;background:#fff;color:#0f1115;font-size:48px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="46"
+  height="46"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="3" />
+  <path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5" />
+  <path d="M12 7.5V9" />
+  <path d="M7.5 12H9" />
+  <path d="M16.5 12H15" />
+  <path d="M12 16.5V15" />
+  <path d="m8 8 1.88 1.88" />
+  <path d="M14.12 9.88 16 8" />
+  <path d="m8 16 1.88-1.88" />
+  <path d="M14.12 14.12 16 16" />
+</svg> PRIMAVERA DE 1940</div>
+<div id="cke" class="aclock" style="position:absolute;left:170px;top:3135px;width:340px;height:340px;z-index:6;border-color:#e2e8f0">
+      <div class="tkw"><i class="tk" style="transform-origin:4px 148px;transform:rotate(0deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(30deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(60deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(90deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(120deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(150deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(180deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(210deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(240deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(270deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(300deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(330deg)"></i></div>
+      <div id="cke-h" class="hand hh" style="transform:rotate(30.0deg)"></div>
+      <div id="cke-m" class="hand mh" style="transform:rotate(0deg)"></div><div class="hub"></div></div>
+<div id="ckd" class="aclock" style="position:absolute;left:630px;top:3135px;width:340px;height:340px;z-index:6;border-color:#ef4444">
+      <div class="tkw"><i class="tk" style="transform-origin:4px 148px;transform:rotate(0deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(30deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(60deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(90deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(120deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(150deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(180deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(210deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(240deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(270deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(300deg)"></i><i class="tk" style="transform-origin:4px 148px;transform:rotate(330deg)"></i></div>
+      <div id="ckd-h" class="hand hh" style="transform:rotate(60.0deg)"></div>
+      <div id="ckd-m" class="hand mh" style="transform:rotate(0deg)"></div><div class="hub"></div></div>
+<div id="le" class="axl" style="position:absolute;left:170px;top:3495px;width:340px;height:70px;z-index:6;opacity:0">ESPAÑA</div>
+<div id="ld" class="axl" style="position:absolute;left:630px;top:3495px;width:340px;height:70px;z-index:6;opacity:0">ALEMANIA</div>
+<div id="plus1" class="pill" style="position:absolute;left:690px;top:3055px;z-index:9;background:#ef4444;color:#fff;font-size:52px;opacity:0">+1 HORA</div>
+<div id="nc" class="stampbox" style="position:absolute;left:260px;top:3595px;width:620px;height:170px;z-index:9;opacity:0">NO CUADRA</div>
+<div id="h3" style="position:absolute;left:1150px;top:2805px;width:960px;height:150px;z-index:6;">
+      <div id="h3-badge" class="badge" style="background:#15803d;color:#fff">3</div>
+      <div id="h3-title" class="htitle">LA VERDADERA RAZÓN</div></div>
+<svg id="wk" class="chr " data-layout-ignore viewBox="0 0 240 440" width="240" height="440"
+  style="position:absolute;left:1230px;top:3432px;overflow:visible;z-index:6" color="#2563eb">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2563eb"/>
+      <rect x="70" y="250" width="100" height="14" fill="#000" opacity="0.15"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1b1b1b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2563eb"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg>
+<div id="bc0" style="position:absolute;left:1240px;top:3682px;width:130px;height:130px;z-index:7;opacity:0"><svg fill="#78350f"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#e2e8f0"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  <rect width="20" height="14" x="2" y="6" rx="2" />
+</svg></div>
+<div id="bc1" style="position:absolute;left:1410px;top:3682px;width:130px;height:130px;z-index:7;opacity:0"><svg fill="#78350f"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#e2e8f0"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  <rect width="20" height="14" x="2" y="6" rx="2" />
+</svg></div>
+<div id="x2" class="pill" style="position:absolute;left:1240px;top:3005px;z-index:8;background:#ffd43b;color:#0f1115;font-size:52px;opacity:0">2 TRABAJOS</div>
+<div id="ck3" class="aclock" style="position:absolute;left:1610px;top:3005px;width:260px;height:260px;z-index:6;border-color:#e2e8f0">
+      <div class="tkw"><i class="tk" style="transform-origin:4px 108px;transform:rotate(0deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(30deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(60deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(90deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(120deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(150deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(180deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(210deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(240deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(270deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(300deg)"></i><i class="tk" style="transform-origin:4px 108px;transform:rotate(330deg)"></i></div>
+      <div id="ck3-h" class="hand hh" style="transform:rotate(180.0deg)"></div>
+      <div id="ck3-m" class="hand mh" style="transform:rotate(0deg)"></div><div class="hub"></div></div>
+<div id="pg" class="pill" style="position:absolute;left:1580px;top:3285px;z-index:8;background:#334155;color:#fff;font-size:44px;opacity:0">POSGUERRA</div>
+<div id="sinc" class="card" style="position:absolute;left:1610px;top:3425px;width:460px;height:220px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:28px;top:24px;font:900 44px Inter;color:#64748b">ESTUDIO · SINC</div>
+      <div style="position:absolute;left:28px;top:90px;display:flex;align-items:center;gap:14px;font:900 46px Inter;color:#0f1115">
+        <svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="64"
+  height="64"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#f59e0b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg> SOL &gt; <svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="60"
+  height="60"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg></div></div>
+<div id="pes" class="plate2" style="position:absolute;left:1210px;top:4365px;width:380px;height:380px;z-index:5;">
+      <div class="pin"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="152.0"
+  height="152.0"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#94a3b8"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+  <path d="M7 2v20" />
+  <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+</svg></div></div>
+<div id="pno" class="plate2" style="position:absolute;left:1670px;top:4365px;width:380px;height:380px;z-index:5;">
+      <div class="pin"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="152.0"
+  height="152.0"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#94a3b8"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+  <path d="M7 2v20" />
+  <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+</svg></div></div>
+<div id="tes" class="dclock" style="position:absolute;left:1220px;top:4795px;width:360px;height:170px;z-index:7;background:#0b1220">
+      <div class="dl">ESPAÑA</div><div id="tes-t" class="dt" style="color:#ffd43b">22:00</div></div>
+<div id="tno" class="dclock" style="position:absolute;left:1680px;top:4795px;width:360px;height:170px;z-index:7;background:#0b1220">
+      <div class="dl">PAÍSES NÓRDICOS</div><div id="tno-t" class="dt" style="color:#93c5fd">17:00</div></div>
+<div id="moon" style="position:absolute;left:1480px;top:4225px;width:120px;height:120px;z-index:7;opacity:0"><svg fill="#fde68a"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="110"
+  height="110"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fde68a"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+</svg></div>
+<div id="sunn" style="position:absolute;left:1940px;top:4225px;width:120px;height:120px;z-index:7;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="110"
+  height="110"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#f59e0b"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg></div>
+<div id="cong" style="position:absolute;left:150px;top:4165px;width:260px;height:260px;z-index:6;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="250"
+  height="250"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#e2e8f0"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <line x1="3" x2="21" y1="22" y2="22" />
+  <line x1="6" x2="6" y1="18" y2="11" />
+  <line x1="10" x2="10" y1="18" y2="11" />
+  <line x1="14" x2="14" y1="18" y2="11" />
+  <line x1="18" x2="18" y1="18" y2="11" />
+  <polygon points="12 2 20 7 4 7" />
+</svg></div>
+<div id="opts" class="opts" style="position:absolute;left:450px;top:4195px;width:560px;height:200px;z-index:6;opacity:0">
+      <div class="op"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="46"
+  height="46"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg> MISMA HORA</div><div class="op"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="46"
+  height="46"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#93c5fd"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg> HORA DE PORTUGAL</div></div>
+<div id="ydeb" class="pill" style="position:absolute;left:470px;top:4425px;z-index:8;background:#334155;color:#fff;font-size:44px;opacity:0">AÑOS DE DEBATE</div>
+<div id="cbox" class="card" style="position:absolute;left:130px;top:4545px;width:880px;height:560px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:40px;top:28px;display:flex;align-items:center;gap:22px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="76"
+  height="76"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+</svg>
+        <span style="font:900 60px Inter;color:#0f1115">Comentarios</span></div>
+      <div class="poll" style="top:130px"><span>20:00</span><i id="pp0" style="background:#22c55e"></i></div><div class="poll" style="top:194px"><span>21:00</span><i id="pp1" style="background:#84cc16"></i></div><div class="poll" style="top:258px"><span>22:00</span><i id="pp2" style="background:#ffd43b"></i></div><div class="poll" style="top:322px"><span>23:00</span><i id="pp3" style="background:#ef4444"></i></div>
+      <div id="ctt" style="position:absolute;left:40px;top:410px;font:800 56px Inter;color:#0f1115;white-space:nowrap"><span style="display:inline-block;white-space:nowrap"><span class="kc">Y</span><span class="kc">o</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">c</span><span class="kc">e</span><span class="kc">n</span><span class="kc">o</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">a</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">l</span><span class="kc">a</span><span class="kc">s</span><span class="kc">…</span></span></div>
+      <div id="pub" class="pubb">Publicar</div></div>
+<div id="cur" data-layout-ignore style="position:absolute;left:870px;top:5035px;width:130px;height:130px;z-index:12;opacity:0"><svg fill="#111"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z" />
+</svg></div>
+    </div>
+  </div>
+  <div id="scrim" data-layout-ignore></div>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const PIV = {"armL": "71 188", "armR": "169 188", "legL": "107 296", "legR": "133 296", "head": "120 160", "upper": "120 300", "eyes": "120 106", "rig": "120 430"};
+const Q = (id, part) => document.querySelector('#' + id + ' .' + part);
+function life(id, t0, t1, seed) {
+  const n = Math.max(1, Math.floor((t1 - t0) / 1.8));
+  tl.fromTo(Q(id,'upper'), {scaleY:1}, {scaleY:1.03, svgOrigin:PIV.upper, duration:0.9, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const m = Math.max(1, Math.floor((t1 - t0) / (1.4 + (seed % 4) * 0.15)));
+  tl.fromTo(Q(id,'head'), {rotation:-2.5}, {rotation:2.5, svgOrigin:PIV.head, duration:1.4 + (seed % 4) * 0.15, ease:'sine.inOut', yoyo:true, repeat:m-1, immediateRender:false}, t0 + 0.1);
+  let r = (seed * 7919) % 997, t = t0 + 0.5 + (seed % 5) * 0.23;
+  const ey = Q(id,'eyes');
+  while (t < t1 - 0.2) {
+    tl.to(ey, {scaleY:0.08, svgOrigin:PIV.eyes, duration:0.06}, t);
+    tl.to(ey, {scaleY:1, svgOrigin:PIV.eyes, duration:0.09}, t + 0.1);
+    r = (r * 7919 + 13) % 997; t += 2.1 + (r / 997) * 2.3;
+  }
+}
+function walk(id, t0, t1, step) {
+  const n = Math.max(2, Math.round((t1 - t0) / step));
+  tl.fromTo(Q(id,'legL'), {rotation:-26}, {rotation:26, svgOrigin:PIV.legL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'legR'), {rotation:26}, {rotation:-26, svgOrigin:PIV.legR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armL'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armR'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'rig'), {y:0}, {y:-14, duration:step/2, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const te = t0 + n * step;
+  ['legL','legR','armL','armR'].forEach(p => tl.to(Q(id,p), {rotation:0, svgOrigin:PIV[p], duration:0.15}, te));
+  tl.to(Q(id,'rig'), {y:0, duration:0.15}, te);
+}
+function face(id, dir, t) { tl.set(Q(id,'rig'), {scaleX:dir, svgOrigin:PIV.rig}, t); }
+function jump(id, t, h) {
+  tl.to(Q(id,'rig'), {keyframes:[{scaleY:0.9, y:0, duration:0.08},{scaleY:1.05, y:-h, duration:0.18, ease:'power2.out'},
+    {scaleY:1, y:0, duration:0.18, ease:'power2.in'},{scaleY:0.95, duration:0.06},{scaleY:1, duration:0.08}], svgOrigin:PIV.rig}, t);
+}
+function point(id, side, t0, t1, ang) {
+  const arm = Q(id, 'arm' + side);
+  tl.to(arm, {rotation:ang, svgOrigin:PIV['arm' + side], duration:0.3, ease:'back.out(2)'}, t0);
+  tl.to(arm, {rotation:0, svgOrigin:PIV['arm' + side], duration:0.35, ease:'power2.inOut'}, t1);
+}
+function wave(id, t0, t1) {
+  const arm = Q(id, 'armR');
+  tl.to(arm, {rotation:-150, svgOrigin:PIV.armR, duration:0.3, ease:'back.out(2)'}, t0);
+  const n = Math.max(1, Math.floor((t1 - t0 - 0.3) / 0.28));
+  tl.fromTo(arm, {rotation:-150}, {rotation:-118, svgOrigin:PIV.armR, duration:0.28, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0 + 0.3);
+}
+function tilt(id, t) {
+  tl.to(Q(id,'brows'), {y:-8, duration:0.2, ease:'back.out(3)'}, t);
+  tl.to(Q(id,'brows'), {y:0, duration:0.3}, t + 1.2);
+}
+function typeOn(sel, t0, t1) {
+  const els = document.querySelectorAll(sel);
+  const dt = (t1 - t0) / Math.max(1, els.length);
+  els.forEach((e, i) => tl.set(e, {opacity:1}, t0 + i * dt));
+}
+
+tl.set("#road", {strokeDasharray:12140.0, strokeDashoffset:12140.0}, 0);
+tl.set("#wd", {x:-30.0, y:195.0, scale:1.0, transformOrigin:"0 0"}, 0);
+tl.set("#grid", {backgroundPosition:"-8px 49px"}, 0);
+tl.fromTo("#ck0", {scale:1.4, rotation:-10, opacity:1}, {scale:1, rotation:0, duration:0.5, ease:"back.out(2)"}, 0);
+tl.fromTo("#ck0-m", {rotation:-360}, {rotation:0, duration:0.8, ease:"power3.out"}, 0);
+tl.fromTo("#pl0", {scale:0.6, opacity:1}, {scale:1, duration:0.45, ease:"back.out(2)"}, 0.1);
+tl.to("#t22", {scale:1.12, duration:0.15, yoyo:true, repeat:1}, 1.710);
+tl.fromTo("#hit", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 2.320);
+tl.to("#hit", {rotation:-3, duration:0.1, yoyo:true, repeat:3}, 3.490);
+tl.fromTo("#mito", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 4.720);
+tl.to("#wd", {x:-1090.0, y:195.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 5.270);
+tl.to("#grid", {backgroundPosition:"-272px 49px", duration:0.6, ease:"power3.inOut"}, 5.270);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 5.270);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 5.570);
+tl.to("#road", {strokeDashoffset:10580.0, duration:0.60, ease:"power2.inOut"}, 5.270);
+tl.fromTo("#h1-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 5.520);
+tl.fromTo("#h1-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 5.840);
+tl.fromTo("#ycb", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 6.270);
+tl.set("#y40-d0", {y:0}, 0);
+tl.set("#y40-d1", {y:0}, 0);
+tl.set("#y40-d2", {y:0}, 0);
+tl.set("#y40-d3", {y:0}, 0);
+tl.to("#y40-d0", {y:-858, duration:0.60, ease:"power3.out"}, 6.370);
+tl.to("#y40-d1", {y:-1482, duration:0.60, ease:"power3.out"}, 6.430);
+tl.to("#y40-d2", {y:-1092, duration:0.60, ease:"power3.out"}, 6.490);
+tl.to("#y40-d3", {y:-780, duration:0.60, ease:"power3.out"}, 6.550);
+tl.fromTo("#fr", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 7.620);
+tl.fromTo("#ck1", {opacity:0, scale:0.6}, {opacity:1, scale:1, duration:0.35, ease:"back.out(2)"}, 7.620);
+tl.to("#ck1-m", {rotation:"+=360", duration:0.8, ease:"power2.inOut"}, 8.070); tl.to("#ck1-h", {rotation:"+=30", duration:0.8, ease:"power2.inOut"}, 8.070);
+tl.to("#ck1", {scale:1.08, duration:0.15, yoyo:true, repeat:1}, 9.620);
+tl.fromTo("#dpt, #des, #duk", {opacity:0, y:40}, {opacity:1, y:0, duration:0.3, stagger:0.08}, 10.000);
+tl.to("#duk", {scale:1.08, duration:0.15, yoyo:true, repeat:1}, 12.160); tl.to("#dpt", {scale:1.08, duration:0.15, yoyo:true, repeat:1}, 12.780);
+tl.to("#des-t", {opacity:0, duration:0.15}, 13.180); tl.fromTo("#des2", {opacity:0, y:-40}, {opacity:1, y:0, duration:0.3, ease:"back.out(2)"}, 13.230);
+tl.set("#gal-c", {opacity:0}, 0);
+tl.set("#lon-c", {opacity:0}, 0);
+tl.set("#pol-c", {opacity:0}, 0);
+tl.to("#wd", {x:-1090.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 13.180);
+tl.to("#grid", {backgroundPosition:"-272px -276px", duration:0.7, ease:"power3.inOut"}, 13.180);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 13.180);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 13.530);
+tl.to("#road", {strokeDashoffset:8280.0, duration:0.70, ease:"power2.inOut"}, 13.180);
+tl.to("#mile0", {opacity:0, duration:0.3}, 13.480);
+tl.fromTo("#axis", {scaleX:0}, {scaleX:1, transformOrigin:"0% 50%", duration:0.6}, 13.480);
+tl.fromTo("#pol-p, #pol-c", {opacity:0, y:30}, {opacity:1, y:0, duration:0.35}, 15.350);
+tl.fromTo("#same", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 14.840);
+tl.fromTo("#gal-p, #gal-c", {opacity:0, y:30}, {opacity:1, y:0, duration:0.35}, 16.210);
+tl.to("#gal-c, #pol-c", {scale:1.06, duration:0.15, yoyo:true, repeat:1}, 16.710);
+tl.fromTo("#lon-p, #lon-c", {opacity:0, y:30}, {opacity:1, y:0, duration:0.35}, 17.380);
+tl.fromTo("#oeste", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 17.240);
+tl.to("#wd", {x:-30.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 18.140);
+tl.to("#grid", {backgroundPosition:"-8px -276px", duration:0.7, ease:"power3.inOut"}, 18.140);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 18.140);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 18.490);
+tl.to("#road", {strokeDashoffset:7220.0, duration:0.70, ease:"power2.inOut"}, 18.140);
+tl.fromTo("#arc", {opacity:0}, {opacity:1, duration:0.4}, 18.440);
+tl.to("#sun", {x:340, y:-470, duration:3.07, ease:"sine.out"}, 18.970);
+tl.fromTo("#retr", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 19.500);
+tl.fromTo("#inv", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 20.230);
+tl.fromTo("#dsol", {opacity:0, y:30}, {opacity:1, y:0, duration:0.3}, 20.810);
+tl.to("#dsol-t", {opacity:0, duration:0.12}, 22.190);
+tl.fromTo("#dsol2", {opacity:0, scale:1.4}, {opacity:1, scale:1, duration:0.3, ease:"back.out(2)"}, 22.290);
+tl.to("#sun", {boxShadow:"0 0 120px 50px rgba(245,158,11,0.7)", duration:0.4, yoyo:true, repeat:1}, 22.650);
+tl.to("#wd", {x:-30.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 23.360);
+tl.to("#grid", {backgroundPosition:"-8px -601px", duration:0.7, ease:"power3.inOut"}, 23.360);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 23.360);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 23.710);
+tl.to("#road", {strokeDashoffset:4920.0, duration:0.70, ease:"power2.inOut"}, 23.360);
+tl.to("#mile1", {opacity:0, duration:0.3}, 23.660);
+tl.fromTo("#h2-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 23.660);
+tl.fromTo("#h2-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 23.930);
+tl.fromTo("#cke, #le", {opacity:0, scale:0.6}, {opacity:1, scale:1, duration:0.35, ease:"back.out(2)"}, 24.420);
+tl.fromTo("#ckd, #ld", {opacity:0, scale:0.6}, {opacity:1, scale:1, duration:0.35, ease:"back.out(2)"}, 26.090);
+tl.fromTo("#pv", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 27.290);
+tl.to("#ckd-m", {rotation:"+=360", duration:0.6, ease:"power2.inOut"}, 29.120);
+tl.fromTo("#plus1", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 29.590);
+tl.fromTo("#nc", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 30.580);
+tl.to("#wd", {x:-1090.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 31.340);
+tl.to("#grid", {backgroundPosition:"-272px -601px", duration:0.7, ease:"power3.inOut"}, 31.340);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 31.340);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 31.690);
+tl.to("#road", {strokeDashoffset:3860.0, duration:0.70, ease:"power2.inOut"}, 31.340);
+tl.fromTo("#h3-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 31.640);
+tl.fromTo("#h3-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 32.620);
+life("wk", 0.000, 54.596, 3);
+tl.fromTo("#wk", {opacity:0, x:-80}, {opacity:1, x:0, duration:0.4}, 33.180);
+tl.fromTo("#pg", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 33.380);
+tl.fromTo("[id^=bc]", {opacity:0, y:-80}, {opacity:1, y:0, duration:0.35, stagger:0.15, ease:"bounce.out"}, 35.020);
+tl.fromTo("#x2", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 35.200);
+tl.fromTo("#ck3", {opacity:0}, {opacity:1, duration:0.3}, 35.200); tl.to("#ck3-m", {rotation:"+=1440", duration:1.2, ease:"power1.inOut"}, 35.800); tl.to("#ck3-h", {rotation:"+=120", duration:1.2, ease:"power1.inOut"}, 35.800);
+tl.to(Q("wk","head"), {rotation:10, svgOrigin:PIV.head, duration:0.4}, 36.580); tl.to(Q("wk","eyes"), {scaleY:0.4, svgOrigin:PIV.eyes, duration:0.3}, 36.580);
+tl.fromTo("#sinc", {opacity:0, x:0, y:60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 37.650);
+tl.to("#sinc", {scale:1.05, duration:0.15, yoyo:true, repeat:1}, 38.990);
+tl.to("#sinc svg:first-of-type", {rotation:180, duration:0.6}, 40.850);
+tl.to("#wd", {x:-1090.0, y:-3705.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 42.200);
+tl.to("#grid", {backgroundPosition:"-272px -926px", duration:0.7, ease:"power3.inOut"}, 42.200);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 42.200);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 42.550);
+tl.to("#road", {strokeDashoffset:1560.0, duration:0.70, ease:"power2.inOut"}, 42.200);
+tl.to("#mile2", {opacity:0, duration:0.3}, 42.500);
+tl.fromTo("#pes, #tes", {opacity:0, y:40}, {opacity:1, y:0, duration:0.35}, 42.800);
+tl.fromTo("#moon", {opacity:0, y:30}, {opacity:1, y:0, duration:0.35}, 43.700);
+tl.to("#tes", {scale:1.08, duration:0.15, yoyo:true, repeat:1}, 43.800);
+tl.fromTo("#pno, #tno", {opacity:0, y:40}, {opacity:1, y:0, duration:0.35}, 45.250);
+tl.fromTo("#sunn", {opacity:0, y:30}, {opacity:1, y:0, duration:0.35}, 46.370);
+tl.to("#tno", {scale:1.08, duration:0.15, yoyo:true, repeat:1}, 46.930);
+tl.to("#wd", {x:-30.0, y:-3705.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 46.812);
+tl.to("#grid", {backgroundPosition:"-8px -926px", duration:0.6, ease:"power3.inOut"}, 46.812);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 46.812);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 47.112);
+tl.to("#road", {strokeDashoffset:500.0, duration:0.60, ease:"power2.inOut"}, 46.812);
+tl.fromTo("#opts", {opacity:0, x:60}, {opacity:1, x:0, duration:0.4}, 47.112);
+tl.to("#opts .op:last-child", {scale:1.06, duration:0.15, yoyo:true, repeat:1}, 48.240);
+tl.fromTo("#cong", {opacity:0, scale:0.5}, {opacity:1, scale:1, duration:0.4, ease:"back.out(2)"}, 48.900);
+tl.fromTo("#ydeb", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 50.200);
+tl.fromTo("#cbox", {opacity:0, x:0, y:80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 50.820);
+tl.set("[id^=pp]", {scaleX:0, transformOrigin:"0% 50%"}, 0);
+tl.to("[id^=pp]", {scaleX:1, duration:0.4, stagger:0.12, ease:"back.out(1.6)"}, 51.530);
+typeOn("#ctt .kc", 51.700, 52.530);
+tl.fromTo("#cur", {opacity:0, x:200, y:200}, {opacity:1, x:0, y:0, duration:0.4}, 52.340);
+tl.to("#cur", {scale:0.85, duration:0.08, yoyo:true, repeat:1}, 52.830); tl.to("#pub", {scale:0.9, backgroundColor:"#166534", duration:0.1, yoyo:true, repeat:1}, 52.830);
+tl.to(".mile", {opacity:1, duration:0.4}, 53.660);
+tl.to("#wd", {x:307.3, y:368.8, scale:0.2115, duration:0.6, ease:"power3.inOut"}, 53.560);
+tl.to("#grid", {backgroundPosition:"77px 92px", duration:0.6, ease:"power3.inOut"}, 53.560);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 53.560);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 53.860);
+tl.fromTo(".pt:nth-child(1)", {y:0, x:0}, {y:-120, x:-40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(2)", {y:0, x:0}, {y:-150, x:0, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(3)", {y:0, x:0}, {y:-180, x:40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(4)", {y:0, x:0}, {y:-210, x:-40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(5)", {y:0, x:0}, {y:-240, x:0, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(6)", {y:0, x:0}, {y:-120, x:40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(7)", {y:0, x:0}, {y:-150, x:-40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(8)", {y:0, x:0}, {y:-180, x:0, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(9)", {y:0, x:0}, {y:-210, x:40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(10)", {y:0, x:0}, {y:-240, x:-40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(11)", {y:0, x:0}, {y:-120, x:0, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(12)", {y:0, x:0}, {y:-150, x:40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(13)", {y:0, x:0}, {y:-180, x:-40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(14)", {y:0, x:0}, {y:-210, x:0, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(15)", {y:0, x:0}, {y:-240, x:40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(16)", {y:0, x:0}, {y:-120, x:-40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(17)", {y:0, x:0}, {y:-150, x:0, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(18)", {y:0, x:0}, {y:-180, x:40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(19)", {y:0, x:0}, {y:-210, x:-40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(20)", {y:0, x:0}, {y:-240, x:0, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(21)", {y:0, x:0}, {y:-120, x:40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(22)", {y:0, x:0}, {y:-150, x:-40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(23)", {y:0, x:0}, {y:-180, x:0, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(24)", {y:0, x:0}, {y:-210, x:40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(25)", {y:0, x:0}, {y:-240, x:-40, duration:54.60, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(26)", {y:0, x:0}, {y:-120, x:0, duration:54.60, ease:"none"}, 0);
+tl.fromTo("#glow", {opacity:0.75}, {opacity:1, duration:2.5, ease:"sine.inOut", yoyo:true, repeat:21}, 0);
+window.__timelines["world"] = tl;
+</script>
+</template>
