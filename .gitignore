@@ -69,3 +69,8 @@ video-terror/assets/.premix.wav
 video-terror/assets/.mix-graph.txt
 video-terror/.hyperframes/
 video-terror/node_modules/
+video-belen/voz-raw.wav
+video-belen/assets/.premix.wav
+video-belen/assets/.mix-graph.txt
+video-belen/.hyperframes/
+video-belen/node_modules/

@@ -1,0 +1,914 @@
+[
+ {
+  "text": "Belén",
+  "start": 0.18,
+  "end": 0.3,
+  "id": "w0"
+ },
+ {
+  "text": "y",
+  "start": 0.3,
+  "end": 0.36,
+  "id": "w1"
+ },
+ {
+  "text": "Emilio",
+  "start": 0.36,
+  "end": 0.73,
+  "id": "w2"
+ },
+ {
+  "text": "eran",
+  "start": 0.73,
+  "end": 0.97,
+  "id": "w3"
+ },
+ {
+  "text": "la",
+  "start": 0.97,
+  "end": 1.1,
+  "id": "w4"
+ },
+ {
+  "text": "pareja",
+  "start": 1.1,
+  "end": 1.47,
+  "id": "w5"
+ },
+ {
+  "text": "favorita",
+  "start": 1.47,
+  "end": 1.96,
+  "id": "w6"
+ },
+ {
+  "text": "de",
+  "start": 1.96,
+  "end": 2.08,
+  "id": "w7"
+ },
+ {
+  "text": "Aquí",
+  "start": 2.08,
+  "end": 2.29,
+  "id": "w8"
+ },
+ {
+  "text": "no",
+  "start": 2.4,
+  "end": 2.45,
+  "id": "w9"
+ },
+ {
+  "text": "hay",
+  "start": 2.45,
+  "end": 2.63,
+  "id": "w10"
+ },
+ {
+  "text": "quien",
+  "start": 2.63,
+  "end": 2.94,
+  "id": "w11"
+ },
+ {
+  "text": "viva,",
+  "start": 2.94,
+  "end": 3.31,
+  "id": "w12"
+ },
+ {
+  "text": "pero",
+  "start": 3.5,
+  "end": 3.66,
+  "id": "w13"
+ },
+ {
+  "text": "si",
+  "start": 3.66,
+  "end": 3.79,
+  "id": "w14"
+ },
+ {
+  "text": "la",
+  "start": 3.79,
+  "end": 3.94,
+  "id": "w15"
+ },
+ {
+  "text": "psicología",
+  "start": 3.94,
+  "end": 4.44,
+  "id": "w16"
+ },
+ {
+  "text": "los",
+  "start": 4.44,
+  "end": 4.64,
+  "id": "w17"
+ },
+ {
+  "text": "analizara,",
+  "start": 4.64,
+  "end": 5.17,
+  "id": "w18"
+ },
+ {
+  "text": "no",
+  "start": 5.17,
+  "end": 5.23,
+  "id": "w19"
+ },
+ {
+  "text": "saldrían",
+  "start": 5.44,
+  "end": 5.89,
+  "id": "w20"
+ },
+ {
+  "text": "muy",
+  "start": 5.89,
+  "end": 6.11,
+  "id": "w21"
+ },
+ {
+  "text": "bien",
+  "start": 6.11,
+  "end": 6.39,
+  "id": "w22"
+ },
+ {
+  "text": "parados.",
+  "start": 6.39,
+  "end": 6.94,
+  "id": "w23"
+ },
+ {
+  "text": "1.",
+  "start": 7.2,
+  "end": 7.46,
+  "id": "w24"
+ },
+ {
+  "text": "El",
+  "start": 7.46,
+  "end": 7.63,
+  "id": "w25"
+ },
+ {
+  "text": "desprecio.",
+  "start": 7.63,
+  "end": 8.59,
+  "id": "w26"
+ },
+ {
+  "text": "El",
+  "start": 8.59,
+  "end": 8.66,
+  "id": "w27"
+ },
+ {
+  "text": "psicólogo",
+  "start": 8.73,
+  "end": 9.15,
+  "id": "w28"
+ },
+ {
+  "text": "John",
+  "start": 9.21,
+  "end": 9.43,
+  "id": "w29"
+ },
+ {
+  "text": "Gottman",
+  "start": 9.54,
+  "end": 9.84,
+  "id": "w30"
+ },
+ {
+  "text": "estudió",
+  "start": 9.84,
+  "end": 10.23,
+  "id": "w31"
+ },
+ {
+  "text": "parejas",
+  "start": 10.23,
+  "end": 10.63,
+  "id": "w32"
+ },
+ {
+  "text": "durante",
+  "start": 10.65,
+  "end": 11.03,
+  "id": "w33"
+ },
+ {
+  "text": "décadas",
+  "start": 11.03,
+  "end": 11.41,
+  "id": "w34"
+ },
+ {
+  "text": "y",
+  "start": 11.41,
+  "end": 11.49,
+  "id": "w35"
+ },
+ {
+  "text": "encontró",
+  "start": 11.49,
+  "end": 11.93,
+  "id": "w36"
+ },
+ {
+  "text": "el",
+  "start": 11.93,
+  "end": 12.04,
+  "id": "w37"
+ },
+ {
+  "text": "mayor",
+  "start": 12.04,
+  "end": 12.31,
+  "id": "w38"
+ },
+ {
+  "text": "predictor",
+  "start": 12.32,
+  "end": 12.81,
+  "id": "w39"
+ },
+ {
+  "text": "de",
+  "start": 12.84,
+  "end": 12.94,
+  "id": "w40"
+ },
+ {
+  "text": "ruptura,",
+  "start": 12.94,
+  "end": 13.44,
+  "id": "w41"
+ },
+ {
+  "text": "el",
+  "start": 13.44,
+  "end": 13.55,
+  "id": "w42"
+ },
+ {
+  "text": "desprecio.",
+  "start": 13.55,
+  "end": 14.38,
+  "id": "w43"
+ },
+ {
+  "text": "Insultos,",
+  "start": 14.62,
+  "end": 15.02,
+  "id": "w44"
+ },
+ {
+  "text": "burlas,",
+  "start": 15.02,
+  "end": 15.53,
+  "id": "w45"
+ },
+ {
+  "text": "poner",
+  "start": 15.53,
+  "end": 15.86,
+  "id": "w46"
+ },
+ {
+  "text": "los",
+  "start": 15.86,
+  "end": 16.04,
+  "id": "w47"
+ },
+ {
+  "text": "ojos",
+  "start": 16.04,
+  "end": 16.28,
+  "id": "w48"
+ },
+ {
+  "text": "en",
+  "start": 16.35,
+  "end": 16.44,
+  "id": "w49"
+ },
+ {
+  "text": "blanco.¿Te",
+  "start": 16.44,
+  "end": 17.21,
+  "id": "w50"
+ },
+ {
+  "text": "suena?",
+  "start": 17.21,
+  "end": 17.82,
+  "id": "w51"
+ },
+ {
+  "text": "Imbécil.",
+  "start": 17.82,
+  "end": 18.52,
+  "id": "w52"
+ },
+ {
+  "text": "2.",
+  "start": 18.84,
+  "end": 18.94,
+  "id": "w53"
+ },
+ {
+  "text": "El",
+  "start": 18.94,
+  "end": 19.09,
+  "id": "w54"
+ },
+ {
+  "text": "tira",
+  "start": 19.09,
+  "end": 19.36,
+  "id": "w55"
+ },
+ {
+  "text": "y",
+  "start": 19.36,
+  "end": 19.43,
+  "id": "w56"
+ },
+ {
+  "text": "afloja.",
+  "start": 19.43,
+  "end": 20.06,
+  "id": "w57"
+ },
+ {
+  "text": "Rompían",
+  "start": 20.06,
+  "end": 20.5,
+  "id": "w58"
+ },
+ {
+  "text": "y",
+  "start": 20.57,
+  "end": 20.62,
+  "id": "w59"
+ },
+ {
+  "text": "volvían",
+  "start": 20.62,
+  "end": 21.1,
+  "id": "w60"
+ },
+ {
+  "text": "una",
+  "start": 21.11,
+  "end": 21.32,
+  "id": "w61"
+ },
+ {
+  "text": "y",
+  "start": 21.32,
+  "end": 21.39,
+  "id": "w62"
+ },
+ {
+  "text": "otra",
+  "start": 21.39,
+  "end": 21.59,
+  "id": "w63"
+ },
+ {
+  "text": "vez.",
+  "start": 21.69,
+  "end": 22.13,
+  "id": "w64"
+ },
+ {
+  "text": "Yeso",
+  "start": 22.26,
+  "end": 22.45,
+  "id": "w65"
+ },
+ {
+  "text": "engancha,",
+  "start": 22.45,
+  "end": 23.08,
+  "id": "w66"
+ },
+ {
+  "text": "es",
+  "start": 23.08,
+  "end": 23.21,
+  "id": "w67"
+ },
+ {
+  "text": "el",
+  "start": 23.21,
+  "end": 23.34,
+  "id": "w68"
+ },
+ {
+  "text": "refuerzo",
+  "start": 23.34,
+  "end": 23.84,
+  "id": "w69"
+ },
+ {
+  "text": "intermitente,",
+  "start": 23.84,
+  "end": 24.72,
+  "id": "w70"
+ },
+ {
+  "text": "el",
+  "start": 24.72,
+  "end": 24.85,
+  "id": "w71"
+ },
+ {
+  "text": "mismo",
+  "start": 24.85,
+  "end": 25.17,
+  "id": "w72"
+ },
+ {
+  "text": "mecanismo",
+  "start": 25.17,
+  "end": 25.74,
+  "id": "w73"
+ },
+ {
+  "text": "de",
+  "start": 25.74,
+  "end": 25.82,
+  "id": "w74"
+ },
+ {
+  "text": "las",
+  "start": 26,
+  "end": 26.06,
+  "id": "w75"
+ },
+ {
+  "text": "tragaperras.",
+  "start": 26.06,
+  "end": 27.08,
+  "id": "w76"
+ },
+ {
+  "text": "Nunca",
+  "start": 27.35,
+  "end": 27.46,
+  "id": "w77"
+ },
+ {
+  "text": "sabes",
+  "start": 27.46,
+  "end": 27.74,
+  "id": "w78"
+ },
+ {
+  "text": "cuando",
+  "start": 27.74,
+  "end": 28.08,
+  "id": "w79"
+ },
+ {
+  "text": "llega",
+  "start": 28.08,
+  "end": 28.36,
+  "id": "w80"
+ },
+ {
+  "text": "el",
+  "start": 28.36,
+  "end": 28.47,
+  "id": "w81"
+ },
+ {
+  "text": "premio,",
+  "start": 28.47,
+  "end": 28.92,
+  "id": "w82"
+ },
+ {
+  "text": "así",
+  "start": 28.92,
+  "end": 29.09,
+  "id": "w83"
+ },
+ {
+  "text": "que",
+  "start": 29.09,
+  "end": 29.26,
+  "id": "w84"
+ },
+ {
+  "text": "no",
+  "start": 29.26,
+  "end": 29.37,
+  "id": "w85"
+ },
+ {
+  "text": "puedes",
+  "start": 29.37,
+  "end": 29.71,
+  "id": "w86"
+ },
+ {
+  "text": "dejar",
+  "start": 29.71,
+  "end": 29.93,
+  "id": "w87"
+ },
+ {
+  "text": "de",
+  "start": 30.03,
+  "end": 30.1,
+  "id": "w88"
+ },
+ {
+  "text": "intentarlo.",
+  "start": 30.1,
+  "end": 30.92,
+  "id": "w89"
+ },
+ {
+  "text": "3.",
+  "start": 31.16,
+  "end": 31.3,
+  "id": "w90"
+ },
+ {
+  "text": "El",
+  "start": 31.4,
+  "end": 31.42,
+  "id": "w91"
+ },
+ {
+  "text": "paso",
+  "start": 31.43,
+  "end": 31.69,
+  "id": "w92"
+ },
+ {
+  "text": "que",
+  "start": 31.69,
+  "end": 31.88,
+  "id": "w93"
+ },
+ {
+  "text": "nunca",
+  "start": 31.88,
+  "end": 32.2,
+  "id": "w94"
+ },
+ {
+  "text": "llega.",
+  "start": 32.2,
+  "end": 32.67,
+  "id": "w95"
+ },
+ {
+  "text": "Cuando",
+  "start": 32.75,
+  "end": 33.1,
+  "id": "w96"
+ },
+ {
+  "text": "uno",
+  "start": 33.1,
+  "end": 33.29,
+  "id": "w97"
+ },
+ {
+  "text": "quería",
+  "start": 33.29,
+  "end": 33.68,
+  "id": "w98"
+ },
+ {
+  "text": "avanzar,",
+  "start": 33.68,
+  "end": 34.26,
+  "id": "w99"
+ },
+ {
+  "text": "el",
+  "start": 34.26,
+  "end": 34.39,
+  "id": "w100"
+ },
+ {
+  "text": "otro",
+  "start": 34.39,
+  "end": 34.43,
+  "id": "w101"
+ },
+ {
+  "text": "se",
+  "start": 34.67,
+  "end": 34.78,
+  "id": "w102"
+ },
+ {
+  "text": "echaba",
+  "start": 34.78,
+  "end": 35.16,
+  "id": "w103"
+ },
+ {
+  "text": "atrás.",
+  "start": 35.16,
+  "end": 35.74,
+  "id": "w104"
+ },
+ {
+  "text": "Yen",
+  "start": 35.74,
+  "end": 35.92,
+  "id": "w105"
+ },
+ {
+  "text": "vez",
+  "start": 35.92,
+  "end": 36.06,
+  "id": "w106"
+ },
+ {
+  "text": "de",
+  "start": 36.14,
+  "end": 36.22,
+  "id": "w107"
+ },
+ {
+  "text": "hablarlo,",
+  "start": 36.22,
+  "end": 36.82,
+  "id": "w108"
+ },
+ {
+  "text": "discutían",
+  "start": 36.82,
+  "end": 37.36,
+  "id": "w109"
+ },
+ {
+  "text": "por",
+  "start": 37.36,
+  "end": 37.54,
+  "id": "w110"
+ },
+ {
+  "text": "cualquier",
+  "start": 37.54,
+  "end": 38.06,
+  "id": "w111"
+ },
+ {
+  "text": "cosa.¿Y",
+  "start": 38.32,
+  "end": 38.76,
+  "id": "w112"
+ },
+ {
+  "text": "por",
+  "start": 38.76,
+  "end": 38.885,
+  "id": "w113"
+ },
+ {
+  "text": "qué",
+  "start": 38.885,
+  "end": 39.01,
+  "id": "w114"
+ },
+ {
+  "text": "nos",
+  "start": 39.01,
+  "end": 39.13,
+  "id": "w115"
+ },
+ {
+  "text": "encantaban?",
+  "start": 39.13,
+  "end": 39.88,
+  "id": "w116"
+ },
+ {
+  "text": "Porque",
+  "start": 39.88,
+  "end": 40.23,
+  "id": "w117"
+ },
+ {
+  "text": "la",
+  "start": 40.23,
+  "end": 40.28,
+  "id": "w118"
+ },
+ {
+  "text": "química",
+  "start": 40.35,
+  "end": 40.73,
+  "id": "w119"
+ },
+ {
+  "text": "era",
+  "start": 40.73,
+  "end": 40.9,
+  "id": "w120"
+ },
+ {
+  "text": "real.",
+  "start": 40.9,
+  "end": 41.38,
+  "id": "w121"
+ },
+ {
+  "text": "Fernando",
+  "start": 41.38,
+  "end": 41.86,
+  "id": "w122"
+ },
+ {
+  "text": "Tejero",
+  "start": 41.86,
+  "end": 42.05,
+  "id": "w123"
+ },
+ {
+  "text": "llegó",
+  "start": 42.27,
+  "end": 42.52,
+  "id": "w124"
+ },
+ {
+  "text": "a",
+  "start": 42.52,
+  "end": 42.58,
+  "id": "w125"
+ },
+ {
+  "text": "sentir",
+  "start": 42.58,
+  "end": 42.94,
+  "id": "w126"
+ },
+ {
+  "text": "celos",
+  "start": 42.94,
+  "end": 43.24,
+  "id": "w127"
+ },
+ {
+  "text": "de",
+  "start": 43.24,
+  "end": 43.35,
+  "id": "w128"
+ },
+ {
+  "text": "verdad.",
+  "start": 43.36,
+  "end": 43.92,
+  "id": "w129"
+ },
+ {
+  "text": "En",
+  "start": 43.92,
+  "end": 44.15,
+  "id": "w130"
+ },
+ {
+  "text": "la",
+  "start": 44.15,
+  "end": 44.38,
+  "id": "w131"
+ },
+ {
+  "text": "ficción,",
+  "start": 44.38,
+  "end": 44.78,
+  "id": "w132"
+ },
+ {
+  "text": "el",
+  "start": 44.78,
+  "end": 44.91,
+  "id": "w133"
+ },
+ {
+  "text": "drama",
+  "start": 44.91,
+  "end": 45.25,
+  "id": "w134"
+ },
+ {
+  "text": "engancha.",
+  "start": 45.25,
+  "end": 45.98,
+  "id": "w135"
+ },
+ {
+  "text": "En",
+  "start": 45.98,
+  "end": 46.11,
+  "id": "w136"
+ },
+ {
+  "text": "la",
+  "start": 46.11,
+  "end": 46.18,
+  "id": "w137"
+ },
+ {
+  "text": "vida",
+  "start": 46.25,
+  "end": 46.47,
+  "id": "w138"
+ },
+ {
+  "text": "real,",
+  "start": 46.58,
+  "end": 46.91,
+  "id": "w139"
+ },
+ {
+  "text": "desgasta.¿Tú",
+  "start": 46.91,
+  "end": 48.02,
+  "id": "w140"
+ },
+ {
+  "text": "has",
+  "start": 48.02,
+  "end": 48.26,
+  "id": "w141"
+ },
+ {
+  "text": "tenido",
+  "start": 48.26,
+  "end": 48.4,
+  "id": "w142"
+ },
+ {
+  "text": "un",
+  "start": 48.4,
+  "end": 48.51,
+  "id": "w143"
+ },
+ {
+  "text": "Emilio",
+  "start": 48.51,
+  "end": 48.84,
+  "id": "w144"
+ },
+ {
+  "text": "o",
+  "start": 48.84,
+  "end": 48.89,
+  "id": "w145"
+ },
+ {
+  "text": "una",
+  "start": 48.89,
+  "end": 49.05,
+  "id": "w146"
+ },
+ {
+  "text": "Belén?",
+  "start": 49.05,
+  "end": 49.48,
+  "id": "w147"
+ },
+ {
+  "text": "Te",
+  "start": 49.48,
+  "end": 49.54,
+  "id": "w148"
+ },
+ {
+  "text": "leo",
+  "start": 49.61,
+  "end": 49.75,
+  "id": "w149"
+ },
+ {
+  "text": "en",
+  "start": 49.75,
+  "end": 49.86,
+  "id": "w150"
+ },
+ {
+  "text": "comentarios.",
+  "start": 49.86,
+  "end": 50.72,
+  "id": "w151"
+ }
+]

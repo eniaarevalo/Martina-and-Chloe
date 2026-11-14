@@ -1,0 +1,1830 @@
+<template>
+<style>
+#root { position:absolute; inset:0; overflow:hidden; background:#07080b; font-family:Inter, sans-serif; }
+#grid { position:absolute; inset:-200px; background-color:#08090d;
+  background-image: linear-gradient(rgba(255,255,255,0.045) 2px, transparent 2px),
+                    linear-gradient(90deg, rgba(255,255,255,0.045) 2px, transparent 2px);
+  background-size: 90px 90px; }
+#glow { position:absolute; left:-200px; right:-200px; bottom:-500px; height:1200px;
+  background: radial-gradient(ellipse at 50% 70%, rgba(92,108,255,0.38), rgba(46,196,182,0.12) 45%, transparent 70%); }
+#scrim { position:absolute; left:0; right:0; top:0; height:520px; pointer-events:none;
+  background:linear-gradient(rgba(7,8,11,0.97) 0%, rgba(7,8,11,0.94) 62%, rgba(7,8,11,0) 100%); }
+#shake { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+#wd { position:absolute; left:0; top:0; width:2200px; height:6600px; }
+.room { background:linear-gradient(#13151c,#0f1117); border:6px solid rgba(255,255,255,0.10); border-bottom:14px solid rgba(255,255,255,0.16); border-radius:10px; }
+.ghost { font:900 140px Inter; color:rgba(255,255,255,0.055); letter-spacing:-4px; }
+.wall { border:10px solid rgba(255,255,255,0.12); border-radius:16px; }
+.parapet { background:#1a1d26; border-top:8px solid rgba(255,255,255,0.18); }
+.hut { background:#151821; border:6px solid rgba(255,255,255,0.12); border-radius:18px 18px 0 0; }
+.hutdoor { position:absolute; left:70px; bottom:0; width:140px; height:300px; background:#0b0c10; border-radius:70px 70px 0 0; }
+.street { background:linear-gradient(#14161d, #07080b); border-top:10px solid rgba(255,255,255,0.12); }
+#bb { background:#ffffff; border-radius:60px; box-shadow:0 40px 120px rgba(0,0,0,0.5); }
+#bb-posts { background:repeating-linear-gradient(90deg, transparent 0 250px, #2a2e3a 250px 290px); }
+.bbface { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.bbt1, .bbt2 { font:900 210px Inter; color:#0f1115; line-height:0.95; letter-spacing:-6px; }
+.bbt2 { color:#ef4444; }
+.bbsub { font:700 90px Inter; color:#666; margin-top:20px; }
+.card { border-radius:40px; box-shadow:0 24px 60px rgba(0,0,0,0.45); overflow:visible; }
+.stamp { font:900 64px Inter; border:8px solid; border-radius:20px; padding:4px 22px; background:rgba(255,255,255,0.92); }
+.pill { font:900 50px Inter; padding:6px 24px; border-radius:999px; white-space:nowrap; }
+.badge { position:absolute; left:0; top:0; width:140px; height:140px; border-radius:50%; font:900 96px Inter;
+  color:#0f1115; text-align:center; line-height:140px; }
+.htitle { position:absolute; left:170px; top:14px; font:900 100px Inter; color:#fff; letter-spacing:-2px; white-space:nowrap; }
+.doorframe { position:absolute; inset:0; background:#2a1c12; border-radius:200px 200px 0 0; border:14px solid #5a3b22; }
+.doorleaf { position:absolute; top:40px; bottom:0; left:24px; width:186px; background:linear-gradient(90deg,#8a5a34,#a06a3e);
+  border-radius:150px 0 0 0; border:6px solid #5a3b22; }
+.doorleaf.r { left:auto; right:24px; border-radius:0 150px 0 0; }
+.counter { background:#d9d4c7; border-radius:16px 16px 0 0; }
+.counter-top { position:absolute; left:-20px; right:-20px; top:-26px; height:36px; background:#a58a5c; border-radius:12px; }
+.counter-sign { position:absolute; left:0; right:0; top:70px; text-align:center; font:900 72px Inter; color:#0f1115; }
+.desktop { position:absolute; left:0; right:0; top:0; height:44px; background:#a07a4c; border-radius:14px; }
+.deskbody { position:absolute; left:30px; right:30px; top:44px; bottom:0; background:#6e5233; border-radius:0 0 12px 12px; }
+.drawer { position:absolute; left:80px; right:80px; top:90px; height:170px; background:#8b6840; border:6px solid #4e3a22; border-radius:12px; }
+.handle { position:absolute; left:50%; top:60px; width:120px; height:30px; margin-left:-60px; background:#e8d3a8; border-radius:15px; }
+.dust { border-radius:50%; background:#cfc7b8; opacity:0; }
+.chathead { height:120px; background:#1f2430; border-radius:40px 40px 0 0; display:flex; align-items:center; padding-left:40px; }
+.chathead .dot { width:26px; height:26px; border-radius:50%; background:#22c55e; margin-right:20px; }
+.typing { position:absolute; left:40px; top:180px; background:#fff; border-radius:30px; padding:22px 30px; display:flex; gap:14px; opacity:0; }
+.typing span { width:22px; height:22px; border-radius:50%; background:#9aa3b2; display:block; }
+.bubble { position:absolute; background:#fff; border-radius:34px; padding:26px 34px; box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+.ch, .qc, .pc, .cc { opacity:0; }
+.avatar { position:relative; border-radius:50%; overflow:hidden; background:#e8ecf4; }
+.over { position:absolute; left:0; top:0; }
+.badge .over { width:100%; text-align:center; }
+.ph { border:6px dashed rgba(255,255,255,0.25); border-radius:40px; }
+.sticker { border-radius:50%; background:#fff; box-shadow:0 14px 30px rgba(0,0,0,0.35); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; }
+.stlab { font:900 30px Inter; color:#0f1115; margin-top:-4px; }
+.xdot { border-radius:50%; background:#ef4444; display:flex; align-items:center; justify-content:center; }
+.bubble.big { padding:30px 40px; box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+.tail { position:absolute; left:120px; top:-28px; width:0; height:0; border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:34px solid #fff; }
+.tail.l { left:-30px; top:auto; bottom:30px; border-left:none; border-bottom:24px solid transparent; border-top:24px solid transparent; border-right:34px solid #fff; }
+.sofa { background:#3b3f73; border-radius:60px 60px 20px 20px; border-top:60px solid #4b4f8a; }
+.lamp { border-left:10px solid #555a66; margin-left:40px; }
+#vc-sign { border-radius:30px; background:#141621; border:8px solid #3a3f55; text-align:center; font:900 96px Inter; line-height:114px; color:#7a809c; }
+#vc-on { width:100%; color:#ff4fd8; text-shadow:0 0 18px rgba(255,79,216,0.7); }
+.tape { position:absolute; width:48px; height:100px; border-radius:6px; box-shadow:inset 0 -18px 0 rgba(0,0,0,0.25); }
+#shelves { background:#3a2a1c; border-radius:16px; border:10px solid #5a4028; }
+#tv { background:#2a2e3a; border-radius:60px; box-shadow:0 30px 80px rgba(0,0,0,0.5); }
+#tv .screen { position:absolute; left:40px; top:40px; right:170px; bottom:40px; border-radius:40px; background:#0b0d14;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; }
+#tv .ant { position:absolute; top:-80px; width:10px; height:100px; background:#8b93a7; border-radius:5px; }
+#tv .a1 { left:330px; transform-origin:50% 100%; rotate:-25deg; }
+#tv .a2 { left:520px; transform-origin:50% 100%; rotate:25deg; }
+#tv .knob { position:absolute; right:50px; width:80px; height:80px; border-radius:50%; background:#8b93a7; }
+#tv .k1 { top:120px; } #tv .k2 { top:260px; }
+.cbox { position:absolute; left:80px; right:80px; top:240px; height:250px; border-radius:40px; background:#f1f3f6;
+  display:flex; align-items:center; gap:36px; padding-left:40px; }
+.cav { width:170px; height:170px; border-radius:50%; background:#6366f1; display:flex; align-items:center; justify-content:center; flex:none; }
+.caret { display:inline-block; width:10px; height:110px; background:#0f1115; vertical-align:-14px; margin-left:8px; }
+.cbtn { position:absolute; right:80px; bottom:70px; padding:24px 70px; border-radius:999px; background:#15803d; color:#fff; font:900 100px Inter; }
+
+.room { background:rgba(255,255,255,0.025); border:4px solid rgba(255,255,255,0.07); border-radius:40px; }
+.mile { border-radius:999px; background:#0f172a; border:6px solid #fff; color:#fff; font:900 46px Inter; text-align:center; line-height:58px; white-space:nowrap; }
+.htitle { font-size:66px; top:34px; }
+.cnt { border-radius:28px; border:5px solid #fff; display:flex; align-items:center; justify-content:center; gap:12px; }
+.cntl { font:900 56px Inter; color:#fff; }
+.hh { position:absolute; inset:0; }
+.hh svg { width:100%; height:100%; filter:drop-shadow(0 20px 30px rgba(0,0,0,0.45)); }
+.therm { border-radius:55px; background:#1f2937; border:6px solid #fff; overflow:hidden; }
+.thf { position:absolute; left:0; top:0; bottom:0; width:100%; background:linear-gradient(90deg,#22c55e,#ffd43b,#ef4444); }
+.therm span { position:absolute; left:0; right:0; top:0; bottom:0; display:flex; align-items:center; justify-content:center; font:900 48px Inter; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,0.6); }
+.stampbox { border:12px solid #ef4444; border-radius:24px; color:#ef4444; background:rgba(255,255,255,0.94); font:900 110px Inter; text-align:center; line-height:146px; transform:rotate(-8deg); white-space:nowrap; }
+.stampbox.sm { font-size:80px; line-height:106px; }
+.itm { border-radius:28px; background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
+.itm span { font:900 36px Inter; color:#0f1115; white-space:nowrap; }
+.imb { border-radius:40px; background:#ef4444; color:#fff; font:900 120px Inter; text-align:center; line-height:220px; white-space:nowrap; box-shadow:0 20px 50px rgba(0,0,0,0.5); }
+.slot { border-radius:40px; background:linear-gradient(#7c3aed,#4c1d95); border:10px solid #ffd43b; box-shadow:0 30px 60px rgba(0,0,0,0.5); }
+.stop { position:absolute; left:0; right:0; top:20px; text-align:center; font:900 54px Inter; color:#ffd43b; letter-spacing:3px; }
+.reel { position:absolute; top:120px; width:200px; height:380px; border-radius:20px; background:#fff; overflow:hidden; border:6px solid #1f2937; }
+.rstrip { position:absolute; left:0; right:0; top:115px; }
+.sym { height:150px; display:flex; align-items:center; justify-content:center; }
+.lever i { position:absolute; left:20px; top:0; width:20px; height:300px; border-radius:10px; background:#cbd5e1; }
+.lever i::before { content:""; position:absolute; left:-20px; top:-40px; width:60px; height:60px; border-radius:50%; background:#ef4444; }
+.argb { border-radius:40px; background:#fff; display:flex; align-items:center; justify-content:center; gap:10px; font:900 64px Inter; color:#ef4444; }
+.half { border-radius:36px; border:6px solid rgba(255,255,255,0.8); overflow:hidden; }
+.hlab { position:absolute; left:0; right:0; top:30px; text-align:center; font:900 56px Inter; color:#fff; }
+.hic { position:absolute; left:0; right:0; top:170px; display:flex; justify-content:center; }
+.bat { position:relative; width:260px; height:140px; border-radius:24px; border:10px solid #fff; }
+.bat::after { content:""; position:absolute; right:-34px; top:36px; width:20px; height:50px; border-radius:6px; background:#fff; }
+.bat i { position:absolute; left:8px; top:8px; bottom:8px; right:8px; border-radius:12px; }
+.poll { position:absolute; left:40px; right:40px; height:60px; display:flex; align-items:center; gap:20px; }
+.poll span { width:230px; font:900 46px Inter; }
+.poll i { flex:1; height:36px; border-radius:18px; }
+.pubb { position:absolute; right:40px; bottom:30px; padding:12px 44px; border-radius:999px; background:#15803d; color:#fff; font:900 62px Inter; }
+.kc { opacity:0; }
+</style>
+<div id="root" data-composition-id="world" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+  <div id="grid" data-layout-ignore></div>
+  <div id="glow" data-layout-ignore></div>
+  <div id="particles" data-layout-ignore><div class="pt" data-layout-ignore style="position:absolute;left:20px;top:60px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:157px;top:323px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:294px;top:586px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:431px;top:849px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:568px;top:1112px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:705px;top:1375px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:842px;top:1638px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:979px;top:101px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:76px;top:364px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:213px;top:627px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:350px;top:890px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:487px;top:1153px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:624px;top:1416px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:761px;top:1679px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:898px;top:142px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:1035px;top:405px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:132px;top:668px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:269px;top:931px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:406px;top:1194px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:543px;top:1457px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:680px;top:1720px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:817px;top:183px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:954px;top:446px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:51px;top:709px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:188px;top:972px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:325px;top:1235px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div></div>
+  <div id="shake">
+    <div id="wd">
+      <div class="room" data-layout-ignore style="position:absolute;left:50px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<svg id="roadsvg" data-layout-ignore style="position:absolute;left:0px;top:0px;width:2200px;height:5300px;z-index:1;overflow:visible" viewBox="0 0 2200 5300">
+      <defs><linearGradient id="rb" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="5200">
+        <stop offset="0" stop-color="#db2777"/><stop offset="0.5" stop-color="#7c3aed"/><stop offset="1" stop-color="#2f62c0"/></linearGradient></defs>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="#262a35" stroke-width="54" fill="none" stroke-linejoin="round"/>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="rgba(255,255,255,0.18)" stroke-width="5" fill="none" stroke-dasharray="26 22" stroke-linejoin="round"/>
+      <path id="road" d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="url(#rb)" stroke-width="16" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
+<div id="mile0" class="mile" data-layout-ignore style="position:absolute;left:1350px;top:1306px;width:560px;height:70px;z-index:2;">Desengaño 21</div>
+<div id="mile1" class="mile" data-layout-ignore style="position:absolute;left:290px;top:2606px;width:560px;height:70px;z-index:2;">Rompen</div>
+<div id="mile2" class="mile" data-layout-ignore style="position:absolute;left:1350px;top:3906px;width:560px;height:70px;z-index:2;">Vuelven</div>
+<div id="mile3" class="mile" data-layout-ignore style="position:absolute;left:1350px;top:5206px;width:560px;height:70px;z-index:2;">Y vuelta a empezar</div>
+<svg id="c0e" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
+  style="position:absolute;left:182px;top:768px;overflow:visible;z-index:6" color="#2f62c0">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e2f5c"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e2f5c"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2f62c0"/>
+      <g class="buttons" opacity="1"><circle cx="120" cy="200" r="6" fill="#f4c542"/><circle cx="120" cy="232" r="6" fill="#f4c542"/><circle cx="120" cy="264" r="6" fill="#f4c542"/><path d="M98 172 L120 190 L142 172" stroke="#f4c542" stroke-width="5" fill="none"/></g><g class="nametag" opacity="0"><rect x="128" y="196" width="34" height="20" rx="4" fill="#ffd43b"/></g>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#e8b48a"/>
+        <circle cx="120" cy="104" r="56" fill="#e8b48a"/>
+        <circle cx="64" cy="108" r="10" fill="#e8b48a"/><circle cx="176" cy="108" r="10" fill="#e8b48a"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#17171b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <g class="cap" data-s="1"><path d="M60 70 Q64 26 120 24 Q176 26 180 70 Z" fill="#1d3f86"/><rect x="56" y="64" width="128" height="14" rx="7" fill="#132c61"/><path d="M120 70 L186 70 Q196 78 184 84 L120 80 Z" fill="#132c61"/><circle cx="120" cy="46" r="8" fill="#f4c542"/></g>
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2f62c0"/><circle cx="71" cy="304" r="15" fill="#e8b48a"/></g>
+      <g class="armR"><g class="broom" data-s="1"><rect x="165" y="170" width="9" height="236" rx="4" fill="#b07a3c"/><path d="M150 400 L190 400 L200 446 L140 446 Z" fill="#e2b84b"/><path d="M150 412 L190 412" stroke="#b58d2c" stroke-width="4"/></g><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2f62c0"/><circle cx="169" cy="304" r="15" fill="#e8b48a"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="c0b" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
+  style="position:absolute;left:682px;top:768px;overflow:visible;z-index:6" color="#db2777">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#db2777"/>
+      
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f2c9a5"/>
+        <circle cx="120" cy="104" r="56" fill="#f2c9a5"/>
+        <circle cx="64" cy="108" r="10" fill="#f2c9a5"/><circle cx="176" cy="108" r="10" fill="#f2c9a5"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#5b3a1f"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="71" cy="304" r="15" fill="#f2c9a5"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="169" cy="304" r="15" fill="#f2c9a5"/></g>
+    </g>
+  </g>
+</svg>
+<div id="bh0" style="position:absolute;left:420px;top:325px;width:300px;height:300px;z-index:7;">
+      <div id="bh0-a" class="hh" style="clip-path:polygon(0 0, 52% 0, 44% 30%, 56% 55%, 46% 100%, 0 100%)"><svg fill="#db2777"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="300"
+  height="300"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fecdd3"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+      <div id="bh0-b" class="hh" style="clip-path:polygon(52% 0, 100% 0, 100% 100%, 46% 100%, 56% 55%, 44% 30%)"><svg fill="#db2777"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="300"
+  height="300"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fecdd3"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div></div>
+<div id="fav" class="pill" style="position:absolute;left:290px;top:675px;z-index:8;background:#db2777;color:#fff;font-size:50px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="46"
+  height="46"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg> LA PAREJA FAVORITA</div>
+<div id="psi" class="pill" style="position:absolute;left:320px;top:675px;z-index:9;background:#fff;color:#0f1115;font-size:50px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="46"
+  height="46"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="11" cy="11" r="8" />
+  <path d="m21 21-4.3-4.3" />
+</svg> PSICOLOGÍA</div>
+<div id="h1" style="position:absolute;left:1150px;top:205px;width:960px;height:150px;z-index:6;">
+      <div id="h1-badge" class="badge" style="background:#ef4444;color:#fff">1</div>
+      <div id="h1-title" class="htitle">EL DESPRECIO</div></div>
+<div id="gm" class="card" style="position:absolute;left:1190px;top:395px;width:600px;height:230px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:30px;top:30px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="110"
+  height="110"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+  <path d="M22 10v6" />
+  <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+</svg></div>
+      <div style="position:absolute;left:170px;top:36px;font:900 46px Inter;color:#0f1115;white-space:nowrap">JOHN GOTTMAN</div>
+      <div style="position:absolute;left:170px;top:116px;font:800 44px Inter;color:#64748b">psicólogo</div></div>
+<div id="dec" class="pill" style="position:absolute;left:1810px;top:435px;z-index:8;background:#334155;color:#fff;font-size:46px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="44"
+  height="44"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 22h14" />
+  <path d="M5 2h14" />
+  <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+  <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+</svg> DÉCADAS</div>
+<div id="thermo" class="therm" style="position:absolute;left:1270px;top:675px;width:720px;height:110px;z-index:6;opacity:0">
+      <div id="thf" class="thf"></div><span>RIESGO DE RUPTURA</span></div>
+<div id="dsp" class="stampbox" style="position:absolute;left:1320px;top:885px;width:620px;height:170px;z-index:9;opacity:0">DESPRECIO</div>
+<div id="it0" class="itm" style="position:absolute;left:1190px;top:1565px;width:280px;height:200px;z-index:7;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ef4444"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+  <path d="m14.5 7.5-5 5" />
+  <path d="m9.5 7.5 5 5" />
+</svg><span>INSULTOS</span></div>
+<div id="it1" class="itm" style="position:absolute;left:1490px;top:1565px;width:280px;height:200px;z-index:7;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ef4444"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M18 13a6 6 0 0 1-6 5 6 6 0 0 1-6-5h12Z" />
+  <line x1="9" x2="9.01" y1="9" y2="9" />
+  <line x1="15" x2="15.01" y1="9" y2="9" />
+</svg><span>BURLAS</span></div>
+<div id="it2" class="itm" style="position:absolute;left:1790px;top:1565px;width:280px;height:200px;z-index:7;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ef4444"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" />
+  <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
+  <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" />
+  <path d="m2 2 20 20" />
+</svg><span>OJOS EN BLANCO</span></div>
+<svg id="c1e" class="chr " data-layout-ignore viewBox="0 0 240 440" width="264" height="484"
+  style="position:absolute;left:1248px;top:2089px;overflow:visible;z-index:6" color="#2f62c0">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e2f5c"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e2f5c"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2f62c0"/>
+      <g class="buttons" opacity="1"><circle cx="120" cy="200" r="6" fill="#f4c542"/><circle cx="120" cy="232" r="6" fill="#f4c542"/><circle cx="120" cy="264" r="6" fill="#f4c542"/><path d="M98 172 L120 190 L142 172" stroke="#f4c542" stroke-width="5" fill="none"/></g><g class="nametag" opacity="0"><rect x="128" y="196" width="34" height="20" rx="4" fill="#ffd43b"/></g>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#e8b48a"/>
+        <circle cx="120" cy="104" r="56" fill="#e8b48a"/>
+        <circle cx="64" cy="108" r="10" fill="#e8b48a"/><circle cx="176" cy="108" r="10" fill="#e8b48a"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#17171b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <g class="cap" data-s="1"><path d="M60 70 Q64 26 120 24 Q176 26 180 70 Z" fill="#1d3f86"/><rect x="56" y="64" width="128" height="14" rx="7" fill="#132c61"/><path d="M120 70 L186 70 Q196 78 184 84 L120 80 Z" fill="#132c61"/><circle cx="120" cy="46" r="8" fill="#f4c542"/></g>
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2f62c0"/><circle cx="71" cy="304" r="15" fill="#e8b48a"/></g>
+      <g class="armR"><g class="broom" data-s="1"><rect x="165" y="170" width="9" height="236" rx="4" fill="#b07a3c"/><path d="M150 400 L190 400 L200 446 L140 446 Z" fill="#e2b84b"/><path d="M150 412 L190 412" stroke="#b58d2c" stroke-width="4"/></g><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2f62c0"/><circle cx="169" cy="304" r="15" fill="#e8b48a"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="c1b" class="chr " data-layout-ignore viewBox="0 0 240 440" width="264" height="484"
+  style="position:absolute;left:1728px;top:2089px;overflow:visible;z-index:6" color="#db2777">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#db2777"/>
+      
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f2c9a5"/>
+        <circle cx="120" cy="104" r="56" fill="#f2c9a5"/>
+        <circle cx="64" cy="108" r="10" fill="#f2c9a5"/><circle cx="176" cy="108" r="10" fill="#f2c9a5"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#5b3a1f"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="71" cy="304" r="15" fill="#f2c9a5"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="169" cy="304" r="15" fill="#f2c9a5"/></g>
+    </g>
+  </g>
+</svg>
+<div id="imb" class="imb" style="position:absolute;left:1480px;top:1835px;width:600px;height:220px;z-index:9;opacity:0">¡IMBÉCIL!</div>
+<div id="h2" style="position:absolute;left:90px;top:1505px;width:960px;height:150px;z-index:6;">
+      <div id="h2-badge" class="badge" style="background:#7c3aed;color:#fff">2</div>
+      <div id="h2-title" class="htitle">EL TIRA Y AFLOJA</div></div>
+<div id="bh1" style="position:absolute;left:420px;top:1705px;width:300px;height:300px;z-index:7;">
+      <div id="bh1-a" class="hh" style="clip-path:polygon(0 0, 52% 0, 44% 30%, 56% 55%, 46% 100%, 0 100%)"><svg fill="#db2777"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="300"
+  height="300"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fecdd3"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+      <div id="bh1-b" class="hh" style="clip-path:polygon(52% 0, 100% 0, 100% 100%, 46% 100%, 56% 55%, 44% 30%)"><svg fill="#db2777"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="300"
+  height="300"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fecdd3"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div></div>
+<div id="rupb" class="cnt" style="position:absolute;left:130px;top:2065px;width:420px;height:140px;z-index:8;background:#ef4444;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+  <path d="m12 13-1-1 2-2-3-3 2-2" />
+</svg><span class="cntl">ROMPEN</span></div>
+<div id="vueb" class="cnt" style="position:absolute;left:590px;top:2065px;width:420px;height:140px;z-index:8;background:#15803d;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="70"
+  height="70"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg><span class="cntl">VUELVEN</span></div>
+<div id="eng" class="pill" style="position:absolute;left:370px;top:2255px;z-index:8;background:#ffd43b;color:#0f1115;font-size:54px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15" />
+  <path d="m5 8 4 4" />
+  <path d="m12 15 4 4" />
+</svg> ENGANCHA</div>
+<div id="ref" class="pill" style="position:absolute;left:210px;top:2375px;z-index:8;background:#fff;color:#0f1115;font-size:48px;opacity:0">REFUERZO INTERMITENTE</div>
+<div id="slot" class="slot" style="position:absolute;left:170px;top:2925px;width:760px;height:560px;z-index:5;">
+      <div class="stop">TRAGAPERRAS</div><div class="reel" style="left:60px"><div id="rl0" class="rstrip"><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div></div></div><div class="reel" style="left:290px"><div id="rl1" class="rstrip"><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div></div></div><div class="reel" style="left:520px"><div id="rl2" class="rstrip"><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#dc2626"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z" />
+  <path d="M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12" />
+  <path d="M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#334155"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 6 6 18" />
+  <path d="m6 6 12 12" />
+</svg></div><div class="sym"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#db2777"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div></div></div></div>
+<div id="lever" class="lever" style="position:absolute;left:940px;top:3005px;width:60px;height:340px;z-index:4;"><i></i></div>
+<div id="casi" class="pill" style="position:absolute;left:350px;top:3525px;z-index:8;background:#ef4444;color:#fff;font-size:54px;opacity:0">¡CASI!</div>
+<div id="otra" class="pill" style="position:absolute;left:280px;top:3655px;z-index:8;background:#fff;color:#0f1115;font-size:50px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="48"
+  height="48"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+  <path d="M3 3v5h5" />
+</svg> OTRA VEZ…</div>
+<div id="h3" style="position:absolute;left:1150px;top:2805px;width:960px;height:150px;z-index:6;">
+      <div id="h3-badge" class="badge" style="background:#2f62c0;color:#fff">3</div>
+      <div id="h3-title" class="htitle">EL PASO QUE NUNCA LLEGA</div></div>
+<svg id="c2e" class="chr " data-layout-ignore viewBox="0 0 240 440" width="240" height="440"
+  style="position:absolute;left:1280px;top:3432px;overflow:visible;z-index:6" color="#2f62c0">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e2f5c"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e2f5c"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2f62c0"/>
+      <g class="buttons" opacity="1"><circle cx="120" cy="200" r="6" fill="#f4c542"/><circle cx="120" cy="232" r="6" fill="#f4c542"/><circle cx="120" cy="264" r="6" fill="#f4c542"/><path d="M98 172 L120 190 L142 172" stroke="#f4c542" stroke-width="5" fill="none"/></g><g class="nametag" opacity="0"><rect x="128" y="196" width="34" height="20" rx="4" fill="#ffd43b"/></g>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#e8b48a"/>
+        <circle cx="120" cy="104" r="56" fill="#e8b48a"/>
+        <circle cx="64" cy="108" r="10" fill="#e8b48a"/><circle cx="176" cy="108" r="10" fill="#e8b48a"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#17171b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <g class="cap" data-s="1"><path d="M60 70 Q64 26 120 24 Q176 26 180 70 Z" fill="#1d3f86"/><rect x="56" y="64" width="128" height="14" rx="7" fill="#132c61"/><path d="M120 70 L186 70 Q196 78 184 84 L120 80 Z" fill="#132c61"/><circle cx="120" cy="46" r="8" fill="#f4c542"/></g>
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2f62c0"/><circle cx="71" cy="304" r="15" fill="#e8b48a"/></g>
+      <g class="armR"><g class="broom" data-s="1"><rect x="165" y="170" width="9" height="236" rx="4" fill="#b07a3c"/><path d="M150 400 L190 400 L200 446 L140 446 Z" fill="#e2b84b"/><path d="M150 412 L190 412" stroke="#b58d2c" stroke-width="4"/></g><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2f62c0"/><circle cx="169" cy="304" r="15" fill="#e8b48a"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="c2b" class="chr " data-layout-ignore viewBox="0 0 240 440" width="240" height="440"
+  style="position:absolute;left:1720px;top:3432px;overflow:visible;z-index:6" color="#db2777">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#db2777"/>
+      
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f2c9a5"/>
+        <circle cx="120" cy="104" r="56" fill="#f2c9a5"/>
+        <circle cx="64" cy="108" r="10" fill="#f2c9a5"/><circle cx="176" cy="108" r="10" fill="#f2c9a5"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#5b3a1f"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="71" cy="304" r="15" fill="#f2c9a5"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="169" cy="304" r="15" fill="#f2c9a5"/></g>
+    </g>
+  </g>
+</svg>
+<div id="fwd" style="position:absolute;left:1510px;top:3165px;width:220px;height:120px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="210"
+  height="210"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#22c55e"
+  stroke-width="3"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 8L22 12L18 16" />
+  <path d="M2 12H22" />
+</svg></div>
+<div id="bck" style="position:absolute;left:1750px;top:3305px;width:220px;height:120px;z-index:8;opacity:0"><svg style="transform:scaleX(-1)"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="210"
+  height="210"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ef4444"
+  stroke-width="3"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 8L22 12L18 16" />
+  <path d="M2 12H22" />
+</svg></div>
+<div id="ar0" class="argb" style="position:absolute;left:1230px;top:3055px;width:260px;height:120px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="56"
+  height="56"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
+</svg><b>!!</b></div>
+<div id="ar1" class="argb" style="position:absolute;left:1710px;top:3025px;width:260px;height:120px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="56"
+  height="56"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
+</svg><b>!!</b></div>
+<div id="ar2" class="argb" style="position:absolute;left:1450px;top:3365px;width:260px;height:120px;z-index:9;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="56"
+  height="56"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
+</svg><b>!!</b></div>
+<div id="nohab" class="pill" style="position:absolute;left:1370px;top:3005px;z-index:9;background:#334155;color:#fff;font-size:48px;opacity:0;text-decoration:line-through">HABLARLO</div>
+<svg id="c3e" class="chr " data-layout-ignore viewBox="0 0 240 440" width="252" height="462"
+  style="position:absolute;left:1324px;top:4710px;overflow:visible;z-index:6" color="#2f62c0">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e2f5c"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e2f5c"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#2f62c0"/>
+      <g class="buttons" opacity="1"><circle cx="120" cy="200" r="6" fill="#f4c542"/><circle cx="120" cy="232" r="6" fill="#f4c542"/><circle cx="120" cy="264" r="6" fill="#f4c542"/><path d="M98 172 L120 190 L142 172" stroke="#f4c542" stroke-width="5" fill="none"/></g><g class="nametag" opacity="0"><rect x="128" y="196" width="34" height="20" rx="4" fill="#ffd43b"/></g>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#e8b48a"/>
+        <circle cx="120" cy="104" r="56" fill="#e8b48a"/>
+        <circle cx="64" cy="108" r="10" fill="#e8b48a"/><circle cx="176" cy="108" r="10" fill="#e8b48a"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#17171b"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <g class="cap" data-s="1"><path d="M60 70 Q64 26 120 24 Q176 26 180 70 Z" fill="#1d3f86"/><rect x="56" y="64" width="128" height="14" rx="7" fill="#132c61"/><path d="M120 70 L186 70 Q196 78 184 84 L120 80 Z" fill="#132c61"/><circle cx="120" cy="46" r="8" fill="#f4c542"/></g>
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#2f62c0"/><circle cx="71" cy="304" r="15" fill="#e8b48a"/></g>
+      <g class="armR"><g class="broom" data-s="1"><rect x="165" y="170" width="9" height="236" rx="4" fill="#b07a3c"/><path d="M150 400 L190 400 L200 446 L140 446 Z" fill="#e2b84b"/><path d="M150 412 L190 412" stroke="#b58d2c" stroke-width="4"/></g><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#2f62c0"/><circle cx="169" cy="304" r="15" fill="#e8b48a"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="c3b" class="chr " data-layout-ignore viewBox="0 0 240 440" width="252" height="462"
+  style="position:absolute;left:1684px;top:4710px;overflow:visible;z-index:6" color="#db2777">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#db2777"/>
+      
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f2c9a5"/>
+        <circle cx="120" cy="104" r="56" fill="#f2c9a5"/>
+        <circle cx="64" cy="108" r="10" fill="#f2c9a5"/><circle cx="176" cy="108" r="10" fill="#f2c9a5"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#5b3a1f"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="71" cy="304" r="15" fill="#f2c9a5"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#db2777"/><circle cx="169" cy="304" r="15" fill="#f2c9a5"/></g>
+    </g>
+  </g>
+</svg>
+<div id="sp0" data-layout-ignore style="position:absolute;left:1530px;top:4625px;width:90px;height:90px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sp1" data-layout-ignore style="position:absolute;left:1670px;top:4575px;width:90px;height:90px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sp2" data-layout-ignore style="position:absolute;left:1600px;top:4705px;width:90px;height:90px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sp3" data-layout-ignore style="position:absolute;left:1450px;top:4545px;width:90px;height:90px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="sp4" data-layout-ignore style="position:absolute;left:1750px;top:4685px;width:90px;height:90px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ffd43b"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></div>
+<div id="qr" class="pill" style="position:absolute;left:1400px;top:4225px;z-index:8;background:#db2777;color:#fff;font-size:56px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="52"
+  height="52"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+</svg> QUÍMICA REAL</div>
+<div id="ft" class="pill" style="position:absolute;left:1380px;top:4365px;z-index:8;background:#fff;color:#0f1115;font-size:46px;opacity:0">FERNANDO TEJERO</div>
+<div id="cel" class="stampbox sm" style="position:absolute;left:1320px;top:4435px;width:620px;height:130px;z-index:9;opacity:0">CELOS REALES</div>
+<div id="fic" class="half" style="position:absolute;left:130px;top:4145px;width:420px;height:520px;z-index:5;background:#4c0519">
+      <div class="hlab">FICCIÓN</div><div class="hic"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="170"
+  height="170"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fde68a"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M18 8a2 2 0 0 0 0-4 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0 0 4" />
+  <path d="M10 22 9 8" />
+  <path d="m14 22 1-14" />
+  <path d="M20 8c.5 0 .9.4.8 1l-2.6 12c-.1.5-.7 1-1.2 1H7c-.6 0-1.1-.4-1.2-1L3.2 9c-.1-.6.3-1 .8-1Z" />
+</svg></div></div>
+<div id="vid" class="half" style="position:absolute;left:590px;top:4145px;width:420px;height:520px;z-index:5;background:#0f172a">
+      <div class="hlab">VIDA REAL</div><div class="hic"><div id="bat" class="bat"><i id="batf"></i></div></div></div>
+<div id="hf-0" class="heart" data-layout-ignore style="position:absolute;left:165px;top:4405px;width:90px;height:90px;z-index:9;"><svg fill="#ef4444"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#ef4444"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="hf-1" class="heart" data-layout-ignore style="position:absolute;left:252px;top:4405px;width:90px;height:90px;z-index:9;"><svg fill="#f97316"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#f97316"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="hf-2" class="heart" data-layout-ignore style="position:absolute;left:338px;top:4405px;width:90px;height:90px;z-index:9;"><svg fill="#facc15"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="hf-3" class="heart" data-layout-ignore style="position:absolute;left:425px;top:4405px;width:90px;height:90px;z-index:9;"><svg fill="#22c55e"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#22c55e"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+</svg></div>
+<div id="cbox" class="card" style="position:absolute;left:130px;top:4705px;width:880px;height:440px;z-index:6;background:#ffffff;">
+      <div style="position:absolute;left:40px;top:28px;display:flex;align-items:center;gap:22px"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="76"
+  height="76"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+</svg>
+        <span style="font:900 60px Inter;color:#0f1115">Comentarios</span></div>
+      <div class="poll" style="top:130px"><span style="color:#2f62c0">EMILIO</span><i id="pe" style="background:#2f62c0"></i></div>
+      <div class="poll" style="top:200px"><span style="color:#db2777">BELÉN</span><i id="pb" style="background:#db2777"></i></div>
+      <div id="ctt" style="position:absolute;left:40px;top:285px;font:800 58px Inter;color:#0f1115;white-space:nowrap"><span style="display:inline-block;white-space:nowrap"><span class="kc">M</span><span class="kc">i</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">B</span><span class="kc">e</span><span class="kc">l</span><span class="kc">é</span><span class="kc">n</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">e</span><span class="kc">r</span><span class="kc">a</span><span class="kc">…</span></span></div>
+      <div id="pub" class="pubb">Publicar</div></div>
+<div id="cur" data-layout-ignore style="position:absolute;left:870px;top:5065px;width:130px;height:130px;z-index:12;opacity:0"><svg fill="#111"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z" />
+</svg></div>
+    </div>
+  </div>
+  <div id="scrim" data-layout-ignore></div>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const PIV = {"armL": "71 188", "armR": "169 188", "legL": "107 296", "legR": "133 296", "head": "120 160", "upper": "120 300", "eyes": "120 106", "rig": "120 430"};
+const Q = (id, part) => document.querySelector('#' + id + ' .' + part);
+function life(id, t0, t1, seed) {
+  const n = Math.max(1, Math.floor((t1 - t0) / 1.8));
+  tl.fromTo(Q(id,'upper'), {scaleY:1}, {scaleY:1.03, svgOrigin:PIV.upper, duration:0.9, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const m = Math.max(1, Math.floor((t1 - t0) / (1.4 + (seed % 4) * 0.15)));
+  tl.fromTo(Q(id,'head'), {rotation:-2.5}, {rotation:2.5, svgOrigin:PIV.head, duration:1.4 + (seed % 4) * 0.15, ease:'sine.inOut', yoyo:true, repeat:m-1, immediateRender:false}, t0 + 0.1);
+  let r = (seed * 7919) % 997, t = t0 + 0.5 + (seed % 5) * 0.23;
+  const ey = Q(id,'eyes');
+  while (t < t1 - 0.2) {
+    tl.to(ey, {scaleY:0.08, svgOrigin:PIV.eyes, duration:0.06}, t);
+    tl.to(ey, {scaleY:1, svgOrigin:PIV.eyes, duration:0.09}, t + 0.1);
+    r = (r * 7919 + 13) % 997; t += 2.1 + (r / 997) * 2.3;
+  }
+}
+function walk(id, t0, t1, step) {
+  const n = Math.max(2, Math.round((t1 - t0) / step));
+  tl.fromTo(Q(id,'legL'), {rotation:-26}, {rotation:26, svgOrigin:PIV.legL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'legR'), {rotation:26}, {rotation:-26, svgOrigin:PIV.legR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armL'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armR'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'rig'), {y:0}, {y:-14, duration:step/2, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const te = t0 + n * step;
+  ['legL','legR','armL','armR'].forEach(p => tl.to(Q(id,p), {rotation:0, svgOrigin:PIV[p], duration:0.15}, te));
+  tl.to(Q(id,'rig'), {y:0, duration:0.15}, te);
+}
+function face(id, dir, t) { tl.set(Q(id,'rig'), {scaleX:dir, svgOrigin:PIV.rig}, t); }
+function jump(id, t, h) {
+  tl.to(Q(id,'rig'), {keyframes:[{scaleY:0.9, y:0, duration:0.08},{scaleY:1.05, y:-h, duration:0.18, ease:'power2.out'},
+    {scaleY:1, y:0, duration:0.18, ease:'power2.in'},{scaleY:0.95, duration:0.06},{scaleY:1, duration:0.08}], svgOrigin:PIV.rig}, t);
+}
+function point(id, side, t0, t1, ang) {
+  const arm = Q(id, 'arm' + side);
+  tl.to(arm, {rotation:ang, svgOrigin:PIV['arm' + side], duration:0.3, ease:'back.out(2)'}, t0);
+  tl.to(arm, {rotation:0, svgOrigin:PIV['arm' + side], duration:0.35, ease:'power2.inOut'}, t1);
+}
+function wave(id, t0, t1) {
+  const arm = Q(id, 'armR');
+  tl.to(arm, {rotation:-150, svgOrigin:PIV.armR, duration:0.3, ease:'back.out(2)'}, t0);
+  const n = Math.max(1, Math.floor((t1 - t0 - 0.3) / 0.28));
+  tl.fromTo(arm, {rotation:-150}, {rotation:-118, svgOrigin:PIV.armR, duration:0.28, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0 + 0.3);
+}
+function tilt(id, t) {
+  tl.to(Q(id,'brows'), {y:-8, duration:0.2, ease:'back.out(3)'}, t);
+  tl.to(Q(id,'brows'), {y:0, duration:0.3}, t + 1.2);
+}
+function typeOn(sel, t0, t1) {
+  const els = document.querySelectorAll(sel);
+  const dt = (t1 - t0) / Math.max(1, els.length);
+  els.forEach((e, i) => tl.set(e, {opacity:1}, t0 + i * dt));
+}
+
+tl.set("#road", {strokeDasharray:12140.0, strokeDashoffset:12140.0}, 0);
+face("c0b", -1, 0);
+tl.set("#wd", {x:-30.0, y:195.0, scale:1.0, transformOrigin:"0 0"}, 0);
+tl.set("#grid", {backgroundPosition:"-8px 49px"}, 0);
+tl.fromTo("#bh0", {scale:1.5, opacity:1}, {scale:1, duration:0.5, ease:"back.out(2.5)"}, 0);
+tl.to("#bh0", {scale:1.08, duration:0.25, yoyo:true, repeat:5, ease:"sine.inOut"}, 0.5);
+life("c0e", 0.000, 51.877, 1);
+life("c0b", 0.000, 51.877, 2);
+tl.fromTo("#fav", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 1.270);
+tl.to("#fav", {opacity:0, duration:0.2}, 3.740);
+tl.fromTo("#psi", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 3.940);
+tl.to("#psi", {x:20, duration:0.3, yoyo:true, repeat:3, ease:"sine.inOut"}, 4.640);
+tl.to("#bh0-a", {x:-40, rotation:-12, duration:0.35, ease:"back.out(2)"}, 5.440); tl.to("#bh0-b", {x:40, rotation:12, duration:0.35, ease:"back.out(2)"}, 5.440);
+tl.to("#shake", {keyframes:[{x:-14,y:8},{x:11,y:-6},{x:-7,y:4},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 5.490);
+tl.to(Q("c0e","mouth"), {scaleX:0.7, svgOrigin:"120 136", duration:0.2}, 6.390); tl.to(Q("c0b","brows"), {y:6, rotation:-5, svgOrigin:"120 88", duration:0.2}, 6.390);
+tl.to("#wd", {x:-1090.0, y:195.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 6.950);
+tl.to("#grid", {backgroundPosition:"-272px 49px", duration:0.6, ease:"power3.inOut"}, 6.950);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 6.950);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 7.250);
+tl.to("#road", {strokeDashoffset:10580.0, duration:0.60, ease:"power2.inOut"}, 6.950);
+tl.fromTo("#h1-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 7.200);
+tl.fromTo("#h1-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 7.630);
+tl.fromTo("#gm", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 8.730);
+tl.fromTo("#dec", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 10.930);
+tl.fromTo("#thermo", {opacity:0}, {opacity:1, duration:0.3}, 11.490);
+tl.set("#thf", {scaleX:0.1, transformOrigin:"0% 50%"}, 0);
+tl.to("#thf", {scaleX:1, duration:1.0, ease:"power2.in"}, 12.320);
+tl.to("#thermo", {x:8, duration:0.05, yoyo:true, repeat:7}, 12.940);
+tl.fromTo("#dsp", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 13.450);
+face("c1b", -1, 0);
+tl.to("#wd", {x:-1090.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 14.270);
+tl.to("#grid", {backgroundPosition:"-272px -276px", duration:0.7, ease:"power3.inOut"}, 14.270);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 14.270);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 14.620);
+tl.to("#road", {strokeDashoffset:8280.0, duration:0.70, ease:"power2.inOut"}, 14.270);
+tl.to("#mile0", {opacity:0, duration:0.3}, 14.620);
+tl.fromTo("#it0", {opacity:0, y:-40}, {opacity:1, y:0, duration:0.3, ease:"back.out(2)"}, 14.620);
+tl.fromTo("#it1", {opacity:0, y:-40}, {opacity:1, y:0, duration:0.3, ease:"back.out(2)"}, 15.020);
+tl.fromTo("#it2", {opacity:0, y:-40}, {opacity:1, y:0, duration:0.3, ease:"back.out(2)"}, 16.040);
+life("c1e", 0.000, 51.877, 3);
+life("c1b", 0.000, 51.877, 4);
+tl.to(Q("c1b","eyes"), {y:-8, duration:0.2, yoyo:true, repeat:1}, 16.240);
+tilt("c1b", 17.210);
+tl.to("#it0, #it1, #it2", {opacity:0.3, duration:0.3}, 17.520);
+tl.fromTo("#imb", {opacity:0, scale:0.3, rotation:-10}, {opacity:1, scale:1, rotation:-4, duration:0.3, ease:"back.out(3)"}, 17.770);
+point("c1b", "R", 17.720, 18.620, -100);
+tl.to("#c1e", {scaleY:0.92, transformOrigin:"50% 100%", duration:0.2}, 17.870);
+tl.to("#shake", {keyframes:[{x:-20,y:12},{x:16,y:-8},{x:-10,y:6},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 17.870);
+tl.to("#wd", {x:-30.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 18.540);
+tl.to("#grid", {backgroundPosition:"-8px -276px", duration:0.7, ease:"power3.inOut"}, 18.540);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 18.540);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 18.890);
+tl.to("#road", {strokeDashoffset:7220.0, duration:0.70, ease:"power2.inOut"}, 18.540);
+tl.fromTo("#h2-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 18.840);
+tl.fromTo("#h2-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 19.090);
+tl.fromTo("#rupb", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 19.960);
+tl.fromTo("#vueb", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 20.520);
+tl.to("#bh1-a", {x:-40, rotation:-12, duration:0.35, ease:"back.out(2)"}, 20.060); tl.to("#bh1-b", {x:40, rotation:12, duration:0.35, ease:"back.out(2)"}, 20.060);
+tl.to("#rupb", {scale:1.1, duration:0.12, yoyo:true, repeat:1}, 20.060);
+tl.to("#bh1-a, #bh1-b", {x:0, rotation:0, duration:0.3, ease:"back.out(2)"}, 20.620);
+tl.to("#vueb", {scale:1.1, duration:0.12, yoyo:true, repeat:1}, 20.620);
+tl.to("#bh1-a", {x:-40, rotation:-12, duration:0.35, ease:"back.out(2)"}, 21.190); tl.to("#bh1-b", {x:40, rotation:12, duration:0.35, ease:"back.out(2)"}, 21.190);
+tl.to("#rupb", {scale:1.1, duration:0.12, yoyo:true, repeat:1}, 21.190);
+tl.to("#bh1-a, #bh1-b", {x:0, rotation:0, duration:0.3, ease:"back.out(2)"}, 21.640);
+tl.to("#vueb", {scale:1.1, duration:0.12, yoyo:true, repeat:1}, 21.640);
+tl.to("#bh1-a, #bh1-b", {x:0, rotation:0, duration:0.3, ease:"back.out(2)"}, 22.350);
+tl.fromTo("#eng", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 22.450);
+tl.fromTo("#ref", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 23.340);
+tl.to("#ref", {scale:1.06, duration:0.15, yoyo:true, repeat:1}, 23.840);
+tl.to("#wd", {x:-30.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 24.870);
+tl.to("#grid", {backgroundPosition:"-8px -601px", duration:0.7, ease:"power3.inOut"}, 24.870);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 24.870);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 25.220);
+tl.to("#road", {strokeDashoffset:4920.0, duration:0.70, ease:"power2.inOut"}, 24.870);
+tl.to("#mile1", {opacity:0, duration:0.3}, 25.170);
+tl.fromTo("#slot", {opacity:0, scale:0.7}, {opacity:1, scale:1, duration:0.4, ease:"back.out(2)"}, 25.860);
+tl.to("#lever i", {rotation:40, transformOrigin:"50% 100%", duration:0.15, yoyo:true, repeat:1}, 26.060);
+tl.fromTo("#rl0", {y:0}, {y:-1200, duration:0.90, ease:"power2.out", immediateRender:false}, 26.160);
+tl.fromTo("#rl1", {y:0}, {y:-1200, duration:1.15, ease:"power2.out", immediateRender:false}, 26.160);
+tl.fromTo("#rl2", {y:0}, {y:-300, duration:1.40, ease:"power2.out", immediateRender:false}, 26.160);
+tl.fromTo("#casi", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.3, ease:"back.out(3)"}, 28.470);
+tl.to("#lever i", {rotation:40, transformOrigin:"50% 100%", duration:0.15, yoyo:true, repeat:1}, 29.610);
+tl.fromTo("#rl0", {y:0}, {y:-1650, duration:0.90, ease:"power2.out", immediateRender:false}, 29.710);
+tl.fromTo("#rl1", {y:0}, {y:-1650, duration:1.15, ease:"power2.out", immediateRender:false}, 29.710);
+tl.fromTo("#rl2", {y:0}, {y:-2100, duration:1.40, ease:"power2.out", immediateRender:false}, 29.710);
+tl.fromTo("#otra", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 30.100);
+face("c2b", -1, 0);
+tl.to("#wd", {x:-1090.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 30.860);
+tl.to("#grid", {backgroundPosition:"-272px -601px", duration:0.7, ease:"power3.inOut"}, 30.860);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 30.860);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 31.210);
+tl.to("#road", {strokeDashoffset:3860.0, duration:0.70, ease:"power2.inOut"}, 30.860);
+tl.fromTo("#h3-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 31.160);
+tl.fromTo("#h3-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 31.430);
+life("c2e", 0.000, 51.877, 5);
+life("c2b", 0.000, 51.877, 6);
+tl.fromTo("#fwd", {opacity:0, x:-60}, {opacity:1, x:0, duration:0.4}, 33.290);
+tl.to("#c2e", {x:110, duration:0.6}, 33.680); walk("c2e", 33.680, 34.280, 0.13);
+tl.fromTo("#bck", {opacity:0, x:60}, {opacity:1, x:0, duration:0.4}, 34.390);
+tl.to("#c2b", {x:120, duration:0.6}, 34.960); walk("c2b", 34.960, 35.560, 0.13);
+tl.to("#fwd, #bck", {opacity:0, duration:0.3}, 36.020);
+tl.fromTo("#nohab", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 36.220);
+tl.fromTo("#ar0", {opacity:0, scale:0.3}, {opacity:1, scale:1, duration:0.25, ease:"back.out(3)"}, 36.820);
+tl.to("#ar0", {rotation:-8, duration:0.1, yoyo:true, repeat:5}, 37.120);
+tl.fromTo("#ar1", {opacity:0, scale:0.3}, {opacity:1, scale:1, duration:0.25, ease:"back.out(3)"}, 37.020);
+tl.to("#ar1", {rotation:0, duration:0.1, yoyo:true, repeat:5}, 37.320);
+tl.fromTo("#ar2", {opacity:0, scale:0.3}, {opacity:1, scale:1, duration:0.25, ease:"back.out(3)"}, 37.220);
+tl.to("#ar2", {rotation:8, duration:0.1, yoyo:true, repeat:5}, 37.520);
+tl.to(Q("c2e","mouth"), {scaleY:2, svgOrigin:"120 136", duration:0.12, yoyo:true, repeat:5}, 36.820); tl.to(Q("c2b","mouth"), {scaleY:2, svgOrigin:"120 136", duration:0.12, yoyo:true, repeat:5}, 36.920);
+tl.to("#shake", {keyframes:[{x:-8,y:5},{x:6,y:-3},{x:-4,y:2},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 38.320);
+face("c3b", -1, 0);
+tl.to("#wd", {x:-1090.0, y:-3705.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 38.334);
+tl.to("#grid", {backgroundPosition:"-272px -926px", duration:0.7, ease:"power3.inOut"}, 38.334);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 38.334);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 38.684);
+tl.to("#road", {strokeDashoffset:1560.0, duration:0.70, ease:"power2.inOut"}, 38.334);
+tl.to("#mile2", {opacity:0, duration:0.3}, 38.634);
+life("c3e", 0.000, 51.877, 7);
+life("c3b", 0.000, 51.877, 8);
+tl.to(Q("c3e","mouth"), {scaleX:1.3, svgOrigin:"120 136", duration:0.2}, 39.130); tl.to(Q("c3b","mouth"), {scaleX:1.3, svgOrigin:"120 136", duration:0.2}, 39.130);
+tl.fromTo("#sp0", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.3, ease:"back.out(3)"}, 40.350);
+tl.to("#sp0", {scale:1.2, duration:0.25, yoyo:true, repeat:5}, 40.750);
+tl.fromTo("#sp1", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.3, ease:"back.out(3)"}, 40.430);
+tl.to("#sp1", {scale:1.2, duration:0.25, yoyo:true, repeat:5}, 40.830);
+tl.fromTo("#sp2", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.3, ease:"back.out(3)"}, 40.510);
+tl.to("#sp2", {scale:1.2, duration:0.25, yoyo:true, repeat:5}, 40.910);
+tl.fromTo("#sp3", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.3, ease:"back.out(3)"}, 40.590);
+tl.to("#sp3", {scale:1.2, duration:0.25, yoyo:true, repeat:5}, 40.990);
+tl.fromTo("#sp4", {opacity:0, scale:0.3, rotation:-40}, {opacity:1, scale:1, rotation:0, duration:0.3, ease:"back.out(3)"}, 40.670);
+tl.to("#sp4", {scale:1.2, duration:0.25, yoyo:true, repeat:5}, 41.070);
+tl.fromTo("#qr", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 40.800);
+tl.fromTo("#ft", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 41.380);
+tl.fromTo("#cel", {opacity:0, scale:2.6, rotation:-26}, {opacity:1, scale:1, rotation:-12, duration:0.32, ease:"power4.in"}, 42.840);
+tl.to(Q("c3e","brows"), {y:6, duration:0.2}, 43.360);
+tl.fromTo("#hf-0", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.5, ease:"back.out(2)"}, 45.250);
+tl.to("#hf-0", {y:-200, x:-40, opacity:0, duration:1.2, ease:"power1.in"}, 45.800);
+tl.fromTo("#hf-1", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.5, ease:"back.out(2)"}, 45.340);
+tl.to("#hf-1", {y:-200, x:0, opacity:0, duration:1.2, ease:"power1.in"}, 45.890);
+tl.fromTo("#hf-2", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.5, ease:"back.out(2)"}, 45.430);
+tl.to("#hf-2", {y:-200, x:40, opacity:0, duration:1.2, ease:"power1.in"}, 45.980);
+tl.fromTo("#hf-3", {opacity:0, y:0, scale:0.4}, {opacity:1, y:-100, scale:1, duration:0.5, ease:"back.out(2)"}, 45.520);
+tl.to("#hf-3", {y:-200, x:-40, opacity:0, duration:1.2, ease:"power1.in"}, 46.070);
+tl.to("#wd", {x:-30.0, y:-3705.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 43.620);
+tl.to("#grid", {backgroundPosition:"-8px -926px", duration:0.6, ease:"power3.inOut"}, 43.620);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 43.620);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 43.920);
+tl.to("#road", {strokeDashoffset:500.0, duration:0.60, ease:"power2.inOut"}, 43.620);
+tl.fromTo("#fic", {opacity:0, x:-60}, {opacity:1, x:0, duration:0.4}, 44.280);
+tl.to("#fic .hic", {scale:1.15, duration:0.2, yoyo:true, repeat:3}, 44.910);
+tl.fromTo("#vid", {opacity:0, x:60}, {opacity:1, x:0, duration:0.4}, 46.050);
+tl.set("#batf", {scaleX:1, transformOrigin:"0% 50%", backgroundColor:"#22c55e"}, 0);
+tl.to("#batf", {scaleX:0.12, backgroundColor:"#ef4444", duration:1.0, ease:"power2.in"}, 46.610);
+tl.fromTo("#cbox", {opacity:0, x:0, y:80}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 47.442);
+tl.set("#pe, #pb", {scaleX:0, transformOrigin:"0% 50%"}, 0);
+tl.to("#pe", {scaleX:1, duration:0.4, ease:"back.out(1.6)"}, 48.510); tl.to("#pb", {scaleX:1, duration:0.4, ease:"back.out(1.6)"}, 49.050);
+typeOn("#ctt .kc", 49.250, 49.860);
+tl.fromTo("#cur", {opacity:0, x:200, y:200}, {opacity:1, x:0, y:0, duration:0.4}, 49.610);
+tl.to("#cur", {scale:0.85, duration:0.08, yoyo:true, repeat:1}, 50.160); tl.to("#pub", {scale:0.9, backgroundColor:"#166534", duration:0.1, yoyo:true, repeat:1}, 50.160);
+tl.to(".mile", {opacity:1, duration:0.4}, 50.920);
+tl.to("#wd", {x:307.3, y:368.8, scale:0.2115, duration:0.6, ease:"power3.inOut"}, 50.820);
+tl.to("#grid", {backgroundPosition:"77px 92px", duration:0.6, ease:"power3.inOut"}, 50.820);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 50.820);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 51.120);
+tl.fromTo(".pt:nth-child(1)", {y:0, x:0}, {y:-120, x:-40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(2)", {y:0, x:0}, {y:-150, x:0, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(3)", {y:0, x:0}, {y:-180, x:40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(4)", {y:0, x:0}, {y:-210, x:-40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(5)", {y:0, x:0}, {y:-240, x:0, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(6)", {y:0, x:0}, {y:-120, x:40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(7)", {y:0, x:0}, {y:-150, x:-40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(8)", {y:0, x:0}, {y:-180, x:0, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(9)", {y:0, x:0}, {y:-210, x:40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(10)", {y:0, x:0}, {y:-240, x:-40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(11)", {y:0, x:0}, {y:-120, x:0, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(12)", {y:0, x:0}, {y:-150, x:40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(13)", {y:0, x:0}, {y:-180, x:-40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(14)", {y:0, x:0}, {y:-210, x:0, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(15)", {y:0, x:0}, {y:-240, x:40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(16)", {y:0, x:0}, {y:-120, x:-40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(17)", {y:0, x:0}, {y:-150, x:0, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(18)", {y:0, x:0}, {y:-180, x:40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(19)", {y:0, x:0}, {y:-210, x:-40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(20)", {y:0, x:0}, {y:-240, x:0, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(21)", {y:0, x:0}, {y:-120, x:40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(22)", {y:0, x:0}, {y:-150, x:-40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(23)", {y:0, x:0}, {y:-180, x:0, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(24)", {y:0, x:0}, {y:-210, x:40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(25)", {y:0, x:0}, {y:-240, x:-40, duration:51.88, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(26)", {y:0, x:0}, {y:-120, x:0, duration:51.88, ease:"none"}, 0);
+tl.fromTo("#glow", {opacity:0.75}, {opacity:1, duration:2.5, ease:"sine.inOut", yoyo:true, repeat:20}, 0);
+window.__timelines["world"] = tl;
+</script>
+</template>
