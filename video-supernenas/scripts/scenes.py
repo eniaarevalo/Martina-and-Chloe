@@ -247,10 +247,10 @@ def scene_casting():
     add(f'''<div id="scr" class="script" style="{css_box(fx + 80, fy + 150, 380, 480, 6)}opacity:0">
       <div class="sh">GUION</div><div class="sl">VICENTA</div>{"".join(f'<i class="sline" style="top:{180 + k * 50}px;width:{240 - (k % 3) * 40}px"></i>' for k in range(5))}</div>''')
     add(f'<div id="quo" class="quote" style="{css_box(fx + 500, fy + 180, 420, 200, 8)}opacity:0">«No quiero estar aquí»</div>')
-    plate("asq", fx + 500, fy + 420, 440, "MARÍA ASQUERINO", "la primera elegida", "#64748b")
-    add(f'<div id="asqx" class="xline" data-layout-ignore style="{css_box(fx + 510, fy + 452, 420, 12, 9)}opacity:0"></div>')
+    add(f'<div id="asq" class="pill" style="{css_box(fx + 500, fy + 430, None, None, 7)}background:#fff;color:#475569;font-size:44px;opacity:0">MARÍA ASQUERINO</div>')
+    add(f'<div id="asqx" class="xline" data-layout-ignore style="{css_box(fx + 505, fy + 462, 440, 12, 9)}opacity:0"></div>')
     add(character("vin", "vicenta", fx + 280, fl, 1.0, z=6))
-    plate("gem", fx + 500, fy + 640, 440, "GEMMA CUERVO", "Vicenta", "#7c3aed")
+    add(f'<div id="gem" class="pill" style="{css_box(fx + 380, fy + 560, None, None, 7)}background:#fff;color:#7c3aed;font-size:44px;opacity:0">VICENTA · <span style="color:#475569">Gemma Cuervo</span></div>')
     t_y3, t_vic3, t_cas, t_otr, t_pap, t_mar, t_asq, t_rec, t_lee, t_gui = (P("y", 3), P("vicenta", 3), P("casi"), P("otra"), P("papel"), P("maria"),
                                                                           P("asquerino"), P("rechazo"), P("leer"), P("guion"))
     travel(t_y3 - 0.3, F(1, 0), 1, 570, dur=0.7)
