@@ -32,7 +32,7 @@ SFX = {
     "tic-rodillo": ("assets/sfx/teclado.mp3", 3.0, 0.5),
 }
 MUSIC = "assets/sfx/amb-terror.mp3"
-MUSIC_VOL = 0.30
+MUSIC_VOL = 0.10
 
 inputs = ["-i", "voz.wav", "-stream_loop", "-1", "-i", MUSIC]
 filters = [

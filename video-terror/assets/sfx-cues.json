@@ -4,12 +4,12 @@
   {
    "t": 0.0,
    "file": "viento",
-   "vol": 0.18
+   "vol": 0.08
   },
   {
    "t": 0.0,
    "file": "transicion-terror",
-   "vol": 0.35
+   "vol": 0.15
   },
   {
    "t": 0.44,
