@@ -59,3 +59,8 @@ video-dedos/assets/.premix.wav
 video-dedos/assets/.mix-graph.txt
 video-dedos/.hyperframes/
 video-dedos/node_modules/
+video-supernenas/voz-raw.wav
+video-supernenas/assets/.premix.wav
+video-supernenas/assets/.mix-graph.txt
+video-supernenas/.hyperframes/
+video-supernenas/node_modules/
