@@ -276,57 +276,63 @@ def scene_berta():
     pop("#hc", t_cas + 0.1, sound="pop2")
 
 
-# ================================================================= 3 · FINA × VICENTA
+# ================================================================= 3 · FINA × MARISA
 def scene_fina():
     fx, fy, fw, fh = F(1, 0)
     fl = floor(1)
-    header("h3", fx, fy, "3", "FINA × VICENTA", color="#16a34a", txt="#fff")
+    header("h3", fx, fy, "3", "FINA × MARISA", color="#16a34a", txt="#fff")
     add(f'''<div id="bench" style="{css_box(fx + 110, fl - 230, 740, 230, 3)}opacity:0">
       <i class="bk" style="top:0"></i><i class="bk" style="top:46px"></i><i class="bk" style="top:110px"></i>
       <i class="bl" style="left:60px"></i><i class="bl" style="right:60px"></i></div>''')
     for k, x in enumerate([fx + 40, fx + 830]):
         add(f'<div id="pg{k}" data-layout-ignore style="{css_box(x, fl - 100, 90, 90, 6)}opacity:0">{icon("bird", 90, "#cbd5e1", 2.6)}</div>')
     add(character("fi1", "fina", fx + 290, fl, 1.2, z=5))
-    add(character("vi1", "vicenta", fx + 680, fl, 1.2, z=5))
-    nf = bubble("sbf", fx + 10, fy + 180, 540, "DOÑA FINA", "¡Pero hija, espabila, que se te pasa el arroz!", "#64748b", "l", fs=44)
-    nv = bubble("sbv", fx + 520, fy + 330, 420, "VICENTA", "Ay… ¿usted cree?", "#8a56b8", "r", fs=48)
-    add(f'<div id="alc" data-layout-ignore style="{css_box(fx + 600, fy + 190, 130, 130, 9)}opacity:0">{icon("alarm-clock", 130, ACC, 2.6)}</div>')
-    add(f'''<div id="mtr" class="card" style="{css_box(fx + 130, fy + 220, 700, 220, 9)}background:#fff;opacity:0">
-      <div class="mtt">CARÁCTER DE VICENTA</div><div class="mtb"><i id="mtf"></i></div></div>''')
-    add(f'<div id="x10" class="pill" style="{css_box(fx + 630, fy + 170, None, None, 10)}background:{BAD};color:#fff;font-size:56px;opacity:0">×10</div>')
-    t_tre, t_fin, t_vic, t_ban, t_par = P("tres"), P("fina"), P("vicenta"), P("banco"), P("parque")
+    add(character("vi1", "vecina1", fx + 680, fl, 1.2, z=5))
+    nf = bubble("sbf", fx + 10, fy + 180, 520, "DOÑA FINA", "Mira esa, con la falda por aquí. Qué poca vergüenza.", "#64748b", "l", fs=44)
+    nv = bubble("sbv", fx + 440, fy + 230, 510, "MARISA", "Pues la del quinto, peor. Y su marido, ni le cuento.", "#16a34a", "r", fs=44)
+    rc, hc = roller("crit", "00", 130, BAD)
+    add(f'''<div id="mtr" class="card" style="{css_box(fx + 130, fy + 200, 700, 300, 9)}background:#fff;opacity:0">
+      <div class="mtt">VECINOS CRITICADOS</div><div class="crn">{rc}</div></div>''')
+    add(f'<div id="zpb" data-layout-ignore style="{css_box(fx + 410, fl - 400, 140, 140, 9)}opacity:0">'
+        f'{icon("zap", 140, ACC, 2.4).replace("<svg", "<svg fill=\"#ffd43b\"")}</div>')
+    t_tre, t_fin, t_mar, t_ban, t_par = P("tres"), P("fina"), P("marisa"), P("banco"), P("parque")
     travel(t_tre - 0.3, F(1, 0), 1, 570, dur=0.7)
     header_in("h3", t_tre, t_fin)
     life("fi1", 0, G.DUR, 5)
     life("vi1", 0, G.DUR, 6)
     js(f'tl.fromTo("#fi1", {{opacity:0, y:60}}, {{opacity:1, y:0, duration:0.35, ease:"back.out(2)"}}, {t_fin:.3f});')
-    js(f'tl.fromTo("#vi1", {{opacity:0, y:60}}, {{opacity:1, y:0, duration:0.35, ease:"back.out(2)"}}, {t_vic:.3f});')
+    js(f'tl.fromTo("#vi1", {{opacity:0, y:60}}, {{opacity:1, y:0, duration:0.35, ease:"back.out(2)"}}, {t_mar:.3f});')
     js(f'tl.fromTo("#bench", {{opacity:0, y:40}}, {{opacity:1, y:0, duration:0.35}}, {t_ban - 0.1:.3f});')
     sfx(t_ban, "madera", 0.3)
     for k in range(2):
         js(f'tl.fromTo("#pg{k}", {{opacity:0, y:-120}}, {{opacity:1, y:0, duration:0.4, ease:"bounce.out"}}, {t_par + k * 0.15:.3f});')
         js(f'tl.to("#pg{k}", {{y:-10, duration:0.18, yoyo:true, repeat:9}}, {t_par + 0.6 + k * 0.1:.3f});')
-    t_f2, t_esp, t_arr, t_v2, t_ay, t_cre = P("fina", 2), P("espabila"), P("arroz"), P("vicenta", 2), P("ay"), E("cree")
-    say("sbf", nf, "fi1", t_f2 + 0.3, E("arroz"), from_x=-60)
-    js(f'tl.to(Q("fi1","armR"), {{rotation:-60, svgOrigin:PIV.armR, duration:0.25, ease:"back.out(2)"}}, {t_esp - 0.1:.3f});')
-    js(f'tl.to(Q("fi1","armR"), {{rotation:-35, svgOrigin:PIV.armR, duration:0.14, yoyo:true, repeat:7}}, {t_esp + 0.2:.3f});')
-    js(f'tl.to(Q("fi1","armR"), {{rotation:0, svgOrigin:PIV.armR, duration:0.3}}, {t_arr + 0.5:.3f});')
-    pop("#alc", t_arr - 0.1, sound="pop2")
-    js(f'tl.to("#alc", {{rotation:12, duration:0.06, yoyo:true, repeat:9}}, {t_arr + 0.25:.3f});')
-    js(f'tl.to("#sbf, #alc", {{opacity:0.25, duration:0.3}}, {t_v2 - 0.2:.3f});')
-    say("sbv", nv, "vi1", t_ay, t_cre, from_x=40)
-    js(f'tl.to("#vi1", {{scale:0.94, transformOrigin:"50% 100%", duration:0.3}}, {t_ay:.3f});')
-    t_v3, t_car, t_die, t_tem = P("vicenta", 3), P("caracter"), P("diez"), P("temporadas")
-    js(f'tl.to("#sbf, #sbv, #alc", {{opacity:0, duration:0.25}}, {t_v3 - 0.1:.3f});')
-    js(f'tl.to("#vi1", {{scale:1, duration:0.3}}, {t_v3:.3f});')
-    slide_in("#mtr", t_v3, dy=-60)
-    js(f'tl.fromTo("#mtf", {{scaleX:0.08}}, {{scaleX:1, duration:{t_tem - t_car + 0.4:.2f}, ease:"power2.in"}}, {t_car:.3f});')
-    js(f'tl.fromTo("#mtf", {{backgroundColor:"#94a3b8"}}, {{backgroundColor:"#ef4444", duration:{t_tem - t_car + 0.4:.2f}}}, {t_car:.3f});')
-    sfx(t_car, "tic-rodillo", 0.3)
-    stamp("#x10", t_die - 0.2, rot=8)
-    js(f'jump("vi1", {t_tem:.3f}, 70);')
-    js(f'tl.to(Q("vi1","brows"), {{rotation:0, y:6, duration:0.2}}, {t_tem:.3f});')
-    js(f'point("vi1", "R", {t_tem:.3f}, {t_tem + 1.0:.3f}, -150);')
+    t_f2, t_mir, t_fal, t_ver, t_m2, t_qui, t_mdo, t_cue = (P("fina", 2), P("mira"), P("falda"), P("verguenza"), P("marisa", 2),
+                                                            P("quinto"), P("marido", 2), E("cuento"))
+    say("sbf", nf, "fi1", t_f2 + 0.3, E("verguenza"), from_x=-60)
+    js(f'point("fi1", "L", {t_mir - 0.1:.3f}, {t_ver + 0.3:.3f}, 70);')
+    js(f'tl.to(Q("fi1","head"), {{rotation:-12, svgOrigin:PIV.head, duration:0.2, yoyo:true, repeat:3}}, {t_ver:.3f});')
+    sfx(t_ver, "pop2", 0.2)
+    js(f'tl.to("#sbf", {{opacity:0.25, scale:0.92, duration:0.3}}, {t_m2 - 0.3:.3f});')
+    say("sbv", nv, "vi1", t_m2 + 0.3, t_cue, from_x=60)
+    js(f'point("vi1", "R", {t_qui - 0.1:.3f}, {t_cue + 0.3:.3f}, -110);')
+    js(f'tilt("vi1", {t_mdo:.3f});')
+    js(f'tl.to(Q("fi1","head"), {{rotation:12, svgOrigin:PIV.head, duration:0.25}}, {t_mdo:.3f}); tl.to(Q("fi1","head"), {{rotation:0, svgOrigin:PIV.head, duration:0.3}}, {t_cue + 0.2:.3f});')
+    t_med, t_cri, t_bar, t_pel, t_b2 = P("media"), P("criticado"), P("barrio"), P("pelean"), P("banco", 2)
+    js(f'tl.to("#sbf, #sbv", {{opacity:0, duration:0.25}}, {t_med - 0.2:.3f});')
+    slide_in("#mtr", t_med, dy=-60)
+    roll_set("crit", "00", hc)
+    roll_to("crit", "47", hc, t_cri, dur=0.8, spins=1)
+    roll_to("crit", "99", hc, t_bar, dur=0.6, spins=2)
+    js(f'tl.to("#mtr", {{scale:1.08, duration:0.15, yoyo:true, repeat:1}}, {t_bar + 0.6:.3f});')
+    # se pelean por el banco: cada una tira hacia su lado
+    js(f'tl.to("#mtr", {{opacity:0, y:-40, duration:0.25}}, {t_pel - 0.2:.3f});')
+    js(f'point("fi1", "R", {t_pel:.3f}, {t_b2 + 0.8:.3f}, -60); point("vi1", "L", {t_pel:.3f}, {t_b2 + 0.8:.3f}, 60);')
+    js(f'tl.to("#fi1", {{x:-30, duration:0.12, yoyo:true, repeat:9}}, {t_pel:.3f}); tl.to("#vi1", {{x:30, duration:0.12, yoyo:true, repeat:9}}, {t_pel:.3f});')
+    js(f'tl.to("#bench", {{x:16, rotation:1.5, duration:0.1, yoyo:true, repeat:11}}, {t_pel:.3f});')
+    js(f'tl.fromTo("#zpb", {{opacity:0, scale:0.3, rotation:-30}}, {{opacity:1, scale:1, rotation:0, duration:0.25, ease:"back.out(3)"}}, {t_b2 - 0.2:.3f});')
+    sfx(t_b2 - 0.1, "golpe", 0.4)
+    shake(t_b2, 12)
 
 
 # ================================================================= 4 · CUESTA × PASTOR
@@ -412,7 +418,7 @@ def scene_actor():
 
 
 # ================================================================= ENCUESTA FINAL
-PAIRS = [("RECIO × MAURI", "#3b82c4"), ("BERTA × PALOMA", "#db2777"), ("FINA × VICENTA", "#16a34a"), ("CUESTA × PASTOR", "#7c3aed")]
+PAIRS = [("RECIO × MAURI", "#3b82c4"), ("BERTA × PALOMA", "#db2777"), ("FINA × MARISA", "#16a34a"), ("CUESTA × PASTOR", "#7c3aed")]
 
 
 def scene_final():
@@ -463,6 +469,7 @@ CSS = """
 .bk {{ position:absolute; left:0; right:0; height:34px; border-radius:10px; background:#a16207; }}
 .bl {{ position:absolute; bottom:0; width:30px; height:110px; background:#3f3f46; border-radius:6px; }}
 .mtt {{ position:absolute; left:0; right:0; top:28px; text-align:center; font:900 52px {FONT}; color:{INK}; white-space:nowrap; }}
+.crn {{ position:absolute; left:0; right:0; top:110px; text-align:center; }}
 .mtb {{ position:absolute; left:50px; right:50px; top:120px; height:60px; border-radius:30px; background:#e2e8f0; overflow:hidden; }}
 .mtb i {{ position:absolute; left:0; top:0; bottom:0; width:100%; border-radius:30px; transform-origin:0% 50%; }}
 .urn {{ border-radius:20px; background:rgba(186,230,253,0.25); border:8px solid #bae6fd; }}

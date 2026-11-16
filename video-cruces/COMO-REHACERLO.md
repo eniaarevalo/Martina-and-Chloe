@@ -59,8 +59,8 @@ Solo los primeros segundos: `npx hyperframes render --end 8 -o entregas/prueba-8
 | `scripts/fix_transcript.py` | Arregla la escritura de Whisper sin tocar los tiempos |
 | `scripts/compare.py` | Compara guion y voz palabra a palabra |
 | `scripts/gen.py` | Motor: cámara, `P("palabra", n)`, rodillos, subtítulos, composición |
-| `scripts/scenes.py` | Las escenas: los dos edificios que chocan, 1 · Recio × Mauri (rellano), 2 · Berta × Paloma (peluquería), 3 · Fina × Vicenta (banco del parque), 4 · Cuesta × Pastor (elecciones y empate), «mismo actor» y la encuesta. `bubble()` + `say()` = bocadillo que se escribe mientras habla el personaje |
-| `scripts/rig.py` | Personajes SVG articulados (estilo propio): Recio, Mauri, Paloma (`paloma`), Berta (`berta`, collar de perlas), Doña Fina (`fina`, gafas y bastón), Vicenta, Juan Cuesta y Enrique Pastor (`pastor`) |
+| `scripts/scenes.py` | Las escenas: los dos edificios que chocan, 1 · Recio × Mauri (rellano), 2 · Berta × Paloma (peluquería), 3 · Fina × Marisa (banco del parque, contador de vecinos criticados), 4 · Cuesta × Pastor (elecciones y empate), «mismo actor» y la encuesta. `bubble()` + `say()` = bocadillo que se escribe mientras habla el personaje |
+| `scripts/rig.py` | Personajes SVG articulados (estilo propio): Recio, Mauri, Paloma (`paloma`), Berta (`berta`, collar de perlas), Doña Fina (`fina`, gafas y bastón), Marisa (`vecina1`), Juan Cuesta y Enrique Pastor (`pastor`) |
 | `scripts/mix.py` | Voz + efectos + música baja, normalizado a -14 LUFS |
 | `assets/sync.json` | Cada anclaje con la palabra y el segundo en que suena |
 
