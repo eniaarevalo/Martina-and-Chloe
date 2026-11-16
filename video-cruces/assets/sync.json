@@ -175,213 +175,228 @@
   "empieza": 30.72
  },
  {
-  "palabra": "Vicenta,",
+  "palabra": "Marisa,",
   "vez": 1,
   "empieza": 31.08
  },
  {
   "palabra": "banco",
   "vez": 1,
-  "empieza": 32.33
+  "empieza": 32.26
  },
  {
   "palabra": "parque.",
   "vez": 1,
-  "empieza": 32.89
+  "empieza": 32.82
  },
  {
   "palabra": "Fina:",
   "vez": 2,
-  "empieza": 33.8
+  "empieza": 33.7
  },
  {
-  "palabra": "espabila,",
+  "palabra": "Mira",
   "vez": 1,
-  "empieza": 34.61
+  "empieza": 33.97
  },
  {
-  "palabra": "arroz!",
+  "palabra": "falda",
   "vez": 1,
-  "empieza": 36.13
+  "empieza": 34.9
  },
  {
-  "palabra": "arroz! (final)",
+  "palabra": "vergüenza.",
   "vez": 1,
-  "empieza": 36.76
+  "empieza": 36.55
  },
  {
-  "palabra": "Vicenta:",
+  "palabra": "vergüenza. (final)",
+  "vez": 1,
+  "empieza": 37.12
+ },
+ {
+  "palabra": "Marisa:",
   "vez": 2,
-  "empieza": 36.98
+  "empieza": 37.5
  },
  {
-  "palabra": "Ay…",
+  "palabra": "quinto,",
   "vez": 1,
-  "empieza": 37.4
+  "empieza": 38.35
  },
  {
-  "palabra": "cree? (final)",
+  "palabra": "marido,",
+  "vez": 2,
+  "empieza": 39.87
+ },
+ {
+  "palabra": "cuento. (final)",
   "vez": 1,
-  "empieza": 38.61
+  "empieza": 41.12
  },
  {
-  "palabra": "Vicenta",
-  "vez": 3,
-  "empieza": 38.84
- },
- {
-  "palabra": "carácter",
+  "palabra": "Media",
   "vez": 1,
-  "empieza": 39.94
+  "empieza": 41.12
  },
  {
-  "palabra": "más (final)",
+  "palabra": "criticado",
   "vez": 1,
-  "empieza": 39.94
+  "empieza": 42.45
  },
  {
-  "palabra": "diez",
+  "palabra": "barrio…",
   "vez": 1,
-  "empieza": 40.72
+  "empieza": 43.45
  },
  {
-  "palabra": "temporadas.",
+  "palabra": "pelean",
   "vez": 1,
-  "empieza": 40.96
+  "empieza": 44.24
+ },
+ {
+  "palabra": "banco.",
+  "vez": 2,
+  "empieza": 45.58
  },
  {
   "palabra": "cuatro:",
   "vez": 2,
-  "empieza": 42.14
+  "empieza": 46.2
  },
  {
   "palabra": "Juan",
   "vez": 1,
-  "empieza": 42.41
+  "empieza": 46.47
  },
  {
   "palabra": "Enrique",
   "vez": 1,
-  "empieza": 42.98
+  "empieza": 47.02
  },
  {
   "palabra": "elecciones",
   "vez": 1,
-  "empieza": 43.92
+  "empieza": 47.96
  },
  {
   "palabra": "Cuesta:",
   "vez": 3,
-  "empieza": 45.88
+  "empieza": 49.94
  },
  {
   "palabra": "votar.",
   "vez": 1,
-  "empieza": 47.66
+  "empieza": 51.72
  },
  {
   "palabra": "votar. (final)",
   "vez": 1,
-  "empieza": 48.24
+  "empieza": 52.3
  },
  {
   "palabra": "Pastor:",
   "vez": 2,
-  "empieza": 48.65
+  "empieza": 52.7
  },
  {
   "palabra": "Perdone,",
   "vez": 1,
-  "empieza": 48.78
+  "empieza": 52.83
  },
  {
   "palabra": "voto,",
   "vez": 1,
-  "empieza": 51.25
+  "empieza": 55.25
+ },
+ {
+  "palabra": "más. (final)",
+  "vez": 1,
+  "empieza": 56.5
  },
  {
   "palabra": "Recuento:",
   "vez": 1,
-  "empieza": 52.82
+  "empieza": 56.78
  },
  {
   "palabra": "voto",
   "vez": 2,
-  "empieza": 53.29
+  "empieza": 57.57
  },
  {
   "palabra": "voto",
   "vez": 3,
-  "empieza": 54.45
+  "empieza": 58.49
  },
  {
   "palabra": "Cada",
   "vez": 1,
-  "empieza": 55.59
+  "empieza": 59.88
  },
  {
   "palabra": "Empate.",
   "vez": 1,
-  "empieza": 57.7
+  "empieza": 61.7
  },
  {
   "palabra": "mejor:",
   "vez": 1,
-  "empieza": 58.13
+  "empieza": 62.49
  },
  {
   "palabra": "dos",
   "vez": 3,
-  "empieza": 58.79
+  "empieza": 62.85
  },
  {
   "palabra": "interpreta",
   "vez": 1,
-  "empieza": 59.19
+  "empieza": 63.27
  },
  {
   "palabra": "mismo",
   "vez": 3,
-  "empieza": 60.03
+  "empieza": 64.01
  },
  {
   "palabra": "José",
   "vez": 1,
-  "empieza": 60.77
+  "empieza": 64.78
  },
  {
   "palabra": "Gil. (final)",
   "vez": 1,
-  "empieza": 61.645
+  "empieza": 65.63
  },
  {
   "palabra": "cruce",
   "vez": 1,
-  "empieza": 62.13
+  "empieza": 66.11
  },
  {
   "palabra": "gustaría",
   "vez": 1,
-  "empieza": 62.33
+  "empieza": 66.33
  },
  {
   "palabra": "ver?",
   "vez": 1,
-  "empieza": 62.8
+  "empieza": 66.77
  },
  {
   "palabra": "leo",
   "vez": 1,
-  "empieza": 63.18
+  "empieza": 67.34
  },
  {
   "palabra": "comentarios.",
   "vez": 1,
-  "empieza": 63.43
+  "empieza": 67.57
  },
  {
   "palabra": "comentarios. (final)",
   "vez": 1,
-  "empieza": 64.27
+  "empieza": 68.26
  }
 ]
