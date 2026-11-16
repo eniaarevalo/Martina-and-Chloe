@@ -94,3 +94,8 @@ video-rodaje/assets/.premix.wav
 video-rodaje/assets/.mix-graph.txt
 video-rodaje/.hyperframes/
 video-rodaje/node_modules/
+video-maite/voz-raw.wav
+video-maite/assets/.premix.wav
+video-maite/assets/.mix-graph.txt
+video-maite/.hyperframes/
+video-maite/node_modules/
