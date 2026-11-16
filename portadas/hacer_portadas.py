@@ -31,6 +31,7 @@ PORTADAS = {
     "video-terror":     (41.5, ["NUNCA RESPONDAS", "A SUS", "PREGUNTAS"], "PREGUNTAS", "#dc2626", "HISTORIA DE TERROR"),
     "video-belen":      (18.3, ["BELÉN Y EMILIO", "SEGÚN LA", "PSICOLOGÍA"], "PSICOLOGÍA", "#db2777", "AQUÍ NO HAY QUIEN VIVA"),
     "video-hora":       (31.2, ["¿CENAMOS TARDE", "POR CULPA", "DE HITLER?"], "DE HITLER?", "#ef4444", "MITO O VERDAD"),
+    "video-cruces":     (17.95, ["¿Y SI SE", "CRUZARAN?"], "CRUZARAN?", "#db2777", "AQUÍ NO HAY QUIEN VIVA × LQSA"),
 }
 
 HTML = """<!doctype html><html><head><meta charset="utf-8"><style>
