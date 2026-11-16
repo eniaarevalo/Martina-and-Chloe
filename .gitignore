@@ -89,3 +89,8 @@ video-coste/assets/.premix.wav
 video-coste/assets/.mix-graph.txt
 video-coste/.hyperframes/
 video-coste/node_modules/
+video-rodaje/voz-raw.wav
+video-rodaje/assets/.premix.wav
+video-rodaje/assets/.mix-graph.txt
+video-rodaje/.hyperframes/
+video-rodaje/node_modules/

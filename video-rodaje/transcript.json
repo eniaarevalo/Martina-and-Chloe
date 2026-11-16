@@ -1,0 +1,836 @@
+[
+ {
+  "text": "En",
+  "start": 0.12,
+  "end": 0.24,
+  "id": "w0"
+ },
+ {
+  "text": "pleno",
+  "start": 0.24,
+  "end": 0.38,
+  "id": "w1"
+ },
+ {
+  "text": "rodaje",
+  "start": 0.45,
+  "end": 0.78,
+  "id": "w2"
+ },
+ {
+  "text": "de",
+  "start": 0.78,
+  "end": 0.9,
+  "id": "w3"
+ },
+ {
+  "text": "La",
+  "start": 0.9,
+  "end": 1.02,
+  "id": "w4"
+ },
+ {
+  "text": "que",
+  "start": 1.02,
+  "end": 1.2,
+  "id": "w5"
+ },
+ {
+  "text": "se",
+  "start": 1.2,
+  "end": 1.32,
+  "id": "w6"
+ },
+ {
+  "text": "avecina,",
+  "start": 1.32,
+  "end": 1.87,
+  "id": "w7"
+ },
+ {
+  "text": "José",
+  "start": 1.87,
+  "end": 1.95,
+  "id": "w8"
+ },
+ {
+  "text": "Luis",
+  "start": 2.26,
+  "end": 2.37,
+  "id": "w9"
+ },
+ {
+  "text": "Gil",
+  "start": 2.37,
+  "end": 2.55,
+  "id": "w10"
+ },
+ {
+  "text": "llamó",
+  "start": 2.55,
+  "end": 2.86,
+  "id": "w11"
+ },
+ {
+  "text": "Mauri",
+  "start": 2.86,
+  "end": 3.23,
+  "id": "w12"
+ },
+ {
+  "text": "a",
+  "start": 3.23,
+  "end": 3.29,
+  "id": "w13"
+ },
+ {
+  "text": "Luis",
+  "start": 3.29,
+  "end": 3.54,
+  "id": "w14"
+ },
+ {
+  "text": "Merlo.",
+  "start": 3.54,
+  "end": 4.08,
+  "id": "w15"
+ },
+ {
+  "text": "Su",
+  "start": 4.08,
+  "end": 4.13,
+  "id": "w16"
+ },
+ {
+  "text": "personaje…",
+  "start": 4.36,
+  "end": 5.02,
+  "id": "w17"
+ },
+ {
+  "text": "de",
+  "start": 5.02,
+  "end": 5.207,
+  "id": "w18"
+ },
+ {
+  "text": "Aquí",
+  "start": 5.207,
+  "end": 5.393,
+  "id": "w19"
+ },
+ {
+  "text": "no",
+  "start": 5.393,
+  "end": 5.58,
+  "id": "w20"
+ },
+ {
+  "text": "hay",
+  "start": 5.58,
+  "end": 5.62,
+  "id": "w21"
+ },
+ {
+  "text": "quien",
+  "start": 5.62,
+  "end": 5.9,
+  "id": "w22"
+ },
+ {
+  "text": "viva.",
+  "start": 5.9,
+  "end": 6.27,
+  "id": "w23"
+ },
+ {
+  "text": "Merlo",
+  "start": 6.35,
+  "end": 6.59,
+  "id": "w24"
+ },
+ {
+  "text": "no",
+  "start": 6.65,
+  "end": 6.77,
+  "id": "w25"
+ },
+ {
+  "text": "pudo",
+  "start": 6.79,
+  "end": 7.05,
+  "id": "w26"
+ },
+ {
+  "text": "parar",
+  "start": 7.05,
+  "end": 7.28,
+  "id": "w27"
+ },
+ {
+  "text": "de",
+  "start": 7.28,
+  "end": 7.59,
+  "id": "w28"
+ },
+ {
+  "text": "reír,",
+  "start": 7.59,
+  "end": 7.91,
+  "id": "w29"
+ },
+ {
+  "text": "y",
+  "start": 7.91,
+  "end": 7.98,
+  "id": "w30"
+ },
+ {
+  "text": "acabó",
+  "start": 7.98,
+  "end": 8.31,
+  "id": "w31"
+ },
+ {
+  "text": "en",
+  "start": 8.31,
+  "end": 8.44,
+  "id": "w32"
+ },
+ {
+  "text": "las",
+  "start": 8.44,
+  "end": 8.64,
+  "id": "w33"
+ },
+ {
+  "text": "tomas",
+  "start": 8.64,
+  "end": 8.97,
+  "id": "w34"
+ },
+ {
+  "text": "falsas.",
+  "start": 8.97,
+  "end": 9.74,
+  "id": "w35"
+ },
+ {
+  "text": "Primer",
+  "start": 9.98,
+  "end": 10.11,
+  "id": "w36"
+ },
+ {
+  "text": "secreto:",
+  "start": 10.22,
+  "end": 10.67,
+  "id": "w37"
+ },
+ {
+  "text": "Montepinar",
+  "start": 10.67,
+  "end": 11.23,
+  "id": "w38"
+ },
+ {
+  "text": "no",
+  "start": 11.29,
+  "end": 11.41,
+  "id": "w39"
+ },
+ {
+  "text": "existía.",
+  "start": 11.41,
+  "end": 11.93,
+  "id": "w40"
+ },
+ {
+  "text": "Era",
+  "start": 12.2,
+  "end": 12.23,
+  "id": "w41"
+ },
+ {
+  "text": "un",
+  "start": 12.24,
+  "end": 12.35,
+  "id": "w42"
+ },
+ {
+  "text": "decorado",
+  "start": 12.35,
+  "end": 12.86,
+  "id": "w43"
+ },
+ {
+  "text": "dentro",
+  "start": 12.86,
+  "end": 13.24,
+  "id": "w44"
+ },
+ {
+  "text": "de",
+  "start": 13.24,
+  "end": 13.36,
+  "id": "w45"
+ },
+ {
+  "text": "un",
+  "start": 13.36,
+  "end": 13.47,
+  "id": "w46"
+ },
+ {
+  "text": "plató.",
+  "start": 13.47,
+  "end": 14.06,
+  "id": "w47"
+ },
+ {
+  "text": "Y",
+  "start": 14.06,
+  "end": 14.11,
+  "id": "w48"
+ },
+ {
+  "text": "tuvieron",
+  "start": 14.32,
+  "end": 14.7,
+  "id": "w49"
+ },
+ {
+  "text": "que",
+  "start": 14.7,
+  "end": 14.94,
+  "id": "w50"
+ },
+ {
+  "text": "dejarlo",
+  "start": 14.94,
+  "end": 15.23,
+  "id": "w51"
+ },
+ {
+  "text": "por",
+  "start": 15.23,
+  "end": 15.39,
+  "id": "w52"
+ },
+ {
+  "text": "un",
+  "start": 15.39,
+  "end": 15.49,
+  "id": "w53"
+ },
+ {
+  "text": "conflicto",
+  "start": 15.49,
+  "end": 15.95,
+  "id": "w54"
+ },
+ {
+  "text": "entre",
+  "start": 16.01,
+  "end": 16.24,
+  "id": "w55"
+ },
+ {
+  "text": "los",
+  "start": 16.24,
+  "end": 16.32,
+  "id": "w56"
+ },
+ {
+  "text": "productores",
+  "start": 16.4,
+  "end": 16.99,
+  "id": "w57"
+ },
+ {
+  "text": "y",
+  "start": 16.99,
+  "end": 17.04,
+  "id": "w58"
+ },
+ {
+  "text": "los",
+  "start": 17.04,
+  "end": 17.2,
+  "id": "w59"
+ },
+ {
+  "text": "dueños",
+  "start": 17.2,
+  "end": 17.52,
+  "id": "w60"
+ },
+ {
+  "text": "de",
+  "start": 17.52,
+  "end": 17.62,
+  "id": "w61"
+ },
+ {
+  "text": "ese",
+  "start": 17.62,
+  "end": 17.78,
+  "id": "w62"
+ },
+ {
+  "text": "plató.",
+  "start": 17.78,
+  "end": 18.3,
+  "id": "w63"
+ },
+ {
+  "text": "Pero",
+  "start": 18.3,
+  "end": 18.6,
+  "id": "w64"
+ },
+ {
+  "text": "antes",
+  "start": 18.6,
+  "end": 18.83,
+  "id": "w65"
+ },
+ {
+  "text": "de",
+  "start": 19.04,
+  "end": 19.14,
+  "id": "w66"
+ },
+ {
+  "text": "irse,",
+  "start": 19.25,
+  "end": 19.47,
+  "id": "w67"
+ },
+ {
+  "text": "las",
+  "start": 19.47,
+  "end": 19.64,
+  "id": "w68"
+ },
+ {
+  "text": "últimas",
+  "start": 19.64,
+  "end": 20.03,
+  "id": "w69"
+ },
+ {
+  "text": "escenas",
+  "start": 20.03,
+  "end": 20.39,
+  "id": "w70"
+ },
+ {
+  "text": "de",
+  "start": 20.45,
+  "end": 20.53,
+  "id": "w71"
+ },
+ {
+  "text": "Montepinar",
+  "start": 20.53,
+  "end": 21.07,
+  "id": "w72"
+ },
+ {
+  "text": "se",
+  "start": 21.07,
+  "end": 21.11,
+  "id": "w73"
+ },
+ {
+  "text": "grabaron",
+  "start": 21.38,
+  "end": 21.63,
+  "id": "w74"
+ },
+ {
+  "text": "justo",
+  "start": 21.63,
+  "end": 21.8,
+  "id": "w75"
+ },
+ {
+  "text": "donde",
+  "start": 21.91,
+  "end": 22.19,
+  "id": "w76"
+ },
+ {
+  "text": "había",
+  "start": 22.19,
+  "end": 22.47,
+  "id": "w77"
+ },
+ {
+  "text": "estado",
+  "start": 22.47,
+  "end": 22.81,
+  "id": "w78"
+ },
+ {
+  "text": "el",
+  "start": 22.81,
+  "end": 22.88,
+  "id": "w79"
+ },
+ {
+  "text": "portal",
+  "start": 22.91,
+  "end": 23.27,
+  "id": "w80"
+ },
+ {
+  "text": "de",
+  "start": 23.27,
+  "end": 23.62,
+  "id": "w81"
+ },
+ {
+  "text": "Aquí",
+  "start": 23.62,
+  "end": 23.71,
+  "id": "w82"
+ },
+ {
+  "text": "no",
+  "start": 23.71,
+  "end": 23.76,
+  "id": "w83"
+ },
+ {
+  "text": "hay",
+  "start": 23.83,
+  "end": 23.98,
+  "id": "w84"
+ },
+ {
+  "text": "quien",
+  "start": 23.98,
+  "end": 24.26,
+  "id": "w85"
+ },
+ {
+  "text": "viva.",
+  "start": 24.26,
+  "end": 24.63,
+  "id": "w86"
+ },
+ {
+  "text": "Alberto",
+  "start": 24.63,
+  "end": 25,
+  "id": "w87"
+ },
+ {
+  "text": "Caballero",
+  "start": 25.08,
+  "end": 25.35,
+  "id": "w88"
+ },
+ {
+  "text": "lo",
+  "start": 25.6,
+  "end": 25.61,
+  "id": "w89"
+ },
+ {
+  "text": "llamó",
+  "start": 25.64,
+  "end": 25.88,
+  "id": "w90"
+ },
+ {
+  "text": "cerrar",
+  "start": 25.88,
+  "end": 26.2,
+  "id": "w91"
+ },
+ {
+  "text": "el",
+  "start": 26.2,
+  "end": 26.31,
+  "id": "w92"
+ },
+ {
+  "text": "círculo.",
+  "start": 26.31,
+  "end": 27,
+  "id": "w93"
+ },
+ {
+  "text": "Segundo:",
+  "start": 27.42,
+  "end": 27.78,
+  "id": "w94"
+ },
+ {
+  "text": "Macarena",
+  "start": 27.78,
+  "end": 28.27,
+  "id": "w95"
+ },
+ {
+  "text": "Gómez",
+  "start": 28.27,
+  "end": 28.57,
+  "id": "w96"
+ },
+ {
+  "text": "contó",
+  "start": 28.57,
+  "end": 28.86,
+  "id": "w97"
+ },
+ {
+  "text": "que",
+  "start": 28.94,
+  "end": 29.06,
+  "id": "w98"
+ },
+ {
+  "text": "algunos",
+  "start": 29.06,
+  "end": 29.17,
+  "id": "w99"
+ },
+ {
+  "text": "compañeros",
+  "start": 29.5,
+  "end": 30.1,
+  "id": "w100"
+ },
+ {
+  "text": "exageran",
+  "start": 30.1,
+  "end": 30.58,
+  "id": "w101"
+ },
+ {
+  "text": "la",
+  "start": 30.58,
+  "end": 30.7,
+  "id": "w102"
+ },
+ {
+  "text": "risa",
+  "start": 30.7,
+  "end": 30.94,
+  "id": "w103"
+ },
+ {
+  "text": "porque",
+  "start": 30.94,
+  "end": 31.31,
+  "id": "w104"
+ },
+ {
+  "text": "saben",
+  "start": 31.31,
+  "end": 31.74,
+  "id": "w105"
+ },
+ {
+  "text": "que",
+  "start": 31.74,
+  "end": 31.98,
+  "id": "w106"
+ },
+ {
+  "text": "así",
+  "start": 31.98,
+  "end": 32.08,
+  "id": "w107"
+ },
+ {
+  "text": "salen",
+  "start": 32.08,
+  "end": 32.36,
+  "id": "w108"
+ },
+ {
+  "text": "en",
+  "start": 32.36,
+  "end": 32.47,
+  "id": "w109"
+ },
+ {
+  "text": "las",
+  "start": 32.47,
+  "end": 32.64,
+  "id": "w110"
+ },
+ {
+  "text": "tomas",
+  "start": 32.64,
+  "end": 32.92,
+  "id": "w111"
+ },
+ {
+  "text": "falsas.",
+  "start": 32.92,
+  "end": 33.36,
+  "id": "w112"
+ },
+ {
+  "text": "Y",
+  "start": 33.44,
+  "end": 33.509,
+  "id": "w113"
+ },
+ {
+  "text": "para",
+  "start": 33.509,
+  "end": 33.67,
+  "id": "w114"
+ },
+ {
+  "text": "la",
+  "start": 33.7,
+  "end": 33.71,
+  "id": "w115"
+ },
+ {
+  "text": "nueva",
+  "start": 34,
+  "end": 34.11,
+  "id": "w116"
+ },
+ {
+  "text": "etapa",
+  "start": 34.11,
+  "end": 34.39,
+  "id": "w117"
+ },
+ {
+  "text": "construyeron",
+  "start": 34.39,
+  "end": 35.07,
+  "id": "w118"
+ },
+ {
+  "text": "un",
+  "start": 35.07,
+  "end": 35.18,
+  "id": "w119"
+ },
+ {
+  "text": "edificio",
+  "start": 35.18,
+  "end": 35.63,
+  "id": "w120"
+ },
+ {
+  "text": "entero:",
+  "start": 35.63,
+  "end": 36.23,
+  "id": "w121"
+ },
+ {
+  "text": "once",
+  "start": 36.23,
+  "end": 36.69,
+  "id": "w122"
+ },
+ {
+  "text": "pisos,",
+  "start": 36.69,
+  "end": 36.92,
+  "id": "w123"
+ },
+ {
+  "text": "dos",
+  "start": 36.99,
+  "end": 37.14,
+  "id": "w124"
+ },
+ {
+  "text": "patios…",
+  "start": 37.14,
+  "end": 37.65,
+  "id": "w125"
+ },
+ {
+  "text": "y",
+  "start": 37.65,
+  "end": 37.71,
+  "id": "w126"
+ },
+ {
+  "text": "hasta",
+  "start": 37.71,
+  "end": 38.04,
+  "id": "w127"
+ },
+ {
+  "text": "un",
+  "start": 38.04,
+  "end": 38.16,
+  "id": "w128"
+ },
+ {
+  "text": "bar.",
+  "start": 38.24,
+  "end": 38.52,
+  "id": "w129"
+ },
+ {
+  "text": "¿Cuál",
+  "start": 38.52,
+  "end": 38.87,
+  "id": "w130"
+ },
+ {
+  "text": "de",
+  "start": 38.87,
+  "end": 39,
+  "id": "w131"
+ },
+ {
+  "text": "estas",
+  "start": 39,
+  "end": 39.33,
+  "id": "w132"
+ },
+ {
+  "text": "no",
+  "start": 39.33,
+  "end": 39.46,
+  "id": "w133"
+ },
+ {
+  "text": "sabías?",
+  "start": 39.46,
+  "end": 40.02,
+  "id": "w134"
+ },
+ {
+  "text": "Te",
+  "start": 40.03,
+  "end": 40.16,
+  "id": "w135"
+ },
+ {
+  "text": "leo",
+  "start": 40.16,
+  "end": 40.35,
+  "id": "w136"
+ },
+ {
+  "text": "en",
+  "start": 40.35,
+  "end": 40.48,
+  "id": "w137"
+ },
+ {
+  "text": "comentarios.",
+  "start": 40.48,
+  "end": 41.47,
+  "id": "w138"
+ }
+]
