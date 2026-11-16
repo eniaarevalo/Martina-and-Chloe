@@ -189,7 +189,7 @@ def coins(cid, x, base, n, z=6, w=150):
 def scene_hook():
     fx, fy, fw, fh = F(0, 0)
     fl = floor(0)
-    add(f'<div id="rec" class="rec" style="{css_box(fx + 700, fy + 150, 220, 80, 9)}opacity:0"><i id="recd"></i>REC</div>')
+    add(f'<div id="rec" class="rec" style="{css_box(fx + 660, fy + 150, 220, 80, 9)}opacity:0"><i id="recd"></i>REC</div>')
     add(f'<div id="clp" data-layout-ignore style="{css_box(fx + 40, fy + 130, 150, 150, 9)}opacity:0">{icon("clapperboard", 150, "#f8fafc", 2)}</div>')
     add(character("gil", "pastor", fx + 270, fl, 1.2, z=5))
     add(character("mer", "mauri", fx + 690, fl, 1.2, z=5))
@@ -203,10 +203,10 @@ def scene_hook():
     add(f'<div id="tf" class="stampbox" style="{css_box(fx + 150, fy + 420, 660, 160, 11)}opacity:0;font-size:96px">TOMA FALSA</div>')
     cam(0, F(0, 0), whoosh=False)
     # primer segundo: claqueta, REC y los dos actores entran
-    js('tl.fromTo("#clp", {opacity:1, rotation:-25, scale:1.3}, {rotation:0, scale:1, duration:0.35, ease:"back.out(2)"}, 0);')
+    js('tl.fromTo("#clp", {opacity:1, rotation:-25, scale:1.3}, {opacity:1, rotation:0, scale:1, duration:0.35, ease:"back.out(2)"}, 0);')
     sfx(0.3, "madera", 0.45)
     pop("#rec", 0.35, sound=None)
-    js('tl.to("#recd", {opacity:0.2, duration:0.4, yoyo:true, repeat:-1, ease:"steps(1)"}, 0.5);')
+    js(f'tl.to("#recd", {{opacity:0.2, duration:0.4, yoyo:true, repeat:{int((G.DUR - 0.6) / 0.4) // 2 * 2 - 1}, ease:"steps(1)"}}, 0.5);')
     life("gil", 0, G.DUR, 1)
     life("mer", 0, G.DUR, 2)
     js('tl.fromTo("#gil", {opacity:0, x:-160}, {opacity:1, x:0, duration:0.45, ease:"power3.out"}, 0.1);')
