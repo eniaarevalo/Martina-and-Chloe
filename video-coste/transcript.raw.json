@@ -1,0 +1,866 @@
+[
+ {
+  "text": "¿Cuánto",
+  "start": 0.05,
+  "end": 0.35,
+  "id": "w0"
+ },
+ {
+  "text": "cuesta",
+  "start": 0.35,
+  "end": 0.65,
+  "id": "w1"
+ },
+ {
+  "text": "hacer",
+  "start": 0.65,
+  "end": 0.87,
+  "id": "w2"
+ },
+ {
+  "text": "un",
+  "start": 0.96,
+  "end": 1.01,
+  "id": "w3"
+ },
+ {
+  "text": "capítulo",
+  "start": 1.01,
+  "end": 1.41,
+  "id": "w4"
+ },
+ {
+  "text": "de",
+  "start": 1.48,
+  "end": 1.52,
+  "id": "w5"
+ },
+ {
+  "text": "la",
+  "start": 1.52,
+  "end": 1.62,
+  "id": "w6"
+ },
+ {
+  "text": "que",
+  "start": 1.62,
+  "end": 1.77,
+  "id": "w7"
+ },
+ {
+  "text": "se",
+  "start": 1.77,
+  "end": 1.81,
+  "id": "w8"
+ },
+ {
+  "text": "avecina?",
+  "start": 1.88,
+  "end": 2.46,
+  "id": "w9"
+ },
+ {
+  "text": "Spoiler,",
+  "start": 2.66,
+  "end": 3.02,
+  "id": "w10"
+ },
+ {
+  "text": "nadie",
+  "start": 3.02,
+  "end": 3.34,
+  "id": "w11"
+ },
+ {
+  "text": "lo",
+  "start": 3.34,
+  "end": 3.46,
+  "id": "w12"
+ },
+ {
+  "text": "ha",
+  "start": 3.46,
+  "end": 3.54,
+  "id": "w13"
+ },
+ {
+  "text": "dicho",
+  "start": 3.62,
+  "end": 3.9,
+  "id": "w14"
+ },
+ {
+  "text": "en",
+  "start": 3.9,
+  "end": 4.02,
+  "id": "w15"
+ },
+ {
+  "text": "público,",
+  "start": 4.02,
+  "end": 4.65,
+  "id": "w16"
+ },
+ {
+  "text": "pero",
+  "start": 4.65,
+  "end": 4.85,
+  "id": "w17"
+ },
+ {
+  "text": "podemos",
+  "start": 4.93,
+  "end": 5.38,
+  "id": "w18"
+ },
+ {
+  "text": "echar",
+  "start": 5.38,
+  "end": 5.7,
+  "id": "w19"
+ },
+ {
+  "text": "cuentas.",
+  "start": 5.7,
+  "end": 6.38,
+  "id": "w20"
+ },
+ {
+  "text": "1.",
+  "start": 6.56,
+  "end": 6.76,
+  "id": "w21"
+ },
+ {
+  "text": "Lo",
+  "start": 6.83,
+  "end": 6.88,
+  "id": "w22"
+ },
+ {
+  "text": "que",
+  "start": 6.88,
+  "end": 7.07,
+  "id": "w23"
+ },
+ {
+  "text": "cuesta",
+  "start": 7.07,
+  "end": 7.44,
+  "id": "w24"
+ },
+ {
+  "text": "la",
+  "start": 7.52,
+  "end": 7.56,
+  "id": "w25"
+ },
+ {
+  "text": "tele",
+  "start": 7.56,
+  "end": 7.81,
+  "id": "w26"
+ },
+ {
+  "text": "en",
+  "start": 7.81,
+  "end": 7.93,
+  "id": "w27"
+ },
+ {
+  "text": "España.",
+  "start": 7.93,
+  "end": 8.54,
+  "id": "w28"
+ },
+ {
+  "text": "En",
+  "start": 8.54,
+  "end": 8.737,
+  "id": "w29"
+ },
+ {
+  "text": "TV,",
+  "start": 8.737,
+  "end": 8.933,
+  "id": "w30"
+ },
+ {
+  "text": "una",
+  "start": 8.933,
+  "end": 9.13,
+  "id": "w31"
+ },
+ {
+  "text": "serie",
+  "start": 9.13,
+  "end": 9.25,
+  "id": "w32"
+ },
+ {
+  "text": "de",
+  "start": 9.25,
+  "end": 9.35,
+  "id": "w33"
+ },
+ {
+  "text": "primetime",
+  "start": 9.35,
+  "end": 9.73,
+  "id": "w34"
+ },
+ {
+  "text": "suele",
+  "start": 9.82,
+  "end": 10.06,
+  "id": "w35"
+ },
+ {
+  "text": "costar",
+  "start": 10.07,
+  "end": 10.38,
+  "id": "w36"
+ },
+ {
+  "text": "entre",
+  "start": 10.38,
+  "end": 10.64,
+  "id": "w37"
+ },
+ {
+  "text": "600.000",
+  "start": 10.64,
+  "end": 11.67,
+  "id": "w38"
+ },
+ {
+  "text": "y",
+  "start": 11.75,
+  "end": 11.78,
+  "id": "w39"
+ },
+ {
+  "text": "800.000",
+  "start": 11.78,
+  "end": 12.86,
+  "id": "w40"
+ },
+ {
+  "text": "euros",
+  "start": 12.86,
+  "end": 13.12,
+  "id": "w41"
+ },
+ {
+  "text": "por",
+  "start": 13.12,
+  "end": 13.28,
+  "id": "w42"
+ },
+ {
+  "text": "capítulo.",
+  "start": 13.28,
+  "end": 13.98,
+  "id": "w43"
+ },
+ {
+  "text": "Por",
+  "start": 13.98,
+  "end": 14.55,
+  "id": "w44"
+ },
+ {
+  "text": "ejemplo,",
+  "start": 14.55,
+  "end": 14.7,
+  "id": "w45"
+ },
+ {
+  "text": "cuéntame,",
+  "start": 14.74,
+  "end": 15.34,
+  "id": "w46"
+ },
+ {
+  "text": "unos",
+  "start": 15.34,
+  "end": 15.58,
+  "id": "w47"
+ },
+ {
+  "text": "760.000",
+  "start": 15.58,
+  "end": 16.78,
+  "id": "w48"
+ },
+ {
+  "text": "euros",
+  "start": 16.98,
+  "end": 17.11,
+  "id": "w49"
+ },
+ {
+  "text": "por",
+  "start": 17.19,
+  "end": 17.32,
+  "id": "w50"
+ },
+ {
+  "text": "capítulo",
+  "start": 17.32,
+  "end": 17.8,
+  "id": "w51"
+ },
+ {
+  "text": "en",
+  "start": 17.8,
+  "end": 17.92,
+  "id": "w52"
+ },
+ {
+  "text": "su",
+  "start": 17.92,
+  "end": 18.04,
+  "id": "w53"
+ },
+ {
+  "text": "última",
+  "start": 18.04,
+  "end": 18.38,
+  "id": "w54"
+ },
+ {
+  "text": "temporada.",
+  "start": 18.41,
+  "end": 19.06,
+  "id": "w55"
+ },
+ {
+  "text": "2.",
+  "start": 19.54,
+  "end": 19.64,
+  "id": "w56"
+ },
+ {
+  "text": "El",
+  "start": 19.64,
+  "end": 19.81,
+  "id": "w57"
+ },
+ {
+  "text": "tiempo.",
+  "start": 19.81,
+  "end": 20.56,
+  "id": "w58"
+ },
+ {
+  "text": "Según",
+  "start": 20.56,
+  "end": 21.19,
+  "id": "w59"
+ },
+ {
+  "text": "Alberto",
+  "start": 21.19,
+  "end": 21.3,
+  "id": "w60"
+ },
+ {
+  "text": "Caballero,",
+  "start": 21.3,
+  "end": 21.96,
+  "id": "w61"
+ },
+ {
+  "text": "su",
+  "start": 21.96,
+  "end": 22.08,
+  "id": "w62"
+ },
+ {
+  "text": "creador,",
+  "start": 22.08,
+  "end": 22.63,
+  "id": "w63"
+ },
+ {
+  "text": "sacar",
+  "start": 22.63,
+  "end": 22.94,
+  "id": "w64"
+ },
+ {
+  "text": "una",
+  "start": 22.94,
+  "end": 23.11,
+  "id": "w65"
+ },
+ {
+  "text": "temporada",
+  "start": 23.19,
+  "end": 23.68,
+  "id": "w66"
+ },
+ {
+  "text": "les",
+  "start": 23.68,
+  "end": 23.86,
+  "id": "w67"
+ },
+ {
+  "text": "lleva",
+  "start": 23.86,
+  "end": 24.14,
+  "id": "w68"
+ },
+ {
+  "text": "unos",
+  "start": 24.36,
+  "end": 24.42,
+  "id": "w69"
+ },
+ {
+  "text": "10",
+  "start": 24.42,
+  "end": 24.79,
+  "id": "w70"
+ },
+ {
+  "text": "meses.",
+  "start": 24.79,
+  "end": 25.42,
+  "id": "w71"
+ },
+ {
+  "text": "3.",
+  "start": 25.82,
+  "end": 25.9,
+  "id": "w72"
+ },
+ {
+  "text": "Los",
+  "start": 26.07,
+  "end": 26.14,
+  "id": "w73"
+ },
+ {
+  "text": "actores.",
+  "start": 26.14,
+  "end": 26.98,
+  "id": "w74"
+ },
+ {
+  "text": "Macarena",
+  "start": 27.37,
+  "end": 27.65,
+  "id": "w75"
+ },
+ {
+  "text": "Gómez",
+  "start": 27.65,
+  "end": 27.91,
+  "id": "w76"
+ },
+ {
+  "text": "dijo",
+  "start": 27.99,
+  "end": 28.07,
+  "id": "w77"
+ },
+ {
+  "text": "que",
+  "start": 28.16,
+  "end": 28.31,
+  "id": "w78"
+ },
+ {
+  "text": "lo",
+  "start": 28.31,
+  "end": 28.41,
+  "id": "w79"
+ },
+ {
+  "text": "que",
+  "start": 28.41,
+  "end": 28.59,
+  "id": "w80"
+ },
+ {
+  "text": "cobra",
+  "start": 28.59,
+  "end": 28.87,
+  "id": "w81"
+ },
+ {
+  "text": "es",
+  "start": 28.87,
+  "end": 28.98,
+  "id": "w82"
+ },
+ {
+  "text": "ridículo",
+  "start": 28.98,
+  "end": 29.39,
+  "id": "w83"
+ },
+ {
+  "text": "comparado",
+  "start": 29.43,
+  "end": 29.94,
+  "id": "w84"
+ },
+ {
+  "text": "con",
+  "start": 29.94,
+  "end": 30.11,
+  "id": "w85"
+ },
+ {
+  "text": "una",
+  "start": 30.11,
+  "end": 30.28,
+  "id": "w86"
+ },
+ {
+  "text": "serie",
+  "start": 30.28,
+  "end": 30.42,
+  "id": "w87"
+ },
+ {
+  "text": "de",
+  "start": 30.64,
+  "end": 30.67,
+  "id": "w88"
+ },
+ {
+  "text": "la",
+  "start": 30.67,
+  "end": 30.78,
+  "id": "w89"
+ },
+ {
+  "text": "BBC.",
+  "start": 30.78,
+  "end": 31.2,
+  "id": "w90"
+ },
+ {
+  "text": "Así",
+  "start": 31.2,
+  "end": 31.403,
+  "id": "w91"
+ },
+ {
+  "text": "que",
+  "start": 31.403,
+  "end": 31.607,
+  "id": "w92"
+ },
+ {
+  "text": "el",
+  "start": 31.607,
+  "end": 31.81,
+  "id": "w93"
+ },
+ {
+  "text": "dinero",
+  "start": 31.81,
+  "end": 32.16,
+  "id": "w94"
+ },
+ {
+  "text": "no",
+  "start": 32.16,
+  "end": 32.26,
+  "id": "w95"
+ },
+ {
+  "text": "se",
+  "start": 32.33,
+  "end": 32.41,
+  "id": "w96"
+ },
+ {
+  "text": "va",
+  "start": 32.5,
+  "end": 32.55,
+  "id": "w97"
+ },
+ {
+  "text": "solo",
+  "start": 32.55,
+  "end": 32.82,
+  "id": "w98"
+ },
+ {
+  "text": "en",
+  "start": 32.82,
+  "end": 32.94,
+  "id": "w99"
+ },
+ {
+  "text": "sueldos,",
+  "start": 32.95,
+  "end": 33.54,
+  "id": "w100"
+ },
+ {
+  "text": "guionistas,",
+  "start": 33.54,
+  "end": 34.34,
+  "id": "w101"
+ },
+ {
+  "text": "técnicos,",
+  "start": 34.34,
+  "end": 35.01,
+  "id": "w102"
+ },
+ {
+  "text": "platós,",
+  "start": 35.01,
+  "end": 35.68,
+  "id": "w103"
+ },
+ {
+  "text": "vestuario,",
+  "start": 35.68,
+  "end": 36.52,
+  "id": "w104"
+ },
+ {
+  "text": "y",
+  "start": 36.52,
+  "end": 36.697,
+  "id": "w105"
+ },
+ {
+  "text": "todo",
+  "start": 36.697,
+  "end": 36.873,
+  "id": "w106"
+ },
+ {
+  "text": "un",
+  "start": 36.873,
+  "end": 37.05,
+  "id": "w107"
+ },
+ {
+  "text": "montepinar",
+  "start": 37.05,
+  "end": 37.49,
+  "id": "w108"
+ },
+ {
+  "text": "que",
+  "start": 37.57,
+  "end": 37.65,
+  "id": "w109"
+ },
+ {
+  "text": "montar.",
+  "start": 37.74,
+  "end": 38.32,
+  "id": "w110"
+ },
+ {
+  "text": "Si",
+  "start": 38.32,
+  "end": 38.575,
+  "id": "w111"
+ },
+ {
+  "text": "se",
+  "start": 38.575,
+  "end": 38.83,
+  "id": "w112"
+ },
+ {
+  "text": "parece",
+  "start": 38.83,
+  "end": 38.92,
+  "id": "w113"
+ },
+ {
+  "text": "al",
+  "start": 38.92,
+  "end": 39.04,
+  "id": "w114"
+ },
+ {
+  "text": "resto",
+  "start": 39.04,
+  "end": 39.27,
+  "id": "w115"
+ },
+ {
+  "text": "de",
+  "start": 39.35,
+  "end": 39.44,
+  "id": "w116"
+ },
+ {
+  "text": "series",
+  "start": 39.52,
+  "end": 39.82,
+  "id": "w117"
+ },
+ {
+  "text": "de",
+  "start": 39.82,
+  "end": 39.94,
+  "id": "w118"
+ },
+ {
+  "text": "primetime,",
+  "start": 39.94,
+  "end": 40.62,
+  "id": "w119"
+ },
+ {
+  "text": "cada",
+  "start": 40.62,
+  "end": 40.86,
+  "id": "w120"
+ },
+ {
+  "text": "capítulo",
+  "start": 40.86,
+  "end": 41.34,
+  "id": "w121"
+ },
+ {
+  "text": "costaría",
+  "start": 41.34,
+  "end": 41.77,
+  "id": "w122"
+ },
+ {
+  "text": "cientos",
+  "start": 41.88,
+  "end": 42.24,
+  "id": "w123"
+ },
+ {
+  "text": "de",
+  "start": 42.24,
+  "end": 42.36,
+  "id": "w124"
+ },
+ {
+  "text": "miles",
+  "start": 42.36,
+  "end": 42.7,
+  "id": "w125"
+ },
+ {
+  "text": "de",
+  "start": 42.7,
+  "end": 42.8,
+  "id": "w126"
+ },
+ {
+  "text": "euros.",
+  "start": 42.8,
+  "end": 43.22,
+  "id": "w127"
+ },
+ {
+  "text": "Pero",
+  "start": 43.22,
+  "end": 43.495,
+  "id": "w128"
+ },
+ {
+  "text": "es",
+  "start": 43.495,
+  "end": 43.77,
+  "id": "w129"
+ },
+ {
+  "text": "una",
+  "start": 43.77,
+  "end": 43.8,
+  "id": "w130"
+ },
+ {
+  "text": "estimación,",
+  "start": 43.8,
+  "end": 44.56,
+  "id": "w131"
+ },
+ {
+  "text": "no",
+  "start": 44.56,
+  "end": 44.68,
+  "id": "w132"
+ },
+ {
+  "text": "un",
+  "start": 44.72,
+  "end": 44.8,
+  "id": "w133"
+ },
+ {
+  "text": "dato",
+  "start": 44.86,
+  "end": 45.08,
+  "id": "w134"
+ },
+ {
+  "text": "oficial.¿Tú",
+  "start": 45.08,
+  "end": 46.06,
+  "id": "w135"
+ },
+ {
+  "text": "cuánto",
+  "start": 46.18,
+  "end": 46.23,
+  "id": "w136"
+ },
+ {
+  "text": "crees",
+  "start": 46.31,
+  "end": 46.46,
+  "id": "w137"
+ },
+ {
+  "text": "que",
+  "start": 46.5,
+  "end": 46.66,
+  "id": "w138"
+ },
+ {
+  "text": "cuesta?",
+  "start": 46.66,
+  "end": 47.2,
+  "id": "w139"
+ },
+ {
+  "text": "Te",
+  "start": 47.2,
+  "end": 47.4,
+  "id": "w140"
+ },
+ {
+  "text": "leo",
+  "start": 47.4,
+  "end": 47.45,
+  "id": "w141"
+ },
+ {
+  "text": "en",
+  "start": 47.45,
+  "end": 47.65,
+  "id": "w142"
+ },
+ {
+  "text": "comentarios.",
+  "start": 47.65,
+  "end": 48.25,
+  "id": "w143"
+ }
+]
