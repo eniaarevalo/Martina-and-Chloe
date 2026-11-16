@@ -79,3 +79,8 @@ video-hora/assets/.premix.wav
 video-hora/assets/.mix-graph.txt
 video-hora/.hyperframes/
 video-hora/node_modules/
+video-cruces/voz-raw.wav
+video-cruces/assets/.premix.wav
+video-cruces/assets/.mix-graph.txt
+video-cruces/.hyperframes/
+video-cruces/node_modules/

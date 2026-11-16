@@ -1,0 +1,1178 @@
+[
+ {
+  "text": "¿Y",
+  "start": 0.05,
+  "end": 0.1,
+  "id": "w0"
+ },
+ {
+  "text": "si",
+  "start": 0.1,
+  "end": 0.27,
+  "id": "w1"
+ },
+ {
+  "text": "los",
+  "start": 0.27,
+  "end": 0.38,
+  "id": "w2"
+ },
+ {
+  "text": "vecinos",
+  "start": 0.38,
+  "end": 0.71,
+  "id": "w3"
+ },
+ {
+  "text": "de",
+  "start": 0.8,
+  "end": 0.89,
+  "id": "w4"
+ },
+ {
+  "text": "Desengaño",
+  "start": 0.89,
+  "end": 1.4,
+  "id": "w5"
+ },
+ {
+  "text": "21",
+  "start": 1.4,
+  "end": 1.74,
+  "id": "w6"
+ },
+ {
+  "text": "se",
+  "start": 1.74,
+  "end": 1.79,
+  "id": "w7"
+ },
+ {
+  "text": "cruzaran",
+  "start": 1.86,
+  "end": 2.27,
+  "id": "w8"
+ },
+ {
+  "text": "con",
+  "start": 2.33,
+  "end": 2.43,
+  "id": "w9"
+ },
+ {
+  "text": "los",
+  "start": 2.49,
+  "end": 2.64,
+  "id": "w10"
+ },
+ {
+  "text": "de",
+  "start": 2.64,
+  "end": 2.71,
+  "id": "w11"
+ },
+ {
+  "text": "Montepinar?",
+  "start": 2.77,
+  "end": 3.6,
+  "id": "w12"
+ },
+ {
+  "text": "Cuatro",
+  "start": 3.82,
+  "end": 4,
+  "id": "w13"
+ },
+ {
+  "text": "cruces",
+  "start": 4.09,
+  "end": 4.4,
+  "id": "w14"
+ },
+ {
+  "text": "que",
+  "start": 4.4,
+  "end": 4.53,
+  "id": "w15"
+ },
+ {
+  "text": "nunca",
+  "start": 4.62,
+  "end": 4.94,
+  "id": "w16"
+ },
+ {
+  "text": "viste.",
+  "start": 4.94,
+  "end": 5.3,
+  "id": "w17"
+ },
+ {
+  "text": "1.",
+  "start": 5.54,
+  "end": 5.74,
+  "id": "w18"
+ },
+ {
+  "text": "Antonio",
+  "start": 5.81,
+  "end": 6.22,
+  "id": "w19"
+ },
+ {
+  "text": "Recio",
+  "start": 6.22,
+  "end": 6.53,
+  "id": "w20"
+ },
+ {
+  "text": "y",
+  "start": 6.59,
+  "end": 6.62,
+  "id": "w21"
+ },
+ {
+  "text": "Mauri,",
+  "start": 6.62,
+  "end": 7.08,
+  "id": "w22"
+ },
+ {
+  "text": "vecinos",
+  "start": 7.08,
+  "end": 7.55,
+  "id": "w23"
+ },
+ {
+  "text": "de",
+  "start": 7.55,
+  "end": 7.67,
+  "id": "w24"
+ },
+ {
+  "text": "Rellano.",
+  "start": 7.68,
+  "end": 8.46,
+  "id": "w25"
+ },
+ {
+  "text": "Recio,",
+  "start": 8.72,
+  "end": 8.89,
+  "id": "w26"
+ },
+ {
+  "text": "yo",
+  "start": 8.99,
+  "end": 9.01,
+  "id": "w27"
+ },
+ {
+  "text": "soy",
+  "start": 9.01,
+  "end": 9.2,
+  "id": "w28"
+ },
+ {
+  "text": "un",
+  "start": 9.2,
+  "end": 9.31,
+  "id": "w29"
+ },
+ {
+  "text": "empresario",
+  "start": 9.31,
+  "end": 9.94,
+  "id": "w30"
+ },
+ {
+  "text": "respetable",
+  "start": 9.94,
+  "end": 10.51,
+  "id": "w31"
+ },
+ {
+  "text": "y",
+  "start": 10.58,
+  "end": 10.63,
+  "id": "w32"
+ },
+ {
+  "text": "no",
+  "start": 10.63,
+  "end": 10.75,
+  "id": "w33"
+ },
+ {
+  "text": "quiero",
+  "start": 10.75,
+  "end": 11.13,
+  "id": "w34"
+ },
+ {
+  "text": "cosas",
+  "start": 11.13,
+  "end": 11.43,
+  "id": "w35"
+ },
+ {
+  "text": "raras",
+  "start": 11.5,
+  "end": 11.73,
+  "id": "w36"
+ },
+ {
+  "text": "en",
+  "start": 11.77,
+  "end": 11.88,
+  "id": "w37"
+ },
+ {
+  "text": "mi",
+  "start": 11.88,
+  "end": 11.99,
+  "id": "w38"
+ },
+ {
+  "text": "escalera.",
+  "start": 12.02,
+  "end": 12.82,
+  "id": "w39"
+ },
+ {
+  "text": "Mauri,",
+  "start": 13.12,
+  "end": 13.32,
+  "id": "w40"
+ },
+ {
+  "text": "tranquilo.",
+  "start": 13.39,
+  "end": 14.24,
+  "id": "w41"
+ },
+ {
+  "text": "Antonio,",
+  "start": 14.72,
+  "end": 14.85,
+  "id": "w42"
+ },
+ {
+  "text": "que",
+  "start": 14.85,
+  "end": 15.06,
+  "id": "w43"
+ },
+ {
+  "text": "lo",
+  "start": 15.06,
+  "end": 15.19,
+  "id": "w44"
+ },
+ {
+  "text": "mío",
+  "start": 15.2,
+  "end": 15.4,
+  "id": "w45"
+ },
+ {
+  "text": "no",
+  "start": 15.4,
+  "end": 15.54,
+  "id": "w46"
+ },
+ {
+  "text": "se",
+  "start": 15.54,
+  "end": 15.68,
+  "id": "w47"
+ },
+ {
+  "text": "pega.",
+  "start": 15.68,
+  "end": 16.19,
+  "id": "w48"
+ },
+ {
+  "text": "Lo",
+  "start": 16.19,
+  "end": 16.5,
+  "id": "w49"
+ },
+ {
+  "text": "que",
+  "start": 16.5,
+  "end": 16.51,
+  "id": "w50"
+ },
+ {
+  "text": "se",
+  "start": 16.51,
+  "end": 16.77,
+  "id": "w51"
+ },
+ {
+  "text": "pega",
+  "start": 16.77,
+  "end": 16.88,
+  "id": "w52"
+ },
+ {
+  "text": "es",
+  "start": 16.88,
+  "end": 17,
+  "id": "w53"
+ },
+ {
+  "text": "tu",
+  "start": 17,
+  "end": 17.12,
+  "id": "w54"
+ },
+ {
+  "text": "olor",
+  "start": 17.12,
+  "end": 17.36,
+  "id": "w55"
+ },
+ {
+  "text": "a",
+  "start": 17.36,
+  "end": 17.42,
+  "id": "w56"
+ },
+ {
+  "text": "marisco.",
+  "start": 17.42,
+  "end": 18.1,
+  "id": "w57"
+ },
+ {
+  "text": "2.",
+  "start": 18.44,
+  "end": 18.5,
+  "id": "w58"
+ },
+ {
+  "text": "Berta",
+  "start": 18.56,
+  "end": 18.83,
+  "id": "w59"
+ },
+ {
+  "text": "Escobar",
+  "start": 18.83,
+  "end": 19.29,
+  "id": "w60"
+ },
+ {
+  "text": "y",
+  "start": 19.29,
+  "end": 19.35,
+  "id": "w61"
+ },
+ {
+  "text": "Paloma",
+  "start": 19.35,
+  "end": 19.75,
+  "id": "w62"
+ },
+ {
+  "text": "Cuesta,",
+  "start": 19.75,
+  "end": 20.23,
+  "id": "w63"
+ },
+ {
+  "text": "en",
+  "start": 20.3,
+  "end": 20.41,
+  "id": "w64"
+ },
+ {
+  "text": "la",
+  "start": 20.41,
+  "end": 20.54,
+  "id": "w65"
+ },
+ {
+  "text": "misma",
+  "start": 20.54,
+  "end": 20.87,
+  "id": "w66"
+ },
+ {
+  "text": "peluquería.",
+  "start": 20.93,
+  "end": 21.8,
+  "id": "w67"
+ },
+ {
+  "text": "Paloma,",
+  "start": 22.06,
+  "end": 22.29,
+  "id": "w68"
+ },
+ {
+  "text": "mi",
+  "start": 22.33,
+  "end": 22.4,
+  "id": "w69"
+ },
+ {
+  "text": "marido",
+  "start": 22.4,
+  "end": 22.74,
+  "id": "w70"
+ },
+ {
+  "text": "es",
+  "start": 22.74,
+  "end": 22.78,
+  "id": "w71"
+ },
+ {
+  "text": "el",
+  "start": 22.86,
+  "end": 22.96,
+  "id": "w72"
+ },
+ {
+  "text": "presidente",
+  "start": 22.96,
+  "end": 23.54,
+  "id": "w73"
+ },
+ {
+  "text": "de",
+  "start": 23.54,
+  "end": 23.65,
+  "id": "w74"
+ },
+ {
+  "text": "la",
+  "start": 23.65,
+  "end": 23.76,
+  "id": "w75"
+ },
+ {
+  "text": "comunidad.",
+  "start": 23.76,
+  "end": 24.49,
+  "id": "w76"
+ },
+ {
+  "text": "Berta,",
+  "start": 24.88,
+  "end": 24.97,
+  "id": "w77"
+ },
+ {
+  "text": "pues",
+  "start": 25.15,
+  "end": 25.23,
+  "id": "w78"
+ },
+ {
+  "text": "el",
+  "start": 25.23,
+  "end": 25.36,
+  "id": "w79"
+ },
+ {
+  "text": "mío",
+  "start": 25.36,
+  "end": 25.55,
+  "id": "w80"
+ },
+ {
+  "text": "tiene",
+  "start": 25.55,
+  "end": 25.87,
+  "id": "w81"
+ },
+ {
+  "text": "una",
+  "start": 25.93,
+  "end": 26.07,
+  "id": "w82"
+ },
+ {
+  "text": "empresa",
+  "start": 26.07,
+  "end": 26.53,
+  "id": "w83"
+ },
+ {
+  "text": "de",
+  "start": 26.53,
+  "end": 26.66,
+  "id": "w84"
+ },
+ {
+  "text": "mariscos.",
+  "start": 26.66,
+  "end": 27.44,
+  "id": "w85"
+ },
+ {
+  "text": "Ylas",
+  "start": 27.5,
+  "end": 27.7,
+  "id": "w86"
+ },
+ {
+  "text": "dos",
+  "start": 27.71,
+  "end": 27.9,
+  "id": "w87"
+ },
+ {
+  "text": "a",
+  "start": 27.9,
+  "end": 27.96,
+  "id": "w88"
+ },
+ {
+  "text": "la",
+  "start": 27.96,
+  "end": 28.09,
+  "id": "w89"
+ },
+ {
+  "text": "vez,",
+  "start": 28.09,
+  "end": 28.42,
+  "id": "w90"
+ },
+ {
+  "text": "y",
+  "start": 28.42,
+  "end": 28.43,
+  "id": "w91"
+ },
+ {
+  "text": "ninguno",
+  "start": 28.48,
+  "end": 28.95,
+  "id": "w92"
+ },
+ {
+  "text": "me",
+  "start": 28.95,
+  "end": 29.07,
+  "id": "w93"
+ },
+ {
+  "text": "hace",
+  "start": 29.08,
+  "end": 29.35,
+  "id": "w94"
+ },
+ {
+  "text": "ni",
+  "start": 29.35,
+  "end": 29.48,
+  "id": "w95"
+ },
+ {
+  "text": "caso.",
+  "start": 29.48,
+  "end": 30.02,
+  "id": "w96"
+ },
+ {
+  "text": "3.",
+  "start": 30.28,
+  "end": 30.44,
+  "id": "w97"
+ },
+ {
+  "text": "Doña",
+  "start": 30.55,
+  "end": 30.72,
+  "id": "w98"
+ },
+ {
+  "text": "Fina",
+  "start": 30.72,
+  "end": 30.99,
+  "id": "w99"
+ },
+ {
+  "text": "y",
+  "start": 30.99,
+  "end": 31,
+  "id": "w100"
+ },
+ {
+  "text": "Vicenta,",
+  "start": 31.08,
+  "end": 31.7,
+  "id": "w101"
+ },
+ {
+  "text": "en",
+  "start": 31.7,
+  "end": 31.84,
+  "id": "w102"
+ },
+ {
+  "text": "el",
+  "start": 31.84,
+  "end": 31.98,
+  "id": "w103"
+ },
+ {
+  "text": "mismo",
+  "start": 31.98,
+  "end": 32.33,
+  "id": "w104"
+ },
+ {
+  "text": "banco",
+  "start": 32.33,
+  "end": 32.68,
+  "id": "w105"
+ },
+ {
+  "text": "del",
+  "start": 32.68,
+  "end": 32.89,
+  "id": "w106"
+ },
+ {
+  "text": "parque.",
+  "start": 32.89,
+  "end": 33.55,
+  "id": "w107"
+ },
+ {
+  "text": "Fina,",
+  "start": 33.8,
+  "end": 33.95,
+  "id": "w108"
+ },
+ {
+  "text": "pero",
+  "start": 34.07,
+  "end": 34.22,
+  "id": "w109"
+ },
+ {
+  "text": "hija,",
+  "start": 34.22,
+  "end": 34.61,
+  "id": "w110"
+ },
+ {
+  "text": "espabila,",
+  "start": 34.61,
+  "end": 35.27,
+  "id": "w111"
+ },
+ {
+  "text": "que",
+  "start": 35.27,
+  "end": 35.47,
+  "id": "w112"
+ },
+ {
+  "text": "se",
+  "start": 35.47,
+  "end": 35.59,
+  "id": "w113"
+ },
+ {
+  "text": "te",
+  "start": 35.66,
+  "end": 35.73,
+  "id": "w114"
+ },
+ {
+  "text": "pasa",
+  "start": 35.73,
+  "end": 36,
+  "id": "w115"
+ },
+ {
+  "text": "el",
+  "start": 36,
+  "end": 36.07,
+  "id": "w116"
+ },
+ {
+  "text": "arroz.",
+  "start": 36.13,
+  "end": 36.76,
+  "id": "w117"
+ },
+ {
+  "text": "Vicenta,",
+  "start": 36.98,
+  "end": 37.39,
+  "id": "w118"
+ },
+ {
+  "text": "ay,¿usted",
+  "start": 37.4,
+  "end": 38.09,
+  "id": "w119"
+ },
+ {
+  "text": "cree?",
+  "start": 38.09,
+  "end": 38.61,
+  "id": "w120"
+ },
+ {
+  "text": "Vicenta",
+  "start": 38.84,
+  "end": 39.04,
+  "id": "w121"
+ },
+ {
+  "text": "sale",
+  "start": 39.11,
+  "end": 39.28,
+  "id": "w122"
+ },
+ {
+  "text": "de",
+  "start": 39.28,
+  "end": 39.4,
+  "id": "w123"
+ },
+ {
+  "text": "ahí",
+  "start": 39.4,
+  "end": 39.55,
+  "id": "w124"
+ },
+ {
+  "text": "con",
+  "start": 39.64,
+  "end": 39.76,
+  "id": "w125"
+ },
+ {
+  "text": "más",
+  "start": 39.76,
+  "end": 39.94,
+  "id": "w126"
+ },
+ {
+  "text": "carácter",
+  "start": 39.94,
+  "end": 40.42,
+  "id": "w127"
+ },
+ {
+  "text": "que",
+  "start": 40.42,
+  "end": 40.6,
+  "id": "w128"
+ },
+ {
+  "text": "en",
+  "start": 40.6,
+  "end": 40.72,
+  "id": "w129"
+ },
+ {
+  "text": "diez",
+  "start": 40.72,
+  "end": 40.96,
+  "id": "w130"
+ },
+ {
+  "text": "temporadas.",
+  "start": 40.96,
+  "end": 41.85,
+  "id": "w131"
+ },
+ {
+  "text": "Y",
+  "start": 41.85,
+  "end": 42.14,
+  "id": "w132"
+ },
+ {
+  "text": "4.",
+  "start": 42.14,
+  "end": 42.3,
+  "id": "w133"
+ },
+ {
+  "text": "Juan",
+  "start": 42.41,
+  "end": 42.55,
+  "id": "w134"
+ },
+ {
+  "text": "Cuesta",
+  "start": 42.56,
+  "end": 42.85,
+  "id": "w135"
+ },
+ {
+  "text": "y",
+  "start": 42.94,
+  "end": 42.98,
+  "id": "w136"
+ },
+ {
+  "text": "Enrique",
+  "start": 42.98,
+  "end": 43.42,
+  "id": "w137"
+ },
+ {
+  "text": "Pastor,",
+  "start": 43.42,
+  "end": 43.92,
+  "id": "w138"
+ },
+ {
+  "text": "elecciones",
+  "start": 43.92,
+  "end": 44.55,
+  "id": "w139"
+ },
+ {
+  "text": "a",
+  "start": 44.55,
+  "end": 44.57,
+  "id": "w140"
+ },
+ {
+  "text": "presidente.",
+  "start": 44.63,
+  "end": 45.5,
+  "id": "w141"
+ },
+ {
+  "text": "Cuesta,",
+  "start": 45.88,
+  "end": 46.05,
+  "id": "w142"
+ },
+ {
+  "text": "como",
+  "start": 46.15,
+  "end": 46.32,
+  "id": "w143"
+ },
+ {
+  "text": "presidente,",
+  "start": 46.32,
+  "end": 47.12,
+  "id": "w144"
+ },
+ {
+  "text": "propongo",
+  "start": 47.12,
+  "end": 47.66,
+  "id": "w145"
+ },
+ {
+  "text": "votar.",
+  "start": 47.66,
+  "end": 48.24,
+  "id": "w146"
+ },
+ {
+  "text": "Pastor,",
+  "start": 48.65,
+  "end": 48.78,
+  "id": "w147"
+ },
+ {
+  "text": "perdone,",
+  "start": 48.78,
+  "end": 49.38,
+  "id": "w148"
+ },
+ {
+  "text": "el",
+  "start": 49.38,
+  "end": 49.45,
+  "id": "w149"
+ },
+ {
+  "text": "presidente",
+  "start": 49.51,
+  "end": 50.2,
+  "id": "w150"
+ },
+ {
+  "text": "soy",
+  "start": 50.2,
+  "end": 50.4,
+  "id": "w151"
+ },
+ {
+  "text": "yo.",
+  "start": 50.4,
+  "end": 50.73,
+  "id": "w152"
+ },
+ {
+  "text": "Pero",
+  "start": 50.73,
+  "end": 51.25,
+  "id": "w153"
+ },
+ {
+  "text": "voto,",
+  "start": 51.25,
+  "end": 51.5,
+  "id": "w154"
+ },
+ {
+  "text": "faltaría",
+  "start": 51.5,
+  "end": 52.06,
+  "id": "w155"
+ },
+ {
+  "text": "más.",
+  "start": 52.06,
+  "end": 52.52,
+  "id": "w156"
+ },
+ {
+  "text": "Recuento,",
+  "start": 52.82,
+  "end": 53.16,
+  "id": "w157"
+ },
+ {
+  "text": "un",
+  "start": 53.16,
+  "end": 53.29,
+  "id": "w158"
+ },
+ {
+  "text": "voto",
+  "start": 53.29,
+  "end": 53.54,
+  "id": "w159"
+ },
+ {
+  "text": "para",
+  "start": 53.62,
+  "end": 53.8,
+  "id": "w160"
+ },
+ {
+  "text": "Cuesta,",
+  "start": 53.8,
+  "end": 54.32,
+  "id": "w161"
+ },
+ {
+  "text": "un",
+  "start": 54.32,
+  "end": 54.45,
+  "id": "w162"
+ },
+ {
+  "text": "voto",
+  "start": 54.45,
+  "end": 54.7,
+  "id": "w163"
+ },
+ {
+  "text": "para",
+  "start": 54.7,
+  "end": 54.95,
+  "id": "w164"
+ },
+ {
+  "text": "Pastor.",
+  "start": 54.96,
+  "end": 55.59,
+  "id": "w165"
+ },
+ {
+  "text": "Cada",
+  "start": 55.59,
+  "end": 55.87,
+  "id": "w166"
+ },
+ {
+  "text": "uno",
+  "start": 55.87,
+  "end": 56.04,
+  "id": "w167"
+ },
+ {
+  "text": "se",
+  "start": 56.04,
+  "end": 56.16,
+  "id": "w168"
+ },
+ {
+  "text": "ha",
+  "start": 56.16,
+  "end": 56.3,
+  "id": "w169"
+ },
+ {
+  "text": "votado",
+  "start": 56.3,
+  "end": 56.68,
+  "id": "w170"
+ },
+ {
+  "text": "a",
+  "start": 56.68,
+  "end": 56.74,
+  "id": "w171"
+ },
+ {
+  "text": "sí",
+  "start": 56.74,
+  "end": 56.86,
+  "id": "w172"
+ },
+ {
+  "text": "mismo.",
+  "start": 56.87,
+  "end": 57.39,
+  "id": "w173"
+ },
+ {
+  "text": "Empate,",
+  "start": 57.7,
+  "end": 57.94,
+  "id": "w174"
+ },
+ {
+  "text": "y",
+  "start": 57.97,
+  "end": 58,
+  "id": "w175"
+ },
+ {
+  "text": "lo",
+  "start": 58,
+  "end": 58.13,
+  "id": "w176"
+ },
+ {
+  "text": "mejor,",
+  "start": 58.13,
+  "end": 58.59,
+  "id": "w177"
+ },
+ {
+  "text": "los",
+  "start": 58.59,
+  "end": 58.79,
+  "id": "w178"
+ },
+ {
+  "text": "dos",
+  "start": 58.79,
+  "end": 58.98,
+  "id": "w179"
+ },
+ {
+  "text": "los",
+  "start": 58.99,
+  "end": 59.19,
+  "id": "w180"
+ },
+ {
+  "text": "interpreta",
+  "start": 59.19,
+  "end": 59.84,
+  "id": "w181"
+ },
+ {
+  "text": "el",
+  "start": 59.84,
+  "end": 59.97,
+  "id": "w182"
+ },
+ {
+  "text": "mismo",
+  "start": 60.03,
+  "end": 60.31,
+  "id": "w183"
+ },
+ {
+  "text": "actor,",
+  "start": 60.31,
+  "end": 60.77,
+  "id": "w184"
+ },
+ {
+  "text": "José",
+  "start": 60.77,
+  "end": 61.03,
+  "id": "w185"
+ },
+ {
+  "text": "Luis",
+  "start": 61.03,
+  "end": 61.29,
+  "id": "w186"
+ },
+ {
+  "text": "Gil.¿Qué",
+  "start": 61.29,
+  "end": 62,
+  "id": "w187"
+ },
+ {
+  "text": "cruce",
+  "start": 62.13,
+  "end": 62.23,
+  "id": "w188"
+ },
+ {
+  "text": "te",
+  "start": 62.27,
+  "end": 62.33,
+  "id": "w189"
+ },
+ {
+  "text": "gustaría",
+  "start": 62.33,
+  "end": 62.71,
+  "id": "w190"
+ },
+ {
+  "text": "ver?",
+  "start": 62.8,
+  "end": 63.08,
+  "id": "w191"
+ },
+ {
+  "text": "Te",
+  "start": 63.08,
+  "end": 63.18,
+  "id": "w192"
+ },
+ {
+  "text": "leo",
+  "start": 63.18,
+  "end": 63.33,
+  "id": "w193"
+ },
+ {
+  "text": "en",
+  "start": 63.33,
+  "end": 63.43,
+  "id": "w194"
+ },
+ {
+  "text": "comentarios.",
+  "start": 63.43,
+  "end": 64.27,
+  "id": "w195"
+ }
+]
