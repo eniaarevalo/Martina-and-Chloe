@@ -36,6 +36,7 @@ PORTADAS = {
     "video-rodaje":     (9.5,  ["LO QUE NO VISTE", "DE LQSA:", "DETRÁS DE CÁMARAS"], "DETRÁS DE CÁMARAS", "#ef4444", "LA QUE SE AVECINA"),
     "video-maite":      (1.6,  ["¿Y SI ESTE BEBÉ", "NUNCA HUBIERA", "NACIDO?"], "NACIDO?", "#a855f7", "LA QUE SE AVECINA"),
     "video-cruces2":    (52.78, ["4 CRUCES QUE", "NUNCA VISTE", "PARTE 2"], "PARTE 2", "#ef4444", "AQUÍ NO HAY QUIEN VIVA × LQSA"),
+    "video-vicente":    (4.2,  ["¿Y SI VICENTE", "MAROTO ENTRENARA", "AL ATLÉTICO?"], "AL ATLÉTICO?", "#ef4444", "LA QUE SE AVECINA"),
 }
 
 HTML = """<!doctype html><html><head><meta charset="utf-8"><style>
