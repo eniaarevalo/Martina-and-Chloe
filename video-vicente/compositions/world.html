@@ -1,0 +1,926 @@
+<template>
+<style>
+#root { position:absolute; inset:0; overflow:hidden; background:#07080b; font-family:Inter, sans-serif; }
+#grid { position:absolute; inset:-200px; background-color:#08090d;
+  background-image: linear-gradient(rgba(255,255,255,0.045) 2px, transparent 2px),
+                    linear-gradient(90deg, rgba(255,255,255,0.045) 2px, transparent 2px);
+  background-size: 90px 90px; }
+#glow { position:absolute; left:-200px; right:-200px; bottom:-500px; height:1200px;
+  background: radial-gradient(ellipse at 50% 70%, rgba(92,108,255,0.38), rgba(46,196,182,0.12) 45%, transparent 70%); }
+#scrim { position:absolute; left:0; right:0; top:0; height:520px; pointer-events:none;
+  background:linear-gradient(rgba(7,8,11,0.97) 0%, rgba(7,8,11,0.94) 62%, rgba(7,8,11,0) 100%); }
+#shake { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+#wd { position:absolute; left:0; top:0; width:2200px; height:6600px; }
+.room { background:linear-gradient(#13151c,#0f1117); border:6px solid rgba(255,255,255,0.10); border-bottom:14px solid rgba(255,255,255,0.16); border-radius:10px; }
+.ghost { font:900 140px Inter; color:rgba(255,255,255,0.055); letter-spacing:-4px; }
+.wall { border:10px solid rgba(255,255,255,0.12); border-radius:16px; }
+.parapet { background:#1a1d26; border-top:8px solid rgba(255,255,255,0.18); }
+.hut { background:#151821; border:6px solid rgba(255,255,255,0.12); border-radius:18px 18px 0 0; }
+.hutdoor { position:absolute; left:70px; bottom:0; width:140px; height:300px; background:#0b0c10; border-radius:70px 70px 0 0; }
+.street { background:linear-gradient(#14161d, #07080b); border-top:10px solid rgba(255,255,255,0.12); }
+#bb { background:#ffffff; border-radius:60px; box-shadow:0 40px 120px rgba(0,0,0,0.5); }
+#bb-posts { background:repeating-linear-gradient(90deg, transparent 0 250px, #2a2e3a 250px 290px); }
+.bbface { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.bbt1, .bbt2 { font:900 210px Inter; color:#0f1115; line-height:0.95; letter-spacing:-6px; }
+.bbt2 { color:#ef4444; }
+.bbsub { font:700 90px Inter; color:#666; margin-top:20px; }
+.card { border-radius:40px; box-shadow:0 24px 60px rgba(0,0,0,0.45); overflow:visible; }
+.stamp { font:900 64px Inter; border:8px solid; border-radius:20px; padding:4px 22px; background:rgba(255,255,255,0.92); }
+.pill { font:900 50px Inter; padding:6px 24px; border-radius:999px; white-space:nowrap; }
+.badge { position:absolute; left:0; top:0; width:140px; height:140px; border-radius:50%; font:900 96px Inter;
+  color:#0f1115; text-align:center; line-height:140px; }
+.htitle { position:absolute; left:170px; top:14px; font:900 100px Inter; color:#fff; letter-spacing:-2px; white-space:nowrap; }
+.doorframe { position:absolute; inset:0; background:#2a1c12; border-radius:200px 200px 0 0; border:14px solid #5a3b22; }
+.doorleaf { position:absolute; top:40px; bottom:0; left:24px; width:186px; background:linear-gradient(90deg,#8a5a34,#a06a3e);
+  border-radius:150px 0 0 0; border:6px solid #5a3b22; }
+.doorleaf.r { left:auto; right:24px; border-radius:0 150px 0 0; }
+.counter { background:#d9d4c7; border-radius:16px 16px 0 0; }
+.counter-top { position:absolute; left:-20px; right:-20px; top:-26px; height:36px; background:#a58a5c; border-radius:12px; }
+.counter-sign { position:absolute; left:0; right:0; top:70px; text-align:center; font:900 72px Inter; color:#0f1115; }
+.desktop { position:absolute; left:0; right:0; top:0; height:44px; background:#a07a4c; border-radius:14px; }
+.deskbody { position:absolute; left:30px; right:30px; top:44px; bottom:0; background:#6e5233; border-radius:0 0 12px 12px; }
+.drawer { position:absolute; left:80px; right:80px; top:90px; height:170px; background:#8b6840; border:6px solid #4e3a22; border-radius:12px; }
+.handle { position:absolute; left:50%; top:60px; width:120px; height:30px; margin-left:-60px; background:#e8d3a8; border-radius:15px; }
+.dust { border-radius:50%; background:#cfc7b8; opacity:0; }
+.chathead { height:120px; background:#1f2430; border-radius:40px 40px 0 0; display:flex; align-items:center; padding-left:40px; }
+.chathead .dot { width:26px; height:26px; border-radius:50%; background:#22c55e; margin-right:20px; }
+.typing { position:absolute; left:40px; top:180px; background:#fff; border-radius:30px; padding:22px 30px; display:flex; gap:14px; opacity:0; }
+.typing span { width:22px; height:22px; border-radius:50%; background:#9aa3b2; display:block; }
+.bubble { position:absolute; background:#fff; border-radius:34px; padding:26px 34px; box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+.ch, .qc, .pc, .cc { opacity:0; }
+.avatar { position:relative; border-radius:50%; overflow:hidden; background:#e8ecf4; }
+.over { position:absolute; left:0; top:0; }
+.badge .over { width:100%; text-align:center; }
+.ph { border:6px dashed rgba(255,255,255,0.25); border-radius:40px; }
+.sticker { border-radius:50%; background:#fff; box-shadow:0 14px 30px rgba(0,0,0,0.35); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; }
+.stlab { font:900 30px Inter; color:#0f1115; margin-top:-4px; }
+.xdot { border-radius:50%; background:#ef4444; display:flex; align-items:center; justify-content:center; }
+.bubble.big { padding:30px 40px; box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+.tail { position:absolute; left:120px; top:-28px; width:0; height:0; border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:34px solid #fff; }
+.tail.l { left:-30px; top:auto; bottom:30px; border-left:none; border-bottom:24px solid transparent; border-top:24px solid transparent; border-right:34px solid #fff; }
+.sofa { background:#3b3f73; border-radius:60px 60px 20px 20px; border-top:60px solid #4b4f8a; }
+.lamp { border-left:10px solid #555a66; margin-left:40px; }
+#vc-sign { border-radius:30px; background:#141621; border:8px solid #3a3f55; text-align:center; font:900 96px Inter; line-height:114px; color:#7a809c; }
+#vc-on { width:100%; color:#ff4fd8; text-shadow:0 0 18px rgba(255,79,216,0.7); }
+.tape { position:absolute; width:48px; height:100px; border-radius:6px; box-shadow:inset 0 -18px 0 rgba(0,0,0,0.25); }
+#shelves { background:#3a2a1c; border-radius:16px; border:10px solid #5a4028; }
+#tv { background:#2a2e3a; border-radius:60px; box-shadow:0 30px 80px rgba(0,0,0,0.5); }
+#tv .screen { position:absolute; left:40px; top:40px; right:170px; bottom:40px; border-radius:40px; background:#0b0d14;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; }
+#tv .ant { position:absolute; top:-80px; width:10px; height:100px; background:#8b93a7; border-radius:5px; }
+#tv .a1 { left:330px; transform-origin:50% 100%; rotate:-25deg; }
+#tv .a2 { left:520px; transform-origin:50% 100%; rotate:25deg; }
+#tv .knob { position:absolute; right:50px; width:80px; height:80px; border-radius:50%; background:#8b93a7; }
+#tv .k1 { top:120px; } #tv .k2 { top:260px; }
+.cbox { position:absolute; left:80px; right:80px; top:240px; height:250px; border-radius:40px; background:#f1f3f6;
+  display:flex; align-items:center; gap:36px; padding-left:40px; }
+.cav { width:170px; height:170px; border-radius:50%; background:#6366f1; display:flex; align-items:center; justify-content:center; flex:none; }
+.caret { display:inline-block; width:10px; height:110px; background:#0f1115; vertical-align:-14px; margin-left:8px; }
+.cbtn { position:absolute; right:80px; bottom:70px; padding:24px 70px; border-radius:999px; background:#15803d; color:#fff; font:900 100px Inter; }
+
+.room { background:rgba(255,255,255,0.025); border:4px solid rgba(255,255,255,0.07); border-radius:40px; }
+.mile { border-radius:999px; background:#0f172a; border:6px solid #fff; color:#fff; font:900 42px Inter; text-align:center; line-height:58px; white-space:nowrap; }
+.htitle { font-size:80px; top:26px; }
+.stampbox { font:900 100px Inter; color:#ef4444; border:12px solid #ef4444; border-radius:26px; background:rgba(255,255,255,0.94);
+  display:flex; align-items:center; justify-content:center; letter-spacing:-2px; white-space:nowrap; }
+.ntag { border-radius:14px; background:#0f172a; border:4px solid #fff; color:#fff; font:900 34px Inter; text-align:center; line-height:52px; white-space:nowrap; }
+.pitch { border-radius:30px; background:repeating-linear-gradient(90deg,#15803d 0 120px,#16a34a 120px 240px); opacity:0.55; }
+.pitch .pl1 { position:absolute; left:50%; top:0; bottom:0; width:8px; margin-left:-4px; background:rgba(255,255,255,0.7); }
+.pitch .pl2 { position:absolute; left:50%; top:50%; width:220px; height:220px; margin:-110px 0 0 -110px; border:8px solid rgba(255,255,255,0.7); border-radius:50%; }
+.sofa2 .sb2 { position:absolute; left:30px; right:30px; top:0; height:130px; border-radius:40px 40px 10px 10px; filter:brightness(1.15); }
+.sofa2 .ss { position:absolute; left:10px; right:10px; top:110px; height:90px; border-radius:24px; }
+.sofa2 .sa { position:absolute; top:70px; width:70px; height:140px; border-radius:30px; filter:brightness(0.85); }
+.sofa2 .sa.l { left:0; } .sofa2 .sa.r { right:0; }
+.spill { border-radius:999px; padding:6px 30px; background:repeating-linear-gradient(90deg,#c8102e 0 40px,#ffffff 40px 80px); border:6px solid #1d4ed8; white-space:nowrap; }
+.spill span { font-weight:900; color:#fff; -webkit-text-stroke:3px #1d4ed8; paint-order:stroke fill; letter-spacing:-1px; }
+.cone { clip-path:polygon(50% 0, 100% 100%, 0 100%); background:linear-gradient(#fb923c,#ea580c); }
+.blanket { border-radius:20px; background:repeating-linear-gradient(45deg,#a78bfa 0 20px,#c4b5fd 20px 40px); }
+.lie { position:absolute; left:0; top:0; width:260px; height:260px; transform:rotate(-90deg); transform-origin:50% 50%; }
+.zz { font:900 70px Inter; color:#a5b4fc; text-align:center; }
+.board { border-radius:30px; background:#065f46; border:12px solid #e2e8f0; overflow:hidden; }
+.dot { position:absolute; width:60px; height:60px; border-radius:50%; background:#c8102e; border:6px solid #fff; }
+.bsofa { position:absolute; right:40px; bottom:40px; width:150px; height:150px; border-radius:30px; background:#7c2d12; display:flex; align-items:center; justify-content:center; opacity:0; }
+.bench2 .roof { position:absolute; left:0; right:0; top:0; height:150px; border-radius:30px 30px 0 0; background:rgba(186,230,253,0.35); border:8px solid #94a3b8; }
+.bench2 .seat { position:absolute; left:20px; right:20px; top:210px; height:40px; border-radius:12px; background:#64748b; }
+.bench2 .lg { position:absolute; top:150px; width:16px; height:170px; background:#94a3b8; }
+.bench2 .lg.l { left:20px; } .bench2 .lg.r { right:20px; }
+.footr { border-radius:24px; background:#991b1b; }
+.goal { border:12px solid #f8fafc; border-bottom:none; border-radius:10px 10px 0 0;
+  background:repeating-linear-gradient(0deg, rgba(255,255,255,0.15) 0 3px, transparent 3px 30px), repeating-linear-gradient(90deg, rgba(255,255,255,0.15) 0 3px, transparent 3px 30px); }
+.sct { position:absolute; top:20px; width:50%; text-align:center; font:900 40px Inter; color:#475569; }
+.sct.l { left:0; color:#c8102e; } .sct.r { right:0; }
+.scn { position:absolute; left:0; right:0; top:70px; text-align:center; }
+.scn span { font:900 110px Inter; color:#94a3b8; margin:0 40px; vertical-align:top; }
+.backdrop { border-radius:24px; background:repeating-linear-gradient(45deg,#c8102e 0 60px,#b91c1c 60px 120px); opacity:0.35; }
+.ptable { border-radius:16px; background:#1e293b; border-top:10px solid #475569; }
+.flash { border-radius:50%; background:radial-gradient(circle,#fff,rgba(255,255,255,0) 70%); }
+.sb { background:#fff; border:7px solid; border-radius:36px; padding:54px 30px 26px; box-shadow:0 18px 40px rgba(0,0,0,0.45); }
+.sb:after { content:""; position:absolute; bottom:-34px; width:0; height:0; border-left:24px solid transparent; border-right:24px solid transparent; border-top:34px solid #fff; }
+.sb.l:after { left:90px; } .sb.r:after { right:110px; } .sb.c:after { left:50%; margin-left:-24px; }
+.who { position:absolute; left:26px; top:-30px; padding:4px 22px; border-radius:999px; color:#fff; font:900 38px Inter; white-space:nowrap; }
+.sbt { font-weight:900; color:#0f1115; line-height:1.15; text-align:center; }
+.kc { opacity:0; }
+.polh svg { flex:none; }
+.polh { position:absolute; left:40px; right:40px; top:40px; display:flex; align-items:center; gap:18px; font:900 50px Inter; color:#0f1115; white-space:nowrap; }
+.poll { position:absolute; left:40px; right:40px; height:76px; display:flex; align-items:center; gap:20px; }
+.poll span { width:420px; flex:none; font:900 42px Inter; color:#0f1115; white-space:nowrap; }
+.poll i { flex:1; height:44px; border-radius:22px; }
+.ctt { position:absolute; left:40px; top:52px; font:800 50px Inter; color:#0f1115; white-space:nowrap; }
+.pubb { position:absolute; right:30px; top:40px; padding:12px 40px; border-radius:999px; background:#15803d; color:#fff; font:900 56px Inter; }
+</style>
+<div id="root" data-composition-id="world" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+  <div id="grid" data-layout-ignore></div>
+  <div id="glow" data-layout-ignore></div>
+  <div id="particles" data-layout-ignore><div class="pt" data-layout-ignore style="position:absolute;left:20px;top:60px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:157px;top:323px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:294px;top:586px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:431px;top:849px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:568px;top:1112px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:705px;top:1375px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:842px;top:1638px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:979px;top:101px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:76px;top:364px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:213px;top:627px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:350px;top:890px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:487px;top:1153px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:624px;top:1416px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:761px;top:1679px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:898px;top:142px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:1035px;top:405px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:132px;top:668px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:269px;top:931px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:406px;top:1194px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:543px;top:1457px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:680px;top:1720px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:817px;top:183px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.09)"></div><div class="pt" data-layout-ignore style="position:absolute;left:954px;top:446px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.12)"></div><div class="pt" data-layout-ignore style="position:absolute;left:51px;top:709px;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.15)"></div><div class="pt" data-layout-ignore style="position:absolute;left:188px;top:972px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.06)"></div><div class="pt" data-layout-ignore style="position:absolute;left:325px;top:1235px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)"></div></div>
+  <div id="shake">
+    <div id="wd">
+      <div class="room" data-layout-ignore style="position:absolute;left:50px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:120px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:1420px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:2720px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:50px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<div class="room" data-layout-ignore style="position:absolute;left:1110px;top:4020px;width:1040px;height:1150px;z-index:0;"></div>
+<svg id="roadsvg" data-layout-ignore style="position:absolute;left:0px;top:0px;width:2200px;height:5300px;z-index:1;overflow:visible" viewBox="0 0 2200 5300">
+      <defs><linearGradient id="rb" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="5200">
+        <stop offset="0" stop-color="#ef4444"/><stop offset="0.5" stop-color="#f8fafc"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="#262a35" stroke-width="54" fill="none" stroke-linejoin="round"/>
+      <path d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="rgba(255,255,255,0.18)" stroke-width="5" fill="none" stroke-dasharray="26 22" stroke-linejoin="round"/>
+      <path id="road" d="M 70 1272 L 2130 1272 L 2130 2572 L 70 2572 L 70 3872 L 2130 3872 L 2130 5172 L 70 5172" stroke="url(#rb)" stroke-width="16" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
+<div id="ti11630" class="mile" data-layout-ignore style="position:absolute;left:1370px;top:2606px;width:520px;height:70px;z-index:2;">CRUCE IMAGINADO</div>
+<div id="ti1570" class="mile" data-layout-ignore style="position:absolute;left:310px;top:2606px;width:520px;height:70px;z-index:2;">CRUCE IMAGINADO</div>
+<div id="ti2570" class="mile" data-layout-ignore style="position:absolute;left:310px;top:3906px;width:520px;height:70px;z-index:2;">CRUCE IMAGINADO</div>
+<div id="ti21630" class="mile" data-layout-ignore style="position:absolute;left:1370px;top:3906px;width:520px;height:70px;z-index:2;">CRUCE IMAGINADO</div>
+<div id="ti31630" class="mile" data-layout-ignore style="position:absolute;left:1370px;top:5206px;width:520px;height:70px;z-index:2;">CRUCE IMAGINADO</div>
+<div id="pt0" class="pitch" data-layout-ignore style="position:absolute;left:90px;top:585px;width:960px;height:700px;z-index:1;">
+      <i class="pl1"></i><i class="pl2"></i></div>
+<div id="sf0" class="sofa2" data-layout-ignore style="position:absolute;left:360px;top:1022px;width:420px;height:230px;z-index:3;opacity:0">
+      <i class="sb2" style="background:#7c2d12"></i></div>
+<div id="sf0f" class="sofa2" data-layout-ignore style="position:absolute;left:360px;top:1022px;width:420px;height:230px;z-index:7;opacity:0">
+      <i class="ss" style="background:#7c2d12"></i>
+      <i class="sa l" style="background:#7c2d12"></i><i class="sa r" style="background:#7c2d12"></i></div>
+<svg id="vi0" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
+  style="position:absolute;left:432px;top:738px;overflow:visible;z-index:5" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <path d="M120 172 L120 306" stroke="#ffffff" stroke-width="7"/><path d="M70 210 L170 210" stroke="#ffffff" stroke-width="5" opacity="0.8"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#efc29b"/>
+        <circle cx="120" cy="104" r="56" fill="#efc29b"/>
+        <circle cx="64" cy="108" r="10" fill="#efc29b"/><circle cx="176" cy="108" r="10" fill="#efc29b"/>
+        <path d="M62 96 Q60 120 70 128 L74 100 Z" fill="#e5e7eb"/><path d="M178 96 Q180 120 170 128 L166 100 Z" fill="#e5e7eb"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#efc29b"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#efc29b"/></g>
+    </g>
+  </g>
+</svg>
+<div id="coj" class="pill" style="position:absolute;left:340px;top:405px;z-index:9;background:#fff;color:#0f1115;font-size:56px;opacity:0">EL HOMBRE COJÍN</div>
+<div id="atl" class="spill" style="position:absolute;left:250px;top:505px;z-index:9;font-size:56px;opacity:0"><span>ATLÉTICO DE MADRID</span></div>
+<div id="img" class="stampbox" style="position:absolute;left:310px;top:675px;width:520px;height:140px;z-index:11;opacity:0;font-size:78px">IMAGINADO</div>
+<div id="h0" style="position:absolute;left:1150px;top:205px;width:960px;height:150px;z-index:6;">
+      <div id="h0-badge" class="badge" style="background:#22c55e;color:#0f1115">✓</div>
+      <div id="h0-title" class="htitle">LO QUE SABEMOS</div></div>
+<div id="sf1" class="sofa2" data-layout-ignore style="position:absolute;left:1430px;top:1022px;width:400px;height:230px;z-index:3;opacity:0">
+      <i class="sb2" style="background:#7c2d12"></i></div>
+<div id="sf1f" class="sofa2" data-layout-ignore style="position:absolute;left:1430px;top:1022px;width:400px;height:230px;z-index:7;opacity:0">
+      <i class="ss" style="background:#7c2d12"></i>
+      <i class="sa l" style="background:#7c2d12"></i><i class="sa r" style="background:#7c2d12"></i></div>
+<svg id="go1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="264" height="484"
+  style="position:absolute;left:1188px;top:789px;overflow:visible;z-index:5" color="#7c3aed">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#334155"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#7c3aed"/>
+      
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#f1c7a6"/>
+        <circle cx="120" cy="104" r="56" fill="#f1c7a6"/>
+        <circle cx="64" cy="108" r="10" fill="#f1c7a6"/><circle cx="176" cy="108" r="10" fill="#f1c7a6"/>
+        <path d="M58 132 Q50 46 120 44 Q190 46 182 132 L166 132 Q170 88 150 76 Q120 66 90 76 Q70 88 74 132 Z" fill="#9ca3af"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#7c3aed"/><circle cx="71" cy="304" r="15" fill="#f1c7a6"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#7c3aed"/><circle cx="169" cy="304" r="15" fill="#f1c7a6"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="vi1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="264" height="484"
+  style="position:absolute;left:1498px;top:759px;overflow:visible;z-index:5" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <path d="M120 172 L120 306" stroke="#ffffff" stroke-width="7"/><path d="M70 210 L170 210" stroke="#ffffff" stroke-width="5" opacity="0.8"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#efc29b"/>
+        <circle cx="120" cy="104" r="56" fill="#efc29b"/>
+        <circle cx="64" cy="108" r="10" fill="#efc29b"/><circle cx="176" cy="108" r="10" fill="#efc29b"/>
+        <path d="M62 96 Q60 120 70 128 L74 100 Z" fill="#e5e7eb"/><path d="M178 96 Q180 120 170 128 L166 100 Z" fill="#e5e7eb"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#efc29b"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#efc29b"/></g>
+    </g>
+  </g>
+</svg>
+<svg id="ja1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="264" height="484"
+  style="position:absolute;left:1818px;top:789px;overflow:visible;z-index:5" color="#0ea5e9">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1f2937"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#0ea5e9"/>
+      
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#efc29b"/>
+        <circle cx="120" cy="104" r="56" fill="#efc29b"/>
+        <circle cx="64" cy="108" r="10" fill="#efc29b"/><circle cx="176" cy="108" r="10" fill="#efc29b"/>
+        <path d="M64 102 Q62 46 120 44 Q178 46 176 102 Q170 74 150 68 Q120 60 92 70 Q70 78 64 102 Z" fill="#1c1917"/><rect x="60" y="92" width="10" height="26" rx="5" fill="#1c1917"/><rect x="170" y="92" width="10" height="26" rx="5" fill="#1c1917"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#0ea5e9"/><circle cx="71" cy="304" r="15" fill="#efc29b"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#0ea5e9"/><circle cx="169" cy="304" r="15" fill="#efc29b"/></g>
+    </g>
+  </g>
+</svg>
+<div id="nt0" class="ntag" style="position:absolute;left:1200px;top:1222px;width:240px;height:60px;z-index:8;opacity:0">GOYA</div>
+<div id="nt1" class="ntag" style="position:absolute;left:1510px;top:1222px;width:240px;height:60px;z-index:8;opacity:0">VICENTE</div>
+<div id="nt2" class="ntag" style="position:absolute;left:1830px;top:1222px;width:240px;height:60px;z-index:8;opacity:0">JAVIER</div>
+<div id="crw" data-layout-ignore style="position:absolute;left:1570px;top:505px;width:120px;height:120px;z-index:9;opacity:0"><svg fill="#fde047"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="120"
+  height="120"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#facc15"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" />
+  <path d="M5 21h14" />
+</svg></div>
+<div id="rey" class="pill" style="position:absolute;left:1350px;top:405px;z-index:9;background:#ffd43b;color:#0f1115;font-size:48px;opacity:0">EL REY DEL SOFÁ</div>
+<div id="h1" style="position:absolute;left:1150px;top:1505px;width:960px;height:150px;z-index:6;">
+      <div id="h1-badge" class="badge" style="background:#c8102e;color:#fff">1</div>
+      <div id="h1-title" class="htitle">ENTRENAMIENTO</div></div>
+<div id="pt1" class="pitch" data-layout-ignore style="position:absolute;left:1150px;top:1925px;width:960px;height:660px;z-index:1;">
+      <i class="pl1"></i><i class="pl2"></i></div>
+<div id="cn0" class="cone" data-layout-ignore style="position:absolute;left:1270px;top:1975px;width:60px;height:70px;z-index:3;opacity:0"></div>
+<div id="cn1" class="cone" data-layout-ignore style="position:absolute;left:1470px;top:1975px;width:60px;height:70px;z-index:3;opacity:0"></div>
+<div id="cn2" class="cone" data-layout-ignore style="position:absolute;left:1670px;top:1975px;width:60px;height:70px;z-index:3;opacity:0"></div>
+<div id="cn3" class="cone" data-layout-ignore style="position:absolute;left:1870px;top:1975px;width:60px;height:70px;z-index:3;opacity:0"></div>
+<div id="sf2" class="sofa2" data-layout-ignore style="position:absolute;left:1670px;top:2322px;width:400px;height:230px;z-index:3;opacity:0">
+      <i class="sb2" style="background:#7c2d12"></i></div>
+<div id="sf2f" class="sofa2" data-layout-ignore style="position:absolute;left:1670px;top:2322px;width:400px;height:230px;z-index:7;opacity:0">
+      <i class="ss" style="background:#7c2d12"></i>
+      <i class="sa l" style="background:#7c2d12"></i><i class="sa r" style="background:#7c2d12"></i></div>
+<svg id="vi2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="264" height="484"
+  style="position:absolute;left:1738px;top:2059px;overflow:visible;z-index:5" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <path d="M120 172 L120 306" stroke="#ffffff" stroke-width="7"/><path d="M70 210 L170 210" stroke="#ffffff" stroke-width="5" opacity="0.8"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#efc29b"/>
+        <circle cx="120" cy="104" r="56" fill="#efc29b"/>
+        <circle cx="64" cy="108" r="10" fill="#efc29b"/><circle cx="176" cy="108" r="10" fill="#efc29b"/>
+        <path d="M62 96 Q60 120 70 128 L74 100 Z" fill="#e5e7eb"/><path d="M178 96 Q180 120 170 128 L166 100 Z" fill="#e5e7eb"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#efc29b"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#efc29b"/></g>
+    </g>
+  </g>
+</svg>
+<div id="blk" class="blanket" data-layout-ignore style="position:absolute;left:1770px;top:2262px;width:200px;height:140px;z-index:7;opacity:0"></div>
+<div id="pw0" data-layout-ignore style="position:absolute;left:1140px;top:2302px;width:260px;height:260px;z-index:5;opacity:0"><div class="lie"><svg id="pl0" class="chr " data-layout-ignore viewBox="0 0 240 440" width="132" height="242"
+  style="position:absolute;left:64px;top:13px;overflow:visible;z-index:1" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <rect x="86" y="168" width="18" height="140" fill="#ffffff"/><rect x="120" y="168" width="18" height="140" fill="#ffffff"/><rect x="152" y="176" width="14" height="128" fill="#ffffff"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#e8b48a"/>
+        <circle cx="120" cy="104" r="56" fill="#e8b48a"/>
+        <circle cx="64" cy="108" r="10" fill="#e8b48a"/><circle cx="176" cy="108" r="10" fill="#e8b48a"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1c1917"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#e8b48a"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#e8b48a"/></g>
+    </g>
+  </g>
+</svg></div></div>
+<div id="pw1" data-layout-ignore style="position:absolute;left:1350px;top:2302px;width:260px;height:260px;z-index:5;opacity:0"><div class="lie"><svg id="pl1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="132" height="242"
+  style="position:absolute;left:64px;top:13px;overflow:visible;z-index:1" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <rect x="86" y="168" width="18" height="140" fill="#ffffff"/><rect x="120" y="168" width="18" height="140" fill="#ffffff"/><rect x="152" y="176" width="14" height="128" fill="#ffffff"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M64 102 Q62 46 120 44 Q178 46 176 102 Q170 74 150 68 Q120 60 92 70 Q70 78 64 102 Z" fill="#111111"/><rect x="60" y="92" width="10" height="26" rx="5" fill="#111111"/><rect x="170" y="92" width="10" height="26" rx="5" fill="#111111"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg></div></div>
+<div id="zz0" class="zz" data-layout-ignore style="position:absolute;left:1270px;top:2105px;width:140px;height:90px;z-index:10;opacity:0">Zzz</div>
+<div id="zz1" class="zz" data-layout-ignore style="position:absolute;left:1480px;top:2065px;width:140px;height:90px;z-index:10;opacity:0">Zzz</div>
+<div id="zz2" class="zz" data-layout-ignore style="position:absolute;left:1850px;top:1925px;width:140px;height:90px;z-index:10;opacity:0">Zzz</div>
+<div id="nor" class="stampbox" style="position:absolute;left:1290px;top:1755px;width:380px;height:120px;z-index:11;opacity:0;font-size:64px">¿CORRER?</div>
+<div id="h2" style="position:absolute;left:90px;top:1505px;width:960px;height:150px;z-index:6;">
+      <div id="h2-badge" class="badge" style="background:#1d4ed8;color:#fff">2</div>
+      <div id="h2-title" class="htitle">LA TÁCTICA</div></div>
+<div id="brd" class="board" style="position:absolute;left:130px;top:1805px;width:880px;height:720px;z-index:4;opacity:0">
+      <svg viewBox="0 0 880 720" width="880" height="720" style="position:absolute;left:0;top:0"><line id="ps0" x1="150" y1="440" x2="330" y2="300" stroke="#facc15" stroke-width="10" stroke-linecap="round" stroke-dasharray="14 12"/><line id="ps1" x1="330" y1="300" x2="540" y2="360" stroke="#facc15" stroke-width="10" stroke-linecap="round" stroke-dasharray="14 12"/><line id="ps2" x1="540" y1="360" x2="330" y2="580" stroke="#facc15" stroke-width="10" stroke-linecap="round" stroke-dasharray="14 12"/><line id="ps3" x1="330" y1="580" x2="540" y2="540" stroke="#facc15" stroke-width="10" stroke-linecap="round" stroke-dasharray="14 12"/><line id="ps4" x1="540" y1="540" x2="330" y2="300" stroke="#facc15" stroke-width="10" stroke-linecap="round" stroke-dasharray="14 12"/><line id="ps5" x1="330" y1="300" x2="540" y2="360" stroke="#facc15" stroke-width="10" stroke-linecap="round" stroke-dasharray="14 12"/><line id="ps6" x1="540" y1="360" x2="720" y2="440" stroke="#facc15" stroke-width="10" stroke-linecap="round" stroke-dasharray="14 12"/></svg><i class="dot" id="dt0" style="left:120px;top:410px"></i><i class="dot" id="dt1" style="left:300px;top:270px"></i><i class="dot" id="dt2" style="left:300px;top:550px"></i><i class="dot" id="dt3" style="left:510px;top:330px"></i><i class="dot" id="dt4" style="left:510px;top:510px"></i><i class="dot" id="dt5" style="left:690px;top:410px"></i>
+      <div id="bsf" class="bsofa"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="110"
+  height="110"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3" />
+  <path d="M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z" />
+  <path d="M4 18v2" />
+  <path d="M20 18v2" />
+  <path d="M12 4v9" />
+</svg></div></div>
+<div id="sab" class="pill" style="position:absolute;left:270px;top:1695px;z-index:10;background:#15803d;color:#fff;font-size:52px;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="3"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 6 9 17l-5-5" />
+</svg> SABE DE FÚTBOL</div>
+<div id="tt" class="spill" style="position:absolute;left:370px;top:1695px;z-index:11;font-size:64px;opacity:0"><span>TIKI TAKA</span></div>
+<div id="h3" style="position:absolute;left:90px;top:2805px;width:960px;height:150px;z-index:6;">
+      <div id="h3-badge" class="badge" style="background:#c8102e;color:#fff">3</div>
+      <div id="h3-title" class="htitle">EL BANQUILLO</div></div>
+<div id="bnc" class="bench2" data-layout-ignore style="position:absolute;left:270px;top:3532px;width:600px;height:320px;z-index:3;opacity:0">
+      <i class="roof"></i><i class="seat"></i><i class="lg l"></i><i class="lg r"></i></div>
+<div id="sf3" class="sofa2" data-layout-ignore style="position:absolute;left:320px;top:3622px;width:500px;height:230px;z-index:3;opacity:0">
+      <i class="sb2" style="background:#b91c1c"></i></div>
+<div id="sf3f" class="sofa2" data-layout-ignore style="position:absolute;left:320px;top:3622px;width:500px;height:230px;z-index:7;opacity:0">
+      <i class="ss" style="background:#b91c1c"></i>
+      <i class="sa l" style="background:#b91c1c"></i><i class="sa r" style="background:#b91c1c"></i></div>
+<div id="foot" class="footr" data-layout-ignore style="position:absolute;left:830px;top:3752px;width:160px;height:100px;z-index:4;opacity:0"></div>
+<svg id="vi3" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
+  style="position:absolute;left:432px;top:3338px;overflow:visible;z-index:5" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <path d="M120 172 L120 306" stroke="#ffffff" stroke-width="7"/><path d="M70 210 L170 210" stroke="#ffffff" stroke-width="5" opacity="0.8"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#efc29b"/>
+        <circle cx="120" cy="104" r="56" fill="#efc29b"/>
+        <circle cx="64" cy="108" r="10" fill="#efc29b"/><circle cx="176" cy="108" r="10" fill="#efc29b"/>
+        <path d="M62 96 Q60 120 70 128 L74 100 Z" fill="#e5e7eb"/><path d="M178 96 Q180 120 170 128 L166 100 Z" fill="#e5e7eb"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#efc29b"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#efc29b"/></g>
+    </g>
+  </g>
+</svg>
+<div id="rep" class="pill" style="position:absolute;left:610px;top:3105px;z-index:10;background:#fff;color:#0f1115;font-size:46px;opacity:0">+ REPOSAPIÉS</div>
+<div id="h4" style="position:absolute;left:1150px;top:2805px;width:960px;height:150px;z-index:6;">
+      <div id="h4-badge" class="badge" style="background:#1d4ed8;color:#fff">4</div>
+      <div id="h4-title" class="htitle">LOS PARTIDOS</div></div>
+<div id="pt4" class="pitch" data-layout-ignore style="position:absolute;left:1150px;top:3225px;width:960px;height:660px;z-index:1;">
+      <i class="pl1"></i><i class="pl2"></i></div>
+<div id="gol" class="goal" data-layout-ignore style="position:absolute;left:1400px;top:3532px;width:460px;height:300px;z-index:3;opacity:0"></div>
+<div id="dw0" data-layout-ignore style="position:absolute;left:1220px;top:3622px;width:260px;height:260px;z-index:5;opacity:0"><div class="lie"><svg id="df0" class="chr " data-layout-ignore viewBox="0 0 240 440" width="132" height="242"
+  style="position:absolute;left:64px;top:13px;overflow:visible;z-index:1" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <rect x="86" y="168" width="18" height="140" fill="#ffffff"/><rect x="120" y="168" width="18" height="140" fill="#ffffff"/><rect x="152" y="176" width="14" height="128" fill="#ffffff"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#e8b48a"/>
+        <circle cx="120" cy="104" r="56" fill="#e8b48a"/>
+        <circle cx="64" cy="108" r="10" fill="#e8b48a"/><circle cx="176" cy="108" r="10" fill="#e8b48a"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1c1917"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#e8b48a"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#e8b48a"/></g>
+    </g>
+  </g>
+</svg></div></div>
+<div id="dw1" data-layout-ignore style="position:absolute;left:1440px;top:3622px;width:260px;height:260px;z-index:5;opacity:0"><div class="lie"><svg id="df1" class="chr " data-layout-ignore viewBox="0 0 240 440" width="132" height="242"
+  style="position:absolute;left:64px;top:13px;overflow:visible;z-index:1" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <rect x="86" y="168" width="18" height="140" fill="#ffffff"/><rect x="120" y="168" width="18" height="140" fill="#ffffff"/><rect x="152" y="176" width="14" height="128" fill="#ffffff"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#c98e64"/>
+        <circle cx="120" cy="104" r="56" fill="#c98e64"/>
+        <circle cx="64" cy="108" r="10" fill="#c98e64"/><circle cx="176" cy="108" r="10" fill="#c98e64"/>
+        <path d="M64 102 Q62 46 120 44 Q178 46 176 102 Q170 74 150 68 Q120 60 92 70 Q70 78 64 102 Z" fill="#111111"/><rect x="60" y="92" width="10" height="26" rx="5" fill="#111111"/><rect x="170" y="92" width="10" height="26" rx="5" fill="#111111"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#c98e64"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#c98e64"/></g>
+    </g>
+  </g>
+</svg></div></div>
+<div id="dw2" data-layout-ignore style="position:absolute;left:1660px;top:3622px;width:260px;height:260px;z-index:5;opacity:0"><div class="lie"><svg id="df2" class="chr " data-layout-ignore viewBox="0 0 240 440" width="132" height="242"
+  style="position:absolute;left:64px;top:13px;overflow:visible;z-index:1" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e3a8a"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <rect x="86" y="168" width="18" height="140" fill="#ffffff"/><rect x="120" y="168" width="18" height="140" fill="#ffffff"/><rect x="152" y="176" width="14" height="128" fill="#ffffff"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#e8b48a"/>
+        <circle cx="120" cy="104" r="56" fill="#e8b48a"/>
+        <circle cx="64" cy="108" r="10" fill="#e8b48a"/><circle cx="176" cy="108" r="10" fill="#e8b48a"/>
+        <path d="M62 100 L70 58 L86 70 L96 44 L112 62 L124 38 L136 60 L152 44 L160 68 L176 58 L178 100 Q160 76 120 74 Q80 76 62 100 Z" fill="#1c1917"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#e8b48a"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#e8b48a"/></g>
+    </g>
+  </g>
+</svg></div></div>
+<div id="sco" class="card" style="position:absolute;left:1330px;top:2995px;width:600px;height:220px;z-index:8;background:#fff;opacity:0">
+      <div class="sct l">ATLÉTICO</div><div class="sct r">RIVAL</div>
+      <div class="scn"><span id="sr1" class="roller" style="display:inline-block;font-size:130px;font-weight:900;color:#0f1115;font-variant-numeric:tabular-nums;line-height:146px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:146px;overflow:hidden;vertical-align:top"><span id="sr1-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:146px;line-height:146px">0</span><span style="display:block;height:146px;line-height:146px">1</span><span style="display:block;height:146px;line-height:146px">2</span><span style="display:block;height:146px;line-height:146px">3</span><span style="display:block;height:146px;line-height:146px">4</span><span style="display:block;height:146px;line-height:146px">5</span><span style="display:block;height:146px;line-height:146px">6</span><span style="display:block;height:146px;line-height:146px">7</span><span style="display:block;height:146px;line-height:146px">8</span><span style="display:block;height:146px;line-height:146px">9</span><span style="display:block;height:146px;line-height:146px">0</span><span style="display:block;height:146px;line-height:146px">1</span><span style="display:block;height:146px;line-height:146px">2</span><span style="display:block;height:146px;line-height:146px">3</span><span style="display:block;height:146px;line-height:146px">4</span><span style="display:block;height:146px;line-height:146px">5</span><span style="display:block;height:146px;line-height:146px">6</span><span style="display:block;height:146px;line-height:146px">7</span><span style="display:block;height:146px;line-height:146px">8</span><span style="display:block;height:146px;line-height:146px">9</span><span style="display:block;height:146px;line-height:146px">0</span><span style="display:block;height:146px;line-height:146px">1</span><span style="display:block;height:146px;line-height:146px">2</span><span style="display:block;height:146px;line-height:146px">3</span><span style="display:block;height:146px;line-height:146px">4</span><span style="display:block;height:146px;line-height:146px">5</span><span style="display:block;height:146px;line-height:146px">6</span><span style="display:block;height:146px;line-height:146px">7</span><span style="display:block;height:146px;line-height:146px">8</span><span style="display:block;height:146px;line-height:146px">9</span></span></span></span><span>–</span><span id="sr2" class="roller" style="display:inline-block;font-size:130px;font-weight:900;color:#0f1115;font-variant-numeric:tabular-nums;line-height:146px;white-space:nowrap"><span class="dg" data-layout-ignore style="display:inline-block;height:146px;overflow:hidden;vertical-align:top"><span id="sr2-d0" class="strip" data-layout-ignore style="display:block"><span style="display:block;height:146px;line-height:146px">0</span><span style="display:block;height:146px;line-height:146px">1</span><span style="display:block;height:146px;line-height:146px">2</span><span style="display:block;height:146px;line-height:146px">3</span><span style="display:block;height:146px;line-height:146px">4</span><span style="display:block;height:146px;line-height:146px">5</span><span style="display:block;height:146px;line-height:146px">6</span><span style="display:block;height:146px;line-height:146px">7</span><span style="display:block;height:146px;line-height:146px">8</span><span style="display:block;height:146px;line-height:146px">9</span><span style="display:block;height:146px;line-height:146px">0</span><span style="display:block;height:146px;line-height:146px">1</span><span style="display:block;height:146px;line-height:146px">2</span><span style="display:block;height:146px;line-height:146px">3</span><span style="display:block;height:146px;line-height:146px">4</span><span style="display:block;height:146px;line-height:146px">5</span><span style="display:block;height:146px;line-height:146px">6</span><span style="display:block;height:146px;line-height:146px">7</span><span style="display:block;height:146px;line-height:146px">8</span><span style="display:block;height:146px;line-height:146px">9</span><span style="display:block;height:146px;line-height:146px">0</span><span style="display:block;height:146px;line-height:146px">1</span><span style="display:block;height:146px;line-height:146px">2</span><span style="display:block;height:146px;line-height:146px">3</span><span style="display:block;height:146px;line-height:146px">4</span><span style="display:block;height:146px;line-height:146px">5</span><span style="display:block;height:146px;line-height:146px">6</span><span style="display:block;height:146px;line-height:146px">7</span><span style="display:block;height:146px;line-height:146px">8</span><span style="display:block;height:146px;line-height:146px">9</span></span></span></span></div></div>
+<div id="cero" class="stampbox" style="position:absolute;left:1480px;top:3235px;width:300px;height:140px;z-index:11;opacity:0;font-size:90px">0–0</div>
+<div id="bkdr" class="backdrop" data-layout-ignore style="position:absolute;left:1190px;top:4285px;width:880px;height:600px;z-index:2;opacity:0"></div>
+<div id="sf5" class="sofa2" data-layout-ignore style="position:absolute;left:1420px;top:4922px;width:420px;height:230px;z-index:3;opacity:0">
+      <i class="sb2" style="background:#7c2d12"></i></div>
+<div id="sf5f" class="sofa2" data-layout-ignore style="position:absolute;left:1420px;top:4922px;width:420px;height:230px;z-index:7;opacity:0">
+      <i class="ss" style="background:#7c2d12"></i>
+      <i class="sa l" style="background:#7c2d12"></i><i class="sa r" style="background:#7c2d12"></i></div>
+<svg id="vi5" class="chr " data-layout-ignore viewBox="0 0 240 440" width="276" height="506"
+  style="position:absolute;left:1492px;top:4638px;overflow:visible;z-index:5" color="#c8102e">
+  <ellipse class="shadow" cx="120" cy="432" rx="70" ry="12" fill="#000" opacity="0.35"/>
+  <g class="rig">
+    <g class="legL"><rect x="94" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="102" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="legR"><rect x="120" y="292" width="26" height="130" rx="13" fill="#1e293b"/><ellipse cx="138" cy="426" rx="22" ry="11" fill="#1b1b1f"/></g>
+    <g class="upper">
+      <rect class="shirt" x="70" y="166" width="100" height="144" rx="38" fill="#c8102e"/>
+      <path d="M120 172 L120 306" stroke="#ffffff" stroke-width="7"/><path d="M70 210 L170 210" stroke="#ffffff" stroke-width="5" opacity="0.8"/>
+      <g class="head">
+        <rect x="108" y="146" width="24" height="30" fill="#efc29b"/>
+        <circle cx="120" cy="104" r="56" fill="#efc29b"/>
+        <circle cx="64" cy="108" r="10" fill="#efc29b"/><circle cx="176" cy="108" r="10" fill="#efc29b"/>
+        <path d="M62 96 Q60 120 70 128 L74 100 Z" fill="#e5e7eb"/><path d="M178 96 Q180 120 170 128 L166 100 Z" fill="#e5e7eb"/>
+        <g class="eyes"><ellipse cx="100" cy="106" rx="7" ry="9" fill="#16161a"/><ellipse cx="140" cy="106" rx="7" ry="9" fill="#16161a"/>
+          <circle cx="102" cy="103" r="2.4" fill="#fff"/><circle cx="142" cy="103" r="2.4" fill="#fff"/></g>
+        <path class="brows" d="M88 88 Q100 82 112 88 M128 88 Q140 82 152 88" stroke="#2a1d16" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/><circle cx="154" cy="128" r="9" fill="#ff8a8a" opacity="0.35"/>
+        <path class="mouth" d="M104 132 Q120 146 136 132" stroke="#6a2e1e" stroke-width="5" fill="none" stroke-linecap="round"/>
+        
+      </g>
+      <g class="armL"><rect class="sleeve" x="58" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="71" cy="304" r="15" fill="#efc29b"/></g>
+      <g class="armR"><rect class="sleeve" x="156" y="180" width="26" height="120" rx="13" fill="#c8102e"/><circle cx="169" cy="304" r="15" fill="#efc29b"/></g>
+    </g>
+  </g>
+</svg>
+<div id="tbl" class="ptable" data-layout-ignore style="position:absolute;left:1350px;top:5022px;width:560px;height:130px;z-index:7;opacity:0"></div>
+<div id="mc0" data-layout-ignore style="position:absolute;left:1450px;top:4922px;width:100px;height:100px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="100"
+  height="100"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#e2e8f0"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+  <line x1="12" x2="12" y1="19" y2="22" />
+</svg></div>
+<div id="mc1" data-layout-ignore style="position:absolute;left:1580px;top:4922px;width:100px;height:100px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="100"
+  height="100"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#e2e8f0"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+  <line x1="12" x2="12" y1="19" y2="22" />
+</svg></div>
+<div id="mc2" data-layout-ignore style="position:absolute;left:1710px;top:4922px;width:100px;height:100px;z-index:8;opacity:0"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="100"
+  height="100"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#e2e8f0"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+  <line x1="12" x2="12" y1="19" y2="22" />
+</svg></div>
+<div id="fs0" class="flash" data-layout-ignore style="position:absolute;left:1230px;top:4345px;width:110px;height:110px;z-index:10;opacity:0"></div>
+<div id="fs1" class="flash" data-layout-ignore style="position:absolute;left:1930px;top:4405px;width:110px;height:110px;z-index:10;opacity:0"></div>
+<div id="fs2" class="flash" data-layout-ignore style="position:absolute;left:1270px;top:4625px;width:110px;height:110px;z-index:10;opacity:0"></div>
+<div id="fs3" class="flash" data-layout-ignore style="position:absolute;left:1910px;top:4665px;width:110px;height:110px;z-index:10;opacity:0"></div>
+<div id="sbq" class="sb c" style="position:absolute;left:1210px;top:4305px;width:840px;z-index:8;border-color:#c8102e;opacity:0">
+      <div class="who" style="background:#c8102e">VICENTE</div><div class="sbt" style="font-size:50px"><span style="display:inline-block;white-space:nowrap"><span class="kc">«</span><span class="kc">T</span><span class="kc">i</span><span class="kc">k</span><span class="kc">i</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">t</span><span class="kc">a</span><span class="kc">k</span><span class="kc">a</span><span class="kc">,</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">t</span><span class="kc">o</span><span class="kc">q</span><span class="kc">u</span><span class="kc">e</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">y</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">t</span><span class="kc">o</span><span class="kc">q</span><span class="kc">u</span><span class="kc">e</span><span class="kc">…</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">y</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">l</span><span class="kc">u</span><span class="kc">e</span><span class="kc">g</span><span class="kc">o</span><span class="kc">,</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">u</span><span class="kc">n</span><span class="kc">a</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">s</span><span class="kc">i</span><span class="kc">e</span><span class="kc">s</span><span class="kc">t</span><span class="kc">a</span><span class="kc">»</span><span class="kc">.</span></span></div></div>
+<div id="zq" class="zz" data-layout-ignore style="position:absolute;left:1790px;top:4625px;width:140px;height:90px;z-index:10;opacity:0">Zzz</div>
+<div id="pollc" class="card" style="position:absolute;left:130px;top:4325px;width:880px;height:500px;z-index:6;background:#fff;opacity:0">
+      <div class="polh"><svg
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="54"
+  height="54"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#0f1115"
+  stroke-width="2.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+</svg> ¿LO FICHARÍAS?</div><div class="poll" style="top:150px"><span>SÍ</span><i id="pb0" style="background:#22c55e"></i></div><div class="poll" style="top:250px"><span>NO</span><i id="pb1" style="background:#ef4444"></i></div><div class="poll" style="top:350px"><span>SOLO PARA EL SOFÁ</span><i id="pb2" style="background:#f59e0b"></i></div></div>
+<div id="cbx" class="card" style="position:absolute;left:130px;top:4865px;width:880px;height:170px;z-index:6;background:#fff;opacity:0">
+      <div id="ctt" class="ctt"><span style="display:inline-block;white-space:nowrap"><span class="kc">Y</span><span class="kc">o</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">l</span><span class="kc">o</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">f</span><span class="kc">i</span><span class="kc">c</span><span class="kc">h</span><span class="kc">a</span><span class="kc">r</span><span class="kc">í</span><span class="kc">a</span></span> <span style="display:inline-block;white-space:nowrap"><span class="kc">p</span><span class="kc">a</span><span class="kc">r</span><span class="kc">a</span><span class="kc">…</span></span></div><div id="pub" class="pubb">Publicar</div></div>
+<div id="cur" data-layout-ignore style="position:absolute;left:890px;top:4985px;width:90px;height:90px;z-index:12;opacity:0"><svg fill="#0f1115"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+  width="90"
+  height="90"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#fff"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z" />
+</svg></div>
+    </div>
+  </div>
+  <div id="scrim" data-layout-ignore></div>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const PIV = {"armL": "71 188", "armR": "169 188", "legL": "107 296", "legR": "133 296", "head": "120 160", "upper": "120 300", "eyes": "120 106", "rig": "120 430"};
+const Q = (id, part) => document.querySelector('#' + id + ' .' + part);
+function life(id, t0, t1, seed) {
+  const n = Math.max(1, Math.floor((t1 - t0) / 1.8));
+  tl.fromTo(Q(id,'upper'), {scaleY:1}, {scaleY:1.03, svgOrigin:PIV.upper, duration:0.9, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const m = Math.max(1, Math.floor((t1 - t0) / (1.4 + (seed % 4) * 0.15)));
+  tl.fromTo(Q(id,'head'), {rotation:-2.5}, {rotation:2.5, svgOrigin:PIV.head, duration:1.4 + (seed % 4) * 0.15, ease:'sine.inOut', yoyo:true, repeat:m-1, immediateRender:false}, t0 + 0.1);
+  let r = (seed * 7919) % 997, t = t0 + 0.5 + (seed % 5) * 0.23;
+  const ey = Q(id,'eyes');
+  while (t < t1 - 0.2) {
+    tl.to(ey, {scaleY:0.08, svgOrigin:PIV.eyes, duration:0.06}, t);
+    tl.to(ey, {scaleY:1, svgOrigin:PIV.eyes, duration:0.09}, t + 0.1);
+    r = (r * 7919 + 13) % 997; t += 2.1 + (r / 997) * 2.3;
+  }
+}
+function walk(id, t0, t1, step) {
+  const n = Math.max(2, Math.round((t1 - t0) / step));
+  tl.fromTo(Q(id,'legL'), {rotation:-26}, {rotation:26, svgOrigin:PIV.legL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'legR'), {rotation:26}, {rotation:-26, svgOrigin:PIV.legR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armL'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armL, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'armR'), {rotation:24}, {rotation:-24, svgOrigin:PIV.armR, duration:step, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0);
+  tl.fromTo(Q(id,'rig'), {y:0}, {y:-14, duration:step/2, ease:'sine.inOut', yoyo:true, repeat:n*2-1, immediateRender:false}, t0);
+  const te = t0 + n * step;
+  ['legL','legR','armL','armR'].forEach(p => tl.to(Q(id,p), {rotation:0, svgOrigin:PIV[p], duration:0.15}, te));
+  tl.to(Q(id,'rig'), {y:0, duration:0.15}, te);
+}
+function face(id, dir, t) { tl.set(Q(id,'rig'), {scaleX:dir, svgOrigin:PIV.rig}, t); }
+function jump(id, t, h) {
+  tl.to(Q(id,'rig'), {keyframes:[{scaleY:0.9, y:0, duration:0.08},{scaleY:1.05, y:-h, duration:0.18, ease:'power2.out'},
+    {scaleY:1, y:0, duration:0.18, ease:'power2.in'},{scaleY:0.95, duration:0.06},{scaleY:1, duration:0.08}], svgOrigin:PIV.rig}, t);
+}
+function point(id, side, t0, t1, ang) {
+  const arm = Q(id, 'arm' + side);
+  tl.to(arm, {rotation:ang, svgOrigin:PIV['arm' + side], duration:0.3, ease:'back.out(2)'}, t0);
+  tl.to(arm, {rotation:0, svgOrigin:PIV['arm' + side], duration:0.35, ease:'power2.inOut'}, t1);
+}
+function wave(id, t0, t1) {
+  const arm = Q(id, 'armR');
+  tl.to(arm, {rotation:-150, svgOrigin:PIV.armR, duration:0.3, ease:'back.out(2)'}, t0);
+  const n = Math.max(1, Math.floor((t1 - t0 - 0.3) / 0.28));
+  tl.fromTo(arm, {rotation:-150}, {rotation:-118, svgOrigin:PIV.armR, duration:0.28, ease:'sine.inOut', yoyo:true, repeat:n-1, immediateRender:false}, t0 + 0.3);
+}
+function tilt(id, t) {
+  tl.to(Q(id,'brows'), {y:-8, duration:0.2, ease:'back.out(3)'}, t);
+  tl.to(Q(id,'brows'), {y:0, duration:0.3}, t + 1.2);
+}
+function typeOn(sel, t0, t1) {
+  const els = document.querySelectorAll(sel);
+  const dt = (t1 - t0) / Math.max(1, els.length);
+  els.forEach((e, i) => tl.set(e, {opacity:1}, t0 + i * dt));
+}
+
+tl.set("#road", {strokeDasharray:12140.0, strokeDashoffset:12140.0}, 0);
+tl.set("#wd", {x:-30.0, y:195.0, scale:1.0, transformOrigin:"0 0"}, 0);
+tl.set("#grid", {backgroundPosition:"-8px 49px"}, 0);
+tl.fromTo("#sf0, #sf0f", {opacity:1, y:-900, rotation:-10}, {y:0, rotation:0, duration:0.4, ease:"power3.in"}, 0);
+tl.to("#sf0, #sf0f", {keyframes:[{scaleY:0.85, scaleX:1.08, duration:0.08},{scaleY:1.04, scaleX:0.98, duration:0.12},{scaleY:1, scaleX:1, duration:0.1}], transformOrigin:"50% 100%"}, 0.4);
+tl.to("#shake", {keyframes:[{x:-22,y:13},{x:18,y:-9},{x:-11,y:7},{x:0,y:0}], duration:0.36, ease:"power2.out"}, 0.400);
+tl.fromTo("#vi0", {opacity:1, y:-700}, {y:0, duration:0.35, ease:"power2.in"}, 0.55);
+tl.to("#vi0", {keyframes:[{scaleY:0.88, duration:0.08},{scaleY:1, duration:0.12}], transformOrigin:"50% 100%"}, 0.9);
+life("vi0", 1.100, 43.310, 1);
+tl.fromTo("#coj", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 1.490);
+tl.to(Q("vi0","eyes"), {scaleY:0.1, svgOrigin:PIV.eyes, duration:0.15, yoyo:true, repeat:1}, 1.790);
+tl.fromTo("#atl", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 3.140);
+tl.to("#atl", {scale:1.08, duration:0.12, yoyo:true, repeat:1}, 3.780);
+tl.fromTo("#img", {opacity:0, scale:2.6, rotation:-20}, {opacity:1, scale:1, rotation:-6, duration:0.32, ease:"power4.in"}, 3.830);
+tl.to("#wd", {x:-1090.0, y:195.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 4.180);
+tl.to("#grid", {backgroundPosition:"-272px 49px", duration:0.6, ease:"power3.inOut"}, 4.180);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 4.180);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 4.480);
+tl.to("#road", {strokeDashoffset:10580.0, duration:0.60, ease:"power2.inOut"}, 4.180);
+tl.fromTo("#h0-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 4.480);
+tl.fromTo("#h0-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 4.970);
+tl.fromTo("#sf1, #sf1f", {opacity:0}, {opacity:1, duration:0.3}, 5.090);
+life("go1", 0.000, 43.310, 2);
+tl.fromTo("#go1", {opacity:0, y:60}, {opacity:1, y:0, duration:0.35, ease:"back.out(2)"}, 7.880);
+tl.fromTo("#nt0", {opacity:0}, {opacity:1, duration:0.3}, 7.980);
+life("vi1", 0.000, 43.310, 3);
+tl.fromTo("#vi1", {opacity:0, y:60}, {opacity:1, y:0, duration:0.35, ease:"back.out(2)"}, 5.390);
+tl.fromTo("#nt1", {opacity:0}, {opacity:1, duration:0.3}, 5.490);
+life("ja1", 0.000, 43.310, 4);
+tl.fromTo("#ja1", {opacity:0, y:60}, {opacity:1, y:0, duration:0.35, ease:"back.out(2)"}, 6.620);
+tl.fromTo("#nt2", {opacity:0}, {opacity:1, duration:0.3}, 6.720);
+point("vi1", "R", 6.230, 7.320, -60);
+point("vi1", "L", 7.420, 8.580, 60);
+tl.fromTo("#crw", {opacity:0, y:-160}, {opacity:1, y:0, duration:0.4, ease:"bounce.out"}, 8.760);
+tl.fromTo("#rey", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 9.100);
+tl.to("#wd", {x:-1090.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 11.680);
+tl.to("#grid", {backgroundPosition:"-272px -276px", duration:0.7, ease:"power3.inOut"}, 11.680);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 11.680);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 12.030);
+tl.to("#road", {strokeDashoffset:8280.0, duration:0.70, ease:"power2.inOut"}, 11.680);
+tl.fromTo("#h1-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 11.980);
+tl.fromTo("#h1-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 12.280);
+tl.fromTo("#cn0", {opacity:0, y:-60}, {opacity:1, y:0, duration:0.3, ease:"bounce.out"}, 12.280);
+tl.fromTo("#cn1", {opacity:0, y:-60}, {opacity:1, y:0, duration:0.3, ease:"bounce.out"}, 12.380);
+tl.fromTo("#cn2", {opacity:0, y:-60}, {opacity:1, y:0, duration:0.3, ease:"bounce.out"}, 12.480);
+tl.fromTo("#cn3", {opacity:0, y:-60}, {opacity:1, y:0, duration:0.3, ease:"bounce.out"}, 12.580);
+tl.fromTo("#nor", {opacity:0, scale:2.6, rotation:-22}, {opacity:1, scale:1, rotation:-8, duration:0.32, ease:"power4.in"}, 13.650);
+tl.to("#cn0, #cn1, #cn2, #cn3", {rotation:90, y:30, duration:0.3, stagger:0.06}, 14.150);
+tl.to("#nor", {opacity:0, duration:0.25}, 14.360);
+tl.fromTo("#sf2, #sf2f", {opacity:0, y:60}, {opacity:1, y:0, duration:0.35, ease:"back.out(2)"}, 14.460);
+tl.fromTo("#vi2", {opacity:0, y:-200}, {opacity:1, y:0, duration:0.35, ease:"power2.in"}, 14.660);
+life("vi2", 0.000, 43.310, 5);
+tl.fromTo("#pw0", {opacity:0, y:-40}, {opacity:1, y:0, duration:0.35}, 15.190);
+tl.fromTo("#pw1", {opacity:0, y:-40}, {opacity:1, y:0, duration:0.35}, 15.340);
+tl.fromTo("#blk", {opacity:0, scaleY:0.2, transformOrigin:"50% 0%"}, {opacity:1, scaleY:1, duration:0.35}, 15.390);
+tl.to(Q("vi2","eyes"), {scaleY:0.08, svgOrigin:PIV.eyes, duration:0.2}, 15.950); tl.to(Q("vi2","head"), {rotation:14, svgOrigin:PIV.head, duration:0.4}, 15.950);
+tl.fromTo("#zz0", {opacity:0, y:30, scale:0.5}, {opacity:1, y:-40, scale:1, duration:0.7, repeat:1}, 15.950);
+tl.fromTo("#zz1", {opacity:0, y:30, scale:0.5}, {opacity:1, y:-40, scale:1, duration:0.7, repeat:1}, 16.150);
+tl.fromTo("#zz2", {opacity:0, y:30, scale:0.5}, {opacity:1, y:-40, scale:1, duration:0.7, repeat:1}, 16.350);
+tl.to("#wd", {x:-30.0, y:-1105.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 16.680);
+tl.to("#grid", {backgroundPosition:"-8px -276px", duration:0.7, ease:"power3.inOut"}, 16.680);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 16.680);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 17.030);
+tl.to("#road", {strokeDashoffset:7220.0, duration:0.70, ease:"power2.inOut"}, 16.680);
+tl.fromTo("#h2-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 16.980);
+tl.fromTo("#h2-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 17.250);
+tl.fromTo("#brd", {opacity:0, x:0, y:60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 17.350);
+tl.set(".dot", {scale:0}, 0);
+tl.to(".dot", {scale:1, duration:0.25, stagger:0.06, ease:"back.out(3)"}, 18.670);
+tl.fromTo("#sab", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 19.700);
+tl.to("#sab", {opacity:0, duration:0.25}, 21.100);
+tl.fromTo("#tt", {opacity:0, scale:2.6, rotation:-18}, {opacity:1, scale:1, rotation:-4, duration:0.32, ease:"power4.in"}, 21.300);
+tl.set("[id^=ps]", {opacity:0}, 0);
+tl.fromTo("#ps0", {opacity:0}, {opacity:1, duration:0.12}, 21.700); tl.to("#dt1", {scale:1.3, duration:0.1, yoyo:true, repeat:1}, 21.700);
+tl.fromTo("#ps1", {opacity:0}, {opacity:1, duration:0.12}, 21.880); tl.to("#dt3", {scale:1.3, duration:0.1, yoyo:true, repeat:1}, 21.880);
+tl.fromTo("#ps2", {opacity:0}, {opacity:1, duration:0.12}, 22.060); tl.to("#dt2", {scale:1.3, duration:0.1, yoyo:true, repeat:1}, 22.060);
+tl.fromTo("#ps3", {opacity:0}, {opacity:1, duration:0.12}, 22.240); tl.to("#dt4", {scale:1.3, duration:0.1, yoyo:true, repeat:1}, 22.240);
+tl.fromTo("#ps4", {opacity:0}, {opacity:1, duration:0.12}, 22.420); tl.to("#dt1", {scale:1.3, duration:0.1, yoyo:true, repeat:1}, 22.420);
+tl.fromTo("#ps5", {opacity:0}, {opacity:1, duration:0.12}, 22.600); tl.to("#dt3", {scale:1.3, duration:0.1, yoyo:true, repeat:1}, 22.600);
+tl.fromTo("#ps6", {opacity:0}, {opacity:1, duration:0.12}, 22.780); tl.to("#dt5", {scale:1.3, duration:0.1, yoyo:true, repeat:1}, 22.780);
+tl.fromTo("#bsf", {opacity:0, scale:0.3}, {opacity:1, scale:1, duration:0.35, ease:"back.out(2.5)"}, 23.370);
+tl.to("#tt", {y:-10, duration:0.15, yoyo:true, repeat:1}, 23.670);
+tl.to("#wd", {x:-30.0, y:-2405.0, scale:1.0, duration:0.7, ease:"power3.inOut"}, 24.160);
+tl.to("#grid", {backgroundPosition:"-8px -601px", duration:0.7, ease:"power3.inOut"}, 24.160);
+tl.to("#wd", {filter:"blur(5px)", duration:0.28, ease:"power1.in"}, 24.160);
+tl.to("#wd", {filter:"blur(0px)", duration:0.32, ease:"power1.out"}, 24.510);
+tl.to("#road", {strokeDashoffset:4920.0, duration:0.70, ease:"power2.inOut"}, 24.160);
+tl.fromTo("#h3-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 24.460);
+tl.fromTo("#h3-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 24.750);
+tl.fromTo("#bnc", {opacity:0, y:40}, {opacity:1, y:0, duration:0.35}, 24.750);
+tl.fromTo("#vi3", {opacity:0, x:-300}, {opacity:1, x:0, duration:0.4}, 25.300);
+life("vi3", 0.000, 43.310, 6);
+point("vi3", "R", 25.930, 27.220, -60);
+tl.to("#bnc", {scaleY:0, opacity:0, transformOrigin:"50% 100%", duration:0.3}, 26.620);
+tl.fromTo("#sf3, #sf3f", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.4, ease:"back.out(2)"}, 26.820);
+tl.fromTo("#foot", {opacity:0, x:120}, {opacity:1, x:0, duration:0.35, ease:"back.out(2)"}, 27.160);
+tl.fromTo("#rep", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 27.260);
+jump("vi3", 27.460, 30);
+tl.to("#wd", {x:-1090.0, y:-2405.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 28.110);
+tl.to("#grid", {backgroundPosition:"-272px -601px", duration:0.6, ease:"power3.inOut"}, 28.110);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 28.110);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 28.410);
+tl.to("#road", {strokeDashoffset:3860.0, duration:0.60, ease:"power2.inOut"}, 28.110);
+tl.fromTo("#h4-badge", {opacity:0, scale:0.4}, {opacity:1, scale:1, duration:0.42, ease:"back.out(2.2)"}, 28.410);
+tl.fromTo("#h4-title", {opacity:0, x:-40}, {opacity:1, x:0, duration:0.4, ease:"power3.out"}, 28.880);
+tl.fromTo("#gol", {opacity:0, y:40}, {opacity:1, y:0, duration:0.35}, 28.880);
+tl.fromTo("#sco", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 30.590);
+tl.set("#sr1-d0", {y:-146}, 0);
+tl.set("#sr2-d0", {y:-146}, 0);
+tl.fromTo("#dw0", {opacity:0, y:-80}, {opacity:1, y:0, duration:0.35, ease:"bounce.out"}, 31.420);
+tl.fromTo("#dw1", {opacity:0, y:-80}, {opacity:1, y:0, duration:0.35, ease:"bounce.out"}, 31.540);
+tl.fromTo("#dw2", {opacity:0, y:-80}, {opacity:1, y:0, duration:0.35, ease:"bounce.out"}, 31.660);
+tl.to("[id^=dw]", {x:8, duration:0.1, yoyo:true, repeat:5}, 31.980);
+tl.to("#sr1-d0", {y:0, duration:0.50, ease:"power3.out"}, 32.660);
+tl.to("#sr2-d0", {y:0, duration:0.50, ease:"power3.out"}, 32.760);
+tl.fromTo("#cero", {opacity:0, scale:2.6, rotation:-22}, {opacity:1, scale:1, rotation:-8, duration:0.32, ease:"power4.in"}, 32.990);
+tl.to("#wd", {x:-1090.0, y:-3705.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 33.770);
+tl.to("#grid", {backgroundPosition:"-272px -926px", duration:0.6, ease:"power3.inOut"}, 33.770);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 33.770);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 34.070);
+tl.to("#road", {strokeDashoffset:1560.0, duration:0.60, ease:"power2.inOut"}, 33.770);
+tl.fromTo("#bkdr", {opacity:0}, {opacity:1, duration:0.3}, 34.070);
+tl.fromTo("#sf5, #sf5f, #vi5", {opacity:0}, {opacity:1, duration:0.3}, 34.170);
+life("vi5", 0.000, 43.310, 7);
+tl.fromTo("#tbl", {opacity:0, y:40}, {opacity:1, y:0, duration:0.3}, 34.420);
+tl.fromTo("#mc0", {opacity:0, y:40}, {opacity:1, y:0, duration:0.25, ease:"back.out(2)"}, 34.520);
+tl.fromTo("#mc1", {opacity:0, y:40}, {opacity:1, y:0, duration:0.25, ease:"back.out(2)"}, 34.600);
+tl.fromTo("#mc2", {opacity:0, y:40}, {opacity:1, y:0, duration:0.25, ease:"back.out(2)"}, 34.680);
+tl.fromTo("#fs0", {opacity:0, scale:0.4}, {opacity:1, scale:1.2, duration:0.08, yoyo:true, repeat:1}, 34.720);
+tl.fromTo("#fs0", {opacity:0, scale:0.4}, {opacity:1, scale:1.2, duration:0.08, yoyo:true, repeat:1, immediateRender:false}, 35.910);
+tl.fromTo("#fs1", {opacity:0, scale:0.4}, {opacity:1, scale:1.2, duration:0.08, yoyo:true, repeat:1}, 34.940);
+tl.fromTo("#fs1", {opacity:0, scale:0.4}, {opacity:1, scale:1.2, duration:0.08, yoyo:true, repeat:1, immediateRender:false}, 36.090);
+tl.fromTo("#fs2", {opacity:0, scale:0.4}, {opacity:1, scale:1.2, duration:0.08, yoyo:true, repeat:1}, 35.160);
+tl.fromTo("#fs2", {opacity:0, scale:0.4}, {opacity:1, scale:1.2, duration:0.08, yoyo:true, repeat:1, immediateRender:false}, 36.270);
+tl.fromTo("#fs3", {opacity:0, scale:0.4}, {opacity:1, scale:1.2, duration:0.08, yoyo:true, repeat:1}, 35.380);
+tl.fromTo("#fs3", {opacity:0, scale:0.4}, {opacity:1, scale:1.2, duration:0.08, yoyo:true, repeat:1, immediateRender:false}, 36.450);
+tl.fromTo("#sbq", {opacity:0, scale:0.5, x:0}, {opacity:1, scale:1, x:0, duration:0.3, ease:"back.out(2)"}, 35.900);
+typeOn("#sbq .kc", 36.200, 39.396);
+tl.fromTo(Q("vi5","mouth"), {scaleY:1}, {scaleY:2.4, svgOrigin:"120 134", duration:0.12, yoyo:true, repeat:25, immediateRender:false}, 36.200);
+tl.to(Q("vi5","armR"), {rotation:-50, svgOrigin:PIV.armR, duration:0.2, yoyo:true, repeat:3}, 36.970);
+tl.to(Q("vi5","eyes"), {scaleY:0.08, svgOrigin:PIV.eyes, duration:0.2}, 38.840); tl.to(Q("vi5","head"), {rotation:14, svgOrigin:PIV.head, duration:0.4}, 38.840);
+tl.fromTo("#zq", {opacity:0, y:30}, {opacity:1, y:-40, duration:0.6}, 38.940);
+tl.to("#wd", {x:-30.0, y:-3705.0, scale:1.0, duration:0.6, ease:"power3.inOut"}, 39.270);
+tl.to("#grid", {backgroundPosition:"-8px -926px", duration:0.6, ease:"power3.inOut"}, 39.270);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 39.270);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 39.570);
+tl.to("#road", {strokeDashoffset:500.0, duration:0.60, ease:"power2.inOut"}, 39.270);
+tl.fromTo("#pollc", {opacity:0, x:0, y:-60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 39.520);
+tl.set("[id^=pb]", {scaleX:0, transformOrigin:"0% 50%"}, 0);
+tl.to("#pb0", {scaleX:0.75, duration:0.35, ease:"back.out(1.6)"}, 40.210);
+tl.to("#pb1", {scaleX:0.3, duration:0.35, ease:"back.out(1.6)"}, 40.330);
+tl.to("#pb2", {scaleX:0.9, duration:0.35, ease:"back.out(1.6)"}, 40.450);
+tl.fromTo("#cbx", {opacity:0, x:0, y:60}, {opacity:1, x:0, y:0, duration:0.5, ease:"power3.out"}, 40.610);
+typeOn("#ctt .kc", 40.870, 41.640);
+tl.fromTo("#cur", {opacity:0, x:160, y:160}, {opacity:1, x:0, y:0, duration:0.4}, 41.070);
+tl.to("#cur", {scale:0.85, duration:0.08, yoyo:true, repeat:1}, 41.740); tl.to("#pub", {scale:0.9, backgroundColor:"#166534", duration:0.1, yoyo:true, repeat:1}, 41.740);
+tl.to("#wd", {x:307.3, y:368.8, scale:0.2115, duration:0.6, ease:"power3.inOut"}, 42.190);
+tl.to("#grid", {backgroundPosition:"77px 92px", duration:0.6, ease:"power3.inOut"}, 42.190);
+tl.to("#wd", {filter:"blur(5px)", duration:0.24, ease:"power1.in"}, 42.190);
+tl.to("#wd", {filter:"blur(0px)", duration:0.27, ease:"power1.out"}, 42.490);
+tl.fromTo(".pt:nth-child(1)", {y:0, x:0}, {y:-120, x:-40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(2)", {y:0, x:0}, {y:-150, x:0, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(3)", {y:0, x:0}, {y:-180, x:40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(4)", {y:0, x:0}, {y:-210, x:-40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(5)", {y:0, x:0}, {y:-240, x:0, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(6)", {y:0, x:0}, {y:-120, x:40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(7)", {y:0, x:0}, {y:-150, x:-40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(8)", {y:0, x:0}, {y:-180, x:0, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(9)", {y:0, x:0}, {y:-210, x:40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(10)", {y:0, x:0}, {y:-240, x:-40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(11)", {y:0, x:0}, {y:-120, x:0, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(12)", {y:0, x:0}, {y:-150, x:40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(13)", {y:0, x:0}, {y:-180, x:-40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(14)", {y:0, x:0}, {y:-210, x:0, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(15)", {y:0, x:0}, {y:-240, x:40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(16)", {y:0, x:0}, {y:-120, x:-40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(17)", {y:0, x:0}, {y:-150, x:0, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(18)", {y:0, x:0}, {y:-180, x:40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(19)", {y:0, x:0}, {y:-210, x:-40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(20)", {y:0, x:0}, {y:-240, x:0, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(21)", {y:0, x:0}, {y:-120, x:40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(22)", {y:0, x:0}, {y:-150, x:-40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(23)", {y:0, x:0}, {y:-180, x:0, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(24)", {y:0, x:0}, {y:-210, x:40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(25)", {y:0, x:0}, {y:-240, x:-40, duration:43.31, ease:"none"}, 0);
+tl.fromTo(".pt:nth-child(26)", {y:0, x:0}, {y:-120, x:0, duration:43.31, ease:"none"}, 0);
+tl.fromTo("#glow", {opacity:0.75}, {opacity:1, duration:2.5, ease:"sine.inOut", yoyo:true, repeat:17}, 0);
+window.__timelines["world"] = tl;
+</script>
+</template>
