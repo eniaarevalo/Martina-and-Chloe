@@ -109,3 +109,8 @@ video-vicente/assets/.premix.wav
 video-vicente/assets/.mix-graph.txt
 video-vicente/.hyperframes/
 video-vicente/node_modules/
+video-estela/voz-raw.wav
+video-estela/assets/.premix.wav
+video-estela/assets/.mix-graph.txt
+video-estela/.hyperframes/
+video-estela/node_modules/
